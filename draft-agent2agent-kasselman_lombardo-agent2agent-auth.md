@@ -1,6 +1,6 @@
 ---
-title: "TODO - Your title"
-abbrev: "TODO - Abbreviation"
+title: "Agent-to-Agent Authentication and Authorization"
+abbrev: "A2A-Auth"
 category: info
 
 docname: draft-agent2agent-kasselman_lombardo-agent2agent-auth-latest
@@ -27,7 +27,7 @@ author:
  -
     fullname: "PieterKas"
     organization: Your Organization Here
-    email: "90690777+PieterKas@users.noreply.github.com"
+    email: "pieter@defakto.security"
 
 normative:
 
