@@ -14,7 +14,15 @@ Expires: 9 May 2026                                                  AWS
 
 Abstract
 
-   TODO Abstract
+   This document proposes a framework for secure agent-to-agent (A2A)
+   interactions leveraging existing standards such as OAuth 2.0 and the
+   Workload Identity Management and Secure Exchange (WIMSE)
+   architecture.  Rather than defining new protocols, this document
+   explores how existing and widely deployed stnadards can be applied or
+   extended to establish agent-to-agent authentication and
+   authorization.  By doing so, it aims to provide a framewrok within
+   which to identify protocol gaps, align terminology, and guide future
+   standardization efforts for secure A2A communication.
 
 About This Document
 
@@ -65,9 +73,26 @@ Table of Contents
 
    1.  Introduction
    2.  Conventions and Definitions
-   3.  Security Considerations
-   4.  IANA Considerations
-   5.  Normative References
+   3.  Agent as a workload
+   4.  Agent Attestation
+   5.  Agent Identifier
+   6.  Agent Credentials
+   7.  Agent Identity Provisioning
+   8.  Agent Authentication
+     8.1.  Network layer authentication
+     8.2.  Application layer authentication
+   9.  Agent Authorization
+     9.1.  Same Domain Authorization
+       9.1.1.  Agent-to-Tool Authorization
+       9.1.2.  Agent-to-Agent Authorization
+       9.1.3.  User Delegated Authroization
+     9.2.  Cross Domain Agent-to-Agent Authroization
+   10. Agent Monitoring and Remediation
+   11. Agent Identity Policy
+   12. Agent Compliance
+   13. Security Considerations
+   14. IANA Considerations
+   15. Normative References
    Acknowledgments
    Authors' Addresses
 
@@ -83,15 +108,49 @@ Table of Contents
    BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
 
-3.  Security Considerations
+3.  Agent as a workload
+
+4.  Agent Attestation
+
+5.  Agent Identifier
+
+6.  Agent Credentials
+
+7.  Agent Identity Provisioning
+
+8.  Agent Authentication
+
+8.1.  Network layer authentication
+
+8.2.  Application layer authentication
+
+9.  Agent Authorization
+
+9.1.  Same Domain Authorization
+
+9.1.1.  Agent-to-Tool Authorization
+
+9.1.2.  Agent-to-Agent Authorization
+
+9.1.3.  User Delegated Authroization
+
+9.2.  Cross Domain Agent-to-Agent Authroization
+
+10.  Agent Monitoring and Remediation
+
+11.  Agent Identity Policy
+
+12.  Agent Compliance
+
+13.  Security Considerations
 
    TODO Security
 
-4.  IANA Considerations
+14.  IANA Considerations
 
    This document has no IANA actions.
 
-5.  Normative References
+15.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
