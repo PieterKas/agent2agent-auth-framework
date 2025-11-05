@@ -21,8 +21,9 @@ Abstract
    explores how existing and widely deployed stnadards can be applied or
    extended to establish agent-to-agent authentication and
    authorization.  By doing so, it aims to provide a framewrok within
-   which to identify protocol gaps, align terminology, and guide future
-   standardization efforts for secure A2A communication.
+   which to identify use of existing standards and identify gaps and
+   guide future standardization efforts for secure agent-to-agent
+   authentication and authorization.
 
 About This Document
 
