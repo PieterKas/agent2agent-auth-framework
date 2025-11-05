@@ -29,6 +29,12 @@ author:
     organization: Your Organization Here
     email: "pieter@defakto.security"
 
+ -
+    fullname: Jean-François Lombardo
+    nickname: Jeff
+    organization: AWS
+    country: Canada
+    email: jeffsec@amazon.com
 normative:
 
 informative:
