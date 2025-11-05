@@ -43,8 +43,7 @@ informative:
 
 --- abstract
 
-TODO Abstract
-
+This document proposes a framework for secure agent-to-agent (A2A) interactions leveraging existing standards such as OAuth 2.0 and the Workload Identity Management and Secure Exchange (WIMSE) architecture. Rather than defining new protocols, this document explores how existing and widely deployed stnadards can be applied or extended to establish agent-to-agent authentication and authorization. By doing so, it aims to provide a framewrok within which to identify protocol gaps, align terminology, and guide future standardization efforts for secure A2A communication.
 
 --- middle
 
@@ -57,6 +56,39 @@ TODO Introduction
 
 {::boilerplate bcp14-tagged}
 
+# Agent as a workload
+
+# Agent Attestation
+
+# Agent Identifier
+
+# Agent Credentials
+
+# Agent Identity Provisioning
+
+# Agent Authentication
+
+## Network layer authentication
+
+## Application layer authentication
+
+# Agent Authorization
+
+## Same Domain Authorization
+
+### Agent-to-Tool Authorization
+
+### Agent-to-Agent Authorization
+
+### User Delegated Authroization
+
+## Cross Domain Agent-to-Agent Authroization
+
+# Agent Monitoring and Remediation
+
+# Agent Identity Policy
+
+# Agent Compliance
 
 # Security Considerations
 
