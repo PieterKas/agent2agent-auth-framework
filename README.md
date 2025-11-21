@@ -1,8 +1,8 @@
 <!-- regenerate: on (set to off if you edit this file) -->
 
-# TODO - Your title
+# Agent-to-Agent Authentication and Authorization
 
-This is the working area for the individual Internet-Draft, "TODO - Your title".
+This is the working area for the individual Internet-Draft, "Agent-to-Agent Authentication and Authorization".
 
 * [Editor's Copy](https://PieterKas.github.io/agent2agent-auth-framework/#go.draft-agent2agent-kasselman_lombardo-agent2agent-auth.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-agent2agent-kasselman_lombardo-agent2agent-auth)
