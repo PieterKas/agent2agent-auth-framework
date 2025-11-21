@@ -59,6 +59,8 @@ TODO Introduction
 # Agents are workloads
 An Agent is a workload that iteratively interacts with a Large Language Model (LLM) and a set of tools that expose interfaces to underlying services and resources until a terminating condition, determined either by the LLM or by the agent’s internal logic, is reached. It may receive input from a user, or act autonomusly. {{fig-agent-basic}} shows a conceptual model of the AI Agent as a workload.
 
+{{fig-agent-basic}}  illustrates the high-level interaction model between the User, the AI Agent, the Large Language Model (LLM), the Tools invoked by the Agent, and the underlying Services and Resources accessed through those Tools. 
+
 ~~~ ascii-art
                +----------------+
                | Large Language |
@@ -75,8 +77,6 @@ An Agent is a workload that iteratively interacts with a Large Language Model (L
 ~~~
 {: #fig-agent-basic title="AI Agent as a Workload"}
 
-Figure 1 illustrates the high-level interaction model between the User, the AI Agent, the Large Language Model (LLM), the Tools invoked by the Agent, and the underlying Services and Resources accessed through those Tools. 
-
 1. Optional: The User provides an initial request or instruction to the AI Agent.
 2. The AI Agent forwards the available context to the LLM. Context isimplementation and deployment specific and may include User input, system prompt, tool descriptions, tool outputs and other relevant information.
 3. The LLM returns a response to the AI Agent identifying which tools it should invoke.
@@ -84,7 +84,13 @@ Figure 1 illustrates the high-level interaction model between the User, the AI A
 5. The Tools interacts with the underlying Services and Resources required to fulfill the requested operation.
 6. The underlying Services and Resources returns the information requested by the Tools.
 7. The Tools returns the information collected from the Services and Resources to the AI Agent, which sends the information as additional context to the Large Langugage Model, repeating steps 2-7 until the exit condition is reached and the task is completed. 
-8. Optional: Once the exoot condition is reached in step 7, the AI Agent may return a response to the User.
+8. Optional: Once the exit condition is reached in step 7, the AI Agent may return a response to the User.
+
+As shown in {{fig-arch-basic}}, the AI Agent is a workload that needs and identifier and credentials with which to authenticate itself to the Large Langugage Model and Tools. Once it has authenticated, the Large Langugage Model and Tools must determine if the AI Agent is authorized to access it. If the AI Agent is acting on-behalf-of a User, the User needs to deelegate access to the AI Agent, and the context of the User needs to be preserved to inform authorization decisions.
+
+This document describes how AI Agents should leverage existing standards like SPIFFE, WIMSE, OAuth and SSF.
+
+# Agent Identity Management System
 
 # Agent Identifier
 Key point - agents must be uniquely identified. Proposal is to use a WIMSE or WIMSE compatible identifier (basicaly a URI). Refer to WIMSE identifier draft.
