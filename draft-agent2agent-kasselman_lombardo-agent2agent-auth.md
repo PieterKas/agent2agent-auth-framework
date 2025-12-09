@@ -35,13 +35,14 @@ author:
     organization: AWS
     country: Canada
     email: jeffsec@amazon.com
+
 normative:
   WIMSE_ID
-    title: WIMSE Identifier
+    title: "WIMSE Identifier"
     target: https://datatracker.ietf.org/doc/draft-ietf-wimse-identifier/
   
   SPIFFE:
-    title: Secure Production Identity Framework for Everyone
+    title: "Secure Production Identity Framework for Everyone"
     target: https://spiffe.io/docs/latest/spiffe-about/overview/
     author:
     - org: Cloud Native Computing Foundation
