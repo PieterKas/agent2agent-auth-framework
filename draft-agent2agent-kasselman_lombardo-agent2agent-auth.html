@@ -5,7 +5,7 @@
 <meta content="Common,Latin" name="scripts">
 <meta content="initial-scale=1.0" name="viewport">
 <title>Agent-to-Agent Authentication and Authorization</title>
-<meta content="PieterKas" name="author">
+<meta content="Pieter Kasselman" name="author">
 <meta content="Jean-François Lombardo" name="author">
 <meta content="
        This document proposes a framework for secure agent-to-agent (A2A) interactions leveraging existing standards such as OAuth 2.0 and the Workload Identity Management and Secure Exchange (WIMSE) architecture. Rather than defining new protocols, this document explores how existing and widely deployed stnadards can be applied or extended to establish agent-to-agent authentication and authorization. By doing so, it aims to provide a framewrok within which to identify use of existing standards and identify gaps and guide future standardization efforts for secure agent-to-agent authentication and authorization. 
@@ -1046,11 +1046,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">A2A-Auth</td>
-<td class="right">November 2025</td>
+<td class="right">December 2025</td>
 </tr></thead>
 <tfoot><tr>
-<td class="left">PieterKas &amp; Lombardo</td>
-<td class="center">Expires 25 May 2026</td>
+<td class="left">Kasselman &amp; Lombardo</td>
+<td class="center">Expires 12 June 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1063,16 +1063,16 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-agent2agent-kasselman_lombardo-agent2agent-auth-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-11-21" class="published">21 November 2025</time>
+<time datetime="2025-12-09" class="published">9 December 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-05-25">25 May 2026</time></dd>
+<dd class="expires"><time datetime="2026-06-12">12 June 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
-      <div class="author-name">PieterKas</div>
+      <div class="author-name">P. Kasselman</div>
 <div class="org">Your Organization Here</div>
 </div>
 <div class="author">
@@ -1117,7 +1117,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 25 May 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 12 June 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1171,7 +1171,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-agent-credential-provisioni" class="internal xref">Agent Credential Provisioning</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
-            <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-agent-authentication" class="internal xref">Agent Authentication</a></p>
+            <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-agent-authentication-pieter" class="internal xref">Agent Authentication - Pieter</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.1">
                 <p id="section-toc.1-1.9.2.1.1"><a href="#section-9.1" class="auto internal xref">9.1</a>.  <a href="#name-network-layer-authenticatio" class="internal xref">Network layer authentication</a></p>
@@ -1182,7 +1182,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
-            <p id="section-toc.1-1.10.1"><a href="#section-10" class="auto internal xref">10</a>. <a href="#name-agent-authorization" class="internal xref">Agent Authorization</a></p>
+            <p id="section-toc.1-1.10.1"><a href="#section-10" class="auto internal xref">10</a>. <a href="#name-agent-authorization-jeff" class="internal xref">Agent Authorization - Jeff</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.1">
                 <p id="section-toc.1-1.10.2.1.1"><a href="#section-10.1" class="auto internal xref">10.1</a>.  <a href="#name-same-domain-authorization" class="internal xref">Same Domain Authorization</a></p>
@@ -1207,13 +1207,13 @@ svg :is([fill="white"], [fill^="#fff"]) {
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
-            <p id="section-toc.1-1.11.1"><a href="#section-11" class="auto internal xref">11</a>. <a href="#name-agent-monitoring-and-remedi" class="internal xref">Agent Monitoring and Remediation</a></p>
+            <p id="section-toc.1-1.11.1"><a href="#section-11" class="auto internal xref">11</a>. <a href="#name-agent-monitoring-and-remedi" class="internal xref">Agent Monitoring and Remediation - Jeff</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
-            <p id="section-toc.1-1.12.1"><a href="#section-12" class="auto internal xref">12</a>. <a href="#name-agent-auhtentication-and-au" class="internal xref">Agent Auhtentication and Authorization Policy</a></p>
+            <p id="section-toc.1-1.12.1"><a href="#section-12" class="auto internal xref">12</a>. <a href="#name-agent-auhtentication-and-au" class="internal xref">Agent Auhtentication and Authorization Policy - Discuss</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13">
-            <p id="section-toc.1-1.13.1"><a href="#section-13" class="auto internal xref">13</a>. <a href="#name-agent-compliance" class="internal xref">Agent Compliance</a></p>
+            <p id="section-toc.1-1.13.1"><a href="#section-13" class="auto internal xref">13</a>. <a href="#name-agent-compliance-discuss" class="internal xref">Agent Compliance - Discuss</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14">
             <p id="section-toc.1-1.14.1"><a href="#section-14" class="auto internal xref">14</a>. <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
@@ -1309,7 +1309,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 </li>
       </ol>
 <p id="section-3-5">As shown in <a href="#fig-agent-basic" class="auto internal xref">Figure 1</a>, the AI Agent is a workload that needs and identifier and credentials with which to authenticate itself to the Large Langugage Model and Tools. Once it has authenticated, the Large Langugage Model and Tools must determine if the AI Agent is authorized to access it. If the AI Agent is acting on-behalf-of a User, the User needs to deelegate access to the AI Agent, and the context of the User needs to be preserved to inform authorization decisions.<a href="#section-3-5" class="pilcrow">¶</a></p>
-<p id="section-3-6">This document describes how AI Agents should leverage existing standards like SPIFFE, WIMSE, OAuth and SSF.<a href="#section-3-6" class="pilcrow">¶</a></p>
+<p id="section-3-6">This document describes how AI Agents should leverage existing standards defined by SPIFFE <span>[<a href="#SPIFFE" class="cite xref">SPIFFE</a>]</span>, WIMSE, OAuth and SSF.<a href="#section-3-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="agent-identity-management-system">
@@ -1354,7 +1354,10 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
       <h2 id="name-agent-identifier">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-agent-identifier" class="section-name selfRef">Agent Identifier</a>
       </h2>
-<p id="section-5-1">Key point - agents must be uniquely identified. Proposal is to use a WIMSE or WIMSE compatible identifier (basicaly a URI). Refer to WIMSE identifier draft.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-1">Agents <span class="bcp14">MUST</span> be uniquely identified to enable authentication and authorization. The Secure Production Identity Framework for Everyone (SPIFFE) identifier format is widely deployed and operationally mature. The SPIFFE workload identity model defines a SPIFFE identifier (SPIFFE ID) as a URI of the form <code>spiffe://&lt;trust-domain&gt;/&lt;path&gt;</code> that uniquely identifies a workload within a trust domain <span>[<a href="#SPIFFE" class="cite xref">SPIFFE</a>]</span>.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-2">The Workload Identity in Multi-System Environments (WIMSE) working group builds on the experiences gained by the SPIFFE community and defines the WIMSE workload identifier <span>[<a href="#WIMSE_ID" class="cite xref">WIMSE_ID</a>]</span> as a URI that uniquely identifies a workload within a given trust domain.<a href="#section-5-2" class="pilcrow">¶</a></p>
+<p id="section-5-3">Because SPIFFE IDs are URI-based workload identifiers and their structure aligns with the identifier model defined in the WIMSE identifier draft, all SPIFFE IDs can be treated as valid WIMSE identifiers.<a href="#section-5-3" class="pilcrow">¶</a></p>
+<p id="section-5-4">All Agents <span class="bcp14">MUST</span> be assigned a WIMSE identifier, which <span class="bcp14">MAY</span> be a SPIFFE ID.<a href="#section-5-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="agent-credentials">
@@ -1362,7 +1365,10 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
       <h2 id="name-agent-credentials">
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-agent-credentials" class="section-name selfRef">Agent Credentials</a>
       </h2>
-<p id="section-6-1">Key point - identifier must be bound to a credential. Credentials have expiry dates and additional attributes relevant to the agent. multiple formats are possible. JWTs, X.509 and WITs. Reference SPIFFE, WIMSE. Refer to API keys as an anit pattern. also say something about credential exchange.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-1">Agents <span class="bcp14">MUST</span> have credentials that provide a cryptographic binding to the agent identifier. These credentials are considered primary credentials that are provisioned at runtime. The cryptographic binding is essential for establishing trust since an identifier on its own is insufficient unless it is verifiably tied to a key or token controlled by the agent. WIMSE define a profile of X.509 certificates and Workload Identity Tokens (WITs), while SPIFFE defines SPIFFE Verified ID (SVID) profiles of JSON Web Token (JWT-SVID), X.509 certificates (X.509-SVID) and WIMSE Workload Identity Tokens (WIT-SVID). SPIFFE SVID credentials are compatible with WIMSE defined credentials. The choice of an appropriate format depends on the trust model and integration requirements.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-2">Agent credentials <span class="bcp14">MUST</span> be ephemeral, include an explicit expiration time, and <span class="bcp14">MAY</span> carry additional attributes relevant to the agent (e.g., trust domain, attestation evidence, or workload metadata).<a href="#section-6-2" class="pilcrow">¶</a></p>
+<p id="section-6-3">In some cases, agents <span class="bcp14">MAY</span> need to have access to a secondary credential format to acces a proprietary or legacy system that is not compatible with the X.509, JWT or WIT it is provisioned with. In these cases an agent <span class="bcp14">MAY</span> exchange their primary credentials through a credential exchange mechanisms (e.g., OAuth 2.0 Token Exchange, Transaction Tokens, Workload Identity Federation). This allows an agent to obtain a credential targeted to a specific relying party by leveraging the primary credential in its possession.<a href="#section-6-3" class="pilcrow">¶</a></p>
+<p id="section-6-4">Note: Static API keys are an anti-pattern for agent identity. They lack cryptographic binding, cannot convey attestation or provenance, and are difficult to rotate or scope, making them unsuitable for secure Agent-to-Agent authentication or authorization.<a href="#section-6-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="agent-attestation">
@@ -1370,7 +1376,10 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
       <h2 id="name-agent-attestation">
 <a href="#section-7" class="section-number selfRef">7. </a><a href="#name-agent-attestation" class="section-name selfRef">Agent Attestation</a>
       </h2>
-<p id="section-7-1">Key point - agent attestation is the equivalent of identiy proofing. there are numerous mechanisms through which this may be achieved, which are deployment and risk specific. Reference WIMSE and SPIFFE approaches here.<a href="#section-7-1" class="pilcrow">¶</a></p>
+<p id="section-7-1">Agent attestation is the identity-proofing mechanism for AI agents. Just as humans rely on identity proofing during account creation or credential issuance, agents require a means to demonstrate what they are, how they were instantiated, and under what conditions they are operating. Attestation evidence feeds into the credential issuance process and determines whether a credential is issued, the type of credential issued and the contents of the credential.<a href="#section-7-1" class="pilcrow">¶</a></p>
+<p id="section-7-2">Multiple attestation mechanisms exist, and the appropriate choice is deployment, and risk, specific. These mechanisms may include hardware-based attestations (e.g., TEE evidence), software integrity measurements, supply-chain provenance, platform and orchestration-layer attestations, or operator assertions. Depending on the risk involved, a single attestation may be sufficient, or, in higher risk scenarios, multi-attestation may be requred.<a href="#section-7-2" class="pilcrow">¶</a></p>
+<p id="section-7-3">The Remote ATtestation Procedures (RATS) architecture (see <span>[<a href="#RFC9334" class="cite xref">RFC9334</a>]</span>) provides a general model for producing, conveying, and verifying attestation evidence. RATS defines the roles of Attester, Verifier, and Relying Party, as well as the concept of Evidence, Endorsements, and Attestation Results.<a href="#section-7-3" class="pilcrow">¶</a></p>
+<p id="section-7-4">Workload identity management systems can use different attestation mechanisms and implementations (including RATS), to represent attestation evidence and deliver it to credential provisioning systems.<a href="#section-7-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="agent-credential-provisioning">
@@ -1378,13 +1387,24 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
       <h2 id="name-agent-credential-provisioni">
 <a href="#section-8" class="section-number selfRef">8. </a><a href="#name-agent-credential-provisioni" class="section-name selfRef">Agent Credential Provisioning</a>
       </h2>
-<p id="section-8-1">Key point - credentials are dynamically provisioned at runtime, they are short lived to remove need for expiry management. Provisioning includes initial provisioning and rotation. Refer to SPIFFE and WIMSE. Maybe hint at using SCIM here?<a href="#section-8-1" class="pilcrow">¶</a></p>
+<p id="section-8-1">Agent credential provisioning refers to the runtime issuance, renewal, and rotation of the credentials an agent uses to authenticate and authorize itself to other agents. Agents may be provisioned with one or more credential types as described in <a href="#agent-credentials" class="auto internal xref">Section 6</a>. Unlike static secrets, agent credentials are provisioned dynamically and are intentionally short-lived, eliminating the operational burden of manual expiration management and reducing the impact of credential compromise. Agent credential provisioning must operate autonomously, scale to high-churn environments, and integrate closely with the attestation mechanisms that establish trust in the agent at each issuance or rotation event.<a href="#section-8-1" class="pilcrow">¶</a></p>
+<p id="section-8-2">Agent credential provisioning typically includes two phases:<a href="#section-8-2" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-8-3">
+<li id="section-8-3.1">
+          <p id="section-8-3.1.1"><strong>Initial Provisioning</strong>: The process by which an agent first acquires a credential bound to its identity. This often occurs immediately after deployment or instantiation and is based on verified properties of the agent (e.g., deployment context, attestation evidence, or orchestration metadata).<a href="#section-8-3.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-8-3.2">
+          <p id="section-8-3.2.1"><strong>Rotation/Renewal</strong>: The automatic refresh of short-lived credentials before expiration. Continuous rotation ensures that credentials remain valid only for the minimum necessary time and that authorization state reflects current operational conditions.<a href="#section-8-3.2.1" class="pilcrow">¶</a></p>
+</li>
+      </ol>
+<p id="section-8-4">The use of short-lived credentials provides a signiifcant improvement in the risk profile and risk of credential exposure. It provides an alternative to explicit revocation mechanisms and simplifies lifecycle management in large, automated environments.<a href="#section-8-4" class="pilcrow">¶</a></p>
+<p id="section-8-5">Deployed frameworks such as <span>[<a href="#SPIFFE" class="cite xref">SPIFFE</a>]</span> provide concrete mechanisms for automated, short-lived credential provisioning at runtime based on workload attestation. In addition to issuing short-lived credentials, <span>[<a href="#SPIFFE" class="cite xref">SPIFFE</a>]</span> also provisions ephemeral cryptographic key material bound to each credential, further reducing the risks associated with compromising long-lived keys.<a href="#section-8-5" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="agent-authentication">
+<div id="agent-authentication-pieter">
 <section id="section-9">
-      <h2 id="name-agent-authentication">
-<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-agent-authentication" class="section-name selfRef">Agent Authentication</a>
+      <h2 id="name-agent-authentication-pieter">
+<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-agent-authentication-pieter" class="section-name selfRef">Agent Authentication - Pieter</a>
       </h2>
 <p id="section-9-1">Key point - agents may authenticate in a number of ways based on credentials, supported protocols and environment. Distinguish between network and application layer. Refernece WIMSE.<a href="#section-9-1" class="pilcrow">¶</a></p>
 <div id="network-layer-authentication">
@@ -1405,10 +1425,10 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 </div>
 </section>
 </div>
-<div id="agent-authorization">
+<div id="agent-authorization-jeff">
 <section id="section-10">
-      <h2 id="name-agent-authorization">
-<a href="#section-10" class="section-number selfRef">10. </a><a href="#name-agent-authorization" class="section-name selfRef">Agent Authorization</a>
+      <h2 id="name-agent-authorization-jeff">
+<a href="#section-10" class="section-number selfRef">10. </a><a href="#name-agent-authorization-jeff" class="section-name selfRef">Agent Authorization - Jeff</a>
       </h2>
 <p id="section-10-1">Key point - OAuth is broadly supported and provides a delegation model for users to clients (aka agents). Agents can obtain acess tokens directly (client credentials flow, using above authentication methods) or it can be delegated to them by a user (OAuth flows). Make point that the access token includes the client_id, which is the same as the Agent ID (ore related to it) and can be used for authroization decisions, along with other claims in an Access Token (reference JWT Access token spec). Make provision for opaque tokens as well. Discuss Downscoping of agent authorization using transaction tokens. Discuss cross-domain authorization (use cases) and how it may be achieved (identity chaining and cross-domain authorization). Discuss human in the loop authroization. Note concerns, refer to cross-device BCP as examples of consent phishing attacsk. Talk about CIBA as a protocol.<a href="#section-10-1" class="pilcrow">¶</a></p>
 <p id="section-10-2">Picture -&gt; Access Token -&gt; Transaction Token -&gt; Domain 1 -&gt; Domain 2<a href="#section-10-2" class="pilcrow">¶</a></p>
@@ -1467,28 +1487,28 @@ CIBA<a href="#section-10.1.4-2" class="pilcrow">¶</a></p>
 </div>
 </section>
 </div>
-<div id="agent-monitoring-and-remediation">
+<div id="agent-monitoring-and-remediation-jeff">
 <section id="section-11">
       <h2 id="name-agent-monitoring-and-remedi">
-<a href="#section-11" class="section-number selfRef">11. </a><a href="#name-agent-monitoring-and-remedi" class="section-name selfRef">Agent Monitoring and Remediation</a>
+<a href="#section-11" class="section-number selfRef">11. </a><a href="#name-agent-monitoring-and-remedi" class="section-name selfRef">Agent Monitoring and Remediation - Jeff</a>
       </h2>
 <p id="section-11-1">Key point - ongoing monitoring and remediation is needed. Use protocols like SSE, CAEP to respond to changes in authorization. Note the need for ongoing logging and audit trails. Talk about end-to-end audit and how this is enabled by having agent identifiers.<a href="#section-11-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="agent-auhtentication-and-authorization-policy">
+<div id="agent-auhtentication-and-authorization-policy-discuss">
 <section id="section-12">
       <h2 id="name-agent-auhtentication-and-au">
-<a href="#section-12" class="section-number selfRef">12. </a><a href="#name-agent-auhtentication-and-au" class="section-name selfRef">Agent Auhtentication and Authorization Policy</a>
+<a href="#section-12" class="section-number selfRef">12. </a><a href="#name-agent-auhtentication-and-au" class="section-name selfRef">Agent Auhtentication and Authorization Policy - Discuss</a>
       </h2>
 <p id="section-12-1">Key point - configuration and parameters for all the above constitutes policy. Not stnadardises and not recommended for standrdisation? Perhaps somethign about document format?<a href="#section-12-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="agent-compliance">
+<div id="agent-compliance-discuss">
 <section id="section-13">
-      <h2 id="name-agent-compliance">
-<a href="#section-13" class="section-number selfRef">13. </a><a href="#name-agent-compliance" class="section-name selfRef">Agent Compliance</a>
+      <h2 id="name-agent-compliance-discuss">
+<a href="#section-13" class="section-number selfRef">13. </a><a href="#name-agent-compliance-discuss" class="section-name selfRef">Agent Compliance - Discuss</a>
       </h2>
-<p id="section-13-1">Key point - audit against Agent Identity Policy - not standrdised and not recommended to standardise.<a href="#section-13-1" class="pilcrow">¶</a></p>
+<p id="section-13-1">Key point - audit against Agent Identity Policy - not standrdised and not recommended to standardise. Governance and observability. Perhaps we discuss and describe, but don't suggest standards here.<a href="#section-13-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="security-considerations">
@@ -1518,8 +1538,40 @@ CIBA<a href="#section-10.1.4-2" class="pilcrow">¶</a></p>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8174">[RFC8174]</dt>
-    <dd>
+      <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9334">[RFC9334]</dt>
+      <dd>
+<span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Thaler, D.</span>, <span class="refAuthor">Richardson, M.</span>, <span class="refAuthor">Smith, N.</span>, and <span class="refAuthor">W. Pan</span>, <span class="refTitle">"Remote ATtestation procedureS (RATS) Architecture"</span>, <span class="seriesInfo">RFC 9334</span>, <span class="seriesInfo">DOI 10.17487/RFC9334</span>, <time datetime="2023-01" class="refDate">January 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9334">https://www.rfc-editor.org/rfc/rfc9334</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="SPIFFE">[SPIFFE]</dt>
+      <dd>
+<span class="refTitle">"Secure Production Identity Framework for Everyone"</span>, <span>n.d.</span>, <span>&lt;<a href="https://spiffe.io/docs/latest/spiffe-about/overview/">https://spiffe.io/docs/latest/spiffe-about/overview/</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="SPIFFE_BUNDLE">[SPIFFE_BUNDLE]</dt>
+      <dd>
+<span class="refTitle">"SPIFFE Bundle"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE_Trust_Domain_and_Bundle.md#4-spiffe-bundle-format">https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE_Trust_Domain_and_Bundle.md#4-spiffe-bundle-format</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="SPIFFE_FEDERATION">[SPIFFE_FEDERATION]</dt>
+      <dd>
+<span class="refTitle">"SPIFFE Federation"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE_Federation.md">https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE_Federation.md</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="SPIFFE_ID">[SPIFFE_ID]</dt>
+      <dd>
+<span class="refTitle">"SPIFFE-ID"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md">https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="SPIFFE_JWT">[SPIFFE_JWT]</dt>
+      <dd>
+<span class="refTitle">"JWT-SVID"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/spiffe/spiffe/blob/main/standards/JWT-SVID.md">https://github.com/spiffe/spiffe/blob/main/standards/JWT-SVID.md</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="SPIFFE_X509">[SPIFFE_X509]</dt>
+      <dd>
+<span class="refTitle">"X509-SVID"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/spiffe/spiffe/blob/main/standards/X509-SVID.md">https://github.com/spiffe/spiffe/blob/main/standards/X509-SVID.md</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="WIMSE_ID">[WIMSE_ID]</dt>
+    <dd>
+<span class="refTitle">"WIMSE Identifier"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/draft-ietf-wimse-identifier/">https://datatracker.ietf.org/doc/draft-ietf-wimse-identifier/</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -1538,7 +1590,7 @@ CIBA<a href="#section-10.1.4-2" class="pilcrow">¶</a></p>
 <a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
       </h2>
 <address class="vcard">
-        <div dir="auto" class="left"><span class="fn nameRole">PieterKas</span></div>
+        <div dir="auto" class="left"><span class="fn nameRole">Pieter Kasselman</span></div>
 <div dir="auto" class="left"><span class="org">Your Organization Here</span></div>
 <div class="email">
 <span>Email:</span>
@@ -1548,7 +1600,6 @@ CIBA<a href="#section-10.1.4-2" class="pilcrow">¶</a></p>
 <address class="vcard">
         <div dir="auto" class="left"><span class="fn nameRole">Jean-François Lombardo</span></div>
 <div dir="auto" class="left"><span class="org">AWS</span></div>
-<div dir="auto" class="left"><span class="country-name">Canada</span></div>
 <div class="email">
 <span>Email:</span>
 <a href="mailto:jeffsec@amazon.com" class="email">jeffsec@amazon.com</a>

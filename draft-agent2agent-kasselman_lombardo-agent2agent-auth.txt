@@ -2,11 +2,11 @@
 
 
 
-Network Working Group                                          PieterKas
+Network Working Group                                       P. Kasselman
 Internet-Draft                                    Your Organization Here
 Intended status: Informational                               J. Lombardo
-Expires: 25 May 2026                                                 AWS
-                                                        21 November 2025
+Expires: 12 June 2026                                                AWS
+                                                         9 December 2025
 
 
             Agent-to-Agent Authentication and Authorization
@@ -54,7 +54,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 25 May 2026.
+   This Internet-Draft will expire on 12 June 2026.
 
 Copyright Notice
 
@@ -80,10 +80,10 @@ Table of Contents
    6.  Agent Credentials
    7.  Agent Attestation
    8.  Agent Credential Provisioning
-   9.  Agent Authentication
+   9.  Agent Authentication - Pieter
      9.1.  Network layer authentication
      9.2.  Application layer authentication
-   10. Agent Authorization
+   10. Agent Authorization - Jeff
      10.1.  Same Domain Authorization
        10.1.1.  Initial Authorization
        10.1.2.  Donwscoped, Time Bount, Context Enriched Agent
@@ -91,9 +91,9 @@ Table of Contents
        10.1.3.  Agent-to-Resource Authorization
        10.1.4.  Human-in-the loop
      10.2.  Cross Domain Agent-to-Agent Authorization
-   11. Agent Monitoring and Remediation
-   12. Agent Auhtentication and Authorization Policy
-   13. Agent Compliance
+   11. Agent Monitoring and Remediation - Jeff
+   12. Agent Auhtentication and Authorization Policy - Discuss
+   13. Agent Compliance - Discuss
    14. Security Considerations
    15. IANA Considerations
    16. Normative References
@@ -180,7 +180,7 @@ Table of Contents
    decisions.
 
    This document describes how AI Agents should leverage existing
-   standards like SPIFFE, WIMSE, OAuth and SSF.
+   standards defined by SPIFFE [SPIFFE], WIMSE, OAuth and SSF.
 
 4.  Agent Identity Management System
 
@@ -220,33 +220,129 @@ Table of Contents
 
 5.  Agent Identifier
 
-   Key point - agents must be uniquely identified.  Proposal is to use a
-   WIMSE or WIMSE compatible identifier (basicaly a URI).  Refer to
-   WIMSE identifier draft.
+   Agents MUST be uniquely identified to enable authentication and
+   authorization.  The Secure Production Identity Framework for Everyone
+   (SPIFFE) identifier format is widely deployed and operationally
+   mature.  The SPIFFE workload identity model defines a SPIFFE
+   identifier (SPIFFE ID) as a URI of the form spiffe://<trust-
+   domain>/<path> that uniquely identifies a workload within a trust
+   domain [SPIFFE].
+
+   The Workload Identity in Multi-System Environments (WIMSE) working
+   group builds on the experiences gained by the SPIFFE community and
+   defines the WIMSE workload identifier [WIMSE_ID] as a URI that
+   uniquely identifies a workload within a given trust domain.
+
+   Because SPIFFE IDs are URI-based workload identifiers and their
+   structure aligns with the identifier model defined in the WIMSE
+   identifier draft, all SPIFFE IDs can be treated as valid WIMSE
+   identifiers.
+
+   All Agents MUST be assigned a WIMSE identifier, which MAY be a SPIFFE
+   ID.
 
 6.  Agent Credentials
 
-   Key point - identifier must be bound to a credential.  Credentials
-   have expiry dates and additional attributes relevant to the agent.
-   multiple formats are possible.  JWTs, X.509 and WITs.  Reference
-   SPIFFE, WIMSE.  Refer to API keys as an anit pattern. also say
-   something about credential exchange.
+   Agents MUST have credentials that provide a cryptographic binding to
+   the agent identifier.  These credentials are considered primary
+   credentials that are provisioned at runtime.  The cryptographic
+   binding is essential for establishing trust since an identifier on
+   its own is insufficient unless it is verifiably tied to a key or
+   token controlled by the agent.  WIMSE define a profile of X.509
+   certificates and Workload Identity Tokens (WITs), while SPIFFE
+   defines SPIFFE Verified ID (SVID) profiles of JSON Web Token (JWT-
+   SVID), X.509 certificates (X.509-SVID) and WIMSE Workload Identity
+   Tokens (WIT-SVID).  SPIFFE SVID credentials are compatible with WIMSE
+   defined credentials.  The choice of an appropriate format depends on
+   the trust model and integration requirements.
+
+   Agent credentials MUST be ephemeral, include an explicit expiration
+   time, and MAY carry additional attributes relevant to the agent
+   (e.g., trust domain, attestation evidence, or workload metadata).
+
+   In some cases, agents MAY need to have access to a secondary
+   credential format to acces a proprietary or legacy system that is not
+   compatible with the X.509, JWT or WIT it is provisioned with.  In
+   these cases an agent MAY exchange their primary credentials through a
+   credential exchange mechanisms (e.g., OAuth 2.0 Token Exchange,
+   Transaction Tokens, Workload Identity Federation).  This allows an
+   agent to obtain a credential targeted to a specific relying party by
+   leveraging the primary credential in its possession.
+
+   Note: Static API keys are an anti-pattern for agent identity.  They
+   lack cryptographic binding, cannot convey attestation or provenance,
+   and are difficult to rotate or scope, making them unsuitable for
+   secure Agent-to-Agent authentication or authorization.
 
 7.  Agent Attestation
 
-   Key point - agent attestation is the equivalent of identiy proofing.
-   there are numerous mechanisms through which this may be achieved,
-   which are deployment and risk specific.  Reference WIMSE and SPIFFE
-   approaches here.
+   Agent attestation is the identity-proofing mechanism for AI agents.
+   Just as humans rely on identity proofing during account creation or
+   credential issuance, agents require a means to demonstrate what they
+   are, how they were instantiated, and under what conditions they are
+   operating.  Attestation evidence feeds into the credential issuance
+   process and determines whether a credential is issued, the type of
+   credential issued and the contents of the credential.
+
+   Multiple attestation mechanisms exist, and the appropriate choice is
+   deployment, and risk, specific.  These mechanisms may include
+   hardware-based attestations (e.g., TEE evidence), software integrity
+   measurements, supply-chain provenance, platform and orchestration-
+   layer attestations, or operator assertions.  Depending on the risk
+   involved, a single attestation may be sufficient, or, in higher risk
+   scenarios, multi-attestation may be requred.
+
+   The Remote ATtestation Procedures (RATS) architecture (see [RFC9334])
+   provides a general model for producing, conveying, and verifying
+   attestation evidence.  RATS defines the roles of Attester, Verifier,
+   and Relying Party, as well as the concept of Evidence, Endorsements,
+   and Attestation Results.
+
+   Workload identity management systems can use different attestation
+   mechanisms and implementations (including RATS), to represent
+   attestation evidence and deliver it to credential provisioning
+   systems.
 
 8.  Agent Credential Provisioning
 
-   Key point - credentials are dynamically provisioned at runtime, they
-   are short lived to remove need for expiry management.  Provisioning
-   includes initial provisioning and rotation.  Refer to SPIFFE and
-   WIMSE.  Maybe hint at using SCIM here?
+   Agent credential provisioning refers to the runtime issuance,
+   renewal, and rotation of the credentials an agent uses to
+   authenticate and authorize itself to other agents.  Agents may be
+   provisioned with one or more credential types as described in
+   Section 6.  Unlike static secrets, agent credentials are provisioned
+   dynamically and are intentionally short-lived, eliminating the
+   operational burden of manual expiration management and reducing the
+   impact of credential compromise.  Agent credential provisioning must
+   operate autonomously, scale to high-churn environments, and integrate
+   closely with the attestation mechanisms that establish trust in the
+   agent at each issuance or rotation event.
 
-9.  Agent Authentication
+   Agent credential provisioning typically includes two phases:
+
+   1.  *Initial Provisioning*: The process by which an agent first
+       acquires a credential bound to its identity.  This often occurs
+       immediately after deployment or instantiation and is based on
+       verified properties of the agent (e.g., deployment context,
+       attestation evidence, or orchestration metadata).
+
+   2.  *Rotation/Renewal*: The automatic refresh of short-lived
+       credentials before expiration.  Continuous rotation ensures that
+       credentials remain valid only for the minimum necessary time and
+       that authorization state reflects current operational conditions.
+
+   The use of short-lived credentials provides a signiifcant improvement
+   in the risk profile and risk of credential exposure.  It provides an
+   alternative to explicit revocation mechanisms and simplifies
+   lifecycle management in large, automated environments.
+
+   Deployed frameworks such as [SPIFFE] provide concrete mechanisms for
+   automated, short-lived credential provisioning at runtime based on
+   workload attestation.  In addition to issuing short-lived
+   credentials, [SPIFFE] also provisions ephemeral cryptographic key
+   material bound to each credential, further reducing the risks
+   associated with compromising long-lived keys.
+
+9.  Agent Authentication - Pieter
 
    Key point - agents may authenticate in a number of ways based on
    credentials, supported protocols and environment.  Distinguish
@@ -260,7 +356,7 @@ Table of Contents
 
    WPT, HTTP Sig.
 
-10.  Agent Authorization
+10.  Agent Authorization - Jeff
 
    Key point - OAuth is broadly supported and provides a delegation
    model for users to clients (aka agents).  Agents can obtain acess
@@ -311,23 +407,24 @@ Table of Contents
 
    Identiyt chaining, ID-Jag.
 
-11.  Agent Monitoring and Remediation
+11.  Agent Monitoring and Remediation - Jeff
 
    Key point - ongoing monitoring and remediation is needed.  Use
    protocols like SSE, CAEP to respond to changes in authorization.
    Note the need for ongoing logging and audit trails.  Talk about end-
    to-end audit and how this is enabled by having agent identifiers.
 
-12.  Agent Auhtentication and Authorization Policy
+12.  Agent Auhtentication and Authorization Policy - Discuss
 
    Key point - configuration and parameters for all the above
    constitutes policy.  Not stnadardises and not recommended for
    standrdisation?  Perhaps somethign about document format?
 
-13.  Agent Compliance
+13.  Agent Compliance - Discuss
 
    Key point - audit against Agent Identity Policy - not standrdised and
-   not recommended to standardise.
+   not recommended to standardise.  Governance and observability.
+   Perhaps we discuss and describe, but don't suggest standards here.
 
 14.  Security Considerations
 
@@ -348,18 +445,54 @@ Table of Contents
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
 
+   [RFC9334]  Birkholz, H., Thaler, D., Richardson, M., Smith, N., and
+              W. Pan, "Remote ATtestation procedureS (RATS)
+              Architecture", RFC 9334, DOI 10.17487/RFC9334, January
+              2023, <https://www.rfc-editor.org/rfc/rfc9334>.
+
+   [SPIFFE]   "Secure Production Identity Framework for Everyone", n.d.,
+              <https://spiffe.io/docs/latest/spiffe-about/overview/>.
+
+   [SPIFFE_BUNDLE]
+              "SPIFFE Bundle", n.d.,
+              <https://github.com/spiffe/spiffe/blob/main/standards/
+              SPIFFE_Trust_Domain_and_Bundle.md#4-spiffe-bundle-format>.
+
+   [SPIFFE_FEDERATION]
+              "SPIFFE Federation", n.d.,
+              <https://github.com/spiffe/spiffe/blob/main/standards/
+              SPIFFE_Federation.md>.
+
+   [SPIFFE_ID]
+              "SPIFFE-ID", n.d.,
+              <https://github.com/spiffe/spiffe/blob/main/standards/
+              SPIFFE-ID.md>.
+
+   [SPIFFE_JWT]
+              "JWT-SVID", n.d.,
+              <https://github.com/spiffe/spiffe/blob/main/standards/JWT-
+              SVID.md>.
+
+   [SPIFFE_X509]
+              "X509-SVID", n.d.,
+              <https://github.com/spiffe/spiffe/blob/main/standards/
+              X509-SVID.md>.
+
+   [WIMSE_ID] "WIMSE Identifier", n.d.,
+              <https://datatracker.ietf.org/doc/draft-ietf-wimse-
+              identifier/>.
+
 Acknowledgments
 
    TODO acknowledge.
 
 Authors' Addresses
 
-   PieterKas
+   Pieter Kasselman
    Your Organization Here
    Email: pieter@defakto.security
 
 
    Jean-François Lombardo
    AWS
-   Canada
    Email: jeffsec@amazon.com
