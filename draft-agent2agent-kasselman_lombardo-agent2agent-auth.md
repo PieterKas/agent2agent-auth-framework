@@ -37,6 +37,7 @@ author:
 
 normative:
   RFC9334: # Remote ATtestation procedureS (RATS) Architecture
+  RFC9421: # HTTP Message Signatures
   WIMSE_ID:
     title: "WIMSE Identifier"
     target: https://datatracker.ietf.org/doc/draft-ietf-wimse-identifier/
