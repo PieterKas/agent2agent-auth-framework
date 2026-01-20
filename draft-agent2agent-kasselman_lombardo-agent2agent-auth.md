@@ -70,6 +70,9 @@ normative:
   SPIFFE_FEDERATION:
     title: SPIFFE Federation
     target: https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE_Federation.md
+  RFC9421:
+    title: HTTP Message Signatures
+    target: https://datatracker.ietf.org/doc/rfc9421
   RFC6749:
     title: The OAuth 2.0 Authorization Framework
     target: https://datatracker.ietf.org/doc/rfc6749
@@ -106,6 +109,17 @@ normative:
   OpenIDConnect.AuthZEN:
     title: Authorization API 1.0 – draft 05
     target: https://openid.github.io/authzen/
+    author:
+    - name: Omri Gazitt
+      role: editor
+      org: Asserto
+    - name: David Brossard
+      role: editor
+      org: Axiomatics
+    - name: Atul Tulshibagwale
+      role: editor
+      org: SGNL
+    date: 2025
   OAuth.TRAT:
     title: Transaction Tokens
     target: https://datatracker.ietf.org/doc/draft-ietf-oauth-transaction-tokens/
@@ -195,7 +209,7 @@ Because SPIFFE IDs are URI-based workload identifiers and their structure aligns
 All Agents MUST be assigned a WIMSE identifier, which MAY be a SPIFFE ID.
 
 # Agent Credentials {#agent-credentials}
-Agents MUST have credentials that provide a cryptographic binding to the agent identifier. These credentials are considered primary credentials that are provisioned at runtime. The cryptographic binding is essential for establishing trust since an identifier on its own is insufficient unless it is verifiably tied to a key or token controlled by the agent. WIMSE define a profile of X.509 certificates and Workload Identity Tokens (WITs) {{WIMSE_CREDS}}, while SPIFFE defines SPIFFE Verified ID (SVID) profiles of JSON Web Token (JWT-SVID), X.509 certificates (X.509-SVID) and WIMSE Workload Identity Tokens (WIT-SVID). SPIFFE SVID credentials are compatible with WIMSE defined credentials. The choice of an appropriate format depends on the trust model and integration requirements.
+Agents MUST have credentials that provide a cryptographic binding to the agent identifier. These credentials are considered primary credentials that are provisioned at runtime. The cryptographic binding is essential for establishing trust since an identifier on its own is insufficient unless it is verifiably tied to a key or token controlled by the agent. WIMSE define a profile of X.509 certificates and Workload Identity Tokens (WITs) {{WIMSE_CRED}}, while SPIFFE defines SPIFFE Verified ID (SVID) profiles of JSON Web Token (JWT-SVID), X.509 certificates (X.509-SVID) and WIMSE Workload Identity Tokens (WIT-SVID). SPIFFE SVID credentials are compatible with WIMSE defined credentials. The choice of an appropriate format depends on the trust model and integration requirements.
 
 Agent credentials MUST be ephemeral, include an explicit expiration time, and MAY carry additional attributes relevant to the agent (e.g., trust domain, attestation evidence, or workload metadata).
 
@@ -242,7 +256,7 @@ The WIMSE working group defines the following authentication mechansims that may
 ### WIMSE Proof Tokens (WPTs)
 WIMSE Workload Proof Tokens (WPTs) are a protocol-independent, application-layer mechanism for proving possession of the private key associated with a Workload Identity Token (WIT). WPTs are genreated by the agent, using the private key matching the public key in the WIT. A WPT is defined as a signed JSON Web Token (JWT) that binds an agent’s authentication to a specific message context, for example, an HTTP request, thereby providing proof of possession rather than relying on bearer semantics {{WIMSE_WPT}}.
 
-WPTs are designed to work alongside WITs {{WIMSE_CREDS}} and are typically short-lived to reduce the window for replay attacks.  They carry claims such as audience (aud), expiration (exp), a unique token identifier (jti), and a hash of the associated WIT (wth). A WPT may also include hashes of other related tokens (e.g., OAuth access tokens) to binf the authentication contexts to specific transaction or authorizations details.
+WPTs are designed to work alongside WITs {{WIMSE_CRED}} and are typically short-lived to reduce the window for replay attacks.  They carry claims such as audience (aud), expiration (exp), a unique token identifier (jti), and a hash of the associated WIT (wth). A WPT may also include hashes of other related tokens (e.g., OAuth access tokens) to binf the authentication contexts to specific transaction or authorizations details.
 
 Although the draft currently defines detailed usage for HTTP (via a Workload-Proof-Token header), the core format is protocol-agnostic, making it applicable to other protocols. Its JWT structure and claims model allow WPTs to be bound to different protocols and transports, including asynchronous or non-HTTP messaging systems such as Kafka and gRPC, or other future protocol bindings. This design enables relying parties to verify identity, key possession, and message binding at the application layer even in environments where transport-layer identity (e.g., mutual TLS) is insufficient or unavailable.
 
@@ -257,7 +271,7 @@ During agent execution, authorization must be enforced at all the layers in orde
 
 As part of this process:
 - {{RFC6749}} is an established and maintained framework of specifications for requesting, acquiring, and proving ownership of pieces of authorization in the form of bearer tokens.
-- {{OpenIDConect.AuthZEN}} is a new specification for exchanging authorization requests and decisions between the layer acting at the Policy Enforcement Point (PEP) and a Policy Decision Point (PDP).
+- {{OpenIDConnect.AuthZEN}} is a new specification for exchanging authorization requests and decisions between the layer acting at the Policy Enforcement Point (PEP) and a Policy Decision Point (PDP).
 - {{OAuth.TRAT}} is new specification for formattting pieces of authorization in the form of transaction bound bearer tokens.
 
 ~~~ ascii-art
@@ -310,7 +324,7 @@ As part of the grant flow, the client MUST also fulfill all the expected extensi
 - Binding the requested tokens to a possessed key as defined in {{RFC9449}};
 - Requesting additional authorization details as defined in {{RFC9396}} or {{RFC9126}}
 
-When identifying the client MUST use either a {{SPIFFE_ID}}, a {{WIMSE_ID}}, or a specific identifier that can be resolved to either a {{SPIFFE_ID}} as described in {{OAuth.SPIFFE.CLient.Auth}} or a {{WIMSE_ID}} as described in {{TODO}}. Those identifiers MUST be published into the metadata document of the client as defined in {{OAuth.CIMD}}.
+When identifying the client MUST use either a {{SPIFFE_ID}}, a {{WIMSE_ID}}, or a specific identifier that can be resolved to either a {{SPIFFE_ID}} as described in {{OAuth.SPIFFE.CLient.Auth}} or a {{WIMSE_ID}} as described in !TODO. Those identifiers MUST be published into the metadata document of the client as defined in {{OAuth.CIMD}}.
 
 If the OAuth2 tokens issued by the authorization server are JWT profiled, they must follow the format described at {{RFC9068}} and MUST follow the best practices described at {{RFC8725}}.
 
