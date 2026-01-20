@@ -37,7 +37,6 @@ author:
 
 normative:
   RFC9334: # Remote ATtestation procedureS (RATS) Architecture
-  RFC9421: # HTTP Message Signatures
   WIMSE_ID:
     title: "WIMSE Identifier"
     target: https://datatracker.ietf.org/doc/draft-ietf-wimse-identifier/
@@ -106,7 +105,10 @@ normative:
     target: https://datatracker.ietf.org/doc/rfc7662
   RFC9701:
     title: JWT Response for OAuth 2.0 Token Introspection
-    target: ttps://datatracker.ietf.org/doc/rfc9701
+    target: https://datatracker.ietf.org/doc/rfc9701
+  RFC8693:
+    title: OAuth 2.0 Token Exchange
+    target: https://datatracker.ietf.org/doc/rfc8693
   OpenIDConnect.AuthZEN:
     title: Authorization API 1.0 – draft 05
     target: https://openid.github.io/authzen/
@@ -120,7 +122,10 @@ normative:
     - name: Atul Tulshibagwale
       role: editor
       org: SGNL
-    date: 2025
+    date: 2026
+  OpenIDConnect.CIBA:
+    title: OpenID Connect Client-Initiated Backchannel Authentication Flow - Core 1.0
+    abstract: https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html
   OAuth.TRAT:
     title: Transaction Tokens
     target: https://datatracker.ietf.org/doc/draft-ietf-oauth-transaction-tokens/
@@ -284,18 +289,21 @@ As part of this process:
                         │   |
                         |   ▼
 +----------+         +------------+         +-----------+         +-----------+
-|  Client  |─(A)(C)─►|  AI Agent  |─(E)(G)─►| AI Tools  |─(I)(K)─►| Services  |
+|  Client  |─(A)(C)─►|  AI Agent  |─(E)(H)─►| AI Tools  |─(J)(M)─►| Services  |
 |          |         | (workload) |         |           |         |   and     |
 |          |◄────────|            |◄────────|           |◄────────| Resources |
 +----------+         +------------+         +-----------+         +-----------+
      ▲                  ▲  ▲                   ▲   ▲                ▲
      |    ┌──(F)────────┘  |                   |   |                |
-     |    |   ┌───(D)──────┘                  (H)  |                |
-     |    |   |  +---------------+             |  (J)              (L)
+     |    |   ┌───(D)──────┘                  (I)  |                |
+     |    |   |  +---------------+             |  (K)              (N)
     (B)   |   |  |    Policy     |             |   |                |
      |    |   └─►|   Decision    |◄────────────┘   |                |
      |    |      |    Point      |◄────────────────┼────────────────┘
      |    |      +---------------+                 |
+     |    |             ▲                          |
+     |    |          (G)(L)                        |
+     |    |             ▼                          |
      |    |      +---------------+                 |
      |    └─────►| Authorization |◄────────────────┘
      └──────────►|   server      |
@@ -308,7 +316,7 @@ As part of this process:
 ## Client to AI Agent
 ### (A) Negotiation - OPTIONAL
 
-Following {{RFC9728}}, the client MAY interact with the metadata endpoint of an OAuth 2.0 protected resource to understand which Authorization Server is the authority this resource; which scopes or authorization details values MAY be required to access this resources; and if proof of possession needs to be presented as standardized with {{RFC9449}}.
+Following {{RFC9728}}, the client MAY interact with the AI Agent on the metadata endpoint of an OAuth 2.0 protected resource to understand which Authorization Server is the authority this resource; which scopes or authorization details values MAY be required to access this resources; and if proof of possession needs to be presented as standardized with {{RFC9449}}.
 
 ### (B) Initial Authorization
 
@@ -316,8 +324,8 @@ Based on the information collected as part of (A) or based on its configuration,
 
 For this, the client MUST use one of the grant types described in {{RFC6749}} as follows:
 
-- If the client acts on its behalf as a system, it will start a client credential grant flow as described in section 1.3.4 of {{RFC6749}};
-- If the client acts on delegation by a user, it will start an authorization code grant flow as described in section 1.3.1 of {{RFC6749}}.
+- If the client acts on its behalf as a system, it MUST start a client credential grant flow as described in section 1.3.4 of {{RFC6749}};
+- If the client acts on delegation by a user, it MUST start an authorization code grant flow as described in section 1.3.1 of {{RFC6749}}.
 
 The client MUST follow the beast current practices described in {{RFC9700}}.
 
@@ -351,14 +359,26 @@ If the AI Agent delegates its access control logic to a Policy decision point, i
 
 ### (E) Negotiation
 
-Following {{RFC9728}}, the AI Agent MUST interact with the metadata endpoint of an OAuth 2.0 protected resource to understand which Authorization Server is the authority this resource; which scopes or authorization details values MAY be required to access this resources; and if proof of possession needs to be presented as standardized with {{RFC9449}}.
+Following {{RFC9728}}, the AI Agent MUST interact with AI Tools on the metadata endpoint of an OAuth 2.0 protected resource to understand which Authorization Server is the authority this resource; which scopes or authorization details values MAY be required to access this resources; and if proof of possession needs to be presented as standardized with {{RFC9449}}.
 
 ### (F) AI Agent Authorization
 
-Donwscoped, Time Bound, Context Enriched, and credential exchange in Agent Authorization
-Transaction Tokens
+Based on the information collected as part of (E), the AI Agent is initiating an authorization request with the Authorization Server acting as authority for the AI Tools.
 
-### Agent-to-Resource Authorization
+Such authorization request can allow to down, change or translate scope; enrich the authorization with new details based on the context; extend the time boundaries of the authorization; or change from a delegation mode to an impersonation mode and reversely.
+
+- If the AI Agent acts on its behalf as a system:
+  - If it does not want or need to refer to the previous context, it MUST start a client credential grant flow as described in section 1.3.4 of {{RFC6749}};
+  - If it does want or need to refer to the previous context, it MUST start a token exchange flow as described in {{RFC8693}}. The AI Agent will be able to decide in between obtaining tokens representing a Delegation or an Impersonation as described in section 1.1 of the specification.
+- If the AI Agent acts on delegation by a user:
+  - If the AI Agent can interact and want to interact with the user through the client, it MUST start an authorization code grant flow as described in section 1.3.1 of {{RFC6749}};
+  - If the AI Agent cannot or does not want to interact with the user through the client, it MAY:
+    - Start a token exchange flow as described in {{RFC8693}}. The AI Agent will be able to decide in between obtaining tokens representing a Delegation or an Impersonation as described in section 1.1 of the specification.
+    - Start a client initated backchannel authorized request as described in {{OpenIDConnect.CIBA}}
+
+> Transaction Tokens
+
+## Agent-to-Resource Authorization
 Present token, peform additional authorization (RBAC etc?)
 Direct or via tools
 Resources, services.
@@ -372,10 +392,13 @@ Human in the loop - request esalated privelages. Step-up authorization - referne
 MCP Elicitation to agent to perform some browser things - start authz code grant flow.
 CIBA
 
-## Case of Multi Domain Authorization
+## Case of Multi-Domain Authorization
 
 ### Cross Domain Agent-to-Agent Authorization
 Identiyt chaining, ID-Jag.
+
+
+## Agent to Agent Authorization
 
 # Agent Monitoring and Remediation - Jeff
 Key point - ongoing monitoring and remediation is needed. Use protocols like SSE, CAEP to respond to changes in authorization. Note the need for ongoing logging and audit trails. Talk about end-to-end audit and how this is enabled by having agent identifiers.
