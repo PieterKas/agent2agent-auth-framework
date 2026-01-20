@@ -225,10 +225,10 @@ The use of short-lived credentials provides a signiifcant improvement in the ris
 Deployed frameworks such as {{SPIFFE}} provide concrete mechanisms for automated, short-lived credential provisioning at runtime based on workload attestation. In addition to issuing short-lived credentials, {{SPIFFE}} also provisions ephemeral cryptographic key material bound to each credential, further reducing the risks associated with compromising long-lived keys.
 
 # Agent Authentication
-Agents may authenticate to one another using a variety of mechanisms, depending on the credentials they possess, the protocols supported in the deployment environment, and the risk profile of the application. As described in the WIMSE Architecture {{WIMSE_ARCH}}, authentication can occur at either the network layer or the application layer, and many deployments rely on a combination of both. 
+Agents may authenticate to one another using a variety of mechanisms, depending on the credentials they possess, the protocols supported in the deployment environment, and the risk profile of the application. As described in the WIMSE Architecture {{WIMSE_ARCH}}, authentication can occur at either the network layer or the application layer, and many deployments rely on a combination of both.
 
 ## Network layer authentication
-Network-layer authentication establishes trust during the establishment of a secure transport channel. The most common mechanism used by agents is mutual TLS (mTLS), in which both endpoints present X.509-based credentials and perform a bidirectional certificate exchange. When paired with short-lived workload identities—such as those issued by SPIFFE or WIMSE—mTLS provides strong channel binding and cryptographic proof of control over the agent’s credential. 
+Network-layer authentication establishes trust during the establishment of a secure transport channel. The most common mechanism used by agents is mutual TLS (mTLS), in which both endpoints present X.509-based credentials and perform a bidirectional certificate exchange. When paired with short-lived workload identities—such as those issued by SPIFFE or WIMSE—mTLS provides strong channel binding and cryptographic proof of control over the agent’s credential.
 
 mTLS is particularly well-suited for environments where transport-level protection, peer authentication, and ephemeral workload identity are jointly required. It also simplifies authorization decisions by enabling agents to associate application-layer requests with an authenticated transport identity.
 
