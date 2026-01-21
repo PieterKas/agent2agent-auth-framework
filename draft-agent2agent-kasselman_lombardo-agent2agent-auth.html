@@ -1050,7 +1050,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Kasselman &amp; Lombardo</td>
-<td class="center">Expires 24 July 2026</td>
+<td class="center">Expires 25 July 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1063,12 +1063,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-agent2agent-kasselman_lombardo-agent2agent-auth-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-01-20" class="published">20 January 2026</time>
+<time datetime="2026-01-21" class="published">21 January 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-07-24">24 July 2026</time></dd>
+<dd class="expires"><time datetime="2026-07-25">25 July 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1117,7 +1117,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 24 July 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 25 July 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1215,21 +1215,26 @@ svg :is([fill="white"], [fill^="#fff"]) {
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.2.2.2">
                     <p id="section-toc.1-1.10.2.2.2.2.1"><a href="#section-10.2.2" class="auto internal xref">10.2.2</a>.  <a href="#name-f-ai-agent-authorization" class="internal xref">(F) AI Agent Authorization</a></p>
 </li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.2.2.3">
-                    <p id="section-toc.1-1.10.2.2.2.3.1"><a href="#section-10.2.3" class="auto internal xref">10.2.3</a>.  <a href="#name-agent-to-resource-authoriza" class="internal xref">Agent-to-Resource Authorization</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.2.2.4">
-                    <p id="section-toc.1-1.10.2.2.2.4.1"><a href="#section-10.2.4" class="auto internal xref">10.2.4</a>.  <a href="#name-human-in-the-loop" class="internal xref">Human-in-the loop</a></p>
-</li>
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.3">
-                <p id="section-toc.1-1.10.2.3.1"><a href="#section-10.3" class="auto internal xref">10.3</a>.  <a href="#name-case-of-multi-domain-author" class="internal xref">Case of Multi Domain Authorization</a></p>
+                <p id="section-toc.1-1.10.2.3.1"><a href="#section-10.3" class="auto internal xref">10.3</a>.  <a href="#name-agent-to-resource-authoriza" class="internal xref">Agent-to-Resource Authorization</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.3.2.1">
-                    <p id="section-toc.1-1.10.2.3.2.1.1"><a href="#section-10.3.1" class="auto internal xref">10.3.1</a>.  <a href="#name-cross-domain-agent-to-agent" class="internal xref">Cross Domain Agent-to-Agent Authorization</a></p>
+                    <p id="section-toc.1-1.10.2.3.2.1.1"><a href="#section-10.3.1" class="auto internal xref">10.3.1</a>.  <a href="#name-human-in-the-loop" class="internal xref">Human-in-the loop</a></p>
 </li>
                 </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.4">
+                <p id="section-toc.1-1.10.2.4.1"><a href="#section-10.4" class="auto internal xref">10.4</a>.  <a href="#name-case-of-multi-domain-author" class="internal xref">Case of Multi-Domain Authorization</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.4.2.1">
+                    <p id="section-toc.1-1.10.2.4.2.1.1"><a href="#section-10.4.1" class="auto internal xref">10.4.1</a>.  <a href="#name-cross-domain-agent-to-agent" class="internal xref">Cross Domain Agent-to-Agent Authorization</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.5">
+                <p id="section-toc.1-1.10.2.5.1"><a href="#section-10.5" class="auto internal xref">10.5</a>.  <a href="#name-agent-to-agent-authorizatio" class="internal xref">Agent to Agent Authorization</a></p>
 </li>
             </ul>
 </li>
@@ -1291,18 +1296,18 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <figure id="figure-1">
         <div class="alignLeft art-ascii-art art-text artwork" id="section-3-3.1">
 <pre>
-               +----------------+
-               | Large Language |
-               |   Model (LLM)  |
-               +----------------+
-                     ▲   |
-                    (2) (3)
-                     |   ▼
-+--------+       +------------+       +-----------+       +-----------+
-| Client |──(1)─►| AI Agent   |──(4)─►| AI Tools  |──(5)─►| Services  |
-|        |       | (workload) |       |           |       |   and     |
-|        |◄─(8)──|            |◄─(7)──|           |◄─(6)──| Resources |
-+--------+       +------------+       +-----------+       +-----------+
+                    +----------------+
+                    | Large Language |
+                    |   Model (LLM)  |
+                    +----------------+
+                           ▲   |
+                          (2) (3)
+                           |   ▼
++--------------+       +------------+       +-----------+       +-----------+
+|  User /      |──(1)─►|  AI Agent  |──(4)─►|  AI Tools |──(5)─►| Services  |
+|      /       |       | (workload) |       |           |       |   and     |
+|     / System |◄─(8)──|            |◄─(7)──|           |◄─(6)──| Resources |
++--------------+       +------------+       +-----------+       +-----------+
 </pre>
 </div>
 <figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
@@ -1488,28 +1493,31 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 - <span>[<a href="#OAuth.TRAT" class="cite xref">OAuth.TRAT</a>]</span> is new specification for formattting pieces of authorization in the form of transaction bound bearer tokens.<a href="#section-10-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-ascii-art art-text artwork" id="section-10-3">
 <pre>
-                 +----------------+
-                 | Large Language |
-                 |   Model (LLM)  |
-                 +----------------+
-                        ▲   |
-                        │   |
-                        |   ▼
-+----------+         +------------+         +-----------+         +-----------+
-|  Client  |─(A)(C)─►|  AI Agent  |─(E)(G)─►| AI Tools  |─(I)(K)─►| Services  |
-|          |         | (workload) |         |           |         |   and     |
-|          |◄────────|            |◄────────|           |◄────────| Resources |
-+----------+         +------------+         +-----------+         +-----------+
-     ▲                  ▲  ▲                   ▲   ▲                ▲
-     |    ┌──(F)────────┘  |                   |   |                |
-     |    |   ┌───(D)──────┘                  (H)  |                |
-     |    |   |  +---------------+             |  (J)              (L)
-    (B)   |   |  |    Policy     |             |   |                |
-     |    |   └─►|   Decision    |◄────────────┘   |                |
-     |    |      |    Point      |◄────────────────┼────────────────┘
-     |    |      +---------------+                 |
-     |    |      +---------------+                 |
-     |    └─────►| Authorization |◄────────────────┘
+                       +----------------+
+                       | Large Language |
+                       |   Model (LLM)  |
+                       +----------------+
+                              ▲   |
+                              │   |
+                              |   ▼
++--------------+         +------------+         +-----------+         +-----------+
+|  User /      |─(A)(C)─►|  AI Agent  |─(E)(H)─►| AI Tools  |─(J)(M)─►| Services  |
+|      /       |         | (workload) |         |           |         |   and     |
+|     / System |◄────────|            |◄────────|           |◄────────| Resources |
++--------------+         +------------+         +-----------+         +-----------+
+     ▲                       ▲  ▲                   ▲   ▲                ▲
+     |    ┌──(F)─────────────┘  |                   |   |                |
+     |    |   ┌───(D)───────────┘                  (I)  |                |
+     |    |   |  +---------------+                  |  (K)              (N)
+    (B)   |   |  |    Policy     |                  |   |                |
+     |    |   └─►|   Decision    |◄─────────────────┘   |                |
+     |    |      |    Point      |◄─────────────────────┼────────────────┘
+     |    |      +---------------+                      |
+     |    |             ▲                               |
+     |    |          (G)(L)                             |
+     |    |             ▼                               |
+     |    |      +---------------+                      |
+     |    └─────►| Authorization |◄─────────────────────┘
      └──────────►|   server      |
                  +---------------+
 </pre><a href="#section-10-3" class="pilcrow">¶</a>
@@ -1525,7 +1533,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <a href="#section-10.1" class="section-number selfRef">10.1. </a><a href="#name-client-to-ai-agent" class="section-name selfRef">Client to AI Agent</a>
         </h3>
 <p id="section-10.1-1">### (A) Negotiation - <span class="bcp14">OPTIONAL</span><a href="#section-10.1-1" class="pilcrow">¶</a></p>
-<p id="section-10.1-2">Following <span>[<a href="#RFC9728" class="cite xref">RFC9728</a>]</span>, the client <span class="bcp14">MAY</span> interact with the metadata endpoint of an OAuth 2.0 protected resource to understand which Authorization Server is the authority this resource; which scopes or authorization details values <span class="bcp14">MAY</span> be required to access this resources; and if proof of possession needs to be presented as standardized with <span>[<a href="#RFC9449" class="cite xref">RFC9449</a>]</span>.<a href="#section-10.1-2" class="pilcrow">¶</a></p>
+<p id="section-10.1-2">Following <span>[<a href="#RFC9728" class="cite xref">RFC9728</a>]</span>, the client <span class="bcp14">MAY</span> interact with the AI Agent on the metadata endpoint of an OAuth 2.0 protected resource to understand which Authorization Server is the authority this resource; which scopes or authorization details values <span class="bcp14">MAY</span> be required to access this resources; and if proof of possession needs to be presented as standardized with <span>[<a href="#RFC9449" class="cite xref">RFC9449</a>]</span>.<a href="#section-10.1-2" class="pilcrow">¶</a></p>
 <div id="b-initial-authorization">
 <section id="section-10.1.1">
           <h4 id="name-b-initial-authorization">
@@ -1535,10 +1543,10 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <p id="section-10.1.1-2">For this, the client <span class="bcp14">MUST</span> use one of the grant types described in <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> as follows:<a href="#section-10.1.1-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-10.1.1-3.1">
-              <p id="section-10.1.1-3.1.1">If the client acts on its behalf as a system, it will start a client credential grant flow as described in section 1.3.4 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>;<a href="#section-10.1.1-3.1.1" class="pilcrow">¶</a></p>
+              <p id="section-10.1.1-3.1.1">If the client acts on its behalf as a system, it <span class="bcp14">MUST</span> start a client credential grant flow as described in section 1.3.4 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>;<a href="#section-10.1.1-3.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-10.1.1-3.2">
-              <p id="section-10.1.1-3.2.1">If the client acts on delegation by a user, it will start an authorization code grant flow as described in section 1.3.1 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>.<a href="#section-10.1.1-3.2.1" class="pilcrow">¶</a></p>
+              <p id="section-10.1.1-3.2.1">If the client acts on delegation by a user, it <span class="bcp14">MUST</span> start an authorization code grant flow as described in section 1.3.1 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>.<a href="#section-10.1.1-3.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 <p id="section-10.1.1-4">The client <span class="bcp14">MUST</span> follow the beast current practices described in <span>[<a href="#RFC9700" class="cite xref">RFC9700</a>]</span>.<a href="#section-10.1.1-4" class="pilcrow">¶</a></p>
@@ -1586,7 +1594,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
           <h4 id="name-e-negotiation">
 <a href="#section-10.2.1" class="section-number selfRef">10.2.1. </a><a href="#name-e-negotiation" class="section-name selfRef">(E) Negotiation</a>
           </h4>
-<p id="section-10.2.1-1">Following <span>[<a href="#RFC9728" class="cite xref">RFC9728</a>]</span>, the AI Agent <span class="bcp14">MUST</span> interact with the metadata endpoint of an OAuth 2.0 protected resource to understand which Authorization Server is the authority this resource; which scopes or authorization details values <span class="bcp14">MAY</span> be required to access this resources; and if proof of possession needs to be presented as standardized with <span>[<a href="#RFC9449" class="cite xref">RFC9449</a>]</span>.<a href="#section-10.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-10.2.1-1">Following <span>[<a href="#RFC9728" class="cite xref">RFC9728</a>]</span>, the AI Agent <span class="bcp14">MUST</span> interact with AI Tools on the metadata endpoint of an OAuth 2.0 protected resource to understand which Authorization Server is the authority this resource; which scopes or authorization details values <span class="bcp14">MAY</span> be required to access this resources; and if proof of possession needs to be presented as standardized with <span>[<a href="#RFC9449" class="cite xref">RFC9449</a>]</span>.<a href="#section-10.2.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="f-ai-agent-authorization">
@@ -1594,47 +1602,91 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
           <h4 id="name-f-ai-agent-authorization">
 <a href="#section-10.2.2" class="section-number selfRef">10.2.2. </a><a href="#name-f-ai-agent-authorization" class="section-name selfRef">(F) AI Agent Authorization</a>
           </h4>
-<p id="section-10.2.2-1">Donwscoped, Time Bound, Context Enriched, and credential exchange in Agent Authorization
-Transaction Tokens<a href="#section-10.2.2-1" class="pilcrow">¶</a></p>
+<p id="section-10.2.2-1">Based on the information collected as part of (E), the AI Agent is initiating an authorization request with the Authorization Server acting as authority for the AI Tools.<a href="#section-10.2.2-1" class="pilcrow">¶</a></p>
+<p id="section-10.2.2-2">Such authorization request can allow to down, change or translate scope; enrich the authorization with new details based on the context; extend the time boundaries of the authorization; or change from a delegation mode to an impersonation mode and reversely.<a href="#section-10.2.2-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-10.2.2-3.1">
+              <p id="section-10.2.2-3.1.1">If the AI Agent acts on its behalf as a system:<a href="#section-10.2.2-3.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-10.2.2-3.1.2.1">
+                  <p id="section-10.2.2-3.1.2.1.1">If it does not want or need to refer to the previous context, it <span class="bcp14">MUST</span> start a client credential grant flow as described in section 1.3.4 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>;<a href="#section-10.2.2-3.1.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                <li class="normal" id="section-10.2.2-3.1.2.2">
+                  <p id="section-10.2.2-3.1.2.2.1">If it does want or need to refer to the previous context, it <span class="bcp14">MUST</span> start a token exchange flow as described in <span>[<a href="#RFC8693" class="cite xref">RFC8693</a>]</span>. The AI Agent will be able to decide in between obtaining tokens representing a Delegation or an Impersonation as described in section 1.1 of the specification.<a href="#section-10.2.2-3.1.2.2.1" class="pilcrow">¶</a></p>
+</li>
+              </ul>
+</li>
+            <li class="normal" id="section-10.2.2-3.2">
+              <p id="section-10.2.2-3.2.1">If the AI Agent acts on delegation by a user:<a href="#section-10.2.2-3.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-10.2.2-3.2.2.1">
+                  <p id="section-10.2.2-3.2.2.1.1">If the AI Agent can interact and want to interact with the user through the client, it <span class="bcp14">MUST</span> start an authorization code grant flow as described in section 1.3.1 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>;<a href="#section-10.2.2-3.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                <li class="normal" id="section-10.2.2-3.2.2.2">
+                  <p id="section-10.2.2-3.2.2.2.1">If the AI Agent cannot or does not want to interact with the user through the client, it <span class="bcp14">MAY</span>:<a href="#section-10.2.2-3.2.2.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-10.2.2-3.2.2.2.2.1">
+                      <p id="section-10.2.2-3.2.2.2.2.1.1">Start a token exchange flow as described in <span>[<a href="#RFC8693" class="cite xref">RFC8693</a>]</span>. The AI Agent will be able to decide in between obtaining tokens representing a Delegation or an Impersonation as described in section 1.1 of the specification.<a href="#section-10.2.2-3.2.2.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                    <li class="normal" id="section-10.2.2-3.2.2.2.2.2">
+                      <p id="section-10.2.2-3.2.2.2.2.2.1">Start a client initated backchannel authorized request as described in <span>[<a href="#OpenIDConnect.CIBA" class="cite xref">OpenIDConnect.CIBA</a>]</span><a href="#section-10.2.2-3.2.2.2.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  </ul>
+</li>
+              </ul>
+</li>
+          </ul>
+<ul class="normal ulEmpty">
+<li class="normal ulEmpty" id="section-10.2.2-4.1">
+              <p id="section-10.2.2-4.1.1">Transaction Tokens<a href="#section-10.2.2-4.1.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</section>
+</div>
 </section>
 </div>
 <div id="agent-to-resource-authorization">
-<section id="section-10.2.3">
-          <h4 id="name-agent-to-resource-authoriza">
-<a href="#section-10.2.3" class="section-number selfRef">10.2.3. </a><a href="#name-agent-to-resource-authoriza" class="section-name selfRef">Agent-to-Resource Authorization</a>
-          </h4>
-<p id="section-10.2.3-1">Present token, peform additional authorization (RBAC etc?)
+<section id="section-10.3">
+        <h3 id="name-agent-to-resource-authoriza">
+<a href="#section-10.3" class="section-number selfRef">10.3. </a><a href="#name-agent-to-resource-authoriza" class="section-name selfRef">Agent-to-Resource Authorization</a>
+        </h3>
+<p id="section-10.3-1">Present token, peform additional authorization (RBAC etc?)
 Direct or via tools
-Resources, services.<a href="#section-10.2.3-1" class="pilcrow">¶</a></p>
-<p id="section-10.2.3-2">Agent -&gt; Tool -&gt; Service -&gt; Resource<a href="#section-10.2.3-2" class="pilcrow">¶</a></p>
-</section>
-</div>
+Resources, services.<a href="#section-10.3-1" class="pilcrow">¶</a></p>
+<p id="section-10.3-2">Agent -&gt; Tool -&gt; Service -&gt; Resource<a href="#section-10.3-2" class="pilcrow">¶</a></p>
 <div id="human-in-the-loop">
-<section id="section-10.2.4">
+<section id="section-10.3.1">
           <h4 id="name-human-in-the-loop">
-<a href="#section-10.2.4" class="section-number selfRef">10.2.4. </a><a href="#name-human-in-the-loop" class="section-name selfRef">Human-in-the loop</a>
+<a href="#section-10.3.1" class="section-number selfRef">10.3.1. </a><a href="#name-human-in-the-loop" class="section-name selfRef">Human-in-the loop</a>
           </h4>
-<p id="section-10.2.4-1">Agent framework problem -&gt; human in the loop - confirm something that it can already do - agent framework capability - confirmation. Risk management flow.
-Human in the loop - request esalated privelages. Step-up authorization - refernece the draft (maybe)<a href="#section-10.2.4-1" class="pilcrow">¶</a></p>
-<p id="section-10.2.4-2">MCP Elicitation to agent to perform some browser things - start authz code grant flow.
-CIBA<a href="#section-10.2.4-2" class="pilcrow">¶</a></p>
+<p id="section-10.3.1-1">Agent framework problem -&gt; human in the loop - confirm something that it can already do - agent framework capability - confirmation. Risk management flow.
+Human in the loop - request esalated privelages. Step-up authorization - refernece the draft (maybe)<a href="#section-10.3.1-1" class="pilcrow">¶</a></p>
+<p id="section-10.3.1-2">MCP Elicitation to agent to perform some browser things - start authz code grant flow.
+CIBA<a href="#section-10.3.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
 </div>
 <div id="case-of-multi-domain-authorization">
-<section id="section-10.3">
+<section id="section-10.4">
         <h3 id="name-case-of-multi-domain-author">
-<a href="#section-10.3" class="section-number selfRef">10.3. </a><a href="#name-case-of-multi-domain-author" class="section-name selfRef">Case of Multi Domain Authorization</a>
+<a href="#section-10.4" class="section-number selfRef">10.4. </a><a href="#name-case-of-multi-domain-author" class="section-name selfRef">Case of Multi-Domain Authorization</a>
         </h3>
 <div id="cross-domain-agent-to-agent-authorization">
-<section id="section-10.3.1">
+<section id="section-10.4.1">
           <h4 id="name-cross-domain-agent-to-agent">
-<a href="#section-10.3.1" class="section-number selfRef">10.3.1. </a><a href="#name-cross-domain-agent-to-agent" class="section-name selfRef">Cross Domain Agent-to-Agent Authorization</a>
+<a href="#section-10.4.1" class="section-number selfRef">10.4.1. </a><a href="#name-cross-domain-agent-to-agent" class="section-name selfRef">Cross Domain Agent-to-Agent Authorization</a>
           </h4>
-<p id="section-10.3.1-1">Identiyt chaining, ID-Jag.<a href="#section-10.3.1-1" class="pilcrow">¶</a></p>
+<p id="section-10.4.1-1">Identiyt chaining, ID-Jag.<a href="#section-10.4.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
+</section>
+</div>
+<div id="agent-to-agent-authorization">
+<section id="section-10.5">
+        <h3 id="name-agent-to-agent-authorizatio">
+<a href="#section-10.5" class="section-number selfRef">10.5. </a><a href="#name-agent-to-agent-authorizatio" class="section-name selfRef">Agent to Agent Authorization</a>
+      </h3>
 </section>
 </div>
 </section>
@@ -1703,7 +1755,11 @@ CIBA<a href="#section-10.2.4-2" class="pilcrow">¶</a></p>
 <dd class="break"></dd>
 <dt id="OpenIDConnect.AuthZEN">[OpenIDConnect.AuthZEN]</dt>
       <dd>
-<span class="refAuthor">Gazitt, O., Ed.</span>, <span class="refAuthor">Brossard, D., Ed.</span>, and <span class="refAuthor">A. Tulshibagwale, Ed.</span>, <span class="refTitle">"Authorization API 1.0 – draft 05"</span>, <time datetime="2025" class="refDate">2025</time>, <span>&lt;<a href="https://openid.github.io/authzen/">https://openid.github.io/authzen/</a>&gt;</span>. </dd>
+<span class="refAuthor">Gazitt, O., Ed.</span>, <span class="refAuthor">Brossard, D., Ed.</span>, and <span class="refAuthor">A. Tulshibagwale, Ed.</span>, <span class="refTitle">"Authorization API 1.0 – draft 05"</span>, <time datetime="2026" class="refDate">2026</time>, <span>&lt;<a href="https://openid.github.io/authzen/">https://openid.github.io/authzen/</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OpenIDConnect.CIBA">[OpenIDConnect.CIBA]</dt>
+      <dd>
+<span class="refTitle">"OpenID Connect Client-Initiated Backchannel Authentication Flow - Core 1.0"</span>, <span>n.d.</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
       <dd>
@@ -1724,6 +1780,10 @@ CIBA<a href="#section-10.2.4-2" class="pilcrow">¶</a></p>
 <dt id="RFC8174">[RFC8174]</dt>
       <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8693">[RFC8693]</dt>
+      <dd>
+<span class="refTitle">"OAuth 2.0 Token Exchange"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/rfc8693">https://datatracker.ietf.org/doc/rfc8693</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8725">[RFC8725]</dt>
       <dd>
@@ -1759,7 +1819,7 @@ CIBA<a href="#section-10.2.4-2" class="pilcrow">¶</a></p>
 <dd class="break"></dd>
 <dt id="RFC9701">[RFC9701]</dt>
       <dd>
-<span class="refTitle">"JWT Response for OAuth 2.0 Token Introspection"</span>, <span>n.d.</span>, <span>&lt;<a href="ttps://datatracker.ietf.org/doc/rfc9701">ttps://datatracker.ietf.org/doc/rfc9701</a>&gt;</span>. </dd>
+<span class="refTitle">"JWT Response for OAuth 2.0 Token Introspection"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/rfc9701">https://datatracker.ietf.org/doc/rfc9701</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9728">[RFC9728]</dt>
       <dd>

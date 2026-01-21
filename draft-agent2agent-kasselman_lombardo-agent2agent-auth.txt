@@ -5,8 +5,8 @@
 Network Working Group                                       P. Kasselman
 Internet-Draft                                                   DeFakto
 Intended status: Informational                               J. Lombardo
-Expires: 24 July 2026                                                AWS
-                                                         20 January 2026
+Expires: 25 July 2026                                                AWS
+                                                         21 January 2026
 
 
             Agent-to-Agent Authentication and Authorization
@@ -54,7 +54,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 July 2026.
+   This Internet-Draft will expire on 25 July 2026.
 
 Copyright Notice
 
@@ -93,10 +93,11 @@ Table of Contents
      10.2.  AI Agent to AI tools
        10.2.1.  (E) Negotiation
        10.2.2.  (F) AI Agent Authorization
-       10.2.3.  Agent-to-Resource Authorization
-       10.2.4.  Human-in-the loop
-     10.3.  Case of Multi Domain Authorization
-       10.3.1.  Cross Domain Agent-to-Agent Authorization
+     10.3.  Agent-to-Resource Authorization
+       10.3.1.  Human-in-the loop
+     10.4.  Case of Multi-Domain Authorization
+       10.4.1.  Cross Domain Agent-to-Agent Authorization
+     10.5.  Agent to Agent Authorization
    11. Agent Monitoring and Remediation - Jeff
    12. Agent Auhtentication and Authorization Policy - Discuss
    13. Agent Compliance - Discuss
@@ -132,20 +133,20 @@ Table of Contents
    by the Agent, and the underlying Services and Resources accessed
    through those Tools.
 
-                +----------------+
-                | Large Language |
-                |   Model (LLM)  |
-                +----------------+
-                      ▲   |
-                     (2) (3)
-                      |   ▼
- +--------+       +------------+       +-----------+       +-----------+
- | Client |──(1)─►| AI Agent   |──(4)─►| AI Tools  |──(5)─►| Services  |
- |        |       | (workload) |       |           |       |   and     |
- |        |◄─(8)──|            |◄─(7)──|           |◄─(6)──| Resources |
- +--------+       +------------+       +-----------+       +-----------+
+                    +----------------+
+                    | Large Language |
+                    |   Model (LLM)  |
+                    +----------------+
+                           ▲   |
+                          (2) (3)
+                           |   ▼
++--------------+       +------------+       +-----------+       +-----------+
+|  User /      |──(1)─►|  AI Agent  |──(4)─►|  AI Tools |──(5)─►| Services  |
+|      /       |       | (workload) |       |           |       |   and     |
+|     / System |◄─(8)──|            |◄─(7)──|           |◄─(6)──| Resources |
++--------------+       +------------+       +-----------+       +-----------+
 
-                    Figure 1: AI Agent as a Workload
+                   Figure 1: AI Agent as a Workload
 
    1.  Optional: The Client provides an initial request or instruction
        to the AI Agent.
@@ -468,28 +469,31 @@ Table of Contents
    [OAuth.TRAT] is new specification for formattting pieces of
    authorization in the form of transaction bound bearer tokens.
 
-                 +----------------+
-                 | Large Language |
-                 |   Model (LLM)  |
-                 +----------------+
-                        ▲   |
-                        │   |
-                        |   ▼
-+----------+         +------------+         +-----------+         +-----------+
-|  Client  |─(A)(C)─►|  AI Agent  |─(E)(G)─►| AI Tools  |─(I)(K)─►| Services  |
-|          |         | (workload) |         |           |         |   and     |
-|          |◄────────|            |◄────────|           |◄────────| Resources |
-+----------+         +------------+         +-----------+         +-----------+
-     ▲                  ▲  ▲                   ▲   ▲                ▲
-     |    ┌──(F)────────┘  |                   |   |                |
-     |    |   ┌───(D)──────┘                  (H)  |                |
-     |    |   |  +---------------+             |  (J)              (L)
-    (B)   |   |  |    Policy     |             |   |                |
-     |    |   └─►|   Decision    |◄────────────┘   |                |
-     |    |      |    Point      |◄────────────────┼────────────────┘
-     |    |      +---------------+                 |
-     |    |      +---------------+                 |
-     |    └─────►| Authorization |◄────────────────┘
+                       +----------------+
+                       | Large Language |
+                       |   Model (LLM)  |
+                       +----------------+
+                              ▲   |
+                              │   |
+                              |   ▼
++--------------+         +------------+         +-----------+         +-----------+
+|  User /      |─(A)(C)─►|  AI Agent  |─(E)(H)─►| AI Tools  |─(J)(M)─►| Services  |
+|      /       |         | (workload) |         |           |         |   and     |
+|     / System |◄────────|            |◄────────|           |◄────────| Resources |
++--------------+         +------------+         +-----------+         +-----------+
+     ▲                       ▲  ▲                   ▲   ▲                ▲
+     |    ┌──(F)─────────────┘  |                   |   |                |
+     |    |   ┌───(D)───────────┘                  (I)  |                |
+     |    |   |  +---------------+                  |  (K)              (N)
+    (B)   |   |  |    Policy     |                  |   |                |
+     |    |   └─►|   Decision    |◄─────────────────┘   |                |
+     |    |      |    Point      |◄─────────────────────┼────────────────┘
+     |    |      +---------------+                      |
+     |    |             ▲                               |
+     |    |          (G)(L)                             |
+     |    |             ▼                               |
+     |    |      +---------------+                      |
+     |    └─────►| Authorization |◄─────────────────────┘
      └──────────►|   server      |
                  +---------------+
 
@@ -513,10 +517,10 @@ Table of Contents
 
    ### (A) Negotiation - OPTIONAL
 
-   Following [RFC9728], the client MAY interact with the metadata
-   endpoint of an OAuth 2.0 protected resource to understand which
-   Authorization Server is the authority this resource; which scopes or
-   authorization details values MAY be required to access this
+   Following [RFC9728], the client MAY interact with the AI Agent on the
+   metadata endpoint of an OAuth 2.0 protected resource to understand
+   which Authorization Server is the authority this resource; which
+   scopes or authorization details values MAY be required to access this
    resources; and if proof of possession needs to be presented as
    standardized with [RFC9449].
 
@@ -529,11 +533,11 @@ Table of Contents
    For this, the client MUST use one of the grant types described in
    [RFC6749] as follows:
 
-   *  If the client acts on its behalf as a system, it will start a
+   *  If the client acts on its behalf as a system, it MUST start a
       client credential grant flow as described in section 1.3.4 of
       [RFC6749];
 
-   *  If the client acts on delegation by a user, it will start an
+   *  If the client acts on delegation by a user, it MUST start an
       authorization code grant flow as described in section 1.3.1 of
       [RFC6749].
 
@@ -592,26 +596,63 @@ Table of Contents
 
 10.2.1.  (E) Negotiation
 
-   Following [RFC9728], the AI Agent MUST interact with the metadata
-   endpoint of an OAuth 2.0 protected resource to understand which
-   Authorization Server is the authority this resource; which scopes or
-   authorization details values MAY be required to access this
+   Following [RFC9728], the AI Agent MUST interact with AI Tools on the
+   metadata endpoint of an OAuth 2.0 protected resource to understand
+   which Authorization Server is the authority this resource; which
+   scopes or authorization details values MAY be required to access this
    resources; and if proof of possession needs to be presented as
    standardized with [RFC9449].
 
 10.2.2.  (F) AI Agent Authorization
 
-   Donwscoped, Time Bound, Context Enriched, and credential exchange in
-   Agent Authorization Transaction Tokens
+   Based on the information collected as part of (E), the AI Agent is
+   initiating an authorization request with the Authorization Server
+   acting as authority for the AI Tools.
 
-10.2.3.  Agent-to-Resource Authorization
+   Such authorization request can allow to down, change or translate
+   scope; enrich the authorization with new details based on the
+   context; extend the time boundaries of the authorization; or change
+   from a delegation mode to an impersonation mode and reversely.
+
+   *  If the AI Agent acts on its behalf as a system:
+
+      -  If it does not want or need to refer to the previous context,
+         it MUST start a client credential grant flow as described in
+         section 1.3.4 of [RFC6749];
+
+      -  If it does want or need to refer to the previous context, it
+         MUST start a token exchange flow as described in [RFC8693].
+         The AI Agent will be able to decide in between obtaining tokens
+         representing a Delegation or an Impersonation as described in
+         section 1.1 of the specification.
+
+   *  If the AI Agent acts on delegation by a user:
+
+      -  If the AI Agent can interact and want to interact with the user
+         through the client, it MUST start an authorization code grant
+         flow as described in section 1.3.1 of [RFC6749];
+
+      -  If the AI Agent cannot or does not want to interact with the
+         user through the client, it MAY:
+
+         o  Start a token exchange flow as described in [RFC8693].  The
+            AI Agent will be able to decide in between obtaining tokens
+            representing a Delegation or an Impersonation as described
+            in section 1.1 of the specification.
+
+         o  Start a client initated backchannel authorized request as
+            described in [OpenIDConnect.CIBA]
+
+      Transaction Tokens
+
+10.3.  Agent-to-Resource Authorization
 
    Present token, peform additional authorization (RBAC etc?)  Direct or
    via tools Resources, services.
 
    Agent -> Tool -> Service -> Resource
 
-10.2.4.  Human-in-the loop
+10.3.1.  Human-in-the loop
 
    Agent framework problem -> human in the loop - confirm something that
    it can already do - agent framework capability - confirmation.  Risk
@@ -621,11 +662,13 @@ Table of Contents
    MCP Elicitation to agent to perform some browser things - start authz
    code grant flow.  CIBA
 
-10.3.  Case of Multi Domain Authorization
+10.4.  Case of Multi-Domain Authorization
 
-10.3.1.  Cross Domain Agent-to-Agent Authorization
+10.4.1.  Cross Domain Agent-to-Agent Authorization
 
    Identiyt chaining, ID-Jag.
+
+10.5.  Agent to Agent Authorization
 
 11.  Agent Monitoring and Remediation - Jeff
 
@@ -676,8 +719,12 @@ Table of Contents
 
    [OpenIDConnect.AuthZEN]
               Gazitt, O., Ed., Brossard, D., Ed., and A. Tulshibagwale,
-              Ed., "Authorization API 1.0 – draft 05", 2025,
+              Ed., "Authorization API 1.0 – draft 05", 2026,
               <https://openid.github.io/authzen/>.
+
+   [OpenIDConnect.CIBA]
+              "OpenID Connect Client-Initiated Backchannel
+              Authentication Flow - Core 1.0", n.d..
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -696,6 +743,9 @@ Table of Contents
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+   [RFC8693]  "OAuth 2.0 Token Exchange", n.d.,
+              <https://datatracker.ietf.org/doc/rfc8693>.
 
    [RFC8725]  "JSON Web Token Best Current Practices", n.d.,
               <https://datatracker.ietf.org/doc/rfc8725>.
@@ -724,7 +774,7 @@ Table of Contents
               <https://datatracker.ietf.org/doc/rfc9700>.
 
    [RFC9701]  "JWT Response for OAuth 2.0 Token Introspection", n.d.,
-              <ttps://datatracker.ietf.org/doc/rfc9701>.
+              <https://datatracker.ietf.org/doc/rfc9701>.
 
    [RFC9728]  "OAuth 2.0 Protected Resource Metadata", n.d.,
               <https://datatracker.ietf.org/doc/rfc9728>.
