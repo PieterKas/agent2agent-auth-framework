@@ -304,7 +304,7 @@ As part of this process:
      |    |      +---------------+                      |
      |    |             ▲                               |
      |    |          (G)(L)                             |
-     |    |             ▼                               |
+     |    |             ▼                               |
      |    |      +---------------+                      |
      |    └─────►| Authorization |◄─────────────────────┘
      └──────────►|   server      |
@@ -328,7 +328,7 @@ For this, the client MUST use one of the grant types described in {{RFC6749}} as
 - If the client acts on its behalf as a system, it MUST start a client credential grant flow as described in section 1.3.4 of {{RFC6749}};
 - If the client acts on delegation by a user, it MUST start an authorization code grant flow as described in section 1.3.1 of {{RFC6749}}.
 
-The client MUST follow the beast current practices described in {{RFC9700}}.
+The client MUST follow the best current practices described in {{RFC9700}}.
 
 As part of the grant flow, the client MUST also fulfill all the expected extensions it has an understanding of. For example, not exhaustively:
 - Binding the requested tokens to a possessed key as defined in {{RFC9449}};
@@ -342,7 +342,7 @@ If the OAuth2 tokens issued by the authorization server are JWT profiled, they m
 
 To access an AI Agent, the client MUST present its credentials as defined in section 7 of {{RFC6749}} as well as defined in {{RFC6750}}. The client MUST be able to process error codes as defined in section 3 of {{RFC6750}}.
 
-The client MUST follow the beast current practices described in {{RFC9700}}.
+The client MUST follow the best current practices described in {{RFC9700}}.
 
 ### (D) Controlling access to the AI Agent
 
