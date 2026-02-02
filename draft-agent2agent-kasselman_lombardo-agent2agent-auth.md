@@ -354,12 +354,12 @@ For this, the System MUST use one of the grant types described in {{RFC6749}} as
 - In the case of the System is acting on behalf of a user:
   - If the System can interact directly with the user (e.g., browser-based), the System MUST use the authorization code grant flow as described in Section 4.1 of {{RFC6749}};
   - If the System has limited input capabilities, but the User is present at the device, the System MUST use the Device Authorization Grant {{RFC8628}};
-  - If the User is not present at the consuming device (decoupled flow), the System MUST use Client-Initiated Backchannel Authentication {{OpenID.CIBA}}.
+  - If the User is not present at the consuming device (decoupled flow), the System MUST use Client-Initiated Backchannel Authentication {{OpenIDConnect.CIBA}}.
 
 #### Extensions
 
 As part of the grant flow, the User / System MUST also fulfill all the expected extensions it has an understanding of. For example, not exhaustively:
-- Binding the requested tokens to a possessed key as defined in {{RFC9449}} or {{#wpt}}
+- Binding the requested tokens to a possessed key as defined in {{RFC9449}} or {#wpt}
 - Requesting additional authorization details as defined in {{RFC9396}} or {{RFC9126}}
 
 #### Identification
