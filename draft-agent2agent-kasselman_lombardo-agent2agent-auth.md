@@ -111,7 +111,7 @@ normative:
     title: OAuth 2.0 Token Exchange
     target: https://datatracker.ietf.org/doc/rfc8693
   RFC9728:
-    title: OAuth 2.0 Protected Resource Metadata 
+    title: OAuth 2.0 Protected Resource Metadata
     target: https://datatracker.ietf.org/doc/rfc9728/
   RFC8628:
     title: OAuth 2.0 Device Authorization Grant
@@ -391,7 +391,7 @@ The AI Agent MAY request additional details to be provided through a new authori
 
 #### Security
 
-The client MUST follow the beast current practices described in {{RFC9700}}.
+The client MUST follow the best current practices described in {{RFC9700}}.
 
 ### (D) Controlling access to the AI Agent
 
