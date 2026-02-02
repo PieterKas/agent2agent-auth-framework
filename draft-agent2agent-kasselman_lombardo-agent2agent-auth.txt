@@ -5,8 +5,8 @@
 Network Working Group                                       P. Kasselman
 Internet-Draft                                                   DeFakto
 Intended status: Informational                               J. Lombardo
-Expires: 25 July 2026                                                AWS
-                                                         21 January 2026
+Expires: 6 August 2026                                               AWS
+                                                         2 February 2026
 
 
             Agent-to-Agent Authentication and Authorization
@@ -54,7 +54,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 25 July 2026.
+   This Internet-Draft will expire on 6 August 2026.
 
 Copyright Notice
 
@@ -86,10 +86,11 @@ Table of Contents
        9.2.1.  WIMSE Proof Tokens (WPTs)
        9.2.2.  HTTP Message Signatures (HTTP Sig)
    10. Agent Authorization
-     10.1.  Client to AI Agent
-       10.1.1.  (B) Initial Authorization
-       10.1.2.  (C) Access to the AI Agent
-       10.1.3.  (D) Controlling access to the AI Agent
+     10.1.  System to AI Agent
+       10.1.1.  Flow
+       10.1.2.  (B) Initial Authorization
+       10.1.3.  (C) Access to the AI Agent
+       10.1.4.  (D) Controlling access to the AI Agent
      10.2.  AI Agent to AI tools
        10.2.1.  (E) Negotiation
        10.2.2.  (F) AI Agent Authorization
@@ -397,13 +398,13 @@ Table of Contents
    balancers, or protocol translation layers.
 
    The WIMSE working group defines the following authentication
-   mechansims that may be used by agents:
+   mechanisms that may be used by agents:
 
 9.2.1.  WIMSE Proof Tokens (WPTs)
 
    WIMSE Workload Proof Tokens (WPTs) are a protocol-independent,
    application-layer mechanism for proving possession of the private key
-   associated with a Workload Identity Token (WIT).  WPTs are genreated
+   associated with a Workload Identity Token (WIT).  WPTs are generated
    by the agent, using the private key matching the public key in the
    WIT.  A WPT is defined as a signed JSON Web Token (JWT) that binds an
    agent’s authentication to a specific message context, for example, an
@@ -415,7 +416,7 @@ Table of Contents
    carry claims such as audience (aud), expiration (exp), a unique token
    identifier (jti), and a hash of the associated WIT (wth).  A WPT may
    also include hashes of other related tokens (e.g., OAuth access
-   tokens) to binf the authentication contexts to specific transaction
+   tokens) to bind the authentication contexts to specific transaction
    or authorizations details.
 
    Although the draft currently defines detailed usage for HTTP (via a
@@ -452,21 +453,23 @@ Table of Contents
 10.  Agent Authorization
 
    During agent execution, authorization must be enforced at all the
-   layers in order to provide an in-depth protection of the resources
-   that are exposed to it.  For each layer, we must consider the
-   following 3 phases: - Negotiation between the layer and its caller on
-   the required pieces of authorization required to interact with the
-   layer - Acquisition of the piece of authorization by the caller at
-   the authorization server authoritative for this layer - Validation of
-   the piece of authorization in the context of the request
+   components involved in the process to provide an in-depth protection
+   of the resources that might be interacted with.  For each component,
+   we must consider the following 3 phases: - Negotiation between the
+   component and its caller on the required pieces of authorization
+   required to interact with the component - Acquisition of the piece of
+   authorization by the caller at the authorization server authoritative
+   for the component it wants to communication - Validation of the piece
+   of authorization in the context of the request by the component
 
-   As part of this process: - [RFC6749] is an established and maintained
+   Those phases rely on the following standards for enforcement of the
+   access control: - [RFC6749] is an established and maintained
    framework of specifications for requesting, acquiring, and proving
    ownership of pieces of authorization in the form of bearer tokens. -
    [OpenIDConnect.AuthZEN] is a new specification for exchanging
    authorization requests and decisions between the layer acting at the
    Policy Enforcement Point (PEP) and a Policy Decision Point (PDP). -
-   [OAuth.TRAT] is new specification for formattting pieces of
+   [OAuth.TRAT] is new specification for formatting pieces of
    authorization in the form of transaction bound bearer tokens.
 
                        +----------------+
@@ -513,68 +516,113 @@ Table of Contents
       examples of consent phishing attacks.  Talk about CIBA as a
       protocol.
 
-10.1.  Client to AI Agent
+10.1.  System to AI Agent
 
    ### (A) Negotiation - OPTIONAL
 
-   Following [RFC9728], the client MAY interact with the AI Agent on the
-   metadata endpoint of an OAuth 2.0 protected resource to understand
-   which Authorization Server is the authority this resource; which
-   scopes or authorization details values MAY be required to access this
-   resources; and if proof of possession needs to be presented as
-   standardized with [RFC9449].
+10.1.1.  Flow
 
-10.1.1.  (B) Initial Authorization
+   Following [RFC9728], the System MUST act as an OAuth2 client.  It
+   MUST interact with the AI Agent on its metadata endpoint which MUST
+   be an OAuth 2.0 protected resource as defined by [RFC9728].
+
+   The System will then understand which Authorization Server MUST be
+   the authority this AI Agent; which scopes or authorization details
+   values MAY be required to access this AI Agent; and if extension
+   mechanisms MAY be required to fulfil.
+
+10.1.1.1.  Security
+
+   The System MUST follow the best current practices described in
+   [RFC9700].
+
+10.1.2.  (B) Initial Authorization
 
    Based on the information collected as part of (A) or based on its
-   configuration, the client is initiating an authorization request with
+   configuration, the System MUST initiate an authorization request to
    the Authorization Server acting as authority for the AI Agent.
 
-   For this, the client MUST use one of the grant types described in
+10.1.2.1.  Flow
+
+   For this, the System MUST use one of the grant types described in
    [RFC6749] as follows:
 
-   *  If the client acts on its behalf as a system, it MUST start a
+   *  In a case of the System is acting on its behalf, it MUST start a
       client credential grant flow as described in section 1.3.4 of
       [RFC6749];
 
-   *  If the client acts on delegation by a user, it MUST start an
-      authorization code grant flow as described in section 1.3.1 of
-      [RFC6749].
+   *  In the case of the System is acting on behalf of a user:
 
-   The client MUST follow the beast current practices described in
-   [RFC9700].
+      -  If the System can interact directly with the user (e.g.,
+         browser-based), the System MUST use the authorization code
+         grant flow as described in Section 4.1 of [RFC6749];
 
-   As part of the grant flow, the client MUST also fulfill all the
-   expected extensions it has an understanding of.  For example, not
+      -  If the System has limited input capabilities, but the User is
+         present at the device, the System MUST use the Device
+         Authorization Grant [RFC8628];
+
+      -  If the User is not present at the consuming device (decoupled
+         flow), the System MUST use Client-Initiated Backchannel
+         Authentication [OpenIDConnect.CIBA].
+
+10.1.2.2.  Extensions
+
+   As part of the grant flow, the User / System MUST also fulfill all
+   the expected extensions it has an understanding of.  For example, not
    exhaustively: - Binding the requested tokens to a possessed key as
-   defined in [RFC9449]; - Requesting additional authorization details
-   as defined in [RFC9396] or [RFC9126]
+   defined in [RFC9449] or {#wpt} - Requesting additional authorization
+   details as defined in [RFC9396] or [RFC9126]
 
-   When identifying the client MUST use either a [SPIFFE_ID], a
-   [WIMSE_ID], or a specific identifier that can be resolved to either a
-   [SPIFFE_ID] as described in [OAuth.SPIFFE.CLient.Auth] or a
-   [WIMSE_ID] as described in !TODO.  Those identifiers MUST be
-   published into the metadata document of the client as defined in
-   [OAuth.CIMD].
+10.1.2.3.  Identification
 
-   If the OAuth2 tokens issued by the authorization server are JWT
-   profiled, they must follow the format described at [RFC9068] and MUST
-   follow the best practices described at [RFC8725].
+   The System MUST act as an OAuth2 Client which MAY be assigned a WIMSE
+   identifier, which MAY be a SPIFFE ID.
 
-10.1.2.  (C) Access to the AI Agent
+   If so, the System MUST provide a way to resolve one value to the
+   other, either through: - A metadata document URL used OAuth2 Client
+   identifier as defined in [OAuth.CIMD]; - Metadata information
+   provided as part of the Private Key JWT OAuth client credential as
+   defined in [OAuth.Private.JWT.Auth-RFC7523] - Public Certificate
+   information provided as part of the mutual TLS OAuth client
+   credential as defined in [OAuth.mTLS.Auth-RFC8705]
 
-   To access an AI Agent, the client MUST present its credentials as
-   defined in section 7 of [RFC6749] as well as defined in [RFC6750].
-   The client MUST be able to process error codes as defined in section
-   3 of [RFC6750].
+10.1.2.4.  Authentication
 
-   The client MUST follow the beast current practices described in
+   The System MUST authentication using either: - Private Key JWT OAuth
+   client authentication as defined in [OAuth.Private.JWT.Auth-RFC7523]
+   - Mutual TLS OAuth client authentication as defined in
+   [OAuth.mTLS.Auth-RFC8705]
+
+10.1.2.5.  Security
+
+   The System MUST follow the best current practices described in
+   [RFC9700] for the interactions with the AI Agent and [RFC8725] when
+   handling JWTs.
+
+10.1.3.  (C) Access to the AI Agent
+
+10.1.3.1.  Flow
+
+   To access an AI Agent, the System MUST present its authorization
+   credential as defined in section 7 of [RFC6749] as well as defined in
+   [RFC6750].  The client MUST be able to process error codes as defined
+   in section 3 of [RFC6750].
+
+   The AI Agent MAY request additional details to be provided through a
+   new authorization credentials using [OAuth.step-up.Auth-RFC9470] or
+   error codes as defined in [RFC6750].
+
+10.1.3.2.  Security
+
+   The client MUST follow the best current practices described in
    [RFC9700].
 
-10.1.3.  (D) Controlling access to the AI Agent
+10.1.4.  (D) Controlling access to the AI Agent
+
+10.1.4.1.  Flow
 
    The AI Agent MUST validate the presented token as described in
-   [RFC6749].
+   [RFC6749] as well as defined in [RFC6750].
 
    If token introspection is required, the AI Agent MUST follow
    [RFC7662] as well as [RFC9701].
@@ -586,6 +634,10 @@ Table of Contents
    If the AI Agent delegates its access control logic to a Policy
    decision point, it MUST follow [OpenIDConnect.AuthZEN] specification
    for requesting and receiving a decision for the access.
+
+10.1.4.2.  Security
+
+   TODO
 
 10.2.  AI Agent to AI tools
 
@@ -707,10 +759,23 @@ Table of Contents
               <https://datatracker.ietf.org/doc/draft-ietf-oauth-client-
               id-metadata-document>.
 
+   [OAuth.mTLS.Auth-RFC8705]
+              "OAuth 2.0 Mutual-TLS Client Authentication and
+              Certificate-Bound Access Tokens", n.d..
+
+   [OAuth.Private.JWT.Auth-RFC7523]
+              "JSON Web Token (JWT) Profile for OAuth 2.0 Client
+              Authentication and Authorization Grants", n.d.,
+              <https://datatracker.ietf.org/doc/html/rfc7523>.
+
    [OAuth.SPIFFE.CLient.Auth]
               "OAuth SPIFFE Client Authentication", n.d.,
               <https://datatracker.ietf.org/doc/draft-ietf-oauth-spiffe-
               client-auth>.
+
+   [OAuth.step-up.Auth-RFC9470]
+              "OAuth 2.0 Step Up Authentication Challenge Protocol",
+              n.d..
 
    [OAuth.TRAT]
               "Transaction Tokens", n.d.,
@@ -719,8 +784,8 @@ Table of Contents
 
    [OpenIDConnect.AuthZEN]
               Gazitt, O., Ed., Brossard, D., Ed., and A. Tulshibagwale,
-              Ed., "Authorization API 1.0 – draft 05", 2026,
-              <https://openid.github.io/authzen/>.
+              Ed., "Authorization API 1.0", 2026,
+              <https://openid.net/specs/authorization-api-1_0.html>.
 
    [OpenIDConnect.CIBA]
               "OpenID Connect Client-Initiated Backchannel
@@ -743,6 +808,9 @@ Table of Contents
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+   [RFC8628]  "OAuth 2.0 Device Authorization Grant", n.d.,
+              <https://www.rfc-editor.org/rfc/rfc8628.html>.
 
    [RFC8693]  "OAuth 2.0 Token Exchange", n.d.,
               <https://datatracker.ietf.org/doc/rfc8693>.
@@ -777,7 +845,7 @@ Table of Contents
               <https://datatracker.ietf.org/doc/rfc9701>.
 
    [RFC9728]  "OAuth 2.0 Protected Resource Metadata", n.d.,
-              <https://datatracker.ietf.org/doc/rfc9728>.
+              <https://datatracker.ietf.org/doc/rfc9728/>.
 
    [SPIFFE]   "Secure Production Identity Framework for Everyone", n.d.,
               <https://spiffe.io/docs/latest/spiffe-about/overview/>.
