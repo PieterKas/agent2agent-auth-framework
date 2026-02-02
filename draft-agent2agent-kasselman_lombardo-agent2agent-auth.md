@@ -37,7 +37,6 @@ author:
 
 normative:
   RFC9334: # Remote ATtestation procedureS (RATS) Architecture
-  RFC9421: # HTTP Message Signatures
   WIMSE_ID:
     title: "WIMSE Identifier"
     target: https://datatracker.ietf.org/doc/draft-ietf-wimse-identifier/
@@ -77,9 +76,6 @@ normative:
   RFC6749:
     title: The OAuth 2.0 Authorization Framework
     target: https://datatracker.ietf.org/doc/rfc6749
-  RFC9728:
-    title: OAuth 2.0 Protected Resource Metadata
-    target: https://datatracker.ietf.org/doc/rfc9728
   RFC9449:
     title: OAuth 2.0 Demonstrating Proof of Possession (DPoP)
     target: https://datatracker.ietf.org/doc/rfc9449
@@ -288,7 +284,7 @@ The WIMSE Workload-to-Workload Authentication with HTTP Signatures specification
 # Agent Authorization
 During agent execution, authorization must be enforced at all the components involved in the process to provide an in-depth protection of the resources that might be interacted with. For each component, we must consider the following 3 phases:
 - Negotiation between the component and its caller on the required pieces of authorization required to interact with the component
-- Acquisition of the piece of authorization by the caller at the authorization server authoritative for the component it wants to communication 
+- Acquisition of the piece of authorization by the caller at the authorization server authoritative for the component it wants to communication
 - Validation of the piece of authorization in the context of the request by the component
 
 Those phases rely on the following standards for enforcement of the access control:
@@ -404,6 +400,10 @@ If token introspection is required, the AI Agent MUST follow {{RFC7662}} as well
 If the provided token is a JWT profiled token as defined in {{RFC9068}}, the AI Agent MUST follow the section 2 of this specification as part of the token validation.
 
 If the AI Agent delegates its access control logic to a Policy decision point, it MUST follow {{OpenIDConnect.AuthZEN}} specification for requesting and receiving a decision for the access.
+
+#### Security
+
+TODO
 
 ## AI Agent to AI tools
 
