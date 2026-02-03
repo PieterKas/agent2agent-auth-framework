@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-01-22T01:57:29.226262+00:00",
+  "timestamp": "2026-02-03T02:24:54.315697+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -55,7 +55,7 @@
       "id": "I_kwDOQP22qc7kg1ja",
       "title": "Clarify \"layer\" in AuthZ section",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/2",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "OWNER",
       "assignees": [
@@ -64,8 +64,8 @@
       "labels": [],
       "body": ">During agent execution, authorization must be enforced at all the layers in order to provide an in-depth protection of the resources that are exposed to it. For each layer, we must consider the following 3 phases:\n\nWhat does all the layers mean (e.g. application, transport etc)?",
       "createdAt": "2026-01-20T13:45:50Z",
-      "updatedAt": "2026-01-21T15:49:50Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-02T13:57:40Z",
+      "closedAt": "2026-02-02T13:57:40Z",
       "comments": [
         {
           "author": "identitymonk",
@@ -73,6 +73,13 @@
           "body": "I see where you are coming from. Here the intent what to meant: user / system, AI Agent, AI AI tool, Service/Resouce.\n\nWill try to find a better term.\n ",
           "createdAt": "2026-01-21T15:49:50Z",
           "updatedAt": "2026-01-21T15:49:50Z"
+        },
+        {
+          "author": "identitymonk",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Done, I talk of components now",
+          "createdAt": "2026-02-02T13:57:40Z",
+          "updatedAt": "2026-02-02T13:57:40Z"
         }
       ]
     },
@@ -151,7 +158,7 @@
       "id": "I_kwDOQP22qc7khDMc",
       "title": "(A) Negotiation - OPTIONAL",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/6",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "OWNER",
       "assignees": [
@@ -160,8 +167,8 @@
       "labels": [],
       "body": "In this interaction,, the AI Agent is an OAuth Resource Server?",
       "createdAt": "2026-01-20T14:00:18Z",
-      "updatedAt": "2026-01-20T15:50:37Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-02T13:53:52Z",
+      "closedAt": "2026-02-02T13:53:51Z",
       "comments": [
         {
           "author": "PieterKas",
@@ -169,6 +176,13 @@
           "body": "@identitymonk - perhaps revisit once the diagram is updated?",
           "createdAt": "2026-01-20T15:50:31Z",
           "updatedAt": "2026-01-20T15:50:31Z"
+        },
+        {
+          "author": "identitymonk",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Done",
+          "createdAt": "2026-02-02T13:53:51Z",
+          "updatedAt": "2026-02-02T13:53:51Z"
         }
       ]
     },
@@ -186,7 +200,7 @@
       "labels": [],
       "body": "> For this, the client MUST use one of the grant types described in {{RFC6749}} as follows:\n\nAdd RFC 7523 assertion grant as one of the options",
       "createdAt": "2026-01-20T14:01:47Z",
-      "updatedAt": "2026-01-21T15:47:05Z",
+      "updatedAt": "2026-02-02T13:53:40Z",
       "closedAt": null,
       "comments": [
         {
@@ -202,6 +216,13 @@
           "body": "@PieterKas the line you mention is the initial authorization, IMO there is no assertion grant at this stage, this will come in the later authorization rounds when AI Agent will require its own authorization creds - Step F, currently in writting",
           "createdAt": "2026-01-21T15:47:05Z",
           "updatedAt": "2026-01-21T15:47:05Z"
+        },
+        {
+          "author": "identitymonk",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Added it in client authentication for Step B, and will reuse in the subsequent steps: \n\n> Authentication\n> \n> The System MUST authentication using either:\n> \n>- Private Key JWT OAuth client authentication as defined in {{OAuth.Private.JWT.Auth-RFC7523}}\n>- Mutual TLS OAuth client authentication as defined in {{OAuth.mTLS.Auth-RFC8705}}\n",
+          "createdAt": "2026-02-02T13:53:40Z",
+          "updatedAt": "2026-02-02T13:53:40Z"
         }
       ]
     },
@@ -210,7 +231,7 @@
       "id": "I_kwDOQP22qc7khFeD",
       "title": "typo",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/8",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "OWNER",
       "assignees": [
@@ -219,8 +240,8 @@
       "labels": [],
       "body": "beast -> best",
       "createdAt": "2026-01-20T14:02:48Z",
-      "updatedAt": "2026-01-21T15:44:55Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-02T13:49:40Z",
+      "closedAt": "2026-02-02T13:49:40Z",
       "comments": [
         {
           "author": "identitymonk",
@@ -245,7 +266,7 @@
       "labels": [],
       "body": "> When identifying the client MUST use either a {{SPIFFE_ID}}, a {{WIMSE_ID}}, or a specific identifier that can be resolved to either a {{SPIFFE_ID}} as described in {{OAuth.SPIFFE.CLient.Auth}} or a {{WIMSE_ID}} as described in !TODO. Those identifiers MUST be published into the metadata document of the client as defined in {{OAuth.CIMD}}.\n\nIt may be good to add a sentence on why this is needed.",
       "createdAt": "2026-01-20T14:06:45Z",
-      "updatedAt": "2026-01-20T15:46:34Z",
+      "updatedAt": "2026-02-02T13:52:04Z",
       "closedAt": null,
       "comments": [
         {
@@ -254,6 +275,13 @@
           "body": "This is related to mapping the SPIFFE ID to the CIMD metadata doc. This is being adressed in the OAuth+SPIFFE spec. What about the generic case? TBD - perhaps in CIMD perhaps in SPIFFE+OAuth.",
           "createdAt": "2026-01-20T15:35:04Z",
           "updatedAt": "2026-01-20T15:35:04Z"
+        },
+        {
+          "author": "identitymonk",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Changed the text to:\n\n> The System MUST act as an OAuth2 Client which MAY be assigned a WIMSE identifier, which MAY be a SPIFFE ID.\n> \n> If so, the System MUST provide a way to resolve one value to the other, either through:\n> \n>- A metadata document URL used OAuth2 Client identifier as defined in {{OAuth.CIMD}};\n>- Metadata information provided as part of the Private Key JWT OAuth client credential as defined in {{OAuth.Private.JWT.Auth-RFC7523}}\n>- Public Certificate information provided as part of the mutual TLS OAuth client credential as defined in {{OAuth.mTLS.Auth-RFC8705}}\n",
+          "createdAt": "2026-02-02T13:51:37Z",
+          "updatedAt": "2026-02-02T13:52:04Z"
         }
       ]
     },
@@ -271,7 +299,31 @@
       "labels": [],
       "body": "",
       "createdAt": "2026-01-20T15:47:45Z",
-      "updatedAt": "2026-01-20T15:47:48Z",
+      "updatedAt": "2026-02-02T13:50:50Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "identitymonk",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Done on my part Changed to User / System, always talking about System that can act on its behalf or on the behalf of Users",
+          "createdAt": "2026-02-02T13:50:31Z",
+          "updatedAt": "2026-02-02T13:50:50Z"
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "id": "I_kwDOQP22qc7noMh9",
+      "title": "Proposal \"rename all the normative reference\"",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/16",
+      "state": "OPEN",
+      "author": "identitymonk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "@PieterKas With the large list of RFC listed, I propose instead of pointing to {{RFC1234}} to point to a name following this proposed convention: `{{OAuth.something.somethingelse-RFC1234}}`\n\nThis will helps the readers to see something like {{OAuth.Private.JWT.Auth-RFC7523}} instead of just {{RFC7523}}.\n\nThis works well with non IETF sources too like our many references to the OpenID Foundation specifications.",
+      "createdAt": "2026-02-02T13:57:19Z",
+      "updatedAt": "2026-02-02T13:57:19Z",
       "closedAt": null,
       "comments": []
     }
@@ -427,6 +479,34 @@
       "mergedBy": "identitymonk",
       "mergeCommit": {
         "oid": "0bd0516d238448cdee879539a5921ae87bd76048"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 15,
+      "id": "PR_kwDOQP22qc7A6t9I",
+      "title": "Jeff work",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/15",
+      "state": "MERGED",
+      "author": "identitymonk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "- changes Diagrams\r\n- Solved #5 \r\n- Solved #2 ",
+      "createdAt": "2026-02-02T13:40:31Z",
+      "updatedAt": "2026-02-02T13:49:44Z",
+      "baseRepository": "PieterKas/agent2agent-auth-framework",
+      "baseRefName": "main",
+      "baseRefOid": "64ac065d0a1d10902279b8f0f50d781512ed8949",
+      "headRepository": "PieterKas/agent2agent-auth-framework",
+      "headRefName": "jeff-work",
+      "headRefOid": "961f1813c76bf3e13a279a64102a7df7214a8b27",
+      "closedAt": "2026-02-02T13:49:39Z",
+      "mergedAt": "2026-02-02T13:49:39Z",
+      "mergedBy": "identitymonk",
+      "mergeCommit": {
+        "oid": "b36089756f72737af83ab9a42eb921640468cd2f"
       },
       "comments": [],
       "reviews": []
