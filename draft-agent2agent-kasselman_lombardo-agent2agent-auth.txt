@@ -5,8 +5,8 @@
 Network Working Group                                       P. Kasselman
 Internet-Draft                                                   DeFakto
 Intended status: Informational                               J. Lombardo
-Expires: 6 August 2026                                               AWS
-                                                         2 February 2026
+Expires: 13 August 2026                                              AWS
+                                                         9 February 2026
 
 
             Agent-to-Agent Authentication and Authorization
@@ -15,15 +15,15 @@ Expires: 6 August 2026                                               AWS
 Abstract
 
    This document proposes a framework for secure agent-to-agent (A2A)
-   interactions leveraging existing standards such as OAuth 2.0 and the
-   Workload Identity Management and Secure Exchange (WIMSE)
-   architecture.  Rather than defining new protocols, this document
-   explores how existing and widely deployed stnadards can be applied or
-   extended to establish agent-to-agent authentication and
-   authorization.  By doing so, it aims to provide a framewrok within
-   which to identify use of existing standards and identify gaps and
-   guide future standardization efforts for secure agent-to-agent
-   authentication and authorization.
+   authentication and authorization leveraging existing standards such
+   as the Workload Identity Management and Secure Exchange (WIMSE)
+   architecture and OAuth 2.0 family of specifications.  Rather than
+   defining new protocols, this document describes how existing and
+   widely deployed standards can be applied or extended to establish
+   agent-to-agent authentication and authorization.  By doing so, it
+   aims to provide a framework within which to use existing standards,
+   identify gaps and guide future standardization efforts for agent-to-
+   agent authentication and authorization.
 
 About This Document
 
@@ -54,7 +54,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 6 August 2026.
+   This Internet-Draft will expire on 13 August 2026.
 
 Copyright Notice
 
@@ -127,12 +127,11 @@ Table of Contents
    underlying services and resources until a terminating condition,
    determined either by the LLM or by the agent’s internal logic, is
    reached.  It may receive input from a user, or act autonomusly.
-   Figure 1 shows a conceptual model of the AI Agent as a workload.
-
-   Figure 1 illustrates the high-level interaction model between the
-   User, the AI Agent, the Large Language Model (LLM), the Tools invoked
-   by the Agent, and the underlying Services and Resources accessed
-   through those Tools.
+   Figure 1 shows a conceptual model of the AI Agent as a workload and
+   illustrates the high-level interaction model between the User or
+   System, the AI Agent, the Large Language Model (LLM) and the Tools
+   through which the underlying Services and Resources are accessed by
+   the Agent.
 
                     +----------------+
                     | Large Language |
@@ -149,13 +148,13 @@ Table of Contents
 
                    Figure 1: AI Agent as a Workload
 
-   1.  Optional: The Client provides an initial request or instruction
-       to the AI Agent.
+   1.  Optional: The User or System provides an initial request or
+       instruction to the AI Agent.
 
    2.  The AI Agent forwards the available context to the LLM.  Context
-       isimplementation and deployment specific and may include User
-       input, system prompt, tool descriptions, tool outputs and other
-       relevant information.
+       is implementation and deployment specific and may include User or
+       System input, system prompt, tool descriptions, tool outputs and
+       other relevant information.
 
    3.  The LLM returns a response to the AI Agent identifying which
        tools it should invoke.
@@ -176,16 +175,16 @@ Table of Contents
        completed.
 
    8.  Optional: Once the exit condition is reached in step 7, the AI
-       Agent may return a response to the User.
+       Agent may return a response to the User or System.
 
    As shown in Figure 1, the AI Agent is a workload that needs and
-   identifier and credentials with which to authenticate itself to the
-   Large Langugage Model and Tools.  Once it has authenticated, the
-   Large Langugage Model and Tools must determine if the AI Agent is
-   authorized to access it.  If the AI Agent is acting on-behalf-of a
-   User, the User needs to deelegate access to the AI Agent, and the
-   context of the User needs to be preserved to inform authorization
-   decisions.
+   identifier and credentials with which it can be authenticated by the
+   User or System, Large Langugage Model and Tools.  Once it is
+   authenticated, the Large Langugage Model and Tools must determine if
+   the AI Agent is authorized to access it.  If the AI Agent is acting
+   on-behalf-of a User or System, the User or System needs to delegate
+   access to the AI Agent, and the context of the User or System needs
+   to be preserved to inform authorization decisions.
 
    This document describes how AI Agents should leverage existing
    standards defined by SPIFFE [SPIFFE], WIMSE, OAuth and SSF.
