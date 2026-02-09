@@ -285,7 +285,7 @@ Agents may act on behalf of a user, a system, or on their own behalf when intera
 In this framework, an agent may obtain authorization in two primary ways:
 
 * **Delegated authorization**: A user or system authorizes the agent through the OAuth 2.0 Authorization Code Grant (see Section 4.1 of {{RFC6749}})
-* **Direct authorization** The agent obtains access on its own behalf using mechanisms such as the Client Credentials grant (see Section 4.4 of {{RFC6749}}) or the JWT Authorization grant {{RFC7523}}
+* **Direct authorization** The agent obtains access on its own behalf using mechanisms such as the Client Credentials grant (see Section 4.4 of {{RFC6749}}) or the JWT Authorization grant {{OAuth.Private.JWT.Auth-RFC7523}}
 
 ## Access Tokens and Agent Identity
 OAuth authorization results in the issuance of an access token that represents the granted authorization. In many deployments, access tokens are structured as JSON Web Tokens (JWTs) {{RFC9068}}, which include claims such as 'client_id', 'sub', 'aud', 'scope', and other attributes relevant to authorization. The 'client_id' MUST be associated with the agent’s identity and MAY be used by resource servers as a part of an authorization decision.
