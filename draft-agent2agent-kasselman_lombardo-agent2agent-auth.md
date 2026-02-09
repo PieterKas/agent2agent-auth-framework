@@ -280,6 +280,23 @@ Although the draft currently defines detailed usage for HTTP (via a Workload-Pro
 The WIMSE Workload-to-Workload Authentication with HTTP Signatures specification {{WIMSE_HTTPSIG}} defines an application-layer authentication profile built on the HTTP Message Signatures standard {{RFC9421}}. It is one of the mechanisms WIMSE defines for authenticating workloads in HTTP-based interactions where transport-layer protections may be insufficient or unavailable. The protocol combines a workload’s Workload Identity Token (WIT), which conveys attested identity and binds a public key, with HTTP Message Signatures using the corresponding private key, thereby providing proof of possession and message integrity for individual HTTP requests and responses. This approach ensures end-to-end authentication and integrity even when traffic traverses intermediaries such as TLS proxies or load balancers that break transport-layer identity continuity. The profile mandates signing of key request components (e.g., method, target, content digest, and the WIT itself) and supports optional response signing to ensure full protection of workload-to-workload exchanges.
 
 # Agent Authorization
+Agents may act on behalf of a user, a system, or on their own behalf when interacting with protected resources. The OAuth 2.0 Authorization Framework {{RFC6749}} is widely deployed and defines an authorization delegation framework that enables an agent to obtain limited access to a service under well-defined policy constraints. An agent MUST use OAuth 2.0-based mechanisms to obtain authorization from a user, a system, or on its own behalf. 
+
+In this framework, an agent may obtain authorization in two primary ways:
+
+* **Delegated authorization**: A user or system authorizes the agent through the OAuth 2.0 Authorization Code Grant (see Section 4.1 of {{RFC6749}})
+* **Direct authorization** The agent obtains access on its own behalf using mechanisms such as the Client Credentials grant (see Section 4.4 of {{RFC6749}}) or the JWT Authorization grant {{RFC7523}}
+
+## Access Tokens and Agent Identity
+OAuth authorization results in the issuance of an access token that represents the granted authorization. In many deployments, access tokens are structured as JSON Web Tokens (JWTs) {{RFC9068}}, which include claims such as 'client_id', 'sub', 'aud', 'scope', and other attributes relevant to authorization. The 'client_id' MUST be associated with the agent’s identity and MAY be used by resource servers as a part of an authorization decision.
+
+Additional claims may be included to convey contextual, attestation-derived, or policy-related information that enables fine-grained access control. Where JWT access tokens are not used, opaque tokens may be issued and validated through introspection mechanisms. This framework supports both models and does not require a specific token format, provided that equivalent authorization semantics are maintained.
+
+
+-----------------------------------------------------
+
+
+
 During agent execution, authorization must be enforced at all the components involved in the process to provide an in-depth protection of the resources that might be interacted with. For each component, we must consider the following 3 phases:
 - Negotiation between the component and its caller on the required pieces of authorization required to interact with the component
 - Acquisition of the piece of authorization by the caller at the authorization server authoritative for the component it wants to communication
