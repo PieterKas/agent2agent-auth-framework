@@ -1,0 +1,930 @@
+
+
+
+
+Network Working Group                                       P. Kasselman
+Internet-Draft                                                   DeFakto
+Intended status: Informational                               J. Lombardo
+Expires: 13 August 2026                                              AWS
+                                                         9 February 2026
+
+
+            Agent-to-Agent Authentication and Authorization
+      draft-agent2agent-kasselman_lombardo-agent2agent-auth-latest
+
+Abstract
+
+   This document proposes a framework for secure agent-to-agent (A2A)
+   interactions leveraging existing standards such as OAuth 2.0 and the
+   Workload Identity Management and Secure Exchange (WIMSE)
+   architecture.  Rather than defining new protocols, this document
+   explores how existing and widely deployed stnadards can be applied or
+   extended to establish agent-to-agent authentication and
+   authorization.  By doing so, it aims to provide a framewrok within
+   which to identify use of existing standards and identify gaps and
+   guide future standardization efforts for secure agent-to-agent
+   authentication and authorization.
+
+About This Document
+
+   This note is to be removed before publishing as an RFC.
+
+   The latest revision of this draft can be found at
+   https://PieterKas.github.io/agent2agent-auth-framework/draft-
+   agent2agent-kasselman_lombardo-agent2agent-auth.html.  Status
+   information for this document may be found at
+   https://datatracker.ietf.org/doc/draft-agent2agent-
+   kasselman_lombardo-agent2agent-auth/.
+
+   Source for this draft and an issue tracker can be found at
+   https://github.com/PieterKas/agent2agent-auth-framework.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 13 August 2026.
+
+Copyright Notice
+
+   Copyright (c) 2026 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
+
+Table of Contents
+
+   1.  Introduction
+   2.  Conventions and Definitions
+   3.  Agents are workloads
+   4.  Agent Identity Management System
+   5.  Agent Identifier
+   6.  Agent Credentials
+   7.  Agent Attestation
+   8.  Agent Credential Provisioning
+   9.  Agent Authentication
+     9.1.  Network layer authentication
+     9.2.  Application layer authentication
+       9.2.1.  WIMSE Proof Tokens (WPTs)
+       9.2.2.  HTTP Message Signatures (HTTP Sig)
+   10. Agent Authorization
+     10.1.  System to AI Agent
+       10.1.1.  Flow
+       10.1.2.  (B) Initial Authorization
+       10.1.3.  (C) Access to the AI Agent
+       10.1.4.  (D) Controlling access to the AI Agent
+     10.2.  AI Agent to AI tools
+       10.2.1.  (E) Negotiation
+       10.2.2.  (F) AI Agent Authorization
+     10.3.  Agent-to-Resource Authorization
+       10.3.1.  Human-in-the loop
+     10.4.  Case of Multi-Domain Authorization
+       10.4.1.  Cross Domain Agent-to-Agent Authorization
+     10.5.  Agent to Agent Authorization
+   11. Agent Monitoring and Remediation - Jeff
+   12. Agent Auhtentication and Authorization Policy - Discuss
+   13. Agent Compliance - Discuss
+   14. Security Considerations
+   15. IANA Considerations
+   16. Normative References
+   Acknowledgments
+   Authors' Addresses
+
+1.  Introduction
+
+   TODO Introduction
+
+2.  Conventions and Definitions
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
+
+3.  Agents are workloads
+
+   An Agent is a workload that iteratively interacts with a Large
+   Language Model (LLM) and a set of tools that expose interfaces to
+   underlying services and resources until a terminating condition,
+   determined either by the LLM or by the agent’s internal logic, is
+   reached.  It may receive input from a user, or act autonomusly.
+   Figure 1 shows a conceptual model of the AI Agent as a workload.
+
+   Figure 1 illustrates the high-level interaction model between the
+   User, the AI Agent, the Large Language Model (LLM), the Tools invoked
+   by the Agent, and the underlying Services and Resources accessed
+   through those Tools.
+
+                    +----------------+
+                    | Large Language |
+                    |   Model (LLM)  |
+                    +----------------+
+                           ▲   |
+                          (2) (3)
+                           |   ▼
++--------------+       +------------+       +-----------+       +-----------+
+|  User /      |──(1)─►|  AI Agent  |──(4)─►|  AI Tools |──(5)─►| Services  |
+|      /       |       | (workload) |       |           |       |   and     |
+|     / System |◄─(8)──|            |◄─(7)──|           |◄─(6)──| Resources |
++--------------+       +------------+       +-----------+       +-----------+
+
+                   Figure 1: AI Agent as a Workload
+
+   1.  Optional: The Client provides an initial request or instruction
+       to the AI Agent.
+
+   2.  The AI Agent forwards the available context to the LLM.  Context
+       isimplementation and deployment specific and may include User
+       input, system prompt, tool descriptions, tool outputs and other
+       relevant information.
+
+   3.  The LLM returns a response to the AI Agent identifying which
+       tools it should invoke.
+
+   4.  Based on the LLM’s output, the AI Agent invokes the relevant
+       Tools.
+
+   5.  The Tools interacts with the underlying Services and Resources
+       required to fulfill the requested operation.
+
+   6.  The underlying Services and Resources returns the information
+       requested by the Tools.
+
+   7.  The Tools returns the information collected from the Services and
+       Resources to the AI Agent, which sends the information as
+       additional context to the Large Langugage Model, repeating steps
+       2-7 until the exit condition is reached and the task is
+       completed.
+
+   8.  Optional: Once the exit condition is reached in step 7, the AI
+       Agent may return a response to the User.
+
+   As shown in Figure 1, the AI Agent is a workload that needs and
+   identifier and credentials with which to authenticate itself to the
+   Large Langugage Model and Tools.  Once it has authenticated, the
+   Large Langugage Model and Tools must determine if the AI Agent is
+   authorized to access it.  If the AI Agent is acting on-behalf-of a
+   User, the User needs to deelegate access to the AI Agent, and the
+   context of the User needs to be preserved to inform authorization
+   decisions.
+
+   This document describes how AI Agents should leverage existing
+   standards defined by SPIFFE [SPIFFE], WIMSE, OAuth and SSF.
+
+4.  Agent Identity Management System
+
+   An Agent Identity Management System ensure that the right Agent has
+   access to the right resources and tools at the right time for the
+   right reason.  It consists out of the following components:
+
+   *  *Agent Identifiers:* Unique identifier assigned to every Agent.
+
+   *  *Agent Credentials:* Cryptographic binding between the Agent
+      Identifier and attributes of the Agent.
+
+   *  *Agent Attestation:* Mechanisms for determining and assigning the
+      identifier and issue credentials based on measurements of the
+      Agent's environment.
+
+   *  *Agent Credential Provisioning:* The mechanism for provisioning
+      credentials to the agent at runtime.
+
+   *  *Agent Authentication:* Protocols and mechanisms used by the Agent
+      to authenticate itself to Large Langugage Models or Tools
+      (resource or server) in the system.
+
+   *  *Agent Authorization:* Protocols and systems used to determine if
+      an Agent is allowed to access a Large Langugage Model or Tool
+      (resource or server).
+
+   *  *Agent Monitoring and Remediation:* Protocols and mechanisms to
+      dynamically modify the authorization decisions based on observed
+      behaviour and system state.
+
+   *  *Agent Auhtentication and Authorization Policy:* The configuration
+      and rules for each of the Agent Identity Management System.
+
+   *  *Agent Compliance:* Measurement of the state and fucntioning of
+      the system against the stated policies.
+
+5.  Agent Identifier
+
+   Agents MUST be uniquely identified to enable authentication and
+   authorization.
+
+   The Secure Production Identity Framework for Everyone (SPIFFE)
+   identifier format is widely deployed and operationally mature.  The
+   SPIFFE workload identity model defines a SPIFFE identifier (SPIFFE
+   ID) as a URI of the form spiffe://<trust-domain>/<path> that uniquely
+   identifies a workload within a trust domain [SPIFFE].
+
+   The Workload Identity in Multi-System Environments (WIMSE) working
+   group builds on the experiences gained by the SPIFFE community and
+   defines the WIMSE workload identifier [WIMSE_ID] as a URI that
+   uniquely identifies a workload within a given trust domain.
+
+   Since SPIFFE IDs are URI-based workload identifiers and their
+   structure aligns with the identifier model defined in the WIMSE
+   identifier draft, all SPIFFE IDs can be treated as valid WIMSE
+   identifiers.
+
+   All Agents MUST be assigned a WIMSE identifier, which MAY be a SPIFFE
+   ID.
+
+6.  Agent Credentials
+
+   Agents MUST have credentials that provide a cryptographic binding to
+   the agent identifier described in Section 5.  These credentials are
+   considered primary credentials that are provisioned at runtime.  The
+   cryptographic binding is essential for establishing trust since an
+   identifier on its own is insufficient unless it is verifiably tied to
+   a key or token controlled by the agent.
+
+   WIMSE define a profile of X.509 certificates and Workload Identity
+   Tokens (WITs) [WIMSE_CRED], while SPIFFE defines SPIFFE Verified ID
+   (SVID) profiles of JSON Web Token (JWT-SVID), X.509 certificates
+   (X.509-SVID) and WIMSE Workload Identity Tokens (WIT-SVID).  SPIFFE
+   SVID credentials are compatible with WIMSE defined credentials.  The
+   choice of an appropriate format depends on the risk model and
+   integration requirements of a deployment.
+
+   Agent credentials SHOULD be short-lived to minimize the risk of
+   credential theft and MUST have an explicit expiration time after
+   which it is no longer accepted, and MAY carry additional attributes
+   relevant to the agent (e.g., trust domain, attestation evidence, or
+   workload metadata).
+
+   In some cases, agents MAY need a secondary credential to access a
+   proprietary or legacy system that is not compatible with the X.509,
+   JWT or WIT it is provisioned with.  In these cases an agent MAY
+   exchange their primary credentials through a credential exchange
+   mechanisms (e.g., OAuth 2.0 Token Exchange, Transaction Tokens,
+   Workload Identity Federation).  This allows an agent to obtain a
+   credential targeted to a specific relying party by leveraging the
+   primary credential in its possession.
+
+   Note: Static API keys are an anti-pattern for agent identity.  They
+   are bearer artefacts that are not cryptographically bound, don't
+   convey identity, are long lived and are operationally brittle as they
+   are difficult to rotate, making them unsuitable for secure Agent-to-
+   Agent authentication or authorization.
+
+7.  Agent Attestation
+
+   Agent attestation is the identity-proofing mechanism for AI agents.
+   Just as humans rely on identity proofing during account creation or
+   credential issuance, agent identity proofing relies on evidence
+   collected about the agent, including their origin and composition
+   (e.g. Software Bill of Materials), how they were instantiated and
+   where they are running, and under what conditions they are operating.
+   This evidence feeds into the credential issuance process and
+   determines whether a credential is issued, the type of credential
+   issued and the contents of the credential and is referred to as
+   "attestation" in this specification.
+
+   Multiple attestation mechanisms exist, and the appropriate choice is
+   deployment and risk specific.  These mechanisms may include hardware-
+   based attestations (e.g., TEE evidence), software integrity
+   measurements, supply-chain provenance, platform and orchestration-
+   layer attestations, or operator assertions to name a few.  Depending
+   on the risk involved, a single attestation may be sufficient, or, in
+   higher risk scenarios, multi-attestation may be requred.
+
+   There are numerous systems that perform some kind of attestation, any
+   of which can be used in establishing agent identity.  One example of
+   such a system is the Remote ATtestation Procedures (RATS)
+   architecture (see [RFC9334]), which provides a general model for
+   producing, conveying, and verifying attestation evidence and defines
+   the roles of Attester, Verifier, and Relying Party, as well as the
+   concept of Evidence, Endorsements, and Attestation Results.
+
+   Workload identity management systems can use different attestation
+   mechanisms and implementations (including RATS), to represent
+   attestation evidence and deliver it to credential provisioning
+   systems.  The choice of which systems to use depends on the practical
+   constraints and risk profile of a deployment.
+
+8.  Agent Credential Provisioning
+
+   Agent credential provisioning refers to the runtime issuance,
+   renewal, and rotation of the credentials an agent uses to
+   authenticate and authorize itself to other agents.  Agents may be
+   provisioned with one or more credential types as described in
+   Section 6.  Unlike static secrets, agent credentials are provisioned
+   dynamically and are intentionally short-lived, eliminating the
+   operational burden of manual expiration management and reducing the
+   impact of credential compromise.  Agent credential provisioning must
+   operate autonomously, scale to high volumes of ephemeral agents and
+   workloads in dynamic environments, and integrate closely with the
+   attestation mechanisms that used to collect evidence used to
+   edetermin and agent identifier for each issuance or rotation event.
+
+   Agent credential provisioning typically includes two phases:
+
+   1.  *Initial Provisioning*: The process by which an agent first
+       acquires a credential bound to its identity.  This often occurs
+       immediately after deployment or instantiation and is based on
+       verified properties of the agent (e.g., deployment context,
+       attestation evidence, or orchestration metadata).
+
+   2.  *Rotation/Renewal*: The automatic refresh of short-lived
+       credentials before expiration.  Continuous rotation ensures that
+       credentials remain valid only for the minimum necessary time and
+       that authorization state reflects current operational conditions.
+
+   The use of short-lived credentials provides a signiifcant improvement
+   in the risk profile and risk of credential exposure.  It provides an
+   alternative to explicit revocation mechanisms and simplifies
+   lifecycle management in large, automated environments while removing
+   the risks of downtime as a result of credential expiry.
+
+   Deployed frameworks such as [SPIFFE] provide proven mechanisms for
+   automated, short-lived credential provisioning at runtime.  In
+   addition to issuing short-lived credentials, [SPIFFE] also provisions
+   ephemeral cryptographic key material bound to each credential,
+   further reducing the risks associated with compromising long-lived
+   keys.
+
+9.  Agent Authentication
+
+   Agents may authenticate to one another using a variety of mechanisms,
+   depending on the credentials they possess, the protocols supported in
+   the deployment environment, and the risk profile of the application.
+   As described in the WIMSE Architecture [WIMSE_ARCH], authentication
+   can occur at either the network layer or the application layer, and
+   many deployments rely on a combination of both.
+
+9.1.  Network layer authentication
+
+   Network-layer authentication establishes trust during the
+   establishment of a secure transport channel.  The most common
+   mechanism used by agents is mutual TLS (mTLS), in which both
+   endpoints present X.509-based credentials and perform a bidirectional
+   certificate exchange as part of the TL negotiation.  When paired with
+   short-lived workload identities, such as those issued by SPIFFE or
+   WIMSE, mTLS provides strong channel binding and cryptographic proof
+   of control over the agent’s private key.
+
+   mTLS is particularly well-suited for environments where transport-
+   level protection, peer authentication, and ephemeral workload
+   identity are jointly required.  It also simplifies authorization
+   decisions by enabling agents to associate application-layer requests
+   with an authenticated transport identity.  One example of this is the
+   use of mTLS in service mesh architecctures such as Istio or LinkerD.
+
+   *Limitations* There are scenarios where transport-layer
+   authentication is not desirable or cannot be relied upon.  In
+   architectures involving intermediaries, such as API gateways, service
+   meshes, load balancers, or protocol translators, TLS sessions are
+   often terminated and re-established, breaking the end-to-end
+   continuity of transport-layer identity.  Similarly, some deployment
+   models (e.g., serverless platforms, multi-tenant edge environments,
+   or cross-domain topologies) may obscure or abstract identity
+   presented at the transport layer, making it difficult for relying
+   parties to bind application-layer actions to a credential presented
+   at the transport-layer.  In these cases, application-layer
+   authentication provides a more robust and portable mechanism for
+   expressing agent identity and conveying attestation or policy-
+   relevant attributes.
+
+9.2.  Application layer authentication
+
+   Application-layer authentication allows agents to authenticate
+   independently of the underlying transport.  This enables end-to-end
+   identity preservation even when requests traverse proxies, load
+   balancers, or protocol translation layers.
+
+   The WIMSE working group defines the following authentication
+   mechanisms that may be used by agents:
+
+9.2.1.  WIMSE Proof Tokens (WPTs)
+
+   WIMSE Workload Proof Tokens (WPTs) are a protocol-independent,
+   application-layer mechanism for proving possession of the private key
+   associated with a Workload Identity Token (WIT).  WPTs are generated
+   by the agent, using the private key matching the public key in the
+   WIT.  A WPT is defined as a signed JSON Web Token (JWT) that binds an
+   agent’s authentication to a specific message context, for example, an
+   HTTP request, thereby providing proof of possession rather than
+   relying on bearer semantics [WIMSE_WPT].
+
+   WPTs are designed to work alongside WITs [WIMSE_CRED] and are
+   typically short-lived to reduce the window for replay attacks.  They
+   carry claims such as audience (aud), expiration (exp), a unique token
+   identifier (jti), and a hash of the associated WIT (wth).  A WPT may
+   also include hashes of other related tokens (e.g., OAuth access
+   tokens) to bind the authentication contexts to specific transaction
+   or authorizations details.
+
+   Although the draft currently defines a protocol binding for HTTP (via
+   a Workload-Proof-Token header), the core format is protocol-agnostic,
+   making it applicable to other protocols.  Its JWT structure and
+   claims model allow WPTs to be bound to different protocols and
+   transports, including asynchronous or non-HTTP messaging systems such
+   as Kafka and gRPC, or other future protocol bindings.  This design
+   enables relying parties to verify identity, key possession, and
+   message binding at the application layer even in environments where
+   transport-layer identity (e.g., mutual TLS) is insufficient or
+   unavailable.
+
+9.2.2.  HTTP Message Signatures (HTTP Sig)
+
+   The WIMSE Workload-to-Workload Authentication with HTTP Signatures
+   specification [WIMSE_HTTPSIG] defines an application-layer
+   authentication profile built on the HTTP Message Signatures standard
+   [RFC9421].  It is one of the mechanisms WIMSE defines for
+   authenticating workloads in HTTP-based interactions where transport-
+   layer protections may be insufficient or unavailable.  The protocol
+   combines a workload’s Workload Identity Token (WIT), which conveys
+   attested identity and binds a public key, with HTTP Message
+   Signatures using the corresponding private key, thereby providing
+   proof of possession and message integrity for individual HTTP
+   requests and responses.  This approach ensures end-to-end
+   authentication and integrity even when traffic traverses
+   intermediaries such as TLS proxies or load balancers that break
+   transport-layer identity continuity.  The profile mandates signing of
+   key request components (e.g., method, target, content digest, and the
+   WIT itself) and supports optional response signing to ensure full
+   protection of workload-to-workload exchanges.
+
+10.  Agent Authorization
+
+   During agent execution, authorization must be enforced at all the
+   components involved in the process to provide an in-depth protection
+   of the resources that might be interacted with.  For each component,
+   we must consider the following 3 phases: - Negotiation between the
+   component and its caller on the required pieces of authorization
+   required to interact with the component - Acquisition of the piece of
+   authorization by the caller at the authorization server authoritative
+   for the component it wants to communication - Validation of the piece
+   of authorization in the context of the request by the component
+
+   Those phases rely on the following standards for enforcement of the
+   access control: - [RFC6749] is an established and maintained
+   framework of specifications for requesting, acquiring, and proving
+   ownership of pieces of authorization in the form of bearer tokens. -
+   [OpenIDConnect.AuthZEN] is a new specification for exchanging
+   authorization requests and decisions between the layer acting at the
+   Policy Enforcement Point (PEP) and a Policy Decision Point (PDP). -
+   [OAuth.TRAT] is new specification for formatting pieces of
+   authorization in the form of transaction bound bearer tokens.
+
+                       +----------------+
+                       | Large Language |
+                       |   Model (LLM)  |
+                       +----------------+
+                              ▲   |
+                              │   |
+                              |   ▼
++--------------+         +------------+         +-----------+         +-----------+
+|  User /      |─(A)(C)─►|  AI Agent  |─(E)(H)─►| AI Tools  |─(J)(M)─►| Services  |
+|      /       |         | (workload) |         |           |         |   and     |
+|     / System |◄────────|            |◄────────|           |◄────────| Resources |
++--------------+         +------------+         +-----------+         +-----------+
+     ▲                       ▲  ▲                   ▲   ▲                ▲
+     |    ┌──(F)─────────────┘  |                   |   |                |
+     |    |   ┌───(D)───────────┘                  (I)  |                |
+     |    |   |  +---------------+                  |  (K)              (N)
+    (B)   |   |  |    Policy     |                  |   |                |
+     |    |   └─►|   Decision    |◄─────────────────┘   |                |
+     |    |      |    Point      |◄─────────────────────┼────────────────┘
+     |    |      +---------------+                      |
+     |    |             ▲                               |
+     |    |          (G)(L)                             |
+     |    |             ▼                               |
+     |    |      +---------------+                      |
+     |    └─────►| Authorization |◄─────────────────────┘
+     └──────────►|   server      |
+                 +---------------+
+
+      Key point - OAuth is broadly supported and provides a delegation
+      model for users to clients (aka agents).  Agents can obtain access
+      tokens directly (client credentials flow, using above
+      authentication methods) or it can be delegated to them by a user
+      (OAuth flows).  Make point that the access token includes the
+      client_id, which is the same as the Agent ID (ore related to it)
+      and can be used for authorization decisions, along with other
+      claims in an Access Token (reference JWT Access token spec).  Make
+      provision for opaque tokens as well.  Discuss Downscoping of agent
+      authorization using transaction tokens.  Discuss cross-domain
+      authorization (use cases) and how it may be achieved (identity
+      chaining and cross-domain authorization).  Discuss human in the
+      loop authorization.  Note concerns, refer to cross-device BCP as
+      examples of consent phishing attacks.  Talk about CIBA as a
+      protocol.
+
+10.1.  System to AI Agent
+
+   ### (A) Negotiation - OPTIONAL
+
+10.1.1.  Flow
+
+   Following [RFC9728], the System MUST act as an OAuth2 client.  It
+   MUST interact with the AI Agent on its metadata endpoint which MUST
+   be an OAuth 2.0 protected resource as defined by [RFC9728].
+
+   The System will then understand which Authorization Server MUST be
+   the authority this AI Agent; which scopes or authorization details
+   values MAY be required to access this AI Agent; and if extension
+   mechanisms MAY be required to fulfil.
+
+10.1.1.1.  Security
+
+   The System MUST follow the best current practices described in
+   [RFC9700].
+
+10.1.2.  (B) Initial Authorization
+
+   Based on the information collected as part of (A) or based on its
+   configuration, the System MUST initiate an authorization request to
+   the Authorization Server acting as authority for the AI Agent.
+
+10.1.2.1.  Flow
+
+   For this, the System MUST use one of the grant types described in
+   [RFC6749] as follows:
+
+   *  In a case of the System is acting on its behalf, it MUST start a
+      client credential grant flow as described in section 1.3.4 of
+      [RFC6749];
+
+   *  In the case of the System is acting on behalf of a user:
+
+      -  If the System can interact directly with the user (e.g.,
+         browser-based), the System MUST use the authorization code
+         grant flow as described in Section 4.1 of [RFC6749];
+
+      -  If the System has limited input capabilities, but the User is
+         present at the device, the System MUST use the Device
+         Authorization Grant [RFC8628];
+
+      -  If the User is not present at the consuming device (decoupled
+         flow), the System MUST use Client-Initiated Backchannel
+         Authentication [OpenIDConnect.CIBA].
+
+10.1.2.2.  Extensions
+
+   As part of the grant flow, the User / System MUST also fulfill all
+   the expected extensions it has an understanding of.  For example, not
+   exhaustively: - Binding the requested tokens to a possessed key as
+   defined in [RFC9449] or {#wpt} - Requesting additional authorization
+   details as defined in [RFC9396] or [RFC9126]
+
+10.1.2.3.  Identification
+
+   The System MUST act as an OAuth2 Client which MAY be assigned a WIMSE
+   identifier, which MAY be a SPIFFE ID.
+
+   If so, the System MUST provide a way to resolve one value to the
+   other, either through: - A metadata document URL used OAuth2 Client
+   identifier as defined in [OAuth.CIMD]; - Metadata information
+   provided as part of the Private Key JWT OAuth client credential as
+   defined in [OAuth.Private.JWT.Auth-RFC7523] - Public Certificate
+   information provided as part of the mutual TLS OAuth client
+   credential as defined in [OAuth.mTLS.Auth-RFC8705]
+
+10.1.2.4.  Authentication
+
+   The System MUST authentication using either: - Private Key JWT OAuth
+   client authentication as defined in [OAuth.Private.JWT.Auth-RFC7523]
+   - Mutual TLS OAuth client authentication as defined in
+   [OAuth.mTLS.Auth-RFC8705]
+
+10.1.2.5.  Security
+
+   The System MUST follow the best current practices described in
+   [RFC9700] for the interactions with the AI Agent and [RFC8725] when
+   handling JWTs.
+
+10.1.3.  (C) Access to the AI Agent
+
+10.1.3.1.  Flow
+
+   To access an AI Agent, the System MUST present its authorization
+   credential as defined in section 7 of [RFC6749] as well as defined in
+   [RFC6750].  The client MUST be able to process error codes as defined
+   in section 3 of [RFC6750].
+
+   The AI Agent MAY request additional details to be provided through a
+   new authorization credentials using [OAuth.step-up.Auth-RFC9470] or
+   error codes as defined in [RFC6750].
+
+10.1.3.2.  Security
+
+   The client MUST follow the best current practices described in
+   [RFC9700].
+
+10.1.4.  (D) Controlling access to the AI Agent
+
+10.1.4.1.  Flow
+
+   The AI Agent MUST validate the presented token as described in
+   [RFC6749] as well as defined in [RFC6750].
+
+   If token introspection is required, the AI Agent MUST follow
+   [RFC7662] as well as [RFC9701].
+
+   If the provided token is a JWT profiled token as defined in
+   [RFC9068], the AI Agent MUST follow the section 2 of this
+   specification as part of the token validation.
+
+   If the AI Agent delegates its access control logic to a Policy
+   decision point, it MUST follow [OpenIDConnect.AuthZEN] specification
+   for requesting and receiving a decision for the access.
+
+10.1.4.2.  Security
+
+   TODO
+
+10.2.  AI Agent to AI tools
+
+      Interactions between an AI Agent and AI Tools are globally
+      specified by [MCP].  Those sections explain the core
+      specification, [MCP] is based on as well as the complementary
+      specifications RECOMMENDED.
+
+10.2.1.  (E) Negotiation
+
+   Following [RFC9728], the AI Agent MUST interact with AI Tools on the
+   metadata endpoint of an OAuth 2.0 protected resource to understand
+   which Authorization Server is the authority this resource; which
+   scopes or authorization details values MAY be required to access this
+   resources; and if proof of possession needs to be presented as
+   standardized with [RFC9449].
+
+10.2.2.  (F) AI Agent Authorization
+
+   Based on the information collected as part of (E), the AI Agent is
+   initiating an authorization request with the Authorization Server
+   acting as authority for the AI Tools.
+
+   Such authorization request can allow to down, change or translate
+   scope; enrich the authorization with new details based on the
+   context; extend the time boundaries of the authorization; or change
+   from a delegation mode to an impersonation mode and reversely.
+
+   *  If the AI Agent acts on its behalf as a system:
+
+      -  If it does not want or need to refer to the previous context,
+         it MUST start a client credential grant flow as described in
+         section 1.3.4 of [RFC6749];
+
+      -  If it does want or need to refer to the previous context, it
+         MUST start a token exchange flow as described in [RFC8693].
+         The AI Agent will be able to decide in between obtaining tokens
+         representing a Delegation or an Impersonation as described in
+         section 1.1 of the specification.
+
+   *  If the AI Agent acts on delegation by a user:
+
+      -  If the AI Agent can interact and want to interact with the user
+         through the client, it MUST start an authorization code grant
+         flow as described in section 1.3.1 of [RFC6749];
+
+      -  If the AI Agent cannot or does not want to interact with the
+         user through the client, it MAY:
+
+         o  Start a token exchange flow as described in [RFC8693].  The
+            AI Agent will be able to decide in between obtaining tokens
+            representing a Delegation or an Impersonation as described
+            in section 1.1 of the specification.
+
+         o  Start a client initated backchannel authorized request as
+            described in [OpenIDConnect.CIBA]
+
+      Transaction Tokens
+
+10.3.  Agent-to-Resource Authorization
+
+   Present token, peform additional authorization (RBAC etc?)  Direct or
+   via tools Resources, services.
+
+   Agent -> Tool -> Service -> Resource
+
+10.3.1.  Human-in-the loop
+
+   Agent framework problem -> human in the loop - confirm something that
+   it can already do - agent framework capability - confirmation.  Risk
+   management flow.  Human in the loop - request esalated privelages.
+   Step-up authorization - refernece the draft (maybe)
+
+   MCP Elicitation to agent to perform some browser things - start authz
+   code grant flow.  CIBA
+
+10.4.  Case of Multi-Domain Authorization
+
+10.4.1.  Cross Domain Agent-to-Agent Authorization
+
+   Identiyt chaining, ID-Jag.
+
+10.5.  Agent to Agent Authorization
+
+11.  Agent Monitoring and Remediation - Jeff
+
+   Key point - ongoing monitoring and remediation is needed.  Use
+   protocols like SSE, CAEP to respond to changes in authorization.
+   Note the need for ongoing logging and audit trails.  Talk about end-
+   to-end audit and how this is enabled by having agent identifiers.
+
+12.  Agent Auhtentication and Authorization Policy - Discuss
+
+   Key point - configuration and parameters for all the above
+   constitutes policy.  Not stnadardises and not recommended for
+   standrdisation?  Perhaps somethign about document format?
+
+13.  Agent Compliance - Discuss
+
+   Key point - audit against Agent Identity Policy - not standrdised and
+   not recommended to standardise.  Governance and observability.
+   Perhaps we discuss and describe, but don't suggest standards here.
+
+14.  Security Considerations
+
+   TODO Security
+
+15.  IANA Considerations
+
+   This document has no IANA actions.
+
+16.  Normative References
+
+   [MCP]      "Model Context Protocol", n.d.,
+              <https://modelcontextprotocol.io/specification>.
+
+   [OAuth.CIMD]
+              "OAuth Client ID Metadata Document", n.d.,
+              <https://datatracker.ietf.org/doc/draft-ietf-oauth-client-
+              id-metadata-document>.
+
+   [OAuth.mTLS.Auth-RFC8705]
+              "OAuth 2.0 Mutual-TLS Client Authentication and
+              Certificate-Bound Access Tokens", n.d..
+
+   [OAuth.Private.JWT.Auth-RFC7523]
+              "JSON Web Token (JWT) Profile for OAuth 2.0 Client
+              Authentication and Authorization Grants", n.d.,
+              <https://datatracker.ietf.org/doc/html/rfc7523>.
+
+   [OAuth.SPIFFE.CLient.Auth]
+              "OAuth SPIFFE Client Authentication", n.d.,
+              <https://datatracker.ietf.org/doc/draft-ietf-oauth-spiffe-
+              client-auth>.
+
+   [OAuth.step-up.Auth-RFC9470]
+              "OAuth 2.0 Step Up Authentication Challenge Protocol",
+              n.d..
+
+   [OAuth.TRAT]
+              "Transaction Tokens", n.d.,
+              <https://datatracker.ietf.org/doc/draft-ietf-oauth-
+              transaction-tokens/>.
+
+   [OpenIDConnect.AuthZEN]
+              Gazitt, O., Ed., Brossard, D., Ed., and A. Tulshibagwale,
+              Ed., "Authorization API 1.0", 2026,
+              <https://openid.net/specs/authorization-api-1_0.html>.
+
+   [OpenIDConnect.CIBA]
+              "OpenID Connect Client-Initiated Backchannel
+              Authentication Flow - Core 1.0", n.d..
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/rfc/rfc2119>.
+
+   [RFC6749]  "The OAuth 2.0 Authorization Framework", n.d.,
+              <https://datatracker.ietf.org/doc/rfc6749>.
+
+   [RFC6750]  "The OAuth 2.0 Authorization Framework: Bearer Token
+              Usage", n.d., <https://datatracker.ietf.org/doc/rfc6750>.
+
+   [RFC7662]  "OAuth 2.0 Token Introspection", n.d.,
+              <https://datatracker.ietf.org/doc/rfc7662>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+   [RFC8628]  "OAuth 2.0 Device Authorization Grant", n.d.,
+              <https://www.rfc-editor.org/rfc/rfc8628.html>.
+
+   [RFC8693]  "OAuth 2.0 Token Exchange", n.d.,
+              <https://datatracker.ietf.org/doc/rfc8693>.
+
+   [RFC8725]  "JSON Web Token Best Current Practices", n.d.,
+              <https://datatracker.ietf.org/doc/rfc8725>.
+
+   [RFC9068]  "JSON Web Token (JWT) Profile for OAuth 2.0 Access
+              Tokens", n.d., <https://datatracker.ietf.org/doc/rfc9068>.
+
+   [RFC9126]  "OAuth 2.0 Pushed Authorization Requests", n.d.,
+              <https://datatracker.ietf.org/doc/rfc9126>.
+
+   [RFC9334]  Birkholz, H., Thaler, D., Richardson, M., Smith, N., and
+              W. Pan, "Remote ATtestation procedureS (RATS)
+              Architecture", RFC 9334, DOI 10.17487/RFC9334, January
+              2023, <https://www.rfc-editor.org/rfc/rfc9334>.
+
+   [RFC9396]  "OAuth 2.0 Rich Authorization Requests", n.d.,
+              <https://datatracker.ietf.org/doc/rfc9396>.
+
+   [RFC9421]  "HTTP Message Signatures", n.d.,
+              <https://datatracker.ietf.org/doc/rfc9421>.
+
+   [RFC9449]  "OAuth 2.0 Demonstrating Proof of Possession (DPoP)",
+              n.d., <https://datatracker.ietf.org/doc/rfc9449>.
+
+   [RFC9700]  "Best Current Practice for OAuth 2.0 Security", n.d.,
+              <https://datatracker.ietf.org/doc/rfc9700>.
+
+   [RFC9701]  "JWT Response for OAuth 2.0 Token Introspection", n.d.,
+              <https://datatracker.ietf.org/doc/rfc9701>.
+
+   [RFC9728]  "OAuth 2.0 Protected Resource Metadata", n.d.,
+              <https://datatracker.ietf.org/doc/rfc9728/>.
+
+   [SPIFFE]   "Secure Production Identity Framework for Everyone", n.d.,
+              <https://spiffe.io/docs/latest/spiffe-about/overview/>.
+
+   [SPIFFE_BUNDLE]
+              "SPIFFE Bundle", n.d.,
+              <https://github.com/spiffe/spiffe/blob/main/standards/
+              SPIFFE_Trust_Domain_and_Bundle.md#4-spiffe-bundle-format>.
+
+   [SPIFFE_FEDERATION]
+              "SPIFFE Federation", n.d.,
+              <https://github.com/spiffe/spiffe/blob/main/standards/
+              SPIFFE_Federation.md>.
+
+   [SPIFFE_ID]
+              "SPIFFE-ID", n.d.,
+              <https://github.com/spiffe/spiffe/blob/main/standards/
+              SPIFFE-ID.md>.
+
+   [SPIFFE_JWT]
+              "JWT-SVID", n.d.,
+              <https://github.com/spiffe/spiffe/blob/main/standards/JWT-
+              SVID.md>.
+
+   [SPIFFE_X509]
+              "X509-SVID", n.d.,
+              <https://github.com/spiffe/spiffe/blob/main/standards/
+              X509-SVID.md>.
+
+   [WIMSE_ARCH]
+              "Workload Identity in a Multi System Environment (WIMSE)
+              Architecture", n.d.,
+              <https://datatracker.ietf.org/doc/draft-ietf-wimse-arch/>.
+
+   [WIMSE_CRED]
+              "WIMSE Workload Credentials", n.d.,
+              <https://datatracker.ietf.org/doc/draft-ietf-wimse-
+              workload-creds/>.
+
+   [WIMSE_HTTPSIG]
+              "WIMSE Workload-to-Workload Authentication with HTTP
+              Signatures", n.d., <https://datatracker.ietf.org/doc/
+              draft-ietf-wimse-http-signature/>.
+
+   [WIMSE_ID] "WIMSE Identifier", n.d.,
+              <https://datatracker.ietf.org/doc/draft-ietf-wimse-
+              identifier/>.
+
+   [WIMSE_WPT]
+              "WIMSE Proof Token", n.d.,
+              <https://datatracker.ietf.org/doc/draft-ietf-wimse-wpt/>.
+
+Acknowledgments
+
+   TODO acknowledge.
+
+Authors' Addresses
+
+   Pieter Kasselman
+   DeFakto
+   Email: pieter@defakto.security
+
+
+   Jean-François Lombardo
+   AWS
+   Email: jeffsec@amazon.com
