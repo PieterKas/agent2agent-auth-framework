@@ -218,7 +218,7 @@ An Agent Identity Management System ensure that the right Agent has access to th
 * **Agent Compliance:** Measurement of the state and fucntioning of the system against the stated policies.
 
 # Agent Identifier {#agent-identifier}
-Agents MUST be uniquely identified to enable authentication and authorization. 
+Agents MUST be uniquely identified to enable authentication and authorization.
 
 The Secure Production Identity Framework for Everyone (SPIFFE) identifier format is widely deployed and operationally mature. The SPIFFE workload identity model defines a SPIFFE identifier (SPIFFE ID) as a URI of the form `spiffe://<trust-domain>/<path>` that uniquely identifies a workload within a trust domain {{SPIFFE}}.
 
@@ -229,7 +229,7 @@ Since SPIFFE IDs are URI-based workload identifiers and their structure aligns w
 All Agents MUST be assigned a WIMSE identifier, which MAY be a SPIFFE ID.
 
 # Agent Credentials {#agent-credentials}
-Agents MUST have credentials that provide a cryptographic binding to the agent identifier described in {{agent-identifier}}. These credentials are considered primary credentials that are provisioned at runtime. The cryptographic binding is essential for establishing trust since an identifier on its own is insufficient unless it is verifiably tied to a key or token controlled by the agent. 
+Agents MUST have credentials that provide a cryptographic binding to the agent identifier described in {{agent-identifier}}. These credentials are considered primary credentials that are provisioned at runtime. The cryptographic binding is essential for establishing trust since an identifier on its own is insufficient unless it is verifiably tied to a key or token controlled by the agent.
 
 WIMSE define a profile of X.509 certificates and Workload Identity Tokens (WITs) {{WIMSE_CRED}}, while SPIFFE defines SPIFFE Verified ID (SVID) profiles of JSON Web Token (JWT-SVID), X.509 certificates (X.509-SVID) and WIMSE Workload Identity Tokens (WIT-SVID). SPIFFE SVID credentials are compatible with WIMSE defined credentials. The choice of an appropriate format depends on the risk model and integration requirements of a deployment.
 
