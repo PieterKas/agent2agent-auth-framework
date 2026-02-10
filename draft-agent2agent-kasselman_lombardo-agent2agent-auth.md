@@ -150,6 +150,15 @@ normative:
   MCP:
     title: Model Context Protocol
     target: https://modelcontextprotocol.io/specification
+  A2A:
+    title: Agent2Agent (A2A) Protocol
+    target: https://github.com/a2aproject/A2A
+  ACP:
+    title: Agentic Commerce Protocol
+    target: https://www.agenticcommerce.dev/docs
+  AP2:
+    title: Agent Payments Protocol (AP2)
+    target: https://github.com/google-agentic-commerce/AP2
 
 informative:
 
@@ -179,13 +188,13 @@ An Agent is a workload that iteratively interacts with a Large Language Model (L
                     |   Model (LLM)  |
                     +----------------+
                            ▲   |
-                          (2) (3)
-                           |   ▼
-+--------------+       +------------+       +-----------+       +-----------+
-|  User /      |──(1)─►|  AI Agent  |──(4)─►|  AI Tools |──(5)─►| Services  |
-|      /       |       | (workload) |       |           |       |   and     |
-|     / System |◄─(8)──|            |◄─(7)──|           |◄─(6)──| Resources |
-+--------------+       +------------+       +-----------+       +-----------+
+                          (2) (3)              ┌───┐
+                           |   ▼               ▼   │
++--------------+       +------------+       +-------------+       +-----------+
+|  User /      |──(1)─►|  AI Agent  |──(4)─►| Agent /     |──(5)─►| Services  |
+|      /       |       | (workload) |       |      /      |       |   and     |
+|     / System |◄─(8)──|            |◄─(7)──|     / Tools |◄─(6)──| Resources |
++--------------+       +------------+       +-------------+       +-----------+
 ~~~
 {: #fig-agent-basic title="AI Agent as a Workload"}
 
@@ -296,20 +305,20 @@ Those phases rely on the following standards for enforcement of the access contr
                        |   Model (LLM)  |
                        +----------------+
                               ▲   |
-                              │   |
-                              |   ▼
-+--------------+         +------------+         +-----------+         +-----------+
-|  User /      |─(A)(C)─►|  AI Agent  |─(E)(H)─►| AI Tools  |─(J)(M)─►| Services  |
-|      /       |         | (workload) |         |           |         |   and     |
-|     / System |◄────────|            |◄────────|           |◄────────| Resources |
-+--------------+         +------------+         +-----------+         +-----------+
-     ▲                       ▲  ▲                   ▲   ▲                ▲
-     |    ┌──(F)─────────────┘  |                   |   |                |
-     |    |   ┌───(D)───────────┘                  (I)  |                |
-     |    |   |  +---------------+                  |  (K)              (N)
-    (B)   |   |  |    Policy     |                  |   |                |
-     |    |   └─►|   Decision    |◄─────────────────┘   |                |
-     |    |      |    Point      |◄─────────────────────┼────────────────┘
+                              │   |               ┌(H)┐
+                              |   ▼               ▼   │ 
++--------------+         +------------+         +-------------+         +-----------+
+|  User /      |─(A)(C)─►|  AI Agent  |─(E)(H)─►| Agent /     |─(J)(M)─►| Services  |
+|      /       |         | (workload) |         |      /      |         |   and     |
+|     / System |◄────────|            |◄────────|     / Tools |◄────────| Resources |
++--------------+         +------------+         +-------------+         +-----------+
+     ▲                       ▲  ▲                   ▲   ▲                    ▲
+     |    ┌──(F)─────────────┘  |                   |   |                    |
+     |    |   ┌───(D)───────────┘                  (I)  |                    |
+     |    |   |  +---------------+                  |  (K)                  (N)
+    (B)   |   |  |    Policy     |                  |   |                    |
+     |    |   └─►|   Decision    |◄─────────────────┘   |                    |
+     |    |      |    Point      |◄─────────────────────┼────────────────────┘
      |    |      +---------------+                      |
      |    |             ▲                               |
      |    |          (G)(L)                             |
@@ -403,13 +412,22 @@ If the AI Agent delegates its access control logic to a Policy decision point, i
 
 TODO
 
-## AI Agent to AI tools
+## AI Agent To Other Agent / Tools
 
-> Interactions between an AI Agent and AI Tools are globally specified by {{MCP}}. Those sections explain the core specification, {{MCP}} is based on as well as the complementary specifications RECOMMENDED.
+Interactions between an AI Agent and Tools are globally specified by {{MCP}}. Those sections only focus on the Identification, authentication, and authorization aspects of the specification.
+
+Interactions between an AI Agent and other AI Agents are globally specified by {{A2A}}. Note that derived specifications and domain specific specification have emerged like {{AP2}} for Agent payment interaction, {{ACP}} for Agent to commerce flows. Those sections only focus on the Identification, authentication, and authorization aspects of those specifications.
 
 ### (E) Negotiation
 
-Following {{RFC9728}}, the AI Agent MUST interact with AI Tools on the metadata endpoint of an OAuth 2.0 protected resource to understand which Authorization Server is the authority this resource; which scopes or authorization details values MAY be required to access this resources; and if proof of possession needs to be presented as standardized with {{RFC9449}}.
+#### Case of a Tool
+Following {{MCP}}, the AI Agent MUST interact with Tools on the metadata endpoint of an OAuth 2.0 protected resource to understand which Authorization Server is the authority this resource; which scopes or authorization details values MAY be required to access this resources; and if proof of possession needs to be presented as standardized with {{RFC9449}}.
+
+#### Case of an Agent
+
+Following {{A2A}}, the AI Agent MUST interact with the other Agent through their Agent Card. If Extended Agent Card is implemented, the calling AI Agent MUST collect the information to understand which Authorization Server is the authority this resource; which scopes or authorization details values MAY be required to access this resources; and if proof of possession needs to be presented as standardized with {{RFC9449}}.
+
+{{ACP}} and {{AP2}} Agents are expected to follow the same Agent Card feature as {{A2A}} Agents.
 
 ### (F) AI Agent Authorization
 
@@ -426,7 +444,13 @@ Such authorization request can allow to down, change or translate scope; enrich 
     - Start a token exchange flow as described in {{RFC8693}}. The AI Agent will be able to decide in between obtaining tokens representing a Delegation or an Impersonation as described in section 1.1 of the specification.
     - Start a client initated backchannel authorized request as described in {{OpenIDConnect.CIBA}}
 
+If the AI Agent knows that the underlying actions 
+
 > Transaction Tokens
+
+### Security
+
+If the metadata documents are cryptographically signed, the AI Agent MUST validate the signature before using the information for any authentication and authorization decision.
 
 ## Agent-to-Resource Authorization
 Present token, peform additional authorization (RBAC etc?)
