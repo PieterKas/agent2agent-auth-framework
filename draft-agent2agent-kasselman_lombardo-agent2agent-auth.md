@@ -285,7 +285,7 @@ Agents act on behalf of a user, a system, or on their own behalf when interactin
 ## User Authorization Delegation
 In this framework, a User takes on the role of a OAuth Resource Owner and an Agent becomes an OAuth client while the the LLM and the Tools that the Agent access takes on the role of OAuth Resource Servers. These Resource Servers are protected by one or more OAuth Authorization Servers, which issues access tokens to the Agent. The Agent presents the access tokens to the LLM or the Tools in order to complete the task delegayed to it by the user. Agents MUST use the Authorization Code Flow as defined in Section 4.1 of {{RFC6749}} to obtain an access token.
 
-Perhaps the above is sufficient to point readers to the right material? 
+Perhaps the above is sufficient to point readers to the right material?
 
 
 This sketch below feels like it may be too much detail.... but writing it in any event to see how it feels.
@@ -305,7 +305,7 @@ This sketch below feels like it may be too much detail.... but writing it in any
 +--------------+       +------------+        +-----------+        +-----------+
        |    |               |   ▲
       (4)  (3)             (6) (7)
-       |    |               ▼   | 
+       |    |               ▼   |
        |    |       +----------------+
        |    +------►|  OAuth         |
        |            |  Authorization |
@@ -335,7 +335,7 @@ This sketch below feels like it may be too much detail.... but writing it in any
 If the authorrization delegated to the Agent is insufficient to complete a task, it MAY trigger a request for additional authorization from the user by using the OpenID foundation Client Initiated Backchannel Authentication (CIBA) protocol with the appropriate OAuth authorization server. This will trigger a request to the user to grant additional authorization (e.g. through a push notification). Once the user grant authorization, the authorization server issues an access token to the Agent which it may then use to complete the task.
 
 ## System Authorization Delegation
-Rough sketch of this flow - the system already obtained an access token (how is out of scope for this section). It presents the Access Token to the Agent. The Agent exchanges the Access Token for another Access Token, using RFC8693 
+Rough sketch of this flow - the system already obtained an access token (how is out of scope for this section). It presents the Access Token to the Agent. The Agent exchanges the Access Token for another Access Token, using RFC8693.
 
 ## Agent Requesting Authorization for Itself
 This one is just using client credentials flow, or JWT Authorization grant.
