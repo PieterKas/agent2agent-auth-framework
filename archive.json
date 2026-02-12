@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-10T02:35:40.990418+00:00",
+  "timestamp": "2026-02-12T02:28:07.099409+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -97,7 +97,7 @@
       "labels": [],
       "body": ">{{RFC6749}} is an established and maintained framework of specifications for requesting, acquiring, and proving ownership of pieces of authorization in the form of bearer tokens.\n\nI think we should enforce that OAuth is a authorization delegation framework where the RO delegates access to the Client to access and API on the RS by calling the AS (we can split mechanics). \"pieces od the authorization\" = \"authorization delegation by the user\". It hink it is fine to also point out that additional this does not constitute all the authorization information.",
       "createdAt": "2026-01-20T13:49:18Z",
-      "updatedAt": "2026-01-20T15:49:43Z",
+      "updatedAt": "2026-02-10T10:41:08Z",
       "closedAt": null,
       "comments": [
         {
@@ -106,6 +106,13 @@
           "body": "@identitymonk - once the new diagram is in place, it may be worth taking a look at this as well.",
           "createdAt": "2026-01-20T15:49:26Z",
           "updatedAt": "2026-01-20T15:49:26Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "I proposed some text to add this framing here: https://github.com/PieterKas/agent2agent-auth-framework/pull/24",
+          "createdAt": "2026-02-10T10:41:08Z",
+          "updatedAt": "2026-02-10T10:41:08Z"
         }
       ]
     },
@@ -655,13 +662,13 @@
       "labels": [],
       "body": "Added sections on agent authorization and access tokens, detailing OAuth 2.0 mechanisms and token structures.",
       "createdAt": "2026-02-09T20:33:59Z",
-      "updatedAt": "2026-02-09T20:43:22Z",
+      "updatedAt": "2026-02-10T12:41:16Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
       "baseRefOid": "c6a878b16d6112675caf5d268cf6452e9c7d4f67",
       "headRepository": "PieterKas/agent2agent-auth-framework",
       "headRefName": "PieterKas-patch-1",
-      "headRefOid": "8c3a7a876b6ed27499c73e3dad6f2652ccea577f",
+      "headRefOid": "74f74f3e3ac05414aaa33acd8deb0075626c9d7b",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
