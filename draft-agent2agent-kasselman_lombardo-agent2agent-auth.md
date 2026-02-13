@@ -336,21 +336,17 @@ Those phases rely on the following standards for enforcement of the access contr
 ## System to AI Agent
 ### (A) Negotiation - OPTIONAL
 #### Flow
-
 Following {{RFC9728}}, the System MUST act as an OAuth2 client. It MUST interact with the AI Agent on its metadata endpoint which MUST be an OAuth 2.0 protected resource as defined by {{RFC9728}}.
 
 The System will then understand which Authorization Server MUST be the authority this AI Agent; which scopes or authorization details values MAY be required to access this AI Agent; and if extension mechanisms MAY be required to fulfil.
 
 #### Security
-
 The System MUST follow the best current practices described in {{RFC9700}}.
 
 ### (B) Initial Authorization
-
 Based on the information collected as part of (A) or based on its configuration, the System MUST initiate an authorization request to the Authorization Server acting as authority for the AI Agent.
 
 #### Flow
-
 For this, the System MUST use one of the grant types described in {{RFC6749}} as follows:
 
 - In a case of the System is acting on its behalf, it MUST start a client credential grant flow as described in section 1.3.4 of {{RFC6749}};
@@ -360,13 +356,11 @@ For this, the System MUST use one of the grant types described in {{RFC6749}} as
   - If the User is not present at the consuming device (decoupled flow), the System MUST use Client-Initiated Backchannel Authentication {{OpenIDConnect.CIBA}}.
 
 #### Extensions
-
 As part of the grant flow, the User / System MUST also fulfill all the expected extensions it has an understanding of. For example, not exhaustively:
 - Binding the requested tokens to a possessed key as defined in {{RFC9449}} or {#wpt}
 - Requesting additional authorization details as defined in {{RFC9396}} or {{RFC9126}}
 
 #### Identification
-
 The System MUST act as an OAuth2 Client which MAY be assigned a WIMSE identifier, which MAY be a SPIFFE ID.
 
 If so, the System MUST provide a way to resolve one value to the other, either through:
@@ -381,25 +375,19 @@ The System MUST authentication using either:
 - Mutual TLS OAuth client authentication as defined in {{OAuth.mTLS.Auth-RFC8705}}
 
 #### Security
-
 The System MUST follow the best current practices described in {{RFC9700}} for the interactions with the AI Agent and {{RFC8725}} when handling JWTs.
 
 ### (C) Access to the AI Agent
-
 #### Flow
-
 To access an AI Agent, the System MUST present its authorization credential as defined in section 7 of {{RFC6749}} as well as defined in {{RFC6750}}. The client MUST be able to process error codes as defined in section 3 of {{RFC6750}}.
 
 The AI Agent MAY request additional details to be provided through a new authorization credentials using {{OAuth.step-up.Auth-RFC9470}} or error codes as defined in {{RFC6750}}.
 
 #### Security
-
 The client MUST follow the best current practices described in {{RFC9700}}.
 
 ### (D) Controlling access to the AI Agent
-
 #### Flow
-
 The AI Agent MUST validate the presented token as described in {{RFC6749}} as well as defined in {{RFC6750}}.
 
 If token introspection is required, the AI Agent MUST follow {{RFC7662}} as well as {{RFC9701}}.
@@ -409,28 +397,23 @@ If the provided token is a JWT profiled token as defined in {{RFC9068}}, the AI 
 If the AI Agent delegates its access control logic to a Policy decision point, it MUST follow {{OpenIDConnect.AuthZEN}} specification for requesting and receiving a decision for the access.
 
 #### Security
-
 TODO
 
 ## AI Agent To Other Agent / Tools
-
 Interactions between an AI Agent and Tools are globally specified by {{MCP}}. Those sections only focus on the Identification, authentication, and authorization aspects of the specification.
 
 Interactions between an AI Agent and other AI Agents are globally specified by {{A2A}}. Note that derived specifications and domain specific specification have emerged like {{AP2}} for Agent payment interaction, {{ACP}} for Agent to commerce flows. Those sections only focus on the Identification, authentication, and authorization aspects of those specifications.
 
 ### (E) Negotiation
-
 #### Case of a Tool
 Following {{MCP}}, the AI Agent MUST interact with Tools on the metadata endpoint of an OAuth 2.0 protected resource to understand which Authorization Server is the authority this resource; which scopes or authorization details values MAY be required to access this resources; and if proof of possession needs to be presented as standardized with {{RFC9449}}.
 
 #### Case of an Agent
-
 Following {{A2A}}, the AI Agent MUST interact with the other Agent through their Agent Card. If Extended Agent Card is implemented, the calling AI Agent MUST collect the information to understand which Authorization Server is the authority this resource; which scopes or authorization details values MAY be required to access this resources; and if proof of possession needs to be presented as standardized with {{RFC9449}}.
 
 {{ACP}} and {{AP2}} Agents are expected to follow the same Agent Card feature as {{A2A}} Agents.
 
 ### (F) AI Agent Authorization
-
 Based on the information collected as part of (E), the AI Agent is initiating an authorization request with the Authorization Server acting as authority for the AI Tools.
 
 Such authorization request can allow to down, change or translate scope; enrich the authorization with new details based on the context; extend the time boundaries of the authorization; or change from a delegation mode to an impersonation mode and reversely.
@@ -449,7 +432,6 @@ If the AI Agent knows that the underlying actions:
 > Transaction Tokens
 
 ### Security
-
 If the metadata documents are cryptographically signed, the AI Agent MUST validate the signature before using the information for any authentication and authorization decision.
 
 ## Agent-to-Resource Authorization
@@ -467,13 +449,10 @@ MCP Elicitation to agent to perform some browser things - start authz code grant
 CIBA
 
 ## Case of Multi-Domain Authorization
-
 ### Cross Domain Agent-to-Agent Authorization
 Identiyt chaining, ID-Jag.
 
-
 ## Agent to Agent Authorization
-
 # Agent Monitoring and Remediation - Jeff
 Key point - ongoing monitoring and remediation is needed. Use protocols like SSE, CAEP to respond to changes in authorization. Note the need for ongoing logging and audit trails. Talk about end-to-end audit and how this is enabled by having agent identifiers.
 
@@ -484,12 +463,9 @@ Key point - configuration and parameters for all the above constitutes policy. N
 Key point - audit against Agent Identity Policy - not standrdised and not recommended to standardise. Governance and observability. Perhaps we discuss and describe, but don't suggest standards here.
 
 # Security Considerations
-
 TODO Security
 
-
 # IANA Considerations
-
 This document has no IANA actions.
 
 
