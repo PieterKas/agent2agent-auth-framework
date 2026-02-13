@@ -445,7 +445,7 @@ Such authorization request can allow to down, change or translate scope; enrich 
     - Start a token exchange flow as described in {{RFC8693}}. The AI Agent will be able to decide in between obtaining tokens representing a Delegation or an Impersonation as described in section 1.1 of the specification.
     - Start a client initated backchannel authorized request as described in {{OpenIDConnect.CIBA}}
 
-If the AI Agent knows that the underlying actions 
+If the AI Agent knows that the underlying actions:
 
 > Transaction Tokens
 
