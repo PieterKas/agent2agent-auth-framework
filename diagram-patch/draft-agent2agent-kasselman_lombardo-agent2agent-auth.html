@@ -1301,8 +1301,8 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
                        |   v
 +----------+       +----------+       +---------+       +----------+
 | User /   |--(1)-&gt;| AI Agent |--(4)-&gt;| Agent / |--(5)-&gt;| Services |
-|    /     |       |  (work-  |       |    /    |       |   and    |
-|  /System |&lt;-(8)--|   load)  |&lt;-(7)--|  /Tools |&lt;-(6)--| Resource |
+|    /     |       |(workload)|       |    /    |       |   and    |
+|  /System |&lt;-(8)--|          |&lt;-(7)--|  /Tools |&lt;-(6)--| Resource |
 +----------+       +----------+       +---------+       +----------+
 </pre>
 </div>
@@ -1494,12 +1494,12 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
                   |   Model (LLM)  |
                   +----------------+
                          ^   |
-                         |   |
-                         |   v
+                         |   |           +(H)+
+                         |   v           v   |
 +-----------+       +----------+       +---------+       +----------+
 | User /    |-(A)--&gt;| AI Agent |-(E)--&gt;| Agent / |-(J)--&gt;| Services |
-|    /      |-(C)--&gt;|  (work-  |-(H)--&gt;|    /    |-(M)--&gt;|   and    |
-|  / System |&lt;------|   load)  |&lt;------|  /Tools |&lt;------| Resource |
+|    /      |-(C)--&gt;|(workload)|-(H)--&gt;|    /    |-(M)--&gt;|   and    |
+|  / System |&lt;------|          |&lt;------|  /Tools |&lt;------| Resource |
 +-----------+       +----------+       +---------+       +----------+
      ^                  ^  ^               ^   ^              ^
      |    +-(F)---------+  |               |   |              |

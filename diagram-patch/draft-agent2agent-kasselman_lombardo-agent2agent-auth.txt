@@ -140,8 +140,8 @@ Table of Contents
                           |   v
    +----------+       +----------+       +---------+       +----------+
    | User /   |--(1)->| AI Agent |--(4)->| Agent / |--(5)->| Services |
-   |    /     |       |  (work-  |       |    /    |       |   and    |
-   |  /System |<-(8)--|   load)  |<-(7)--|  /Tools |<-(6)--| Resource |
+   |    /     |       |(workload)|       |    /    |       |   and    |
+   |  /System |<-(8)--|          |<-(7)--|  /Tools |<-(6)--| Resource |
    +----------+       +----------+       +---------+       +----------+
 
                       Figure 1: AI Agent as a Workload
@@ -474,12 +474,12 @@ Table of Contents
                      |   Model (LLM)  |
                      +----------------+
                             ^   |
-                            |   |
-                            |   v
+                            |   |           +(H)+
+                            |   v           v   |
    +-----------+       +----------+       +---------+       +----------+
    | User /    |-(A)-->| AI Agent |-(E)-->| Agent / |-(J)-->| Services |
-   |    /      |-(C)-->|  (work-  |-(H)-->|    /    |-(M)-->|   and    |
-   |  / System |<------|   load)  |<------|  /Tools |<------| Resource |
+   |    /      |-(C)-->|(workload)|-(H)-->|    /    |-(M)-->|   and    |
+   |  / System |<------|          |<------|  /Tools |<------| Resource |
    +-----------+       +----------+       +---------+       +----------+
         ^                  ^  ^               ^   ^              ^
         |    +-(F)---------+  |               |   |              |
