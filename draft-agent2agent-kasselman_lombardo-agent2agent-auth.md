@@ -182,7 +182,7 @@ TODO Introduction
 # Agents are workloads
 An Agent is a workload that iteratively interacts with a Large Language Model (LLM) and a set of tools that expose interfaces to underlying services and resources until a terminating condition, determined either by the LLM or by the agent’s internal logic, is reached. It may receive input from a user, or act autonomusly. {{fig-agent-basic}} shows a conceptual model of the AI Agent as a workload and illustrates the high-level interaction model between the User or System, the AI Agent, the Large Language Model (LLM) and the Tools through which the underlying Services and Resources are accessed by the Agent.
 
-```
+~~~ ascii-art
                     +----------------+
                     | Large Language |
                     |   Model (LLM)  |
@@ -195,7 +195,7 @@ An Agent is a workload that iteratively interacts with a Large Language Model (L
 |      /       |       | (workload) |       |      /      |       |   and     |
 |     / System |◄─(8)──|            |◄─(7)──|     / Tools |◄─(6)──| Resources |
 +--------------+       +------------+       +-------------+       +-----------+
-```
+~~~
 {: #fig-agent-basic title="AI Agent as a Workload"}
 
 1. Optional: The User or System provides an initial request or instruction to the AI Agent.
