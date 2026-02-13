@@ -307,7 +307,7 @@ Those phases rely on the following standards for enforcement of the access contr
                        +----------------+
                               ▲   |
                               │   |               ┌(H)┐
-                              |   ▼               ▼   │ 
+                              |   ▼               ▼   │
 +--------------+         +------------+         +-------------+         +-----------+
 |  User /      |─(A)(C)─►|  AI Agent  |─(E)(H)─►| Agent /     |─(J)(M)─►| Services  |
 |      /       |         | (workload) |         |      /      |         |   and     |
