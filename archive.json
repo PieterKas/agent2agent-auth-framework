@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-12T02:28:07.099409+00:00",
+  "timestamp": "2026-02-15T02:29:31.808577+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -411,6 +411,24 @@
       "body": " Device Authorization Grant {{RFC8628}} is fundamentally flawed and we should not recommend its usage.",
       "createdAt": "2026-02-09T20:10:36Z",
       "updatedAt": "2026-02-09T20:10:36Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 25,
+      "id": "I_kwDOQP22qc7qq9jE",
+      "title": "Flow diagrams are broken when ASCII art is rendered in HTML",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/25",
+      "state": "OPEN",
+      "author": "identitymonk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "identitymonk"
+      ],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-02-13T13:11:58Z",
+      "updatedAt": "2026-02-13T13:12:00Z",
       "closedAt": null,
       "comments": []
     }
