@@ -30,7 +30,6 @@ author:
     email: "pieter@defakto.security"
  -
     fullname: Jean-François Lombardo
-    nickname: Jeff
     organization: AWS
     email: jeffsec@amazon.com
 
