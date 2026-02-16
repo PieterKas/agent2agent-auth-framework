@@ -35,7 +35,9 @@ author:
     email: jeffsec@amazon.com
 
 normative:
-  RFC9334: # Remote ATtestation procedureS (RATS) Architecture
+  RFC9334:
+    title: "Remote ATtestation procedureS (RATS) Architecture"
+    target: https://datatracker.ietf.org/doc/rfc9334/
   WIMSE_ID:
     title: "WIMSE Identifier"
     target: https://datatracker.ietf.org/doc/draft-ietf-wimse-identifier/
@@ -116,10 +118,10 @@ normative:
     target: https://datatracker.ietf.org/doc/html/rfc7523
   OAuth.mTLS.Auth-RFC8705:
     title: OAuth 2.0 Mutual-TLS Client Authentication and Certificate-Bound Access Tokens
-    abstract: https://datatracker.ietf.org/doc/html/rfc8705
+    target: https://datatracker.ietf.org/doc/html/rfc8705
   OAuth.step-up.Auth-RFC9470:
     title: OAuth 2.0 Step Up Authentication Challenge Protocol
-    abstract: https://www.rfc-editor.org/rfc/rfc9470.html
+    target: https://www.rfc-editor.org/rfc/rfc9470.html
   OpenIDConnect.AuthZEN:
     title: Authorization API 1.0
     target: https://openid.net/specs/authorization-api-1_0.html
@@ -136,11 +138,11 @@ normative:
     date: 2026
   OpenIDConnect.CIBA:
     title: OpenID Connect Client-Initiated Backchannel Authentication Flow - Core 1.0
-    abstract: https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html
+    targett: https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html
   OAuth.TRAT:
     title: Transaction Tokens
     target: https://datatracker.ietf.org/doc/draft-ietf-oauth-transaction-tokens/
-  OAuth.SPIFFE.CLient.Auth:
+  OAuth.SPIFFE.Client.Auth:
     title: OAuth SPIFFE Client Authentication
     target: https://datatracker.ietf.org/doc/draft-ietf-oauth-spiffe-client-auth
   OAuth.CIMD:
@@ -151,7 +153,7 @@ normative:
     target: https://datatracker.ietf.org/doc/draft-ietf-oauth-identity-assertion-authz-grant/01/
   OAuth.IDChaining:
     title: OAuth Identity and Authorization Chaining Across Domains
-    abstract: https://datatracker.ietf.org/doc/draft-ietf-oauth-identity-chaining/
+    target: https://datatracker.ietf.org/doc/draft-ietf-oauth-identity-chaining/
   MCP:
     title: Model Context Protocol
     target: https://modelcontextprotocol.io/specification
