@@ -134,11 +134,11 @@ Table of Contents
    underlying services and resources until a terminating condition,
    determined either by the LLM or by the agent’s internal logic, is
    reached.  It may receive input from a user, or act autonomusly.
-   <<fig-agent-basic>> shows a conceptual model of the AI Agent as a
-   workload and illustrates the high-level interaction model between the
-   User or System, the AI Agent, the Large Language Model (LLM) and the
-   Tools through which the underlying Services and Resources are
-   accessed by the Agent.
+   Figure 1 shows a conceptual model of the AI Agent as a workload and
+   illustrates the high-level interaction model between the User or
+   System, the AI Agent, the Large Language Model (LLM) and the Tools
+   through which the underlying Services and Resources are accessed by
+   the Agent.
 
                     +----------------+
                     | Large Language |
@@ -184,14 +184,14 @@ Table of Contents
    8.  Optional: Once the exit condition is reached in step 7, the AI
        Agent may return a response to the User or System.
 
-   As shown in <<fig-agent-basic>>, the AI Agent is a workload that
-   needs and identifier and credentials with which it can be
-   authenticated by the User or System, Large Langugage Model and Tools.
-   Once it is authenticated, the Large Langugage Model and Tools must
-   determine if the AI Agent is authorized to access it.  If the AI
-   Agent is acting on-behalf-of a User or System, the User or System
-   needs to delegate access to the AI Agent, and the context of the User
-   or System needs to be preserved to inform authorization decisions.
+   As shown in Figure 1, the AI Agent is a workload that needs and
+   identifier and credentials with which it can be authenticated by the
+   User or System, Large Langugage Model and Tools.  Once it is
+   authenticated, the Large Langugage Model and Tools must determine if
+   the AI Agent is authorized to access it.  If the AI Agent is acting
+   on-behalf-of a User or System, the User or System needs to delegate
+   access to the AI Agent, and the context of the User or System needs
+   to be preserved to inform authorization decisions.
 
    This document describes how AI Agents should leverage existing
    standards defined by SPIFFE [SPIFFE], WIMSE, OAuth and SSF.
@@ -459,8 +459,8 @@ Table of Contents
 10.  Agent Authorization
 
    Agents act on behalf of a user, a system, or on their own behalf as
-   shown in <<fig-agent-basic>> and needs to obtain authorization when
-   interacting with protected resources.
+   shown in Figure 1 and needs to obtain authorization when interacting
+   with protected resources.
 
 10.1.  Leverage OAuth 2.0 as a Delegation Authorization Framework
 
@@ -475,8 +475,8 @@ Table of Contents
    Authorization Server, which receives the request, evaluate the
    authorization policy and returns an access token, which the Agent
    presents to the Resource Server (i.e. the protected resources such as
-   the LLM or Tools in <<fig-agent-basic>>) it needs to access to
-   complete the request.
+   the LLM or Tools in Figure 1) it needs to access to complete the
+   request.
 
 10.2.  Use of OAuth 2.0 Access Tokens
 
@@ -575,12 +575,11 @@ Table of Contents
 
    Agents often require access to resources that are protected by
    different OAuth 2.0 authorization servers.  When the components in
-   <<fig-agent-basic>> are protected by different logical authorization
-   servers, an Agent SHOULD use OAuth Identity and Authorization
-   Chaining Across Domains as defined in [OAuth.IDChaining], or a
-   derived specification such as the Identity Assertion JWT
-   Authorization Grant [OAuth.IDJAG], to obtain an access token from the
-   relevant authorization servers.
+   Figure 1 are protected by different logical authorization servers, an
+   Agent SHOULD use OAuth Identity and Authorization Chaining Across
+   Domains as defined in [OAuth.IDChaining], or a derived specification
+   such as the Identity Assertion JWT Authorization Grant [OAuth.IDJAG],
+   to obtain an access token from the relevant authorization servers.
 
    When using OAuth Identity and Authorization Chaining Across Domains
    ([OAuth.IDChaining]), an Agent SHOULD use the access token or
