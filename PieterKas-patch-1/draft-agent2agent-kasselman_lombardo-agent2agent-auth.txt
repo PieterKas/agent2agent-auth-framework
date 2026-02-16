@@ -153,7 +153,7 @@ Table of Contents
 |     / System |◄─(8)──|            |◄─(7)──|           |◄─(6)──| Resources |
 +--------------+       +------------+       +-----------+       +-----------+
 
-                   Figure 1: AI Agent as a Workload
+Figure 1: AI Agent as a Workload
 
    1.  Optional: The User or System provides an initial request or
        instruction to the AI Agent.
