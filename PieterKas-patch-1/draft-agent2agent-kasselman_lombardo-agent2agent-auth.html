@@ -168,7 +168,7 @@
   font-weight: 400;
   font-display: swap;
   src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
   font-family: 'Oxygen Mono';
@@ -176,7 +176,8 @@
   font-weight: 400;
   font-display: swap;
   src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 }
 
 @font-face {
@@ -1051,7 +1052,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Kasselman &amp; Lombardo</td>
-<td class="center">Expires 14 August 2026</td>
+<td class="center">Expires 20 August 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1064,12 +1065,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-agent2agent-kasselman_lombardo-agent2agent-auth-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-02-10" class="published">10 February 2026</time>
+<time datetime="2026-02-16" class="published">16 February 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-08-14">14 August 2026</time></dd>
+<dd class="expires"><time datetime="2026-08-20">20 August 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1118,7 +1119,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 14 August 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 20 August 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1194,54 +1195,72 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.10.1"><a href="#section-10" class="auto internal xref">10</a>. <a href="#name-agent-authorization" class="internal xref">Agent Authorization</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.1">
-                <p id="section-toc.1-1.10.2.1.1"><a href="#section-10.1" class="auto internal xref">10.1</a>.  <a href="#name-user-authorization-delegati" class="internal xref">User Authorization Delegation</a></p>
+                <p id="section-toc.1-1.10.2.1.1"><a href="#section-10.1" class="auto internal xref">10.1</a>.  <a href="#name-leverage-oauth-20-as-a-dele" class="internal xref">Leverage OAuth 2.0 as a Delegation Authorization Framework</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.2">
-                <p id="section-toc.1-1.10.2.2.1"><a href="#section-10.2" class="auto internal xref">10.2</a>.  <a href="#name-system-to-ai-agent" class="internal xref">System to AI Agent</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.2.2.1">
-                    <p id="section-toc.1-1.10.2.2.2.1.1"><a href="#section-10.2.1" class="auto internal xref">10.2.1</a>.  <a href="#name-flow" class="internal xref">Flow</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.2.2.2">
-                    <p id="section-toc.1-1.10.2.2.2.2.1"><a href="#section-10.2.2" class="auto internal xref">10.2.2</a>.  <a href="#name-b-initial-authorization" class="internal xref">(B) Initial Authorization</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.2.2.3">
-                    <p id="section-toc.1-1.10.2.2.2.3.1"><a href="#section-10.2.3" class="auto internal xref">10.2.3</a>.  <a href="#name-c-access-to-the-ai-agent" class="internal xref">(C) Access to the AI Agent</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.2.2.4">
-                    <p id="section-toc.1-1.10.2.2.2.4.1"><a href="#section-10.2.4" class="auto internal xref">10.2.4</a>.  <a href="#name-d-controlling-access-to-the" class="internal xref">(D) Controlling access to the AI Agent</a></p>
-</li>
-                </ul>
+                <p id="section-toc.1-1.10.2.2.1"><a href="#section-10.2" class="auto internal xref">10.2</a>.  <a href="#name-use-of-oauth-20-access-toke" class="internal xref">Use of OAuth 2.0 Access Tokens</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.3">
-                <p id="section-toc.1-1.10.2.3.1"><a href="#section-10.3" class="auto internal xref">10.3</a>.  <a href="#name-ai-agent-to-ai-tools" class="internal xref">AI Agent to AI tools</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.3.2.1">
-                    <p id="section-toc.1-1.10.2.3.2.1.1"><a href="#section-10.3.1" class="auto internal xref">10.3.1</a>.  <a href="#name-e-negotiation" class="internal xref">(E) Negotiation</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.3.2.2">
-                    <p id="section-toc.1-1.10.2.3.2.2.1"><a href="#section-10.3.2" class="auto internal xref">10.3.2</a>.  <a href="#name-f-ai-agent-authorization" class="internal xref">(F) AI Agent Authorization</a></p>
-</li>
-                </ul>
+                <p id="section-toc.1-1.10.2.3.1"><a href="#section-10.3" class="auto internal xref">10.3</a>.  <a href="#name-obtaining-an-oauth-20-acces" class="internal xref">Obtaining an OAuth 2.0 Access Token</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.4">
-                <p id="section-toc.1-1.10.2.4.1"><a href="#section-10.4" class="auto internal xref">10.4</a>.  <a href="#name-agent-to-resource-authoriza" class="internal xref">Agent-to-Resource Authorization</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.4.2.1">
-                    <p id="section-toc.1-1.10.2.4.2.1.1"><a href="#section-10.4.1" class="auto internal xref">10.4.1</a>.  <a href="#name-human-in-the-loop" class="internal xref">Human-in-the loop</a></p>
-</li>
-                </ul>
+                <p id="section-toc.1-1.10.2.4.1"><a href="#section-10.4" class="auto internal xref">10.4</a>.  <a href="#name-risk-reduction-with-transac" class="internal xref">Risk reduction with Transaction Tokens</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.5">
-                <p id="section-toc.1-1.10.2.5.1"><a href="#section-10.5" class="auto internal xref">10.5</a>.  <a href="#name-case-of-multi-domain-author" class="internal xref">Case of Multi-Domain Authorization</a></p>
+                <p id="section-toc.1-1.10.2.5.1"><a href="#section-10.5" class="auto internal xref">10.5</a>.  <a href="#name-cross-domain-access" class="internal xref">Cross Domain Access</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.6">
+                <p id="section-toc.1-1.10.2.6.1"><a href="#section-10.6" class="auto internal xref">10.6</a>.  <a href="#name-human-in-the-loop" class="internal xref">Human in the Loop</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.7">
+                <p id="section-toc.1-1.10.2.7.1"><a href="#section-10.7" class="auto internal xref">10.7</a>.  <a href="#name-tool-to-service-acccess" class="internal xref">Tool-to-Service Acccess</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.8">
+                <p id="section-toc.1-1.10.2.8.1"><a href="#section-10.8" class="auto internal xref">10.8</a>.  <a href="#name-system-to-ai-agent" class="internal xref">System to AI Agent</a></p>
 <ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.5.2.1">
-                    <p id="section-toc.1-1.10.2.5.2.1.1"><a href="#section-10.5.1" class="auto internal xref">10.5.1</a>.  <a href="#name-cross-domain-agent-to-agent" class="internal xref">Cross Domain Agent-to-Agent Authorization</a></p>
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.8.2.1">
+                    <p id="section-toc.1-1.10.2.8.2.1.1"><a href="#section-10.8.1" class="auto internal xref">10.8.1</a>.  <a href="#name-flow" class="internal xref">Flow</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.8.2.2">
+                    <p id="section-toc.1-1.10.2.8.2.2.1"><a href="#section-10.8.2" class="auto internal xref">10.8.2</a>.  <a href="#name-b-initial-authorization" class="internal xref">(B) Initial Authorization</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.8.2.3">
+                    <p id="section-toc.1-1.10.2.8.2.3.1"><a href="#section-10.8.3" class="auto internal xref">10.8.3</a>.  <a href="#name-c-access-to-the-ai-agent" class="internal xref">(C) Access to the AI Agent</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.8.2.4">
+                    <p id="section-toc.1-1.10.2.8.2.4.1"><a href="#section-10.8.4" class="auto internal xref">10.8.4</a>.  <a href="#name-d-controlling-access-to-the" class="internal xref">(D) Controlling access to the AI Agent</a></p>
 </li>
                 </ul>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.6">
-                <p id="section-toc.1-1.10.2.6.1"><a href="#section-10.6" class="auto internal xref">10.6</a>.  <a href="#name-agent-to-agent-authorizatio" class="internal xref">Agent to Agent Authorization</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.9">
+                <p id="section-toc.1-1.10.2.9.1"><a href="#section-10.9" class="auto internal xref">10.9</a>.  <a href="#name-ai-agent-to-ai-tools" class="internal xref">AI Agent to AI tools</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.9.2.1">
+                    <p id="section-toc.1-1.10.2.9.2.1.1"><a href="#section-10.9.1" class="auto internal xref">10.9.1</a>.  <a href="#name-e-negotiation" class="internal xref">(E) Negotiation</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.9.2.2">
+                    <p id="section-toc.1-1.10.2.9.2.2.1"><a href="#section-10.9.2" class="auto internal xref">10.9.2</a>.  <a href="#name-f-ai-agent-authorization" class="internal xref">(F) AI Agent Authorization</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.10">
+                <p id="section-toc.1-1.10.2.10.1"><a href="#section-10.10" class="auto internal xref">10.10</a>. <a href="#name-agent-to-resource-authoriza" class="internal xref">Agent-to-Resource Authorization</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.10.2.1">
+                    <p id="section-toc.1-1.10.2.10.2.1.1"><a href="#section-10.10.1" class="auto internal xref">10.10.1</a>.  <a href="#name-human-in-the-loop-2" class="internal xref">Human-in-the loop</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.11">
+                <p id="section-toc.1-1.10.2.11.1"><a href="#section-10.11" class="auto internal xref">10.11</a>. <a href="#name-case-of-multi-domain-author" class="internal xref">Case of Multi-Domain Authorization</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.11.2.1">
+                    <p id="section-toc.1-1.10.2.11.2.1.1"><a href="#section-10.11.1" class="auto internal xref">10.11.1</a>.  <a href="#name-cross-domain-agent-to-agent" class="internal xref">Cross Domain Agent-to-Agent Authorization</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.12">
+                <p id="section-toc.1-1.10.2.12.1"><a href="#section-10.12" class="auto internal xref">10.12</a>. <a href="#name-agent-to-agent-authorizatio" class="internal xref">Agent to Agent Authorization</a></p>
 </li>
             </ul>
 </li>
@@ -1439,7 +1458,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <p id="section-8-5">Deployed frameworks such as <span>[<a href="#SPIFFE" class="cite xref">SPIFFE</a>]</span> provide concrete mechanisms for automated, short-lived credential provisioning at runtime based on workload attestation. In addition to issuing short-lived credentials, <span>[<a href="#SPIFFE" class="cite xref">SPIFFE</a>]</span> also provisions ephemeral cryptographic key material bound to each credential, further reducing the risks associated with compromising long-lived keys.<a href="#section-8-5" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="agent-authentication">
+<div id="agent_authentication">
 <section id="section-9">
       <h2 id="name-agent-authentication">
 <a href="#section-9" class="section-number selfRef">9. </a><a href="#name-agent-authentication" class="section-name selfRef">Agent Authentication</a>
@@ -1489,87 +1508,82 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
       <h2 id="name-agent-authorization">
 <a href="#section-10" class="section-number selfRef">10. </a><a href="#name-agent-authorization" class="section-name selfRef">Agent Authorization</a>
       </h2>
-<p id="section-10-1">Agents act on behalf of a user, a system, or on their own behalf when interacting with protected resources. The OAuth 2.0 Authorization Framework <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> is widely deployed and defines an authorization delegation framework that enables an agent to obtain limited access to a service under well-defined policy constraints. An agent <span class="bcp14">MUST</span> use OAuth 2.0-based mechanisms to obtain authorization from a user, a system, or on its own behalf. In all of these flows, an OAuth Authorization Server returns an access token, which the Agent presents to the protected resources (LLM or Tools) it needs to access to complete the request.<a href="#section-10-1" class="pilcrow">¶</a></p>
-<div id="user-authorization-delegation">
+<p id="section-10-1">Agents act on behalf of a user, a system, or on their own behalf as shown in <a href="#fig-agent-basic" class="auto internal xref">Figure 1</a> and needs to obtain authorization when interacting with protected resources.<a href="#section-10-1" class="pilcrow">¶</a></p>
+<div id="leverage-oauth-20-as-a-delegation-authorization-framework">
 <section id="section-10.1">
-        <h3 id="name-user-authorization-delegati">
-<a href="#section-10.1" class="section-number selfRef">10.1. </a><a href="#name-user-authorization-delegati" class="section-name selfRef">User Authorization Delegation</a>
+        <h3 id="name-leverage-oauth-20-as-a-dele">
+<a href="#section-10.1" class="section-number selfRef">10.1. </a><a href="#name-leverage-oauth-20-as-a-dele" class="section-name selfRef">Leverage OAuth 2.0 as a Delegation Authorization Framework</a>
         </h3>
-<p id="section-10.1-1">In this framework, a User takes on the role of a OAuth Resource Owner and an Agent becomes an OAuth client while the the LLM and the Tools that the Agent access takes on the role of OAuth Resource Servers. These Resource Servers are protected by one or more OAuth Authorization Servers, which issues access tokens to the Agent. The Agent presents the access tokens to the LLM or the Tools in order to complete the task delegayed to it by the user. Agents <span class="bcp14">MUST</span> use the Authorization Code Flow as defined in Section 4.1 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> to obtain an access token.<a href="#section-10.1-1" class="pilcrow">¶</a></p>
-<p id="section-10.1-2">Perhaps the above is sufficient to point readers to the right material?<a href="#section-10.1-2" class="pilcrow">¶</a></p>
-<p id="section-10.1-3">This sketch below feels like it may be too much detail.... but writing it in any event to see how it feels.
-~~~ ascii-art
-                    +----------------+
-                    | Large Language |
-                    |   Model (LLM)  |
-                    +----------------+
-                           ▲   |
-                          (8) (9)
-                           |   ▼
-+--------------+       +------------+        +-----------+        +-----------+
-|              |──(1)─►|  AI Agent  |──(10)─►|  AI Tools |──(11)─►| Services  |
-|    User      |◄─(2)──| (workload) |        |           |        |   and     |
-|              |──(5)─►|            |◄─(13)──|           |◄─(12)──| Resources |
-|              |◄─(14)─|            |        |           |        |   and     |
-+--------------+       +------------+        +-----------+        +-----------+
-       |    |               |   ▲
-      (4)  (3)             (6) (7)
-       |    |               ▼   |
-       |    |       +----------------+
-       |    +------►|  OAuth         |
-       |            |  Authorization |
-       +------------|  Server        |
-                    +----------------+<a href="#section-10.1-3" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-10.1-4">
-<pre>
-{: #fig-user-authz-delegation title="User Authorization Delegation"}
-
-1. User initiates task
-2. Agent requires delegated authorization and redirects to the user.
-3. The user authenticates and provides authorization to the OAuth Authorization Server
-4. The Authroization Server returns an authorization code.
-5. The authorization code is sent to the agent
-6. The agent presents the authorization code to the OAuth authorization server
-7. The OAuth authorization server returns an access token to the Agent
-8. The Agent presents the access token to the LLM to request instructions based on the user prompt.
-9. The LLM return instruction on which Tools to call.
-10. The Agent presents the access token to the Tools as needed.
-11. The Tools access Services and Resources based on the access granted via the Access Token.
-12. The Services and Resources returns results to the Tool interface
-13. The Tool interface returns results to the Agent. Steps 8-13 are repeated until an exit condition is met.
-14. The Agent returns the result to the User.
-
-## Additional User Authorization
-If the authorrization delegated to the Agent is insufficient to complete a task, it MAY trigger a request for additional authorization from the user by using the OpenID foundation Client Initiated Backchannel Authentication (CIBA) protocol with the appropriate OAuth authorization server. This will trigger a request to the user to grant additional authorization (e.g. through a push notification). Once the user grant authorization, the authorization server issues an access token to the Agent which it may then use to complete the task.
-
-## System Authorization Delegation
-Rough sketch of this flow - the system already obtained an access token (how is out of scope for this section). It presents the Access Token to the Agent. The Agent exchanges the Access Token for another Access Token, using RFC8693.
-
-## Agent Requesting Authorization for Itself
-This one is just using client credentials flow, or JWT Authorization grant.
-
-
-## Access Tokens and Agent Identity
-OAuth authorization results in the issuance of an access token that represents the granted authorization. In many deployments, access tokens are structured as JSON Web Tokens (JWTs) {{RFC9068}}, which include claims such as 'client_id', 'sub', 'aud', 'scope', and other attributes relevant to authorization. The 'client_id' MUST be associated with the agent’s identity and SHOULD be used by resource servers as a part of an authorization decision.
-
-Additional claims may be included to convey contextual, attestation-derived, or policy-related information that enables fine-grained access control. Where JWT access tokens are not used, opaque tokens may be issued and validated through introspection mechanisms. This framework supports both models and does not require a specific token format, provided that equivalent authorization semantics are maintained.
-
-
------------------------------------------------------
-
-
-
-During agent execution, authorization must be enforced at all the components involved in the process to provide an in-depth protection of the resources that might be interacted with. For each component, we must consider the following 3 phases:
+<p id="section-10.1-1">The OAuth 2.0 Authorization Framework <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> is widely deployed and defines an authorization delegation framework that enables an agent to obtain limited access to a protected resource (e.g. a service or API) under well-defined policy constraints. An agent <span class="bcp14">MUST</span> use OAuth 2.0-based mechanisms to obtain authorization from a user, a system, or on its own behalf. OAuth 2.0 defines a wide range of authorization grant flows that supports these scenarios. In these Oauth 2.0 flows, an Agent acts as an OAuth 2.0 Client to an OAuth 2.0 Authorization Server, which receives the request, evaluate the authorization policy and returns an access token, which the Agent presents to the Resource Server (i.e. the protected resources such as the LLM or Tools in <a href="#fig-agent-basic" class="auto internal xref">Figure 1</a>) it needs to access to complete the request.<a href="#section-10.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="use-of-oauth-20-access-tokens">
+<section id="section-10.2">
+        <h3 id="name-use-of-oauth-20-access-toke">
+<a href="#section-10.2" class="section-number selfRef">10.2. </a><a href="#name-use-of-oauth-20-access-toke" class="section-name selfRef">Use of OAuth 2.0 Access Tokens</a>
+        </h3>
+<p id="section-10.2-1">An OAuth access token represents the authorization granted to the Agent. In many deployments, access tokens are structured as JSON Web Tokens (JWTs) <span>[<a href="#RFC9068" class="cite xref">RFC9068</a>]</span>, which include claims such as 'client_id', 'sub', 'aud', 'scope', and other attributes relevant to authorization. The access token <span class="bcp14">MUST</span> include the Agent identity as the 'client_id' claim as defined in Section 2.2 of <span>[<a href="#RFC9068" class="cite xref">RFC9068</a>]</span>. If the Agent is acting on-behalf of another user or system, it <span class="bcp14">MUST</span> include the user or system identifier in the 'sub' claim as defined in Section 2.2 of <span>[<a href="#RFC9068" class="cite xref">RFC9068</a>]</span>. These identitifiers <span class="bcp14">MUST</span> be used by resource servers protected by the OAuth 2.0 authorization service, along with other claims in the access token, to determine if access to a resource should be allowed. The acccess token <span class="bcp14">MAY</span> include additional claims to convey contextual, attestation-derived, or policy-related information that enables fine-grained access control. The resource server <span class="bcp14">MAY</span> use the access token and the information it contains along with other authorization systems (e.g. policy based, attribute based or role based authorization systems) when enforcing access. Where JWT access tokens are not used, opaque tokens may be issued and validated through introspection mechanisms. This framework supports both models and does not require a specific token format, provided that equivalent authorization semantics are maintained.<a href="#section-10.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="obtaining-an-oauth-20-access-token">
+<section id="section-10.3">
+        <h3 id="name-obtaining-an-oauth-20-acces">
+<a href="#section-10.3" class="section-number selfRef">10.3. </a><a href="#name-obtaining-an-oauth-20-acces" class="section-name selfRef">Obtaining an OAuth 2.0 Access Token</a>
+        </h3>
+<p id="section-10.3-1">Agents <span class="bcp14">MUST</span> obtain OAuth 2.0 accss tokens using standards OAuth 2.0 Authorization Flows.<a href="#section-10.3-1" class="pilcrow">¶</a></p>
+<p id="section-10.3-2">When obtaining an access token on-behalf of a user, the Authorization Code Grant <span class="bcp14">MUST</span> be used as described in Section 4.1 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>.<a href="#section-10.3-2" class="pilcrow">¶</a></p>
+<p id="section-10.3-3">Agents obtaining access tokens on their own behalf <span class="bcp14">MUST</span> use the Client Credentials Grant as described in Section 4.4 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> or the JWT Authorization Grant as described in section 2.1. of <span>[<a href="#OAuth.Private.JWT.Auth-RFC7523" class="cite xref">OAuth.Private.JWT.Auth-RFC7523</a>]</span>. When using the Client Credentials Grant, the Agent <span class="bcp14">MUST</span> authenticate itself using one of the mechanisms described in <a href="#agent_authentication" class="auto internal xref">Section 9</a> and <span class="bcp14">MUST NOT</span> use static, long lived client secrets to authenticate.<a href="#section-10.3-3" class="pilcrow">¶</a></p>
+<p id="section-10.3-4">When Agents are invoked by a System, the System <span class="bcp14">SHOULD</span> treat the Agent as an OAuth protected resource. The System <span class="bcp14">SHOULD</span> obtain an access token using the same mechanisms defined for an Agent and then present the OAuth access token to the Agent. The agent should validate the access token, including verifiying that the 'aud' claim of the access token includes the Agent. Once validated, the Agent <span class="bcp14">SHOULD</span> use OAuth 2.0 Token Exchange as defined in <span>[<a href="#RFC8693" class="cite xref">RFC8693</a>]</span> to exchange the access token it received for a new access token to access. The Agent then uses the newly issued access token to access the protected resources (LLM or Tools) it needs to complete the request.<a href="#section-10.3-4" class="pilcrow">¶</a></p>
+<p id="section-10.3-5">Agents <span class="bcp14">MUST</span> support the Best Current Practice for OAuth 2.0 Security as described in <span>[<a href="#RFC9700" class="cite xref">RFC9700</a>]</span> when requesting acccess tokens.<a href="#section-10.3-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="trat-risk-reduction">
+<section id="section-10.4">
+        <h3 id="name-risk-reduction-with-transac">
+<a href="#section-10.4" class="section-number selfRef">10.4. </a><a href="#name-risk-reduction-with-transac" class="section-name selfRef">Risk reduction with Transaction Tokens</a>
+        </h3>
+<p id="section-10.4-1">Resources servers, whether they are LLMs, Tools or Agents (in the Agent-to-Agent case) may be composed of multiple microservices that are invoked to complete a request. The access tokens presented to the Agent, LLM or Tools can typically be used with multiple transactions and consequently have broader scope than needed to complete any specific transaction. Passing the access token from one microservice to another within an Agent, LLM or the Tools invoked by the Agent increases the risk of token theft and replay attaccks. For example, an attacker may discover and access token passed between microservices in a log file or crash dump, exfiltrate it, and use it to invoke a new transaction with different parameters (e.g. increase the trnasaction amount, or invoke an unrelated call as part of executing a lateral move).<a href="#section-10.4-1" class="pilcrow">¶</a></p>
+<p id="section-10.4-2">To avoid passing access tokens between microservices, the Agent, LLM or Tools <span class="bcp14">SHOULD</span> exchange the access token it receives for a transaction token, as defined in the Transaction Token specification as defined in <span>[<a href="#OAuth.TRAT" class="cite xref">OAuth.TRAT</a>]</span>. The transaction token allows for identity and auhtorization information to be passed along a call chain between microservices. The transaction token issuer enriches the transaction token with context of the caller that presented the access token (e.g. IP address etc), transaction context (transaction amount), identity information and a unique transaction identifier. This results in a dowscoped token that is bound to a specific transaction that cannot be used as an access token, with another transaction, or within the same transaction with modified transaction details (e.g. change in transaction amount). Transaction tokens are typically short lived, further lmiting the risk in case they are obtained by an attacker by liomiting the time window during which these tokens will be accepted.<a href="#section-10.4-2" class="pilcrow">¶</a></p>
+<p id="section-10.4-3">A transaction token <span class="bcp14">MAY</span> be used to obtain an access token to call another service (e.g. another Agent, Tool or LLM) by using OAuth 2.0 Token Exchange as defined in <span>[<a href="#RFC8693" class="cite xref">RFC8693</a>]</span>.<a href="#section-10.4-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="cross-domain-access">
+<section id="section-10.5">
+        <h3 id="name-cross-domain-access">
+<a href="#section-10.5" class="section-number selfRef">10.5. </a><a href="#name-cross-domain-access" class="section-name selfRef">Cross Domain Access</a>
+        </h3>
+<p id="section-10.5-1">Agents often require access to resources that are protected by different OAuth 2.0 authorization servers. When the components in <a href="#fig-agent-basic" class="auto internal xref">Figure 1</a> are protected by different logical authorization servers, an Agent <span class="bcp14">SHOULD</span> use OAuth Identity and Authorization Chaining Across Domains as defined in <span>[<a href="#OAuth.IDChaining" class="cite xref">OAuth.IDChaining</a>]</span>, or a derived specification such as the Identity Assertion JWT Authorization Grant <span>[<a href="#OAuth.IDJAG" class="cite xref">OAuth.IDJAG</a>]</span>, to obtain an access token from the relevant authorization servers.<a href="#section-10.5-1" class="pilcrow">¶</a></p>
+<p id="section-10.5-2">When using OAuth Identity and Authorization Chaining Across Domains (<span>[<a href="#OAuth.IDChaining" class="cite xref">OAuth.IDChaining</a>]</span>), an Agent <span class="bcp14">SHOULD</span> use the access token or transaction token it received to obtain a JWT authorization grant as described in section 2.3 of <span>[<a href="#OAuth.IDChaining" class="cite xref">OAuth.IDChaining</a>]</span> and then use the JWT authorization grant it receives to obtain an access token for the resource it is trying to access as defined in section 2.4 of <span>[<a href="#OAuth.IDChaining" class="cite xref">OAuth.IDChaining</a>]</span>.<a href="#section-10.5-2" class="pilcrow">¶</a></p>
+<p id="section-10.5-3">When using the Identity Assertion JWT Authorization Grant <span>[<a href="#OAuth.IDJAG" class="cite xref">OAuth.IDJAG</a>]</span>, the identity assertion (e.g. the OpenID Connect ID Token or SAML assertion) for the target end-user is used to obtain a JWT assertion (ID-JAG) as described in section 4.3 of <span>[<a href="#OAuth.IDJAG" class="cite xref">OAuth.IDJAG</a>]</span>, which is then used to obtain an access token as described in section 4.4 of <span>[<a href="#OAuth.IDJAG" class="cite xref">OAuth.IDJAG</a>]</span>.<a href="#section-10.5-3" class="pilcrow">¶</a></p>
+<p id="section-10.5-4">OAuth Identity and Authorization Chaining Across Domains (<span>[<a href="#OAuth.IDChaining" class="cite xref">OAuth.IDChaining</a>]</span>) provides a general mechanism for obtaining cross-domain access that can be used whether an identity assertion like a SAML or OpenID Connect token is available or not. The Identity Assertion JWT Authorization Grant <span>[<a href="#OAuth.IDJAG" class="cite xref">OAuth.IDJAG</a>]</span> is optimised for cases where an identity assertion like a SAML or OpenID Connect token is available from an identity provider that is trusted by all the OAuth authorization servers as it removes the need for the user to re-authenticate. This is typically used within enterprise deployments to simplify authorization delegation for multiple software-as-a-service offerings.<a href="#section-10.5-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="human-in-the-loop">
+<section id="section-10.6">
+        <h3 id="name-human-in-the-loop">
+<a href="#section-10.6" class="section-number selfRef">10.6. </a><a href="#name-human-in-the-loop" class="section-name selfRef">Human in the Loop</a>
+        </h3>
+<p id="section-10.6-1">An OAuth authorization server <span class="bcp14">MAY</span> conclude that the level of access to a resource that an Agent, LLM or Tool is requesting requires additional authorization from the User. When it determines that additional authorization is required, it <span class="bcp14">SHOULD</span> either decline the request or request additional authorization from the User by using the OpenID foundation Client Initiated Backchannel Authentication (CIBA). This will trigger a request to the user to grant additional authorization (e.g. through a push notification). Once the user grant authorization, the authorization server issues an access token to the Agent which it may then use to complete the task.<a href="#section-10.6-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="tool-to-service-acccess">
+<section id="section-10.7">
+        <h3 id="name-tool-to-service-acccess">
+<a href="#section-10.7" class="section-number selfRef">10.7. </a><a href="#name-tool-to-service-acccess" class="section-name selfRef">Tool-to-Service Acccess</a>
+        </h3>
+<p id="section-10.7-1">Tools expose interfaces to underlying services and resources. Access to the Tools <span class="bcp14">SHOULD</span> be controlled by OAuth which <span class="bcp14">MAY</span> be augmented by policy, attribute or role based authorization systems (amongst others). If the Tools are implemented as one or more microservices, it should use transaction tokens to reduce risk as described in <a href="#trat-risk-reduction" class="auto internal xref">Section 10.4</a> to avoid passing access tokens around within the Tool implementation.<a href="#section-10.7-1" class="pilcrow">¶</a></p>
+<p id="section-10.7-2">Access from the Tools to the resources and services <span class="bcp14">MAY</span> be controlled through a variety of auhtorization mechanisms, includidng OAuth. If access is controlled through OAuth, the Tools <span class="bcp14">SHOULD</span> use OAuth 2.0 Token Exchange as defined in <span>[<a href="#RFC8693" class="cite xref">RFC8693</a>]</span> to exchange the access token it received for a new access token to access the resource or service in question. If the Tool needs acces to a resource protected by an auhtorization server other than the Tool's own authorization server, it <span class="bcp14">SHOULD</span> use the OAuth Identity and Authorization Chaining Across Domains (<span>[<a href="#OAuth.IDChaining" class="cite xref">OAuth.IDChaining</a>]</span>) to obtain an access token from the authroization server protecting the resource it needs to access.<a href="#section-10.7-2" class="pilcrow">¶</a></p>
+<p id="section-10.7-3">-----------------------End of "High Level Map"------------------------------<a href="#section-10.7-3" class="pilcrow">¶</a></p>
+<p id="section-10.7-4">During agent execution, authorization must be enforced at all the components involved in the process to provide an in-depth protection of the resources that might be interacted with. For each component, we must consider the following 3 phases:
 - Negotiation between the component and its caller on the required pieces of authorization required to interact with the component
 - Acquisition of the piece of authorization by the caller at the authorization server authoritative for the component it wants to communication
-- Validation of the piece of authorization in the context of the request by the component
-
-Those phases rely on the following standards for enforcement of the access control:
-- {{RFC6749}} is an established and maintained framework of specifications for requesting, acquiring, and proving ownership of pieces of authorization in the form of bearer tokens.
-- {{OpenIDConnect.AuthZEN}} is a new specification for exchanging authorization requests and decisions between the layer acting at the Policy Enforcement Point (PEP) and a Policy Decision Point (PDP).
-- {{OAuth.TRAT}} is new specification for formatting pieces of authorization in the form of transaction bound bearer tokens.
-
-~~~ ascii-art
+- Validation of the piece of authorization in the context of the request by the component<a href="#section-10.7-4" class="pilcrow">¶</a></p>
+<p id="section-10.7-5">Those phases rely on the following standards for enforcement of the access control:
+- <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> is an established and maintained framework of specifications for requesting, acquiring, and proving ownership of pieces of authorization in the form of bearer tokens.
+- <span>[<a href="#OpenIDConnect.AuthZEN" class="cite xref">OpenIDConnect.AuthZEN</a>]</span> is a new specification for exchanging authorization requests and decisions between the layer acting at the Policy Enforcement Point (PEP) and a Policy Decision Point (PDP).
+- <span>[<a href="#OAuth.TRAT" class="cite xref">OAuth.TRAT</a>]</span> is new specification for formatting pieces of authorization in the form of transaction bound bearer tokens.<a href="#section-10.7-5" class="pilcrow">¶</a></p>
+<div class="alignLeft art-ascii-art art-text artwork" id="section-10.7-6">
+<pre>
                        +----------------+
                        | Large Language |
                        |   Model (LLM)  |
@@ -1597,65 +1611,65 @@ Those phases rely on the following standards for enforcement of the access contr
      |    └─────►| Authorization |◄─────────────────────┘
      └──────────►|   server      |
                  +---------------+
-</pre><a href="#section-10.1-4" class="pilcrow">¶</a>
+</pre><a href="#section-10.7-6" class="pilcrow">¶</a>
 </div>
 <ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-10.1-5.1">
-            <p id="section-10.1-5.1.1">Key point - OAuth is broadly supported and provides a delegation model for users to clients (aka agents). Agents can obtain access tokens directly (client credentials flow, using above authentication methods) or it can be delegated to them by a user (OAuth flows). Make point that the access token includes the client_id, which is the same as the Agent ID (ore related to it) and can be used for authorization decisions, along with other claims in an Access Token (reference JWT Access token spec). Make provision for opaque tokens as well. Discuss Downscoping of agent authorization using transaction tokens. Discuss cross-domain authorization (use cases) and how it may be achieved (identity chaining and cross-domain authorization). Discuss human in the loop authorization. Note concerns, refer to cross-device BCP as examples of consent phishing attacks. Talk about CIBA as a protocol.<a href="#section-10.1-5.1.1" class="pilcrow">¶</a></p>
+<li class="normal ulEmpty" id="section-10.7-7.1">
+            <p id="section-10.7-7.1.1">Key point - OAuth is broadly supported and provides a delegation model for users to clients (aka agents). Agents can obtain access tokens directly (client credentials flow, using above authentication methods) or it can be delegated to them by a user (OAuth flows). Make point that the access token includes the client_id, which is the same as the Agent ID (ore related to it) and can be used for authorization decisions, along with other claims in an Access Token (reference JWT Access token spec). Make provision for opaque tokens as well. Discuss Downscoping of agent authorization using transaction tokens. Discuss cross-domain authorization (use cases) and how it may be achieved (identity chaining and cross-domain authorization). Discuss human in the loop authorization. Note concerns, refer to cross-device BCP as examples of consent phishing attacks. Talk about CIBA as a protocol.<a href="#section-10.7-7.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="system-to-ai-agent">
-<section id="section-10.2">
+<section id="section-10.8">
         <h3 id="name-system-to-ai-agent">
-<a href="#section-10.2" class="section-number selfRef">10.2. </a><a href="#name-system-to-ai-agent" class="section-name selfRef">System to AI Agent</a>
+<a href="#section-10.8" class="section-number selfRef">10.8. </a><a href="#name-system-to-ai-agent" class="section-name selfRef">System to AI Agent</a>
         </h3>
-<p id="section-10.2-1">### (A) Negotiation - <span class="bcp14">OPTIONAL</span><a href="#section-10.2-1" class="pilcrow">¶</a></p>
+<p id="section-10.8-1">### (A) Negotiation - <span class="bcp14">OPTIONAL</span><a href="#section-10.8-1" class="pilcrow">¶</a></p>
 <div id="flow">
-<section id="section-10.2.1">
+<section id="section-10.8.1">
           <h4 id="name-flow">
-<a href="#section-10.2.1" class="section-number selfRef">10.2.1. </a><a href="#name-flow" class="section-name selfRef">Flow</a>
+<a href="#section-10.8.1" class="section-number selfRef">10.8.1. </a><a href="#name-flow" class="section-name selfRef">Flow</a>
           </h4>
-<p id="section-10.2.1-1">Following <span>[<a href="#RFC9728" class="cite xref">RFC9728</a>]</span>, the System <span class="bcp14">MUST</span> act as an OAuth2 client. It <span class="bcp14">MUST</span> interact with the AI Agent on its metadata endpoint which <span class="bcp14">MUST</span> be an OAuth 2.0 protected resource as defined by <span>[<a href="#RFC9728" class="cite xref">RFC9728</a>]</span>.<a href="#section-10.2.1-1" class="pilcrow">¶</a></p>
-<p id="section-10.2.1-2">The System will then understand which Authorization Server <span class="bcp14">MUST</span> be the authority this AI Agent; which scopes or authorization details values <span class="bcp14">MAY</span> be required to access this AI Agent; and if extension mechanisms <span class="bcp14">MAY</span> be required to fulfil.<a href="#section-10.2.1-2" class="pilcrow">¶</a></p>
+<p id="section-10.8.1-1">Following <span>[<a href="#RFC9728" class="cite xref">RFC9728</a>]</span>, the System <span class="bcp14">MUST</span> act as an OAuth2 client. It <span class="bcp14">MUST</span> interact with the AI Agent on its metadata endpoint which <span class="bcp14">MUST</span> be an OAuth 2.0 protected resource as defined by <span>[<a href="#RFC9728" class="cite xref">RFC9728</a>]</span>.<a href="#section-10.8.1-1" class="pilcrow">¶</a></p>
+<p id="section-10.8.1-2">The System will then understand which Authorization Server <span class="bcp14">MUST</span> be the authority this AI Agent; which scopes or authorization details values <span class="bcp14">MAY</span> be required to access this AI Agent; and if extension mechanisms <span class="bcp14">MAY</span> be required to fulfil.<a href="#section-10.8.1-2" class="pilcrow">¶</a></p>
 <div id="security">
-<section id="section-10.2.1.1">
+<section id="section-10.8.1.1">
             <h5 id="name-security">
-<a href="#section-10.2.1.1" class="section-number selfRef">10.2.1.1. </a><a href="#name-security" class="section-name selfRef">Security</a>
+<a href="#section-10.8.1.1" class="section-number selfRef">10.8.1.1. </a><a href="#name-security" class="section-name selfRef">Security</a>
             </h5>
-<p id="section-10.2.1.1-1">The System <span class="bcp14">MUST</span> follow the best current practices described in <span>[<a href="#RFC9700" class="cite xref">RFC9700</a>]</span>.<a href="#section-10.2.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-10.8.1.1-1">The System <span class="bcp14">MUST</span> follow the best current practices described in <span>[<a href="#RFC9700" class="cite xref">RFC9700</a>]</span>.<a href="#section-10.8.1.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
 </div>
 <div id="b-initial-authorization">
-<section id="section-10.2.2">
+<section id="section-10.8.2">
           <h4 id="name-b-initial-authorization">
-<a href="#section-10.2.2" class="section-number selfRef">10.2.2. </a><a href="#name-b-initial-authorization" class="section-name selfRef">(B) Initial Authorization</a>
+<a href="#section-10.8.2" class="section-number selfRef">10.8.2. </a><a href="#name-b-initial-authorization" class="section-name selfRef">(B) Initial Authorization</a>
           </h4>
-<p id="section-10.2.2-1">Based on the information collected as part of (A) or based on its configuration, the System <span class="bcp14">MUST</span> initiate an authorization request to the Authorization Server acting as authority for the AI Agent.<a href="#section-10.2.2-1" class="pilcrow">¶</a></p>
+<p id="section-10.8.2-1">Based on the information collected as part of (A) or based on its configuration, the System <span class="bcp14">MUST</span> initiate an authorization request to the Authorization Server acting as authority for the AI Agent.<a href="#section-10.8.2-1" class="pilcrow">¶</a></p>
 <div id="flow-1">
-<section id="section-10.2.2.1">
+<section id="section-10.8.2.1">
             <h5 id="name-flow-2">
-<a href="#section-10.2.2.1" class="section-number selfRef">10.2.2.1. </a><a href="#name-flow-2" class="section-name selfRef">Flow</a>
+<a href="#section-10.8.2.1" class="section-number selfRef">10.8.2.1. </a><a href="#name-flow-2" class="section-name selfRef">Flow</a>
             </h5>
-<p id="section-10.2.2.1-1">For this, the System <span class="bcp14">MUST</span> use one of the grant types described in <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> as follows:<a href="#section-10.2.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-10.8.2.1-1">For this, the System <span class="bcp14">MUST</span> use one of the grant types described in <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> as follows:<a href="#section-10.8.2.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-10.2.2.1-2.1">
-                <p id="section-10.2.2.1-2.1.1">In a case of the System is acting on its behalf, it <span class="bcp14">MUST</span> start a client credential grant flow as described in section 1.3.4 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>;<a href="#section-10.2.2.1-2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-10.8.2.1-2.1">
+                <p id="section-10.8.2.1-2.1.1">In a case of the System is acting on its behalf, it <span class="bcp14">MUST</span> start a client credential grant flow as described in section 1.3.4 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>;<a href="#section-10.8.2.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-10.2.2.1-2.2">
-                <p id="section-10.2.2.1-2.2.1">In the case of the System is acting on behalf of a user:<a href="#section-10.2.2.1-2.2.1" class="pilcrow">¶</a></p>
+              <li class="normal" id="section-10.8.2.1-2.2">
+                <p id="section-10.8.2.1-2.2.1">In the case of the System is acting on behalf of a user:<a href="#section-10.8.2.1-2.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-10.2.2.1-2.2.2.1">
-                    <p id="section-10.2.2.1-2.2.2.1.1">If the System can interact directly with the user (e.g., browser-based), the System <span class="bcp14">MUST</span> use the authorization code grant flow as described in Section 4.1 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>;<a href="#section-10.2.2.1-2.2.2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-10.8.2.1-2.2.2.1">
+                    <p id="section-10.8.2.1-2.2.2.1.1">If the System can interact directly with the user (e.g., browser-based), the System <span class="bcp14">MUST</span> use the authorization code grant flow as described in Section 4.1 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>;<a href="#section-10.8.2.1-2.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
-                  <li class="normal" id="section-10.2.2.1-2.2.2.2">
-                    <p id="section-10.2.2.1-2.2.2.2.1">If the System has limited input capabilities, but the User is present at the device, the System <span class="bcp14">MUST</span> use the Device Authorization Grant <span>[<a href="#RFC8628" class="cite xref">RFC8628</a>]</span>;<a href="#section-10.2.2.1-2.2.2.2.1" class="pilcrow">¶</a></p>
+                  <li class="normal" id="section-10.8.2.1-2.2.2.2">
+                    <p id="section-10.8.2.1-2.2.2.2.1">If the System has limited input capabilities, but the User is present at the device, the System <span class="bcp14">MUST</span> use the Device Authorization Grant <span>[<a href="#RFC8628" class="cite xref">RFC8628</a>]</span>;<a href="#section-10.8.2.1-2.2.2.2.1" class="pilcrow">¶</a></p>
 </li>
-                  <li class="normal" id="section-10.2.2.1-2.2.2.3">
-                    <p id="section-10.2.2.1-2.2.2.3.1">If the User is not present at the consuming device (decoupled flow), the System <span class="bcp14">MUST</span> use Client-Initiated Backchannel Authentication <span>[<a href="#OpenIDConnect.CIBA" class="cite xref">OpenIDConnect.CIBA</a>]</span>.<a href="#section-10.2.2.1-2.2.2.3.1" class="pilcrow">¶</a></p>
+                  <li class="normal" id="section-10.8.2.1-2.2.2.3">
+                    <p id="section-10.8.2.1-2.2.2.3.1">If the User is not present at the consuming device (decoupled flow), the System <span class="bcp14">MUST</span> use Client-Initiated Backchannel Authentication <span>[<a href="#OpenIDConnect.CIBA" class="cite xref">OpenIDConnect.CIBA</a>]</span>.<a href="#section-10.8.2.1-2.2.2.3.1" class="pilcrow">¶</a></p>
 </li>
                 </ul>
 </li>
@@ -1663,93 +1677,93 @@ Those phases rely on the following standards for enforcement of the access contr
 </section>
 </div>
 <div id="extensions">
-<section id="section-10.2.2.2">
+<section id="section-10.8.2.2">
             <h5 id="name-extensions">
-<a href="#section-10.2.2.2" class="section-number selfRef">10.2.2.2. </a><a href="#name-extensions" class="section-name selfRef">Extensions</a>
+<a href="#section-10.8.2.2" class="section-number selfRef">10.8.2.2. </a><a href="#name-extensions" class="section-name selfRef">Extensions</a>
             </h5>
-<p id="section-10.2.2.2-1">As part of the grant flow, the User / System <span class="bcp14">MUST</span> also fulfill all the expected extensions it has an understanding of. For example, not exhaustively:
+<p id="section-10.8.2.2-1">As part of the grant flow, the User / System <span class="bcp14">MUST</span> also fulfill all the expected extensions it has an understanding of. For example, not exhaustively:
 - Binding the requested tokens to a possessed key as defined in <span>[<a href="#RFC9449" class="cite xref">RFC9449</a>]</span> or {#wpt}
-- Requesting additional authorization details as defined in <span>[<a href="#RFC9396" class="cite xref">RFC9396</a>]</span> or <span>[<a href="#RFC9126" class="cite xref">RFC9126</a>]</span><a href="#section-10.2.2.2-1" class="pilcrow">¶</a></p>
+- Requesting additional authorization details as defined in <span>[<a href="#RFC9396" class="cite xref">RFC9396</a>]</span> or <span>[<a href="#RFC9126" class="cite xref">RFC9126</a>]</span><a href="#section-10.8.2.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="identification">
-<section id="section-10.2.2.3">
+<section id="section-10.8.2.3">
             <h5 id="name-identification">
-<a href="#section-10.2.2.3" class="section-number selfRef">10.2.2.3. </a><a href="#name-identification" class="section-name selfRef">Identification</a>
+<a href="#section-10.8.2.3" class="section-number selfRef">10.8.2.3. </a><a href="#name-identification" class="section-name selfRef">Identification</a>
             </h5>
-<p id="section-10.2.2.3-1">The System <span class="bcp14">MUST</span> act as an OAuth2 Client which <span class="bcp14">MAY</span> be assigned a WIMSE identifier, which <span class="bcp14">MAY</span> be a SPIFFE ID.<a href="#section-10.2.2.3-1" class="pilcrow">¶</a></p>
-<p id="section-10.2.2.3-2">If so, the System <span class="bcp14">MUST</span> provide a way to resolve one value to the other, either through:
+<p id="section-10.8.2.3-1">The System <span class="bcp14">MUST</span> act as an OAuth2 Client which <span class="bcp14">MAY</span> be assigned a WIMSE identifier, which <span class="bcp14">MAY</span> be a SPIFFE ID.<a href="#section-10.8.2.3-1" class="pilcrow">¶</a></p>
+<p id="section-10.8.2.3-2">If so, the System <span class="bcp14">MUST</span> provide a way to resolve one value to the other, either through:
 - A metadata document URL used OAuth2 Client identifier as defined in <span>[<a href="#OAuth.CIMD" class="cite xref">OAuth.CIMD</a>]</span>;
 - Metadata information provided as part of the Private Key JWT OAuth client credential as defined in <span>[<a href="#OAuth.Private.JWT.Auth-RFC7523" class="cite xref">OAuth.Private.JWT.Auth-RFC7523</a>]</span>
-- Public Certificate information provided as part of the mutual TLS OAuth client credential as defined in <span>[<a href="#OAuth.mTLS.Auth-RFC8705" class="cite xref">OAuth.mTLS.Auth-RFC8705</a>]</span><a href="#section-10.2.2.3-2" class="pilcrow">¶</a></p>
+- Public Certificate information provided as part of the mutual TLS OAuth client credential as defined in <span>[<a href="#OAuth.mTLS.Auth-RFC8705" class="cite xref">OAuth.mTLS.Auth-RFC8705</a>]</span><a href="#section-10.8.2.3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authentication">
-<section id="section-10.2.2.4">
+<section id="section-10.8.2.4">
             <h5 id="name-authentication">
-<a href="#section-10.2.2.4" class="section-number selfRef">10.2.2.4. </a><a href="#name-authentication" class="section-name selfRef">Authentication</a>
+<a href="#section-10.8.2.4" class="section-number selfRef">10.8.2.4. </a><a href="#name-authentication" class="section-name selfRef">Authentication</a>
             </h5>
-<p id="section-10.2.2.4-1">The System <span class="bcp14">MUST</span> authentication using either:
+<p id="section-10.8.2.4-1">The System <span class="bcp14">MUST</span> authentication using either:
 - Private Key JWT OAuth client authentication as defined in <span>[<a href="#OAuth.Private.JWT.Auth-RFC7523" class="cite xref">OAuth.Private.JWT.Auth-RFC7523</a>]</span>
-- Mutual TLS OAuth client authentication as defined in <span>[<a href="#OAuth.mTLS.Auth-RFC8705" class="cite xref">OAuth.mTLS.Auth-RFC8705</a>]</span><a href="#section-10.2.2.4-1" class="pilcrow">¶</a></p>
+- Mutual TLS OAuth client authentication as defined in <span>[<a href="#OAuth.mTLS.Auth-RFC8705" class="cite xref">OAuth.mTLS.Auth-RFC8705</a>]</span><a href="#section-10.8.2.4-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="security-1">
-<section id="section-10.2.2.5">
+<section id="section-10.8.2.5">
             <h5 id="name-security-2">
-<a href="#section-10.2.2.5" class="section-number selfRef">10.2.2.5. </a><a href="#name-security-2" class="section-name selfRef">Security</a>
+<a href="#section-10.8.2.5" class="section-number selfRef">10.8.2.5. </a><a href="#name-security-2" class="section-name selfRef">Security</a>
             </h5>
-<p id="section-10.2.2.5-1">The System <span class="bcp14">MUST</span> follow the best current practices described in <span>[<a href="#RFC9700" class="cite xref">RFC9700</a>]</span> for the interactions with the AI Agent and <span>[<a href="#RFC8725" class="cite xref">RFC8725</a>]</span> when handling JWTs.<a href="#section-10.2.2.5-1" class="pilcrow">¶</a></p>
+<p id="section-10.8.2.5-1">The System <span class="bcp14">MUST</span> follow the best current practices described in <span>[<a href="#RFC9700" class="cite xref">RFC9700</a>]</span> for the interactions with the AI Agent and <span>[<a href="#RFC8725" class="cite xref">RFC8725</a>]</span> when handling JWTs.<a href="#section-10.8.2.5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
 </div>
 <div id="c-access-to-the-ai-agent">
-<section id="section-10.2.3">
+<section id="section-10.8.3">
           <h4 id="name-c-access-to-the-ai-agent">
-<a href="#section-10.2.3" class="section-number selfRef">10.2.3. </a><a href="#name-c-access-to-the-ai-agent" class="section-name selfRef">(C) Access to the AI Agent</a>
+<a href="#section-10.8.3" class="section-number selfRef">10.8.3. </a><a href="#name-c-access-to-the-ai-agent" class="section-name selfRef">(C) Access to the AI Agent</a>
           </h4>
 <div id="flow-2">
-<section id="section-10.2.3.1">
+<section id="section-10.8.3.1">
             <h5 id="name-flow-3">
-<a href="#section-10.2.3.1" class="section-number selfRef">10.2.3.1. </a><a href="#name-flow-3" class="section-name selfRef">Flow</a>
+<a href="#section-10.8.3.1" class="section-number selfRef">10.8.3.1. </a><a href="#name-flow-3" class="section-name selfRef">Flow</a>
             </h5>
-<p id="section-10.2.3.1-1">To access an AI Agent, the System <span class="bcp14">MUST</span> present its authorization credential as defined in section 7 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> as well as defined in <span>[<a href="#RFC6750" class="cite xref">RFC6750</a>]</span>. The client <span class="bcp14">MUST</span> be able to process error codes as defined in section 3 of <span>[<a href="#RFC6750" class="cite xref">RFC6750</a>]</span>.<a href="#section-10.2.3.1-1" class="pilcrow">¶</a></p>
-<p id="section-10.2.3.1-2">The AI Agent <span class="bcp14">MAY</span> request additional details to be provided through a new authorization credentials using <span>[<a href="#OAuth.step-up.Auth-RFC9470" class="cite xref">OAuth.step-up.Auth-RFC9470</a>]</span> or error codes as defined in <span>[<a href="#RFC6750" class="cite xref">RFC6750</a>]</span>.<a href="#section-10.2.3.1-2" class="pilcrow">¶</a></p>
+<p id="section-10.8.3.1-1">To access an AI Agent, the System <span class="bcp14">MUST</span> present its authorization credential as defined in section 7 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> as well as defined in <span>[<a href="#RFC6750" class="cite xref">RFC6750</a>]</span>. The client <span class="bcp14">MUST</span> be able to process error codes as defined in section 3 of <span>[<a href="#RFC6750" class="cite xref">RFC6750</a>]</span>.<a href="#section-10.8.3.1-1" class="pilcrow">¶</a></p>
+<p id="section-10.8.3.1-2">The AI Agent <span class="bcp14">MAY</span> request additional details to be provided through a new authorization credentials using <span>[<a href="#OAuth.step-up.Auth-RFC9470" class="cite xref">OAuth.step-up.Auth-RFC9470</a>]</span> or error codes as defined in <span>[<a href="#RFC6750" class="cite xref">RFC6750</a>]</span>.<a href="#section-10.8.3.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="security-2">
-<section id="section-10.2.3.2">
+<section id="section-10.8.3.2">
             <h5 id="name-security-3">
-<a href="#section-10.2.3.2" class="section-number selfRef">10.2.3.2. </a><a href="#name-security-3" class="section-name selfRef">Security</a>
+<a href="#section-10.8.3.2" class="section-number selfRef">10.8.3.2. </a><a href="#name-security-3" class="section-name selfRef">Security</a>
             </h5>
-<p id="section-10.2.3.2-1">The client <span class="bcp14">MUST</span> follow the best current practices described in <span>[<a href="#RFC9700" class="cite xref">RFC9700</a>]</span>.<a href="#section-10.2.3.2-1" class="pilcrow">¶</a></p>
+<p id="section-10.8.3.2-1">The client <span class="bcp14">MUST</span> follow the best current practices described in <span>[<a href="#RFC9700" class="cite xref">RFC9700</a>]</span>.<a href="#section-10.8.3.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
 </div>
 <div id="d-controlling-access-to-the-ai-agent">
-<section id="section-10.2.4">
+<section id="section-10.8.4">
           <h4 id="name-d-controlling-access-to-the">
-<a href="#section-10.2.4" class="section-number selfRef">10.2.4. </a><a href="#name-d-controlling-access-to-the" class="section-name selfRef">(D) Controlling access to the AI Agent</a>
+<a href="#section-10.8.4" class="section-number selfRef">10.8.4. </a><a href="#name-d-controlling-access-to-the" class="section-name selfRef">(D) Controlling access to the AI Agent</a>
           </h4>
 <div id="flow-3">
-<section id="section-10.2.4.1">
+<section id="section-10.8.4.1">
             <h5 id="name-flow-4">
-<a href="#section-10.2.4.1" class="section-number selfRef">10.2.4.1. </a><a href="#name-flow-4" class="section-name selfRef">Flow</a>
+<a href="#section-10.8.4.1" class="section-number selfRef">10.8.4.1. </a><a href="#name-flow-4" class="section-name selfRef">Flow</a>
             </h5>
-<p id="section-10.2.4.1-1">The AI Agent <span class="bcp14">MUST</span> validate the presented token as described in <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> as well as defined in <span>[<a href="#RFC6750" class="cite xref">RFC6750</a>]</span>.<a href="#section-10.2.4.1-1" class="pilcrow">¶</a></p>
-<p id="section-10.2.4.1-2">If token introspection is required, the AI Agent <span class="bcp14">MUST</span> follow <span>[<a href="#RFC7662" class="cite xref">RFC7662</a>]</span> as well as <span>[<a href="#RFC9701" class="cite xref">RFC9701</a>]</span>.<a href="#section-10.2.4.1-2" class="pilcrow">¶</a></p>
-<p id="section-10.2.4.1-3">If the provided token is a JWT profiled token as defined in <span>[<a href="#RFC9068" class="cite xref">RFC9068</a>]</span>, the AI Agent <span class="bcp14">MUST</span> follow the section 2 of this specification as part of the token validation.<a href="#section-10.2.4.1-3" class="pilcrow">¶</a></p>
-<p id="section-10.2.4.1-4">If the AI Agent delegates its access control logic to a Policy decision point, it <span class="bcp14">MUST</span> follow <span>[<a href="#OpenIDConnect.AuthZEN" class="cite xref">OpenIDConnect.AuthZEN</a>]</span> specification for requesting and receiving a decision for the access.<a href="#section-10.2.4.1-4" class="pilcrow">¶</a></p>
+<p id="section-10.8.4.1-1">The AI Agent <span class="bcp14">MUST</span> validate the presented token as described in <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> as well as defined in <span>[<a href="#RFC6750" class="cite xref">RFC6750</a>]</span>.<a href="#section-10.8.4.1-1" class="pilcrow">¶</a></p>
+<p id="section-10.8.4.1-2">If token introspection is required, the AI Agent <span class="bcp14">MUST</span> follow <span>[<a href="#RFC7662" class="cite xref">RFC7662</a>]</span> as well as <span>[<a href="#RFC9701" class="cite xref">RFC9701</a>]</span>.<a href="#section-10.8.4.1-2" class="pilcrow">¶</a></p>
+<p id="section-10.8.4.1-3">If the provided token is a JWT profiled token as defined in <span>[<a href="#RFC9068" class="cite xref">RFC9068</a>]</span>, the AI Agent <span class="bcp14">MUST</span> follow the section 2 of this specification as part of the token validation.<a href="#section-10.8.4.1-3" class="pilcrow">¶</a></p>
+<p id="section-10.8.4.1-4">If the AI Agent delegates its access control logic to a Policy decision point, it <span class="bcp14">MUST</span> follow <span>[<a href="#OpenIDConnect.AuthZEN" class="cite xref">OpenIDConnect.AuthZEN</a>]</span> specification for requesting and receiving a decision for the access.<a href="#section-10.8.4.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="security-3">
-<section id="section-10.2.4.2">
+<section id="section-10.8.4.2">
             <h5 id="name-security-4">
-<a href="#section-10.2.4.2" class="section-number selfRef">10.2.4.2. </a><a href="#name-security-4" class="section-name selfRef">Security</a>
+<a href="#section-10.8.4.2" class="section-number selfRef">10.8.4.2. </a><a href="#name-security-4" class="section-name selfRef">Security</a>
             </h5>
-<p id="section-10.2.4.2-1">TODO<a href="#section-10.2.4.2-1" class="pilcrow">¶</a></p>
+<p id="section-10.8.4.2-1">TODO<a href="#section-10.8.4.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1757,56 +1771,56 @@ Those phases rely on the following standards for enforcement of the access contr
 </section>
 </div>
 <div id="ai-agent-to-ai-tools">
-<section id="section-10.3">
+<section id="section-10.9">
         <h3 id="name-ai-agent-to-ai-tools">
-<a href="#section-10.3" class="section-number selfRef">10.3. </a><a href="#name-ai-agent-to-ai-tools" class="section-name selfRef">AI Agent to AI tools</a>
+<a href="#section-10.9" class="section-number selfRef">10.9. </a><a href="#name-ai-agent-to-ai-tools" class="section-name selfRef">AI Agent to AI tools</a>
         </h3>
 <ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-10.3-1.1">
-            <p id="section-10.3-1.1.1">Interactions between an AI Agent and AI Tools are globally specified by <span>[<a href="#MCP" class="cite xref">MCP</a>]</span>. Those sections explain the core specification, <span>[<a href="#MCP" class="cite xref">MCP</a>]</span> is based on as well as the complementary specifications <span class="bcp14">RECOMMENDED</span>.<a href="#section-10.3-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal ulEmpty" id="section-10.9-1.1">
+            <p id="section-10.9-1.1.1">Interactions between an AI Agent and AI Tools are globally specified by <span>[<a href="#MCP" class="cite xref">MCP</a>]</span>. Those sections explain the core specification, <span>[<a href="#MCP" class="cite xref">MCP</a>]</span> is based on as well as the complementary specifications <span class="bcp14">RECOMMENDED</span>.<a href="#section-10.9-1.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <div id="e-negotiation">
-<section id="section-10.3.1">
+<section id="section-10.9.1">
           <h4 id="name-e-negotiation">
-<a href="#section-10.3.1" class="section-number selfRef">10.3.1. </a><a href="#name-e-negotiation" class="section-name selfRef">(E) Negotiation</a>
+<a href="#section-10.9.1" class="section-number selfRef">10.9.1. </a><a href="#name-e-negotiation" class="section-name selfRef">(E) Negotiation</a>
           </h4>
-<p id="section-10.3.1-1">Following <span>[<a href="#RFC9728" class="cite xref">RFC9728</a>]</span>, the AI Agent <span class="bcp14">MUST</span> interact with AI Tools on the metadata endpoint of an OAuth 2.0 protected resource to understand which Authorization Server is the authority this resource; which scopes or authorization details values <span class="bcp14">MAY</span> be required to access this resources; and if proof of possession needs to be presented as standardized with <span>[<a href="#RFC9449" class="cite xref">RFC9449</a>]</span>.<a href="#section-10.3.1-1" class="pilcrow">¶</a></p>
+<p id="section-10.9.1-1">Following <span>[<a href="#RFC9728" class="cite xref">RFC9728</a>]</span>, the AI Agent <span class="bcp14">MUST</span> interact with AI Tools on the metadata endpoint of an OAuth 2.0 protected resource to understand which Authorization Server is the authority this resource; which scopes or authorization details values <span class="bcp14">MAY</span> be required to access this resources; and if proof of possession needs to be presented as standardized with <span>[<a href="#RFC9449" class="cite xref">RFC9449</a>]</span>.<a href="#section-10.9.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="f-ai-agent-authorization">
-<section id="section-10.3.2">
+<section id="section-10.9.2">
           <h4 id="name-f-ai-agent-authorization">
-<a href="#section-10.3.2" class="section-number selfRef">10.3.2. </a><a href="#name-f-ai-agent-authorization" class="section-name selfRef">(F) AI Agent Authorization</a>
+<a href="#section-10.9.2" class="section-number selfRef">10.9.2. </a><a href="#name-f-ai-agent-authorization" class="section-name selfRef">(F) AI Agent Authorization</a>
           </h4>
-<p id="section-10.3.2-1">Based on the information collected as part of (E), the AI Agent is initiating an authorization request with the Authorization Server acting as authority for the AI Tools.<a href="#section-10.3.2-1" class="pilcrow">¶</a></p>
-<p id="section-10.3.2-2">Such authorization request can allow to down, change or translate scope; enrich the authorization with new details based on the context; extend the time boundaries of the authorization; or change from a delegation mode to an impersonation mode and reversely.<a href="#section-10.3.2-2" class="pilcrow">¶</a></p>
+<p id="section-10.9.2-1">Based on the information collected as part of (E), the AI Agent is initiating an authorization request with the Authorization Server acting as authority for the AI Tools.<a href="#section-10.9.2-1" class="pilcrow">¶</a></p>
+<p id="section-10.9.2-2">Such authorization request can allow to down, change or translate scope; enrich the authorization with new details based on the context; extend the time boundaries of the authorization; or change from a delegation mode to an impersonation mode and reversely.<a href="#section-10.9.2-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-10.3.2-3.1">
-              <p id="section-10.3.2-3.1.1">If the AI Agent acts on its behalf as a system:<a href="#section-10.3.2-3.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-10.9.2-3.1">
+              <p id="section-10.9.2-3.1.1">If the AI Agent acts on its behalf as a system:<a href="#section-10.9.2-3.1.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-10.3.2-3.1.2.1">
-                  <p id="section-10.3.2-3.1.2.1.1">If it does not want or need to refer to the previous context, it <span class="bcp14">MUST</span> start a client credential grant flow as described in section 1.3.4 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>;<a href="#section-10.3.2-3.1.2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-10.9.2-3.1.2.1">
+                  <p id="section-10.9.2-3.1.2.1.1">If it does not want or need to refer to the previous context, it <span class="bcp14">MUST</span> start a client credential grant flow as described in section 1.3.4 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>;<a href="#section-10.9.2-3.1.2.1.1" class="pilcrow">¶</a></p>
 </li>
-                <li class="normal" id="section-10.3.2-3.1.2.2">
-                  <p id="section-10.3.2-3.1.2.2.1">If it does want or need to refer to the previous context, it <span class="bcp14">MUST</span> start a token exchange flow as described in <span>[<a href="#RFC8693" class="cite xref">RFC8693</a>]</span>. The AI Agent will be able to decide in between obtaining tokens representing a Delegation or an Impersonation as described in section 1.1 of the specification.<a href="#section-10.3.2-3.1.2.2.1" class="pilcrow">¶</a></p>
+                <li class="normal" id="section-10.9.2-3.1.2.2">
+                  <p id="section-10.9.2-3.1.2.2.1">If it does want or need to refer to the previous context, it <span class="bcp14">MUST</span> start a token exchange flow as described in <span>[<a href="#RFC8693" class="cite xref">RFC8693</a>]</span>. The AI Agent will be able to decide in between obtaining tokens representing a Delegation or an Impersonation as described in section 1.1 of the specification.<a href="#section-10.9.2-3.1.2.2.1" class="pilcrow">¶</a></p>
 </li>
               </ul>
 </li>
-            <li class="normal" id="section-10.3.2-3.2">
-              <p id="section-10.3.2-3.2.1">If the AI Agent acts on delegation by a user:<a href="#section-10.3.2-3.2.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-10.9.2-3.2">
+              <p id="section-10.9.2-3.2.1">If the AI Agent acts on delegation by a user:<a href="#section-10.9.2-3.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-10.3.2-3.2.2.1">
-                  <p id="section-10.3.2-3.2.2.1.1">If the AI Agent can interact and want to interact with the user through the client, it <span class="bcp14">MUST</span> start an authorization code grant flow as described in section 1.3.1 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>;<a href="#section-10.3.2-3.2.2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-10.9.2-3.2.2.1">
+                  <p id="section-10.9.2-3.2.2.1.1">If the AI Agent can interact and want to interact with the user through the client, it <span class="bcp14">MUST</span> start an authorization code grant flow as described in section 1.3.1 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>;<a href="#section-10.9.2-3.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
-                <li class="normal" id="section-10.3.2-3.2.2.2">
-                  <p id="section-10.3.2-3.2.2.2.1">If the AI Agent cannot or does not want to interact with the user through the client, it <span class="bcp14">MAY</span>:<a href="#section-10.3.2-3.2.2.2.1" class="pilcrow">¶</a></p>
+                <li class="normal" id="section-10.9.2-3.2.2.2">
+                  <p id="section-10.9.2-3.2.2.2.1">If the AI Agent cannot or does not want to interact with the user through the client, it <span class="bcp14">MAY</span>:<a href="#section-10.9.2-3.2.2.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-10.3.2-3.2.2.2.2.1">
-                      <p id="section-10.3.2-3.2.2.2.2.1.1">Start a token exchange flow as described in <span>[<a href="#RFC8693" class="cite xref">RFC8693</a>]</span>. The AI Agent will be able to decide in between obtaining tokens representing a Delegation or an Impersonation as described in section 1.1 of the specification.<a href="#section-10.3.2-3.2.2.2.2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-10.9.2-3.2.2.2.2.1">
+                      <p id="section-10.9.2-3.2.2.2.2.1.1">Start a token exchange flow as described in <span>[<a href="#RFC8693" class="cite xref">RFC8693</a>]</span>. The AI Agent will be able to decide in between obtaining tokens representing a Delegation or an Impersonation as described in section 1.1 of the specification.<a href="#section-10.9.2-3.2.2.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
-                    <li class="normal" id="section-10.3.2-3.2.2.2.2.2">
-                      <p id="section-10.3.2-3.2.2.2.2.2.1">Start a client initated backchannel authorized request as described in <span>[<a href="#OpenIDConnect.CIBA" class="cite xref">OpenIDConnect.CIBA</a>]</span><a href="#section-10.3.2-3.2.2.2.2.2.1" class="pilcrow">¶</a></p>
+                    <li class="normal" id="section-10.9.2-3.2.2.2.2.2">
+                      <p id="section-10.9.2-3.2.2.2.2.2.1">Start a client initated backchannel authorized request as described in <span>[<a href="#OpenIDConnect.CIBA" class="cite xref">OpenIDConnect.CIBA</a>]</span><a href="#section-10.9.2-3.2.2.2.2.2.1" class="pilcrow">¶</a></p>
 </li>
                   </ul>
 </li>
@@ -1814,8 +1828,8 @@ Those phases rely on the following standards for enforcement of the access contr
 </li>
           </ul>
 <ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-10.3.2-4.1">
-              <p id="section-10.3.2-4.1.1">Transaction Tokens<a href="#section-10.3.2-4.1.1" class="pilcrow">¶</a></p>
+<li class="normal ulEmpty" id="section-10.9.2-4.1">
+              <p id="section-10.9.2-4.1.1">Transaction Tokens<a href="#section-10.9.2-4.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </section>
@@ -1823,46 +1837,46 @@ Those phases rely on the following standards for enforcement of the access contr
 </section>
 </div>
 <div id="agent-to-resource-authorization">
-<section id="section-10.4">
+<section id="section-10.10">
         <h3 id="name-agent-to-resource-authoriza">
-<a href="#section-10.4" class="section-number selfRef">10.4. </a><a href="#name-agent-to-resource-authoriza" class="section-name selfRef">Agent-to-Resource Authorization</a>
+<a href="#section-10.10" class="section-number selfRef">10.10. </a><a href="#name-agent-to-resource-authoriza" class="section-name selfRef">Agent-to-Resource Authorization</a>
         </h3>
-<p id="section-10.4-1">Present token, peform additional authorization (RBAC etc?)
+<p id="section-10.10-1">Present token, peform additional authorization (RBAC etc?)
 Direct or via tools
-Resources, services.<a href="#section-10.4-1" class="pilcrow">¶</a></p>
-<p id="section-10.4-2">Agent -&gt; Tool -&gt; Service -&gt; Resource<a href="#section-10.4-2" class="pilcrow">¶</a></p>
-<div id="human-in-the-loop">
-<section id="section-10.4.1">
-          <h4 id="name-human-in-the-loop">
-<a href="#section-10.4.1" class="section-number selfRef">10.4.1. </a><a href="#name-human-in-the-loop" class="section-name selfRef">Human-in-the loop</a>
+Resources, services.<a href="#section-10.10-1" class="pilcrow">¶</a></p>
+<p id="section-10.10-2">Agent -&gt; Tool -&gt; Service -&gt; Resource<a href="#section-10.10-2" class="pilcrow">¶</a></p>
+<div id="human-in-the-loop-1">
+<section id="section-10.10.1">
+          <h4 id="name-human-in-the-loop-2">
+<a href="#section-10.10.1" class="section-number selfRef">10.10.1. </a><a href="#name-human-in-the-loop-2" class="section-name selfRef">Human-in-the loop</a>
           </h4>
-<p id="section-10.4.1-1">Agent framework problem -&gt; human in the loop - confirm something that it can already do - agent framework capability - confirmation. Risk management flow.
-Human in the loop - request esalated privelages. Step-up authorization - refernece the draft (maybe)<a href="#section-10.4.1-1" class="pilcrow">¶</a></p>
-<p id="section-10.4.1-2">MCP Elicitation to agent to perform some browser things - start authz code grant flow.
-CIBA<a href="#section-10.4.1-2" class="pilcrow">¶</a></p>
+<p id="section-10.10.1-1">Agent framework problem -&gt; human in the loop - confirm something that it can already do - agent framework capability - confirmation. Risk management flow.
+Human in the loop - request esalated privelages. Step-up authorization - refernece the draft (maybe)<a href="#section-10.10.1-1" class="pilcrow">¶</a></p>
+<p id="section-10.10.1-2">MCP Elicitation to agent to perform some browser things - start authz code grant flow.
+CIBA<a href="#section-10.10.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
 </div>
 <div id="case-of-multi-domain-authorization">
-<section id="section-10.5">
+<section id="section-10.11">
         <h3 id="name-case-of-multi-domain-author">
-<a href="#section-10.5" class="section-number selfRef">10.5. </a><a href="#name-case-of-multi-domain-author" class="section-name selfRef">Case of Multi-Domain Authorization</a>
+<a href="#section-10.11" class="section-number selfRef">10.11. </a><a href="#name-case-of-multi-domain-author" class="section-name selfRef">Case of Multi-Domain Authorization</a>
         </h3>
 <div id="cross-domain-agent-to-agent-authorization">
-<section id="section-10.5.1">
+<section id="section-10.11.1">
           <h4 id="name-cross-domain-agent-to-agent">
-<a href="#section-10.5.1" class="section-number selfRef">10.5.1. </a><a href="#name-cross-domain-agent-to-agent" class="section-name selfRef">Cross Domain Agent-to-Agent Authorization</a>
+<a href="#section-10.11.1" class="section-number selfRef">10.11.1. </a><a href="#name-cross-domain-agent-to-agent" class="section-name selfRef">Cross Domain Agent-to-Agent Authorization</a>
           </h4>
-<p id="section-10.5.1-1">Identiyt chaining, ID-Jag.<a href="#section-10.5.1-1" class="pilcrow">¶</a></p>
+<p id="section-10.11.1-1">Identiyt chaining, ID-Jag.<a href="#section-10.11.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
 </div>
 <div id="agent-to-agent-authorization">
-<section id="section-10.6">
+<section id="section-10.12">
         <h3 id="name-agent-to-agent-authorizatio">
-<a href="#section-10.6" class="section-number selfRef">10.6. </a><a href="#name-agent-to-agent-authorizatio" class="section-name selfRef">Agent to Agent Authorization</a>
+<a href="#section-10.12" class="section-number selfRef">10.12. </a><a href="#name-agent-to-agent-authorizatio" class="section-name selfRef">Agent to Agent Authorization</a>
       </h3>
 </section>
 </div>
@@ -1921,6 +1935,14 @@ CIBA<a href="#section-10.4.1-2" class="pilcrow">¶</a></p>
 <dt id="OAuth.CIMD">[OAuth.CIMD]</dt>
       <dd>
 <span class="refTitle">"OAuth Client ID Metadata Document"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/draft-ietf-oauth-client-id-metadata-document">https://datatracker.ietf.org/doc/draft-ietf-oauth-client-id-metadata-document</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OAuth.IDChaining">[OAuth.IDChaining]</dt>
+      <dd>
+<span class="refTitle">"OAuth Identity and Authorization Chaining Across Domains"</span>, <span>n.d.</span>. </dd>
+<dd class="break"></dd>
+<dt id="OAuth.IDJAG">[OAuth.IDJAG]</dt>
+      <dd>
+<span class="refTitle">"Identity Assertion JWT Authorization Grant"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/draft-ietf-oauth-identity-assertion-authz-grant/01/">https://datatracker.ietf.org/doc/draft-ietf-oauth-identity-assertion-authz-grant/01/</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="OAuth.mTLS.Auth-RFC8705">[OAuth.mTLS.Auth-RFC8705]</dt>
       <dd>
