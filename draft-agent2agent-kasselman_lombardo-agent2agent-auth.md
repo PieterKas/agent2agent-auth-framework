@@ -500,7 +500,6 @@ CIBA
 ### Cross Domain Agent-to-Agent Authorization
 Identiyt chaining, ID-Jag.
 
-
 ## Agent to Agent Authorization
 
 # Agent Monitoring and Remediation - Jeff
