@@ -414,6 +414,7 @@ This document has no IANA actions.
 
 -----------------------Early Thoughts on Detailed Spec Below------------------------------
 
+# Agent Authorization - Next Level Detail
 
 During agent execution, authorization must be enforced at all the components involved in the process to provide an in-depth protection of the resources that might be interacted with. For each component, we must consider the following 3 phases:
 - Negotiation between the component and its caller on the required pieces of authorization required to interact with the component
