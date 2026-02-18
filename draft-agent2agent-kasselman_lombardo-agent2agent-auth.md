@@ -356,12 +356,12 @@ In dynamic agent deployments (e.g., ephemeral workloads, multi-tenant services, 
 An Agent that needs to obtain tokens MAY discover authorization server endpoints and capabilities using OAuth 2.0 Authorization Server Metadata {{RFC8414}} and/or OpenID Connect Discovery (when OIDC is in use). This allows the Agent to learn the as issuer identifier, authorization and token endpoints, supported grant types, client authentication methods, signing keys (via jwks_uri), and other relevant capabilities without preconfiguring them.
 
 ### Protected Resource Capability Discovery
-When an Agent is invoking a Tool, the Agent MAY use OAuth 2.0 Protected Resource Metadata {{RFC9728}} to discover how the resource is protected, including the resource identifier and the applicable Authorization Server(s) that protects Tool access. This enables an Agent to select the correct issuer/audience and token acquisition flow at runtime, even when resources are deployed or moved dynamically. 
+When an Agent is invoking a Tool, the Agent MAY use OAuth 2.0 Protected Resource Metadata {{RFC9728}} to discover how the resource is protected, including the resource identifier and the applicable Authorization Server(s) that protects Tool access. This enables an Agent to select the correct issuer/audience and token acquisition flow at runtime, even when resources are deployed or moved dynamically.
 
 A Tool that atttempts to acccess and OAuth protected resource MAY use OAuth 2.0 Protected Resource Metadata {{RFC9728}} in a similar way as an Agent. Similarly, a System may use {{RFC9728}} when accessing an Agent.
 
 ### Client Capability Discovery
-Other actors (e.g., Authorization Servers, registrars, or policy systems) may need to learn about any entities (System, Agent, Tool) that acts as OAuth clients. Where supported, they MAY use Client ID Metadata Documents {{OAuth.CIMD}}, which allow a client to host its metadata at a URL-valued client_id so that the relying party can retrieve client properties (e.g., redirect URIs, software statement / display information, and other registered client metadata) without prior bilateral registration. 
+Other actors (e.g., Authorization Servers, registrars, or policy systems) may need to learn about any entities (System, Agent, Tool) that acts as OAuth clients. Where supported, they MAY use Client ID Metadata Documents {{OAuth.CIMD}}, which allow a client to host its metadata at a URL-valued client_id so that the relying party can retrieve client properties (e.g., redirect URIs, software statement / display information, and other registered client metadata) without prior bilateral registration.
 
 As an alternative, entities acting as OAuth clients MAY register their capabilities with authroization servers as defined in the OAuth 2.0 Dynamic Client Registration Protocol {{RFC7591}}.
 
@@ -370,7 +370,7 @@ Agents operate in environments where authorization state can change after an acc
 
 Any particiapant in the system, including the Agent, Tool, System, LLM or other resources and service MAY subscribe to change notifications using eventing mechanisms such as the OpenID Shared Signals Framework {{SSF}} with the Continuous Access Evaluation Profile {{CAEP}} to receive security and authorization-relevant signals. Upon receipt of a relevant signal (e.g., session revoked, subject disabled, token replay suspected, risk elevated), the recipient SHOULD remediate by attenuating access, such as terminating local sessions, discarding cached tokens, re-acquiring tokens with updated constraints, reducing privileges, or re-running policy evaluation before continueing to allow acccess.
 
-To support detection, investigation, and accountability, deployments SHOULD produce durable logs and audit trails for both authorization decisions and subsequent remediations. This includes recording the Agent, User, System,  LLM, resource or service identity, the targeted resource/tool, token identifiers or hashes, and the triggering signals that caused re-evaluation or revocation. 
+To support detection, investigation, and accountability, deployments SHOULD produce durable logs and audit trails for both authorization decisions and subsequent remediations. This includes recording the Agent, User, System,  LLM, resource or service identity, the targeted resource/tool, token identifiers or hashes, and the triggering signals that caused re-evaluation or revocation.
 
 End-to-end audit is enabled when Agents, Users, Systems, LLMs, Tools, services and resources have stable, verifiable identifiers that allow auditors to trace “which entity did what, using which authorization context, and why access changed over time.”
 
