@@ -1363,20 +1363,20 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <p id="section-3-1">An Agent is a workload that iteratively interacts with a Large Language Model (LLM) and a set of tools that expose interfaces to underlying services and resources until a terminating condition, determined either by the LLM or by the agent’s internal logic, is reached. It may receive input from a user, or act autonomusly. Figure 1 shows a conceptual model of the AI Agent as a workload and illustrates the high-level interaction model between the User or System, the AI Agent, the Large Language Model (LLM) and the Tools through which the underlying Services and Resources are accessed by the Agent.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-ascii-art art-text artwork" id="section-3-2">
 <pre>
-                    +----------------+
-                    | Large Language |
-                    |   Model (LLM)  |
-                    +----------------+
-                           ▲   |
-                          (2) (3)
-                           |   ▼
-+--------------+       +------------+       +-----------+       +-----------+
-|  User /      |──(1)─►|  AI Agent  |──(4)─►|   Tools   |──(5)─►| Services  |
-|      /       |       | (workload) |       |           |       |   and     |
-|     / System |◄─(8)──|            |◄─(7)──|           |◄─(6)──| Resources |
-+--------------+       +------------+       +-----------+       +-----------+
+                +----------------+
+                | Large Language |
+                |   Model (LLM)  |
+                +----------------+
+                      ▲   |
+                     (2) (3)
+                      |   ▼
++--------+       +------------+       +-----------+       +-----------+
+|  User  |──(1)─►|  AI Agent  |──(4)─►|   Tools   |──(5)─►| Services  |
+|   or   |       | (workload) |       |           |       |   and     |
+| System |◄─(8)──|            |◄─(7)──|           |◄─(6)──| Resources |
++--------+       +------------+       +-----------+       +-----------+
 
-Figure 1: AI Agent as a Workload
+               Figure 1: AI Agent as a Workload
 </pre><a href="#section-3-2" class="pilcrow">¶</a>
 </div>
 <ol start="1" type="1" class="normal type-1" id="section-3-3">
@@ -1459,9 +1459,9 @@ Figure 1: AI Agent as a Workload
 |              +----------------------------------|              |
 |              |           Credentials            |              |
 |              +----------------------------------|              |
-|              |         Agent Identifier         |              |
+|              |           Identifier             |              |
 +--------------+----------------------------------+--------------+
-Figure 2: Agent Identity Management System
+          Figure 2: Agent Identity Management System
 </pre><a href="#section-4-3" class="pilcrow">¶</a>
 </div>
 </section>

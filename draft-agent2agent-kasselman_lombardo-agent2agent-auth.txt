@@ -153,20 +153,20 @@ Table of Contents
    through which the underlying Services and Resources are accessed by
    the Agent.
 
-                    +----------------+
-                    | Large Language |
-                    |   Model (LLM)  |
-                    +----------------+
-                           ▲   |
-                          (2) (3)
-                           |   ▼
-+--------------+       +------------+       +-----------+       +-----------+
-|  User /      |──(1)─►|  AI Agent  |──(4)─►|   Tools   |──(5)─►| Services  |
-|      /       |       | (workload) |       |           |       |   and     |
-|     / System |◄─(8)──|            |◄─(7)──|           |◄─(6)──| Resources |
-+--------------+       +------------+       +-----------+       +-----------+
+                 +----------------+
+                 | Large Language |
+                 |   Model (LLM)  |
+                 +----------------+
+                       ▲   |
+                      (2) (3)
+                       |   ▼
+ +--------+       +------------+       +-----------+       +-----------+
+ |  User  |──(1)─►|  AI Agent  |──(4)─►|   Tools   |──(5)─►| Services  |
+ |   or   |       | (workload) |       |           |       |   and     |
+ | System |◄─(8)──|            |◄─(7)──|           |◄─(6)──| Resources |
+ +--------+       +------------+       +-----------+       +-----------+
 
-Figure 1: AI Agent as a Workload
+                Figure 1: AI Agent as a Workload
 
    1.  Optional: The User or System (e.g. a batch job or another Agent)
        provides an initial request or instruction to the AI Agent.
@@ -259,9 +259,9 @@ Figure 1: AI Agent as a Workload
    |              +----------------------------------|              |
    |              |           Credentials            |              |
    |              +----------------------------------|              |
-   |              |         Agent Identifier         |              |
+   |              |           Identifier             |              |
    +--------------+----------------------------------+--------------+
-   Figure 2: Agent Identity Management System
+             Figure 2: Agent Identity Management System
 
 5.  Agent Identifier
 
