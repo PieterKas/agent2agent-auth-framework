@@ -1286,13 +1286,16 @@ svg :is([fill="white"], [fill^="#fff"]) {
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.16.2.2">
-                <p id="section-toc.1-1.16.2.2.1"><a href="#section-16.2" class="auto internal xref">16.2</a>.  <a href="#name-ai-agent-to-ai-tools" class="internal xref">AI Agent to AI tools</a></p>
+                <p id="section-toc.1-1.16.2.2.1"><a href="#section-16.2" class="auto internal xref">16.2</a>.  <a href="#name-ai-agent-to-other-agent-too" class="internal xref">AI Agent To Other Agent / Tools</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.16.2.2.2.1">
                     <p id="section-toc.1-1.16.2.2.2.1.1"><a href="#section-16.2.1" class="auto internal xref">16.2.1</a>.  <a href="#name-e-negotiation" class="internal xref">(E) Negotiation</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.16.2.2.2.2">
                     <p id="section-toc.1-1.16.2.2.2.2.1"><a href="#section-16.2.2" class="auto internal xref">16.2.2</a>.  <a href="#name-f-ai-agent-authorization" class="internal xref">(F) AI Agent Authorization</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.16.2.2.2.3">
+                    <p id="section-toc.1-1.16.2.2.2.3.1"><a href="#section-16.2.3" class="auto internal xref">16.2.3</a>.  <a href="#name-security-5" class="internal xref">Security</a></p>
 </li>
                 </ul>
 </li>
@@ -1365,7 +1368,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
                           (2) (3)
                            |   ▼
 +--------------+       +------------+       +-----------+       +-----------+
-|  User /      |──(1)─►|  AI Agent  |──(4)─►|  AI Tools |──(5)─►| Services  |
+|  User /      |──(1)─►|  AI Agent  |──(4)─►|   Tools   |──(5)─►| Services  |
 |      /       |       | (workload) |       |           |       |   and     |
 |     / System |◄─(8)──|            |◄─(7)──|           |◄─(6)──| Resources |
 +--------------+       +------------+       +-----------+       +-----------+
@@ -1375,16 +1378,16 @@ Figure 1: AI Agent as a Workload
 </div>
 <ol start="1" type="1" class="normal type-1" id="section-3-3">
 <li id="section-3-3.1">
-          <p id="section-3-3.1.1">Optional: The User or System provides an initial request or instruction to the AI Agent.<a href="#section-3-3.1.1" class="pilcrow">¶</a></p>
+          <p id="section-3-3.1.1">Optional: The User or System (e.g. a batch job or another Agent) provides an initial request or instruction to the AI Agent.<a href="#section-3-3.1.1" class="pilcrow">¶</a></p>
 </li>
         <li id="section-3-3.2">
           <p id="section-3-3.2.1">The AI Agent forwards the available context to the LLM. Context is implementation and deployment specific and may include User or System input, system prompt, tool descriptions, tool outputs and other relevant information.<a href="#section-3-3.2.1" class="pilcrow">¶</a></p>
 </li>
         <li id="section-3-3.3">
-          <p id="section-3-3.3.1">The LLM returns a response to the AI Agent identifying which tools it should invoke.<a href="#section-3-3.3.1" class="pilcrow">¶</a></p>
+          <p id="section-3-3.3.1">The LLM returns a response to the AI Agent identifying which Tools it should invoke.<a href="#section-3-3.3.1" class="pilcrow">¶</a></p>
 </li>
         <li id="section-3-3.4">
-          <p id="section-3-3.4.1">Based on the LLM’s output, the AI Agent invokes the relevant Tools.<a href="#section-3-3.4.1" class="pilcrow">¶</a></p>
+          <p id="section-3-3.4.1">Based on the LLM’s output, the AI Agent invokes the relevant Tools (note that a Tool may be another Agent).<a href="#section-3-3.4.1" class="pilcrow">¶</a></p>
 </li>
         <li id="section-3-3.5">
           <p id="section-3-3.5.1">The Tools interacts with the underlying Services and Resources required to fulfill the requested operation.<a href="#section-3-3.5.1" class="pilcrow">¶</a></p>
@@ -1741,20 +1744,20 @@ Figure 1: AI Agent as a Workload
                        |   Model (LLM)  |
                        +----------------+
                               ▲   |
-                              │   |
-                              |   ▼
-+--------------+         +------------+         +-----------+         +-----------+
-|  User /      |─(A)(C)─►|  AI Agent  |─(E)(H)─►| AI Tools  |─(J)(M)─►| Services  |
-|      /       |         | (workload) |         |           |         |   and     |
-|     / System |◄────────|            |◄────────|           |◄────────| Resources |
-+--------------+         +------------+         +-----------+         +-----------+
-     ▲                       ▲  ▲                   ▲   ▲                ▲
-     |    ┌──(F)─────────────┘  |                   |   |                |
-     |    |   ┌───(D)───────────┘                  (I)  |                |
-     |    |   |  +---------------+                  |  (K)              (N)
-    (B)   |   |  |    Policy     |                  |   |                |
-     |    |   └─►|   Decision    |◄─────────────────┘   |                |
-     |    |      |    Point      |◄─────────────────────┼────────────────┘
+                              │   |               ┌(H)┐
+                              |   ▼               ▼   │
++--------------+         +------------+         +-------------+         +-----------+
+|  User /      |─(A)(C)─►|  AI Agent  |─(E)(H)─►| Agent /     |─(J)(M)─►| Services  |
+|      /       |         | (workload) |         |      /      |         |   and     |
+|     / System |◄────────|            |◄────────|     / Tools |◄────────| Resources |
++--------------+         +------------+         +-------------+         +-----------+
+     ▲                       ▲  ▲                   ▲   ▲                    ▲
+     |    ┌──(F)─────────────┘  |                   |   |                    |
+     |    |   ┌───(D)───────────┘                  (I)  |                    |
+     |    |   |  +---------------+                  |  (K)                  (N)
+    (B)   |   |  |    Policy     |                  |   |                    |
+     |    |   └─►|   Decision    |◄─────────────────┘   |                    |
+     |    |      |    Point      |◄─────────────────────┼────────────────────┘
      |    |      +---------------+                      |
      |    |             ▲                               |
      |    |          (G)(L)                             |
@@ -1920,22 +1923,35 @@ Figure 1: AI Agent as a Workload
 </div>
 </section>
 </div>
-<div id="ai-agent-to-ai-tools">
+<div id="ai-agent-to-other-agent-tools">
 <section id="section-16.2">
-        <h3 id="name-ai-agent-to-ai-tools">
-<a href="#section-16.2" class="section-number selfRef">16.2. </a><a href="#name-ai-agent-to-ai-tools" class="section-name selfRef">AI Agent to AI tools</a>
+        <h3 id="name-ai-agent-to-other-agent-too">
+<a href="#section-16.2" class="section-number selfRef">16.2. </a><a href="#name-ai-agent-to-other-agent-too" class="section-name selfRef">AI Agent To Other Agent / Tools</a>
         </h3>
-<ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-16.2-1.1">
-            <p id="section-16.2-1.1.1">Interactions between an AI Agent and AI Tools are globally specified by <span>[<a href="#MCP" class="cite xref">MCP</a>]</span>. Those sections explain the core specification, <span>[<a href="#MCP" class="cite xref">MCP</a>]</span> is based on as well as the complementary specifications <span class="bcp14">RECOMMENDED</span>.<a href="#section-16.2-1.1.1" class="pilcrow">¶</a></p>
-</li>
-        </ul>
+<p id="section-16.2-1">Interactions between an AI Agent and Tools are globally specified by <span>[<a href="#MCP" class="cite xref">MCP</a>]</span>. Those sections only focus on the Identification, authentication, and authorization aspects of the specification.<a href="#section-16.2-1" class="pilcrow">¶</a></p>
+<p id="section-16.2-2">Interactions between an AI Agent and other AI Agents are globally specified by <span>[<a href="#A2A" class="cite xref">A2A</a>]</span>. Note that derived specifications and domain specific specification have emerged like <span>[<a href="#AP2" class="cite xref">AP2</a>]</span> for Agent payment interaction, <span>[<a href="#ACP" class="cite xref">ACP</a>]</span> for Agent to commerce flows. Those sections only focus on the Identification, authentication, and authorization aspects of those specifications.<a href="#section-16.2-2" class="pilcrow">¶</a></p>
 <div id="e-negotiation">
 <section id="section-16.2.1">
           <h4 id="name-e-negotiation">
 <a href="#section-16.2.1" class="section-number selfRef">16.2.1. </a><a href="#name-e-negotiation" class="section-name selfRef">(E) Negotiation</a>
           </h4>
-<p id="section-16.2.1-1">Following <span>[<a href="#RFC9728" class="cite xref">RFC9728</a>]</span>, the AI Agent <span class="bcp14">MUST</span> interact with AI Tools on the metadata endpoint of an OAuth 2.0 protected resource to understand which Authorization Server is the authority this resource; which scopes or authorization details values <span class="bcp14">MAY</span> be required to access this resources; and if proof of possession needs to be presented as standardized with <span>[<a href="#RFC9449" class="cite xref">RFC9449</a>]</span>.<a href="#section-16.2.1-1" class="pilcrow">¶</a></p>
+<div id="case-of-a-tool">
+<section id="section-16.2.1.1">
+            <h5 id="name-case-of-a-tool">
+<a href="#section-16.2.1.1" class="section-number selfRef">16.2.1.1. </a><a href="#name-case-of-a-tool" class="section-name selfRef">Case of a Tool</a>
+            </h5>
+<p id="section-16.2.1.1-1">Following <span>[<a href="#MCP" class="cite xref">MCP</a>]</span>, the AI Agent <span class="bcp14">MUST</span> interact with Tools on the metadata endpoint of an OAuth 2.0 protected resource to understand which Authorization Server is the authority this resource; which scopes or authorization details values <span class="bcp14">MAY</span> be required to access this resources; and if proof of possession needs to be presented as standardized with <span>[<a href="#RFC9449" class="cite xref">RFC9449</a>]</span>.<a href="#section-16.2.1.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="case-of-an-agent">
+<section id="section-16.2.1.2">
+            <h5 id="name-case-of-an-agent">
+<a href="#section-16.2.1.2" class="section-number selfRef">16.2.1.2. </a><a href="#name-case-of-an-agent" class="section-name selfRef">Case of an Agent</a>
+            </h5>
+<p id="section-16.2.1.2-1">Following <span>[<a href="#A2A" class="cite xref">A2A</a>]</span>, the AI Agent <span class="bcp14">MUST</span> interact with the other Agent through their Agent Card. If Extended Agent Card is implemented, the calling AI Agent <span class="bcp14">MUST</span> collect the information to understand which Authorization Server is the authority this resource; which scopes or authorization details values <span class="bcp14">MAY</span> be required to access this resources; and if proof of possession needs to be presented as standardized with <span>[<a href="#RFC9449" class="cite xref">RFC9449</a>]</span>.<a href="#section-16.2.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-16.2.1.2-2"><span>[<a href="#ACP" class="cite xref">ACP</a>]</span> and <span>[<a href="#AP2" class="cite xref">AP2</a>]</span> Agents are expected to follow the same Agent Card feature as <span>[<a href="#A2A" class="cite xref">A2A</a>]</span> Agents.<a href="#section-16.2.1.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 <div id="f-ai-agent-authorization">
@@ -1977,11 +1993,20 @@ Figure 1: AI Agent as a Workload
               </ul>
 </li>
           </ul>
+<p id="section-16.2.2-4">If the AI Agent knows that the underlying actions<a href="#section-16.2.2-4" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-16.2.2-4.1">
-              <p id="section-16.2.2-4.1.1">Transaction Tokens<a href="#section-16.2.2-4.1.1" class="pilcrow">¶</a></p>
+<li class="normal ulEmpty" id="section-16.2.2-5.1">
+              <p id="section-16.2.2-5.1.1">Transaction Tokens<a href="#section-16.2.2-5.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
+</section>
+</div>
+<div id="security-4">
+<section id="section-16.2.3">
+          <h4 id="name-security-5">
+<a href="#section-16.2.3" class="section-number selfRef">16.2.3. </a><a href="#name-security-5" class="section-name selfRef">Security</a>
+          </h4>
+<p id="section-16.2.3-1">If the metadata documents are cryptographically signed, the AI Agent <span class="bcp14">MUST</span> validate the signature before using the information for any authentication and authorization decision.<a href="#section-16.2.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2038,6 +2063,18 @@ CIBA<a href="#section-16.3.1-2" class="pilcrow">¶</a></p>
 <a href="#section-17" class="section-number selfRef">17. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
       </h2>
 <dl class="references">
+<dt id="A2A">[A2A]</dt>
+      <dd>
+<span class="refTitle">"Agent2Agent (A2A) Protocol"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/a2aproject/A2A">https://github.com/a2aproject/A2A</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="ACP">[ACP]</dt>
+      <dd>
+<span class="refTitle">"Agentic Commerce Protocol"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.agenticcommerce.dev/docs">https://www.agenticcommerce.dev/docs</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="AP2">[AP2]</dt>
+      <dd>
+<span class="refTitle">"Agent Payments Protocol (AP2)"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/google-agentic-commerce/AP2">https://github.com/google-agentic-commerce/AP2</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="CAEP">[CAEP]</dt>
       <dd>
 <span class="refTitle">"OpenID Continuous Access Evaluation Profile 1.0"</span>, <span>n.d.</span>, <span>&lt;<a href="https://openid.net/specs/openid-caep-1_0-final.html">https://openid.net/specs/openid-caep-1_0-final.html</a>&gt;</span>. </dd>

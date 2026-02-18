@@ -114,9 +114,10 @@ Table of Contents
        16.1.2.  (B) Initial Authorization
        16.1.3.  (C) Access to the AI Agent
        16.1.4.  (D) Controlling access to the AI Agent
-     16.2.  AI Agent to AI tools
+     16.2.  AI Agent To Other Agent / Tools
        16.2.1.  (E) Negotiation
        16.2.2.  (F) AI Agent Authorization
+       16.2.3.  Security
      16.3.  Agent-to-Resource Authorization
        16.3.1.  Human-in-the loop
      16.4.  Case of Multi-Domain Authorization
@@ -159,15 +160,15 @@ Table of Contents
                           (2) (3)
                            |   ▼
 +--------------+       +------------+       +-----------+       +-----------+
-|  User /      |──(1)─►|  AI Agent  |──(4)─►|  AI Tools |──(5)─►| Services  |
+|  User /      |──(1)─►|  AI Agent  |──(4)─►|   Tools   |──(5)─►| Services  |
 |      /       |       | (workload) |       |           |       |   and     |
 |     / System |◄─(8)──|            |◄─(7)──|           |◄─(6)──| Resources |
 +--------------+       +------------+       +-----------+       +-----------+
 
 Figure 1: AI Agent as a Workload
 
-   1.  Optional: The User or System provides an initial request or
-       instruction to the AI Agent.
+   1.  Optional: The User or System (e.g. a batch job or another Agent)
+       provides an initial request or instruction to the AI Agent.
 
    2.  The AI Agent forwards the available context to the LLM.  Context
        is implementation and deployment specific and may include User or
@@ -175,10 +176,10 @@ Figure 1: AI Agent as a Workload
        other relevant information.
 
    3.  The LLM returns a response to the AI Agent identifying which
-       tools it should invoke.
+       Tools it should invoke.
 
    4.  Based on the LLM’s output, the AI Agent invokes the relevant
-       Tools.
+       Tools (note that a Tool may be another Agent).
 
    5.  The Tools interacts with the underlying Services and Resources
        required to fulfill the requested operation.
@@ -821,20 +822,20 @@ Figure 1: AI Agent as a Workload
                        |   Model (LLM)  |
                        +----------------+
                               ▲   |
-                              │   |
-                              |   ▼
-+--------------+         +------------+         +-----------+         +-----------+
-|  User /      |─(A)(C)─►|  AI Agent  |─(E)(H)─►| AI Tools  |─(J)(M)─►| Services  |
-|      /       |         | (workload) |         |           |         |   and     |
-|     / System |◄────────|            |◄────────|           |◄────────| Resources |
-+--------------+         +------------+         +-----------+         +-----------+
-     ▲                       ▲  ▲                   ▲   ▲                ▲
-     |    ┌──(F)─────────────┘  |                   |   |                |
-     |    |   ┌───(D)───────────┘                  (I)  |                |
-     |    |   |  +---------------+                  |  (K)              (N)
-    (B)   |   |  |    Policy     |                  |   |                |
-     |    |   └─►|   Decision    |◄─────────────────┘   |                |
-     |    |      |    Point      |◄─────────────────────┼────────────────┘
+                              │   |               ┌(H)┐
+                              |   ▼               ▼   │
++--------------+         +------------+         +-------------+         +-----------+
+|  User /      |─(A)(C)─►|  AI Agent  |─(E)(H)─►| Agent /     |─(J)(M)─►| Services  |
+|      /       |         | (workload) |         |      /      |         |   and     |
+|     / System |◄────────|            |◄────────|     / Tools |◄────────| Resources |
++--------------+         +------------+         +-------------+         +-----------+
+     ▲                       ▲  ▲                   ▲   ▲                    ▲
+     |    ┌──(F)─────────────┘  |                   |   |                    |
+     |    |   ┌───(D)───────────┘                  (I)  |                    |
+     |    |   |  +---------------+                  |  (K)                  (N)
+    (B)   |   |  |    Policy     |                  |   |                    |
+     |    |   └─►|   Decision    |◄─────────────────┘   |                    |
+     |    |      |    Point      |◄─────────────────────┼────────────────────┘
      |    |      +---------------+                      |
      |    |             ▲                               |
      |    |          (G)(L)                             |
@@ -983,21 +984,42 @@ Figure 1: AI Agent as a Workload
 
    TODO
 
-16.2.  AI Agent to AI tools
+16.2.  AI Agent To Other Agent / Tools
 
-      Interactions between an AI Agent and AI Tools are globally
-      specified by [MCP].  Those sections explain the core
-      specification, [MCP] is based on as well as the complementary
-      specifications RECOMMENDED.
+   Interactions between an AI Agent and Tools are globally specified by
+   [MCP].  Those sections only focus on the Identification,
+   authentication, and authorization aspects of the specification.
+
+   Interactions between an AI Agent and other AI Agents are globally
+   specified by [A2A].  Note that derived specifications and domain
+   specific specification have emerged like [AP2] for Agent payment
+   interaction, [ACP] for Agent to commerce flows.  Those sections only
+   focus on the Identification, authentication, and authorization
+   aspects of those specifications.
 
 16.2.1.  (E) Negotiation
 
-   Following [RFC9728], the AI Agent MUST interact with AI Tools on the
+16.2.1.1.  Case of a Tool
+
+   Following [MCP], the AI Agent MUST interact with Tools on the
    metadata endpoint of an OAuth 2.0 protected resource to understand
    which Authorization Server is the authority this resource; which
    scopes or authorization details values MAY be required to access this
    resources; and if proof of possession needs to be presented as
    standardized with [RFC9449].
+
+16.2.1.2.  Case of an Agent
+
+   Following [A2A], the AI Agent MUST interact with the other Agent
+   through their Agent Card.  If Extended Agent Card is implemented, the
+   calling AI Agent MUST collect the information to understand which
+   Authorization Server is the authority this resource; which scopes or
+   authorization details values MAY be required to access this
+   resources; and if proof of possession needs to be presented as
+   standardized with [RFC9449].
+
+   [ACP] and [AP2] Agents are expected to follow the same Agent Card
+   feature as [A2A] Agents.
 
 16.2.2.  (F) AI Agent Authorization
 
@@ -1039,7 +1061,15 @@ Figure 1: AI Agent as a Workload
          o  Start a client initated backchannel authorized request as
             described in [OpenIDConnect.CIBA]
 
+   If the AI Agent knows that the underlying actions
+
       Transaction Tokens
+
+16.2.3.  Security
+
+   If the metadata documents are cryptographically signed, the AI Agent
+   MUST validate the signature before using the information for any
+   authentication and authorization decision.
 
 16.3.  Agent-to-Resource Authorization
 
@@ -1067,6 +1097,15 @@ Figure 1: AI Agent as a Workload
 16.5.  Agent to Agent Authorization
 
 17.  Normative References
+
+   [A2A]      "Agent2Agent (A2A) Protocol", n.d.,
+              <https://github.com/a2aproject/A2A>.
+
+   [ACP]      "Agentic Commerce Protocol", n.d.,
+              <https://www.agenticcommerce.dev/docs>.
+
+   [AP2]      "Agent Payments Protocol (AP2)", n.d.,
+              <https://github.com/google-agentic-commerce/AP2>.
 
    [CAEP]     "OpenID Continuous Access Evaluation Profile 1.0", n.d.,
               <https://openid.net/specs/openid-caep-1_0-final.html>.
