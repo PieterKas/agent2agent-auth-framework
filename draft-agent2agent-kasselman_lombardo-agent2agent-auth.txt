@@ -246,6 +246,23 @@ Figure 1: AI Agent as a Workload
    *  *Agent Compliance:* Measurement of the state and fucntioning of
       the system against the stated policies.
 
+   +--------------+----------------------------------+--------------+
+   |    Policy    |   Monitoring & Remediation       |  Complaince  |
+   |              +----------------------------------|              |
+   |              |          Authorization           |              |
+   |              +----------------------------------|              |
+   |              |          Authentication          |              |
+   |              +----------------------------------|              |
+   |              |          Provisioning            |              |
+   |              +----------------------------------|              |
+   |              |           Attestation            |              |
+   |              +----------------------------------|              |
+   |              |           Credentials            |              |
+   |              +----------------------------------|              |
+   |              |         Agent Identifier         |              |
+   +--------------+----------------------------------+--------------+
+   Figure 2: Agent Identity Management System
+
 5.  Agent Identifier
 
    Agents MUST be uniquely identified to enable authentication and
