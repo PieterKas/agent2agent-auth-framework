@@ -278,7 +278,7 @@ Figure 1: AI Agent as a Workload
    defines the WIMSE workload identifier [WIMSE_ID] as a URI that
    uniquely identifies a workload within a given trust domain.
 
-   Because SPIFFE IDs are URI-based workload identifiers and their
+   Since SPIFFE IDs are URI-based workload identifiers and their
    structure aligns with the identifier model defined in the WIMSE
    identifier draft, all SPIFFE IDs can be treated as valid WIMSE
    identifiers.
@@ -301,23 +301,26 @@ Figure 1: AI Agent as a Workload
    with WIMSE defined credentials.  The choice of an appropriate format
    depends on the trust model and integration requirements.
 
-   Agent credentials MUST be ephemeral, include an explicit expiration
-   time, and MAY carry additional attributes relevant to the agent
-   (e.g., trust domain, attestation evidence, or workload metadata).
+   Agent credentials SHOULD be short-lived to minimize the risk of
+   credential theft and MUST have an explicit expiration time after
+   which it is no longer accepted, and MAY carry additional attributes
+   relevant to the agent (e.g., trust domain, attestation evidence, or
+   workload metadata).
 
-   In some cases, agents MAY need to have access to a secondary
-   credential format to acces a proprietary or legacy system that is not
-   compatible with the X.509, JWT or WIT it is provisioned with.  In
-   these cases an agent MAY exchange their primary credentials through a
-   credential exchange mechanisms (e.g., OAuth 2.0 Token Exchange,
-   Transaction Tokens, Workload Identity Federation).  This allows an
-   agent to obtain a credential targeted to a specific relying party by
-   leveraging the primary credential in its possession.
+   In some cases, agents MAY need a secondary credential to access a
+   proprietary or legacy system that is not compatible with the X.509,
+   JWT or WIT it is provisioned with.  In these cases an agent MAY
+   exchange their primary credentials through a credential exchange
+   mechanisms (e.g., OAuth 2.0 Token Exchange, Transaction Tokens,
+   Workload Identity Federation).  This allows an agent to obtain a
+   credential targeted to a specific relying party by leveraging the
+   primary credential in its possession.
 
    Note: Static API keys are an anti-pattern for agent identity.  They
-   lack cryptographic binding, cannot convey attestation or provenance,
-   and are difficult to rotate or scope, making them unsuitable for
-   secure Agent-to-Agent authentication or authorization.
+   are bearer artefacts that are not cryptographically bound, don't
+   convey identity, are long lived and are operationally brittle as they
+   are difficult to rotate, making them unsuitable for secure Agent-to-
+   Agent authentication or authorization.
 
 7.  Agent Attestation
 
@@ -330,23 +333,26 @@ Figure 1: AI Agent as a Workload
    credential issued and the contents of the credential.
 
    Multiple attestation mechanisms exist, and the appropriate choice is
-   deployment, and risk, specific.  These mechanisms may include
-   hardware-based attestations (e.g., TEE evidence), software integrity
+   deployment and risk specific.  These mechanisms may include hardware-
+   based attestations (e.g., TEE evidence), software integrity
    measurements, supply-chain provenance, platform and orchestration-
-   layer attestations, or operator assertions.  Depending on the risk
-   involved, a single attestation may be sufficient, or, in higher risk
-   scenarios, multi-attestation may be requred.
+   layer attestations, or operator assertions to name a few.  Depending
+   on the risk involved, a single attestation may be sufficient, or, in
+   higher risk scenarios, multi-attestation may be requred.
 
-   The Remote ATtestation Procedures (RATS) architecture (see [RFC9334])
-   provides a general model for producing, conveying, and verifying
-   attestation evidence.  RATS defines the roles of Attester, Verifier,
-   and Relying Party, as well as the concept of Evidence, Endorsements,
-   and Attestation Results.
+   There are numerous systems that perform some kind of attestation, any
+   of which can be used in establishing agent identity.  One example of
+   such a system is the Remote ATtestation Procedures (RATS)
+   architecture (see [RFC9334]), which provides a general model for
+   producing, conveying, and verifying attestation evidence and defines
+   the roles of Attester, Verifier, and Relying Party, as well as the
+   concept of Evidence, Endorsements, and Attestation Results.
 
    Workload identity management systems can use different attestation
    mechanisms and implementations (including RATS), to represent
    attestation evidence and deliver it to credential provisioning
-   systems.
+   systems.  The choice of which systems to use depends on the practical
+   constraints and risk profile of a deployment.
 
 8.  Agent Credential Provisioning
 
@@ -378,14 +384,15 @@ Figure 1: AI Agent as a Workload
    The use of short-lived credentials provides a signiifcant improvement
    in the risk profile and risk of credential exposure.  It provides an
    alternative to explicit revocation mechanisms and simplifies
-   lifecycle management in large, automated environments.
+   lifecycle management in large, automated environments while removing
+   the risks of downtime as a result of credential expiry.
 
-   Deployed frameworks such as [SPIFFE] provide concrete mechanisms for
-   automated, short-lived credential provisioning at runtime based on
-   workload attestation.  In addition to issuing short-lived
-   credentials, [SPIFFE] also provisions ephemeral cryptographic key
-   material bound to each credential, further reducing the risks
-   associated with compromising long-lived keys.
+   Deployed frameworks such as [SPIFFE] provide proven mechanisms for
+   automated, short-lived credential provisioning at runtime.  In
+   addition to issuing short-lived credentials, [SPIFFE] also provisions
+   ephemeral cryptographic key material bound to each credential,
+   further reducing the risks associated with compromising long-lived
+   keys.
 
 9.  Agent Authentication
 
@@ -402,30 +409,32 @@ Figure 1: AI Agent as a Workload
    establishment of a secure transport channel.  The most common
    mechanism used by agents is mutual TLS (mTLS), in which both
    endpoints present X.509-based credentials and perform a bidirectional
-   certificate exchange.  When paired with short-lived workload
-   identities—such as those issued by SPIFFE or WIMSE—mTLS provides
-   strong channel binding and cryptographic proof of control over the
-   agent’s credential.
+   certificate exchange as part of the TL negotiation.  When paired with
+   short-lived workload identities, such as those issued by SPIFFE or
+   WIMSE, mTLS provides strong channel binding and cryptographic proof
+   of control over the agent’s private key.
 
    mTLS is particularly well-suited for environments where transport-
    level protection, peer authentication, and ephemeral workload
    identity are jointly required.  It also simplifies authorization
    decisions by enabling agents to associate application-layer requests
-   with an authenticated transport identity.
+   with an authenticated transport identity.  One example of this is the
+   use of mTLS in service mesh architecctures such as Istio or LinkerD.
 
    *Limitations* There are scenarios where transport-layer
    authentication is not desirable or cannot be relied upon.  In
-   architectures involving intermediaries—such as API gateways, service
+   architectures involving intermediaries, such as API gateways, service
    meshes, load balancers, or protocol translators, TLS sessions are
    often terminated and re-established, breaking the end-to-end
    continuity of transport-layer identity.  Similarly, some deployment
    models (e.g., serverless platforms, multi-tenant edge environments,
-   or cross-domain topologies) may obscure or abstract transport
-   identity, making it difficult for relying parties to bind
-   application-layer actions to a transport-level credential.  In these
-   cases, application-layer authentication provides a more robust and
-   portable mechanism for expressing agent identity and conveying
-   attestation or policy-relevant attributes.
+   or cross-domain topologies) may obscure or abstract identity
+   presented at the transport layer, making it difficult for relying
+   parties to bind application-layer actions to a credential presented
+   at the transport-layer.  In these cases, application-layer
+   authentication provides a more robust and portable mechanism for
+   expressing agent identity and conveying attestation or policy-
+   relevant attributes.
 
 9.2.  Application layer authentication
 
@@ -456,8 +465,8 @@ Figure 1: AI Agent as a Workload
    tokens) to bind the authentication contexts to specific transaction
    or authorizations details.
 
-   Although the draft currently defines detailed usage for HTTP (via a
-   Workload-Proof-Token header), the core format is protocol-agnostic,
+   Although the draft currently defines a protocol binding for HTTP (via
+   a Workload-Proof-Token header), the core format is protocol-agnostic,
    making it applicable to other protocols.  Its JWT structure and
    claims model allow WPTs to be bound to different protocols and
    transports, including asynchronous or non-HTTP messaging systems such
