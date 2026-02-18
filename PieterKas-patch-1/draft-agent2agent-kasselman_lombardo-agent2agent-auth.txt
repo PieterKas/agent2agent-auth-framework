@@ -5,8 +5,10 @@
 Network Working Group                                       P. Kasselman
 Internet-Draft                                                   DeFakto
 Intended status: Informational                               J. Lombardo
-Expires: 20 August 2026                                              AWS
-                                                        16 February 2026
+Expires: 22 August 2026                                              AWS
+                                                            Y. Rosomakho
+                                                                 Zscaler
+                                                        18 February 2026
 
 
             Agent-to-Agent Authentication and Authorization
@@ -54,7 +56,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 August 2026.
+   This Internet-Draft will expire on 22 August 2026.
 
 Copyright Notice
 
@@ -89,29 +91,38 @@ Table of Contents
      10.1.  Leverage OAuth 2.0 as a Delegation Authorization Framework
      10.2.  Use of OAuth 2.0 Access Tokens
      10.3.  Obtaining an OAuth 2.0 Access Token
+       10.3.1.  User Delegates Authorization
+       10.3.2.  Agent Obtains Own Authorization
+       10.3.3.  System Access to Agents
+       10.3.4.  OAuth 2.0 Security Best Practices
      10.4.  Risk reduction with Transaction Tokens
      10.5.  Cross Domain Access
      10.6.  Human in the Loop
      10.7.  Tool-to-Service Acccess
-     10.8.  System to AI Agent
-       10.8.1.  Flow
-       10.8.2.  (B) Initial Authorization
-       10.8.3.  (C) Access to the AI Agent
-       10.8.4.  (D) Controlling access to the AI Agent
-     10.9.  AI Agent to AI tools
-       10.9.1.  (E) Negotiation
-       10.9.2.  (F) AI Agent Authorization
-     10.10. Agent-to-Resource Authorization
-       10.10.1.  Human-in-the loop
-     10.11. Case of Multi-Domain Authorization
-       10.11.1.  Cross Domain Agent-to-Agent Authorization
-     10.12. Agent to Agent Authorization
-   11. Agent Monitoring and Remediation - Jeff
-   12. Agent Auhtentication and Authorization Policy - Discuss
-   13. Agent Compliance - Discuss
+     10.8.  OAuth 2.0 Discovery in Dynamic Environments
+       10.8.1.  Authorization Server Capability Discovery
+       10.8.2.  Protected Resource Capability Discovery
+       10.8.3.  Client Capability Discovery
+   11. Agent Monitoring and Remediation
+   12. Agent Authentication and Authorization Policy
+   13. Agent Compliance
    14. Security Considerations
-   15. IANA Considerations
-   16. Normative References
+   15. Privacy Considerations
+   16. IANA Considerations
+     16.1.  System to AI Agent
+       16.1.1.  Flow
+       16.1.2.  (B) Initial Authorization
+       16.1.3.  (C) Access to the AI Agent
+       16.1.4.  (D) Controlling access to the AI Agent
+     16.2.  AI Agent to AI tools
+       16.2.1.  (E) Negotiation
+       16.2.2.  (F) AI Agent Authorization
+     16.3.  Agent-to-Resource Authorization
+       16.3.1.  Human-in-the loop
+     16.4.  Case of Multi-Domain Authorization
+       16.4.1.  Cross Domain Agent-to-Agent Authorization
+     16.5.  Agent to Agent Authorization
+   17. Normative References
    Acknowledgments
    Authors' Addresses
 
@@ -194,7 +205,8 @@ Figure 1: AI Agent as a Workload
    to be preserved to inform authorization decisions.
 
    This document describes how AI Agents should leverage existing
-   standards defined by SPIFFE [SPIFFE], WIMSE, OAuth and SSF.
+   standards defined by SPIFFE [SPIFFE], WIMSE, OAuth and OpenID SSF
+   [SSF].
 
 4.  Agent Identity Management System
 
@@ -508,8 +520,12 @@ Figure 1: AI Agent as a Workload
    Agents MUST obtain OAuth 2.0 accss tokens using standards OAuth 2.0
    Authorization Flows.
 
+10.3.1.  User Delegates Authorization
+
    When obtaining an access token on-behalf of a user, the Authorization
    Code Grant MUST be used as described in Section 4.1 of [RFC6749].
+
+10.3.2.  Agent Obtains Own Authorization
 
    Agents obtaining access tokens on their own behalf MUST use the
    Client Credentials Grant as described in Section 4.4 of [RFC6749] or
@@ -519,17 +535,25 @@ Figure 1: AI Agent as a Workload
    described in Section 9 and MUST NOT use static, long lived client
    secrets to authenticate.
 
-   When Agents are invoked by a System, the System SHOULD treat the
-   Agent as an OAuth protected resource.  The System SHOULD obtain an
-   access token using the same mechanisms defined for an Agent and then
-   present the OAuth access token to the Agent.  The agent should
-   validate the access token, including verifiying that the 'aud' claim
-   of the access token includes the Agent.  Once validated, the Agent
-   SHOULD use OAuth 2.0 Token Exchange as defined in [RFC8693] to
-   exchange the access token it received for a new access token to
-   access.  The Agent then uses the newly issued access token to access
-   the protected resources (LLM or Tools) it needs to complete the
-   request.
+10.3.3.  System Access to Agents
+
+   When Agents are invoked by a System (e.g. a batcch job, or another
+   Agent), the System SHOULD treat the Agent as an OAuth protected
+   resource.  The System SHOULD obtain an access token using the same
+   mechanisms defined for an Agent and then present the OAuth access
+   token to the Agent.  The agent should validate the access token,
+   including verifiying that the 'aud' claim of the access token
+   includes the Agent.  Once validated, the Agent SHOULD use OAuth 2.0
+   Token Exchange as defined in [RFC8693] to exchange the access token
+   it received for a new access token to access.  The Agent then uses
+   the newly issued access token to access the protected resources (LLM
+   or Tools) it needs to complete the request.
+
+   If a System invokes an Agent and does not treat the Agent as an OAuth
+   protected resource, the Agent MUST obtain its own OAuth access token
+   as described in {#agent_obtains_own_access_token}.
+
+10.3.4.  OAuth 2.0 Security Best Practices
 
    Agents MUST support the Best Current Practice for OAuth 2.0 Security
    as described in [RFC9700] when requesting acccess tokens.
@@ -642,8 +666,135 @@ Figure 1: AI Agent as a Workload
    Domains ([OAuth.IDChaining]) to obtain an access token from the
    authroization server protecting the resource it needs to access.
 
+10.8.  OAuth 2.0 Discovery in Dynamic Environments
+
+   In dynamic agent deployments (e.g., ephemeral workloads, multi-tenant
+   services, and frequently changing endpoint topology), Agents and
+   other participants MAY use OAuth discovery mechanisms to reduce
+   static configuration and to bind runtime decisions to verifiable
+   metadata.
+
+10.8.1.  Authorization Server Capability Discovery
+
+   An Agent that needs to obtain tokens MAY discover authorization
+   server endpoints and capabilities using OAuth 2.0 Authorization
+   Server Metadata [RFC8414] and/or OpenID Connect Discovery
+   [OpenIDConnect.Discovery].  This allows the Agent to learn the as
+   issuer identifier, authorization and token endpoints, supported grant
+   types, client authentication methods, signing keys (via jwks_uri),
+   and other relevant capabilities without preconfiguring them.
+
+10.8.2.  Protected Resource Capability Discovery
+
+   When an Agent is invoking a Tool, the Agent MAY use OAuth 2.0
+   Protected Resource Metadata [RFC9728] to discover how the resource is
+   protected, including the resource identifier and the applicable
+   Authorization Server(s) that protects Tool access.  This enables an
+   Agent to select the correct issuer/audience and token acquisition
+   flow at runtime, even when resources are deployed or moved
+   dynamically.
+
+   A Tool that atttempts to acccess and OAuth protected resource MAY use
+   OAuth 2.0 Protected Resource Metadata [RFC9728] in a similar way as
+   an Agent.  Similarly, a System may use [RFC9728] when accessing an
+   Agent.
+
+10.8.3.  Client Capability Discovery
+
+   Other actors (e.g., Authorization Servers, registrars, or policy
+   systems) may need to learn about any entities (System, Agent, Tool)
+   that acts as OAuth clients.  Where supported, they MAY use Client ID
+   Metadata Documents [OAuth.CIMD], which allow a client to host its
+   metadata at a URL-valued client_id so that the relying party can
+   retrieve client properties (e.g., redirect URIs, software statement /
+   display information, and other registered client metadata) without
+   prior bilateral registration.
+
+   As an alternative, entities acting as OAuth clients MAY register
+   their capabilities with authroization servers as defined in the OAuth
+   2.0 Dynamic Client Registration Protocol [RFC7591].
+
+11.  Agent Monitoring and Remediation
+
+   Agents operate in environments where authorization state can change
+   after an access decision is made.  Authroization state may change as
+   a result of policy updates, session termination, device posture
+   changes or elevated risk signals.  Implementations SHOULD treat
+   authorization as continuously evaluated rather than a one-time check,
+   and SHOULD include monitoring and remediation mechanisms to detect
+   and communicate changes in authorization status at runtime.
+
+   Any particiapant in the system, including the Agent, Tool, System,
+   LLM or other resources and service MAY subscribe to change
+   notifications using eventing mechanisms such as the OpenID Shared
+   Signals Framework [SSF] with the Continuous Access Evaluation Profile
+   [CAEP] to receive security and authorization-relevant signals.  Upon
+   receipt of a relevant signal (e.g., session revoked, subject
+   disabled, token replay suspected, risk elevated), the recipient
+   SHOULD remediate by attenuating access, such as terminating local
+   sessions, discarding cached tokens, re-acquiring tokens with updated
+   constraints, reducing privileges, or re-running policy evaluation
+   before continueing to allow acccess.
+
+   To support detection, investigation, and accountability, deployments
+   SHOULD produce durable logs and audit trails for both authorization
+   decisions and subsequent remediations.  This includes recording the
+   Agent, User, System, LLM, resource or service identity, the targeted
+   resource/tool, token identifiers or hashes, and the triggering
+   signals that caused re-evaluation or revocation.
+
+   End-to-end audit is enabled when Agents, Users, Systems, LLMs, Tools,
+   services and resources have stable, verifiable identifiers that allow
+   auditors to trace “which entity did what, using which authorization
+   context, and why access changed over time.”
+
+12.  Agent Authentication and Authorization Policy
+
+   The configuration and runtime parameters for Agent Identifiers
+   Section 5, Agent Credentials Section 6, Agent Attestation Section 7,
+   Agent Credential Provisioning Section 8, Agent Authentication
+   Section 9, Agent Authorization Section 10 and Agent Monitoring and
+   Remediation Section 11 collectively constitute the authentication and
+   authorization policy within which the Agent operates.
+
+   Because these parameters are highly deployment- and risk-model-
+   specific (and often reflect local governance, regulatory, and
+   operational constraints), the policy model and document format are
+   out of scope for this framework and are not recommended as a target
+   for standardization within this specification.  Implementations MAY
+   represent policy in any suitable “policy-as-code” or configuration
+   format (e.g., JSON/YAML), provided it is versioned, reviewable, and
+   supports consistent evaluation across the components participating in
+   the end-to-end flow.
+
+13.  Agent Compliance
+
+   Compliance for Agent-based systems SHOULD be assessed by auditing
+   observed behavior and recorded evidence (logs, signals, and
+   authorization decisions) against the deployment’s Agent
+   Authentication and Authorization Policy Section 12.  Since compliance
+   criteria are specific to individual deployments, organizations,
+   industries and jurisdictions, they are out of scope for this
+   framework though implementers SHOULD ensure strong observability and
+   accountable governance, subject to their specific business needs.
+
+14.  Security Considerations
+
+   TODO Security
+
+15.  Privacy Considerations
+
+   TODO Privac
+
+16.  IANA Considerations
+
+   This document has no IANA actions.
+
    -----------------------End of "High Level
    Map"------------------------------
+
+   -----------------------Early Thoughts on Detailed Spec
+   Below------------------------------
 
    During agent execution, authorization must be enforced at all the
    components involved in the process to provide an in-depth protection
@@ -709,11 +860,11 @@ Figure 1: AI Agent as a Workload
       examples of consent phishing attacks.  Talk about CIBA as a
       protocol.
 
-10.8.  System to AI Agent
+16.1.  System to AI Agent
 
    ### (A) Negotiation - OPTIONAL
 
-10.8.1.  Flow
+16.1.1.  Flow
 
    Following [RFC9728], the System MUST act as an OAuth2 client.  It
    MUST interact with the AI Agent on its metadata endpoint which MUST
@@ -724,18 +875,18 @@ Figure 1: AI Agent as a Workload
    values MAY be required to access this AI Agent; and if extension
    mechanisms MAY be required to fulfil.
 
-10.8.1.1.  Security
+16.1.1.1.  Security
 
    The System MUST follow the best current practices described in
    [RFC9700].
 
-10.8.2.  (B) Initial Authorization
+16.1.2.  (B) Initial Authorization
 
    Based on the information collected as part of (A) or based on its
    configuration, the System MUST initiate an authorization request to
    the Authorization Server acting as authority for the AI Agent.
 
-10.8.2.1.  Flow
+16.1.2.1.  Flow
 
    For this, the System MUST use one of the grant types described in
    [RFC6749] as follows:
@@ -758,7 +909,7 @@ Figure 1: AI Agent as a Workload
          flow), the System MUST use Client-Initiated Backchannel
          Authentication [OpenIDConnect.CIBA].
 
-10.8.2.2.  Extensions
+16.1.2.2.  Extensions
 
    As part of the grant flow, the User / System MUST also fulfill all
    the expected extensions it has an understanding of.  For example, not
@@ -766,7 +917,7 @@ Figure 1: AI Agent as a Workload
    defined in [RFC9449] or {#wpt} - Requesting additional authorization
    details as defined in [RFC9396] or [RFC9126]
 
-10.8.2.3.  Identification
+16.1.2.3.  Identification
 
    The System MUST act as an OAuth2 Client which MAY be assigned a WIMSE
    identifier, which MAY be a SPIFFE ID.
@@ -779,22 +930,22 @@ Figure 1: AI Agent as a Workload
    information provided as part of the mutual TLS OAuth client
    credential as defined in [OAuth.mTLS.Auth-RFC8705]
 
-10.8.2.4.  Authentication
+16.1.2.4.  Authentication
 
    The System MUST authentication using either: - Private Key JWT OAuth
    client authentication as defined in [OAuth.Private.JWT.Auth-RFC7523]
    - Mutual TLS OAuth client authentication as defined in
    [OAuth.mTLS.Auth-RFC8705]
 
-10.8.2.5.  Security
+16.1.2.5.  Security
 
    The System MUST follow the best current practices described in
    [RFC9700] for the interactions with the AI Agent and [RFC8725] when
    handling JWTs.
 
-10.8.3.  (C) Access to the AI Agent
+16.1.3.  (C) Access to the AI Agent
 
-10.8.3.1.  Flow
+16.1.3.1.  Flow
 
    To access an AI Agent, the System MUST present its authorization
    credential as defined in section 7 of [RFC6749] as well as defined in
@@ -805,14 +956,14 @@ Figure 1: AI Agent as a Workload
    new authorization credentials using [OAuth.step-up.Auth-RFC9470] or
    error codes as defined in [RFC6750].
 
-10.8.3.2.  Security
+16.1.3.2.  Security
 
    The client MUST follow the best current practices described in
    [RFC9700].
 
-10.8.4.  (D) Controlling access to the AI Agent
+16.1.4.  (D) Controlling access to the AI Agent
 
-10.8.4.1.  Flow
+16.1.4.1.  Flow
 
    The AI Agent MUST validate the presented token as described in
    [RFC6749] as well as defined in [RFC6750].
@@ -828,18 +979,18 @@ Figure 1: AI Agent as a Workload
    decision point, it MUST follow [OpenIDConnect.AuthZEN] specification
    for requesting and receiving a decision for the access.
 
-10.8.4.2.  Security
+16.1.4.2.  Security
 
    TODO
 
-10.9.  AI Agent to AI tools
+16.2.  AI Agent to AI tools
 
       Interactions between an AI Agent and AI Tools are globally
       specified by [MCP].  Those sections explain the core
       specification, [MCP] is based on as well as the complementary
       specifications RECOMMENDED.
 
-10.9.1.  (E) Negotiation
+16.2.1.  (E) Negotiation
 
    Following [RFC9728], the AI Agent MUST interact with AI Tools on the
    metadata endpoint of an OAuth 2.0 protected resource to understand
@@ -848,7 +999,7 @@ Figure 1: AI Agent as a Workload
    resources; and if proof of possession needs to be presented as
    standardized with [RFC9449].
 
-10.9.2.  (F) AI Agent Authorization
+16.2.2.  (F) AI Agent Authorization
 
    Based on the information collected as part of (E), the AI Agent is
    initiating an authorization request with the Authorization Server
@@ -890,14 +1041,14 @@ Figure 1: AI Agent as a Workload
 
       Transaction Tokens
 
-10.10.  Agent-to-Resource Authorization
+16.3.  Agent-to-Resource Authorization
 
    Present token, peform additional authorization (RBAC etc?)  Direct or
    via tools Resources, services.
 
    Agent -> Tool -> Service -> Resource
 
-10.10.1.  Human-in-the loop
+16.3.1.  Human-in-the loop
 
    Agent framework problem -> human in the loop - confirm something that
    it can already do - agent framework capability - confirmation.  Risk
@@ -907,42 +1058,18 @@ Figure 1: AI Agent as a Workload
    MCP Elicitation to agent to perform some browser things - start authz
    code grant flow.  CIBA
 
-10.11.  Case of Multi-Domain Authorization
+16.4.  Case of Multi-Domain Authorization
 
-10.11.1.  Cross Domain Agent-to-Agent Authorization
+16.4.1.  Cross Domain Agent-to-Agent Authorization
 
    Identiyt chaining, ID-Jag.
 
-10.12.  Agent to Agent Authorization
+16.5.  Agent to Agent Authorization
 
-11.  Agent Monitoring and Remediation - Jeff
+17.  Normative References
 
-   Key point - ongoing monitoring and remediation is needed.  Use
-   protocols like SSE, CAEP to respond to changes in authorization.
-   Note the need for ongoing logging and audit trails.  Talk about end-
-   to-end audit and how this is enabled by having agent identifiers.
-
-12.  Agent Auhtentication and Authorization Policy - Discuss
-
-   Key point - configuration and parameters for all the above
-   constitutes policy.  Not stnadardises and not recommended for
-   standrdisation?  Perhaps somethign about document format?
-
-13.  Agent Compliance - Discuss
-
-   Key point - audit against Agent Identity Policy - not standrdised and
-   not recommended to standardise.  Governance and observability.
-   Perhaps we discuss and describe, but don't suggest standards here.
-
-14.  Security Considerations
-
-   TODO Security
-
-15.  IANA Considerations
-
-   This document has no IANA actions.
-
-16.  Normative References
+   [CAEP]     "OpenID Continuous Access Evaluation Profile 1.0", n.d.,
+              <https://openid.net/specs/openid-caep-1_0-final.html>.
 
    [MCP]      "Model Context Protocol", n.d.,
               <https://modelcontextprotocol.io/specification>.
@@ -997,6 +1124,11 @@ Figure 1: AI Agent as a Workload
               <https://openid.net/specs/openid-client-initiated-
               backchannel-authentication-core-1_0.html>.
 
+   [OpenIDConnect.Discovery]
+              "OpenID Connect Discovery 1.0", n.d.,
+              <https://openid.net/specs/openid-connect-discovery-
+              1_0-final.html>.
+
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
@@ -1008,12 +1140,18 @@ Figure 1: AI Agent as a Workload
    [RFC6750]  "The OAuth 2.0 Authorization Framework: Bearer Token
               Usage", n.d., <https://datatracker.ietf.org/doc/rfc6750>.
 
+   [RFC7591]  "OAuth 2.0 Dynamic Client Registration Protocol", n.d.,
+              <https://datatracker.ietf.org/doc/html/rfc7591>.
+
    [RFC7662]  "OAuth 2.0 Token Introspection", n.d.,
               <https://datatracker.ietf.org/doc/rfc7662>.
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+   [RFC8414]  "OAuth 2.0 Authorization Server Metadata", n.d.,
+              <https://datatracker.ietf.org/doc/html/rfc8414>.
 
    [RFC8628]  "OAuth 2.0 Device Authorization Grant", n.d.,
               <https://www.rfc-editor.org/rfc/rfc8628.html>.
@@ -1079,6 +1217,10 @@ Figure 1: AI Agent as a Workload
               <https://github.com/spiffe/spiffe/blob/main/standards/
               X509-SVID.md>.
 
+   [SSF]      "OpenID Shared Signals Framework Specification 1.0", n.d.,
+              <https://openid.net/specs/openid-sharedsignals-framework-
+              1_0-final.html>.
+
    [WIMSE_ARCH]
               "Workload Identity in a Multi System Environment (WIMSE)
               Architecture", n.d.,
@@ -1116,3 +1258,8 @@ Authors' Addresses
    Jean-François Lombardo
    AWS
    Email: jeffsec@amazon.com
+
+
+   Yaroslav Rosomakho
+   Zscaler
+   Email: yrosomakho@zscaler.com
