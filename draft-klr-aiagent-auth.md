@@ -205,9 +205,11 @@ TODO Introduction
 {::boilerplate bcp14-tagged}
 
 # Agents are workloads
-An Agent is a workload that iteratively interacts with a Large Language Model (LLM) and a set of tools that expose interfaces to underlying services and resources until a terminating condition, determined either by the LLM or by the agent’s internal logic, is reached. It may receive input from a user, or act autonomusly. Figure 1 shows a conceptual model of the AI Agent as a workload and illustrates the high-level interaction model between the User or System, the AI Agent, the Large Language Model (LLM) and the Tools through which the underlying Services and Resources are accessed by the Agent.
+An Agent is a workload that iteratively interacts with a Large Language Model (LLM) and a set of tools that expose interfaces to underlying services and resources until a terminating condition, determined either by the LLM or by the agent's internal logic, is reached. It may receive input from a user, or act autonomusly. {{fig-ai-agent-workload}} shows a conceptual model of the AI Agent as a workload and illustrates the high-level interaction model between the User or System, the AI Agent, the Large Language Model (LLM), Tools, Services, and Resources.
 
-~~~ ascii-art
+In this document, Tools, Services, and Resources are treated as a single category of external endpoints that an agent invokes or interacts with to complete a task. Communication within or between Tools, Services, and Resources is out of scope.
+
+~~~aasvg
                 +----------------+
                 | Large Language |
                 |   Model (LLM)  |
@@ -215,25 +217,22 @@ An Agent is a workload that iteratively interacts with a Large Language Model (L
                       ▲   |
                      (2) (3)
                       |   ▼
-+--------+       +------------+       +-----------+       +-----------+
-|  User  |──(1)─►|  AI Agent  |──(4)─►|   Tools   |──(5)─►| Services  |
-|   or   |       | (workload) |       |           |       |   and     |
-| System |◄─(8)──|            |◄─(7)──|           |◄─(6)──| Resources |
-+--------+       +------------+       +-----------+       +-----------+
-
-               Figure 1: AI Agent as a Workload
++--------+       +------------+       +-----------+
+|  User  |──(1)─►|  AI Agent  |──(4)─►|   Tools   |
+|   or   |       | (workload) |       | Services  |
+| System |◄─(6)──|            |◄─(5)──| Resources |
++--------+       +------------+       +-----------+
 ~~~
+{: #fig-ai-agent-workload title="AI Agent as a Workload"}
 
 1. Optional: The User or System (e.g. a batch job or another Agent) provides an initial request or instruction to the AI Agent.
-2. The AI Agent forwards the available context to the LLM. Context is implementation and deployment specific and may include User or System input, system prompt, tool descriptions, tool outputs and other relevant information.
-3. The LLM returns a response to the AI Agent identifying which Tools it should invoke.
-4. Based on the LLM’s output, the AI Agent invokes the relevant Tools (note that a Tool may be another Agent).
-5. The Tools interacts with the underlying Services and Resources required to fulfill the requested operation.
-6. The underlying Services and Resources returns the information requested by the Tools.
-7. The Tools returns the information collected from the Services and Resources to the AI Agent, which sends the information as additional context to the Large Langugage Model, repeating steps 2-7 until the exit condition is reached and the task is completed.
-8. Optional: Once the exit condition is reached in step 7, the AI Agent may return a response to the User or System.
+1. The AI Agent provides the available context to the LLM. Context is implementation- and deployment-specific and may include User or System input, system prompts, tool descriptions, prior tool outputs, and other relevant state.
+1. The LLM returns output to the AI Agent facilitating selection of Tools, Services or Resources to invoke.
+1. The AI Agent invokes one or more external endpoints of selected Tools, Services or Resources. A Tool endpoint may itself be implemented by another AI agent.
+1. The external endpoint returns a result of the operation to the AI Agent, which may sends the information as additional context to the Large Langugage Model, repeating steps 2-5 until the exit condition is reached and the task is completed.
+1. Optional: Once the exit condition is reached in step 5, the AI Agent may return a response to the User or System. The AI Agent may also return intermediate results or request additional input.
 
-As shown in Figure 1, the AI Agent is a workload that needs and identifier and credentials with which it can be authenticated by the User or System, Large Langugage Model and Tools. Once it is authenticated, the Large Langugage Model and Tools must determine if the AI Agent is authorized to access it. If the AI Agent is acting on-behalf-of a User or System, the User or System needs to delegate access to the AI Agent, and the context of the User or System needs to be preserved to inform authorization decisions.
+As shown in {{fig-ai-agent-workload}}, the AI Agent is a workload that needs and identifier and credentials with which it can be authenticated by the User or System, Large Langugage Model and Tools/Services/Resources. Once authenticated, these parties must determine if the AI Agent is authorized to access requested functions or data. If the AI Agent is acting on behalf of a User or System, that principal needs to delegate authority to the AI Agent, and the principal context MUST be preserved to inform authorization decisions and auditing.
 
 This document describes how AI Agents should leverage existing standards defined by SPIFFE {{SPIFFE}}, WIMSE, OAuth and OpenID SSF {{SSF}}.
 
@@ -334,10 +333,10 @@ Although the draft currently defines a protocol binding for HTTP (via a Workload
 The WIMSE Workload-to-Workload Authentication with HTTP Signatures specification {{WIMSE_HTTPSIG}} defines an application-layer authentication profile built on the HTTP Message Signatures standard {{RFC9421}}. It is one of the mechanisms WIMSE defines for authenticating workloads in HTTP-based interactions where transport-layer protections may be insufficient or unavailable. The protocol combines a workload’s Workload Identity Token (WIT), which conveys attested identity and binds a public key, with HTTP Message Signatures using the corresponding private key, thereby providing proof of possession and message integrity for individual HTTP requests and responses. This approach ensures end-to-end authentication and integrity even when traffic traverses intermediaries such as TLS proxies or load balancers that break transport-layer identity continuity. The profile mandates signing of key request components (e.g., method, target, content digest, and the WIT itself) and supports optional response signing to ensure full protection of workload-to-workload exchanges.
 
 # Agent Authorization {#agent_authorization}
-Agents act on behalf of a user, a system, or on their own behalf as shown in Figure 1 and needs to obtain authorization when interacting with protected resources.
+Agents act on behalf of a user, a system, or on their own behalf as shown in {{fig-ai-agent-workload}} and needs to obtain authorization when interacting with protected resources.
 
 ## Leverage OAuth 2.0 as a Delegation Authorization Framework
-The OAuth 2.0 Authorization Framework {{RFC6749}} is widely deployed and defines an authorization delegation framework that enables an Agent to obtain limited access to a protected resource (e.g. a service or API) under well-defined policy constraints. An Agent MUST use OAuth 2.0-based mechanisms to obtain authorization from a user, a system, or on its own behalf. OAuth 2.0 defines a wide range of authorization grant flows that supports these scenarios. In these Oauth 2.0 flows, an Agent acts as an OAuth 2.0 Client to an OAuth 2.0 Authorization Server, which receives the request, evaluate the authorization policy and returns an access token, which the Agent presents to the Resource Server (i.e. the protected resources such as the LLM or Tools in Figure 1) it needs to access to complete the request.
+The OAuth 2.0 Authorization Framework {{RFC6749}} is widely deployed and defines an authorization delegation framework that enables an Agent to obtain limited access to a protected resource (e.g. a service or API) under well-defined policy constraints. An Agent MUST use OAuth 2.0-based mechanisms to obtain authorization from a user, a system, or on its own behalf. OAuth 2.0 defines a wide range of authorization grant flows that supports these scenarios. In these Oauth 2.0 flows, an Agent acts as an OAuth 2.0 Client to an OAuth 2.0 Authorization Server, which receives the request, evaluate the authorization policy and returns an access token, which the Agent presents to the Resource Server (i.e. the protected resources such as the LLM or Tools in {{fig-ai-agent-workload}}) it needs to access to complete the request.
 
 ## Use of OAuth 2.0 Access Tokens
 An OAuth access token represents the authorization granted to the Agent. In many deployments, access tokens are structured as JSON Web Tokens (JWTs) {{RFC9068}}, which include claims such as 'client_id', 'sub', 'aud', 'scope', and other attributes relevant to authorization. The access token MUST include the Agent identity as the 'client_id' claim as defined in Section 2.2 of {{RFC9068}}.
@@ -369,7 +368,7 @@ To avoid passing access tokens between microservices, the Agent, LLM or Tools SH
 A transaction token MAY be used to obtain an access token to call another service (e.g. another Agent, Tool or LLM) by using OAuth 2.0 Token Exchange as defined in {{RFC8693}}.
 
 ## Cross Domain Access
-Agents often require access to resources that are protected by different OAuth 2.0 authorization servers. When the components in Figure 1 are protected by different logical authorization servers, an Agent SHOULD use OAuth Identity and Authorization Chaining Across Domains as defined in {{OAuth.IDChaining}}, or a derived specification such as the Identity Assertion JWT Authorization Grant {{OAuth.IDJAG}}, to obtain an access token from the relevant authorization servers.
+Agents often require access to resources that are protected by different OAuth 2.0 authorization servers. When the components in {{fig-ai-agent-workload}} are protected by different logical authorization servers, an Agent SHOULD use OAuth Identity and Authorization Chaining Across Domains as defined in {{OAuth.IDChaining}}, or a derived specification such as the Identity Assertion JWT Authorization Grant {{OAuth.IDJAG}}, to obtain an access token from the relevant authorization servers.
 
 When using OAuth Identity and Authorization Chaining Across Domains ({{OAuth.IDChaining}}), an Agent SHOULD use the access token or transaction token it received to obtain a JWT authorization grant as described in section 2.3 of {{OAuth.IDChaining}} and then use the JWT authorization grant it receives to obtain an access token for the resource it is trying to access as defined in section 2.4 of {{OAuth.IDChaining}}.
 
