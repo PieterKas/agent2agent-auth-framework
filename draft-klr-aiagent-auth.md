@@ -373,13 +373,27 @@ Other actors (e.g., Authorization Servers, registrars, or policy systems) may ne
 As an alternative, entities acting as OAuth clients MAY register their capabilities with authroization servers as defined in the OAuth 2.0 Dynamic Client Registration Protocol {{!OAUTH-REGISTRATION=RFC7591}}.
 
 # Agent Monitoring and Remediation {#agent_monitoring_and_remediation}
-Agents operate in environments where authorization state can change after an access decision is made. Authroization state may change as a result of policy updates, session termination, device posture changes or elevated risk signals. Implementations SHOULD treat authorization as continuously evaluated rather than a one-time check, and SHOULD include monitoring and remediation mechanisms to detect and communicate changes in authorization status at runtime.
+Because agents may perform sensitive actions autonomously or on behalf of users, deployments MUST maintain sufficient observability to reconstruct agent behavior and authorization context after execution. Monitoring is therefore a security control, not solely an operational feature.
 
-Any particiapant in the system, including the Agent, Tool, System, LLM or other resources and service MAY subscribe to change notifications using eventing mechanisms such as the OpenID Shared Signals Framework {{SSF}} with the Continuous Access Evaluation Profile {{CAEP}} to receive security and authorization-relevant signals. Upon receipt of a relevant signal (e.g., session revoked, subject disabled, token replay suspected, risk elevated), the recipient SHOULD remediate by attenuating access, such as terminating local sessions, discarding cached tokens, re-acquiring tokens with updated constraints, reducing privileges, or re-running policy evaluation before continueing to allow acccess.
+Any particiapant in the system, including the Agent, Tool, System, LLM or other resources and service MAY subscribe to change notifications using eventing mechanisms such as the OpenID Shared Signals Framework {{SSF}} with the Continuous Access Evaluation Profile {{CAEP}} to receive security and authorization-relevant signals. Upon receipt of a relevant signal (e.g., session revoked, subject disabled, token replay suspected, risk elevated), the recipient SHOULD remediate by attenuating access, such as terminating local sessions, discarding cached tokens, re-acquiring tokens with updated constraints, reducing privileges, or re-running policy evaluation before continueing to allow acccess. Recipients of such signals MUST ensure that revoked or downgraded authorization is enforced without undue delay. Cached authorization decisions and tokens that are no longer valid MUST NOT continue to be used after a revocation or risk notification is received.
 
-To support detection, investigation, and accountability, deployments SHOULD produce durable logs and audit trails for both authorization decisions and subsequent remediations. This includes recording the Agent, User, System,  LLM, resource or service identity, the targeted resource/tool, token identifiers or hashes, and the triggering signals that caused re-evaluation or revocation.
+To support detection, investigation, and accountability, deployments MUST produce durable audit logs covering authorization decisions and subsequent remediations. Audit records MUST be tamper-evident and retained according to the security policy of the deployment.
 
-End-to-end audit is enabled when Agents, Users, Systems, LLMs, Tools, services and resources have stable, verifiable identifiers that allow auditors to trace “which entity did what, using which authorization context, and why access changed over time.”
+At a minimum, audit events MUST record:
+
+* authenticated agent identifier
+* delegated subject (user or system), when present
+* resource or tool being accessed
+* action requested and authorization decision
+* timestamp and transaction or request correlation identifier
+* attestation or risk state influencing the decision
+* remediation or revocation events and their cause
+
+Monitoring systems SHOULD correlate events across Agents, Tools, Services, Resources and LLMs to detect misuse patterns such as replay, confused deputy behavior, privilege escalation, or unexpected action sequences.
+
+End-to-end audit is enabled when Agents, Users, Systems, LLMs, Tools, services and resources have stable, verifiable identifiers that allow auditors to trace "which entity did what, using which authorization context, and why access changed over time."
+
+Implementations SHOULD provide operators the ability to reconstruct a complete execution chain of an agent task, including delegated authority, intermediate calls, and resulting actions across service boundaries.
 
 # Agent Authentication and Authorization Policy {#agent_auhtentication_and_authorization_policy}
 The configuration and runtime parameters for Agent Identifiers {{agent_identifiers}}, Agent Credentials {{agent_credentials}}, Agent Attestation {{agent_attestation}}, Agent Credential Provisioning {{agent_credential_provisioning}}, Agent Authentication {{agent_authentication}}, Agent Authorization {{agent_authorization}} and Agent Monitoring and Remediation {{agent_monitoring_and_remediation}} collectively constitute the authentication and authorization policy within which the Agent operates.
