@@ -237,7 +237,9 @@ As shown in {{fig-ai-agent-workload}}, the AI Agent is a workload that needs an 
 This document describes how AI Agents should leverage existing standards defined by SPIFFE {{SPIFFE}}, WIMSE, OAuth and OpenID SSF {{SSF}}.
 
 # Agent Identity Management System
-An Agent Identity Management System ensure that the right Agent has access to the right resources and tools at the right time for the right reason. An Agent identity system depends on the following components to achieve its goals:
+This document defines the term Agent Identity Management System (AIMS) as a conceptual model describing the set of functions required to establish, maintain, and evaluate the identity and permissions of an agent workload. AIMS does not refer to a single product, protocol, or deployment architecture. AIMS may be implemented by one component or distributed across multiple systems (such as identity providers, attestation services, authorization servers, policy engines, and runtime enforcement points).
+
+An Agent Identity Management System ensures that the right Agent has access to the right resources and tools at the right time for the right reason. An Agent identity management system depends on the following components to achieve its goals:
 
 * **Agent Identifiers:** Unique identifier assigned to every Agent.
 * **Agent Credentials:** Cryptographic binding between the Agent Identifier and attributes of the Agent.
@@ -249,24 +251,26 @@ An Agent Identity Management System ensure that the right Agent has access to th
 * **Agent Auhtentication and Authorization Policy:** The configuration and rules for each of the Agent Identity Management System.
 * **Agent Compliance:** Measurement of the state and fucntioning of the system against the stated policies.
 
-~~~ ascii-art
+The components form a logical stack in which higher layers depend on guarantees provided by lower layers, as illustrated in {{fig-agent-identity-management-system}}.
+
+~~~aasvg
 +--------------+----------------------------------+--------------+
 |    Policy    |   Monitoring & Remediation       |  Complaince  |
-|              +----------------------------------|              |
+|              +----------------------------------+              |
 |              |          Authorization           |              |
-|              +----------------------------------|              |
+|              +----------------------------------+              |
 |              |          Authentication          |              |
-|              +----------------------------------|              |
+|              +----------------------------------+              |
 |              |          Provisioning            |              |
-|              +----------------------------------|              |
+|              +----------------------------------+              |
 |              |           Attestation            |              |
-|              +----------------------------------|              |
+|              +----------------------------------+              |
 |              |           Credentials            |              |
-|              +----------------------------------|              |
+|              +----------------------------------+              |
 |              |           Identifier             |              |
 +--------------+----------------------------------+--------------+
-          Figure 2: Agent Identity Management System
 ~~~
+{: #fig-agent-identity-management-system title="Agent Identity Management System"}
 
 # Agent Identifier {#agent_identifiers}
 Agents MUST be uniquely identified to enable authentication and authorization. The Secure Production Identity Framework for Everyone (SPIFFE) identifier format is widely deployed and operationally mature. The SPIFFE workload identity model defines a SPIFFE identifier (SPIFFE ID) as a URI of the form `spiffe://<trust-domain>/<path>` that uniquely identifies a workload within a trust domain {{SPIFFE}}.
