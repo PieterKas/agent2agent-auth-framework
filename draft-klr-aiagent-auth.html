@@ -1181,7 +1181,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-agent-authentication" class="internal xref">Agent Authentication</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.1">
-                <p id="section-toc.1-1.9.2.1.1"><a href="#section-9.1" class="auto internal xref">9.1</a>.  <a href="#name-network-layer-authenticatio" class="internal xref">Network layer authentication</a></p>
+                <p id="section-toc.1-1.9.2.1.1"><a href="#section-9.1" class="auto internal xref">9.1</a>.  <a href="#name-transport-layer-authenticat" class="internal xref">Transport layer authentication</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.1.2.1">
+                    <p id="section-toc.1-1.9.2.1.2.1.1"><a href="#section-9.1.1" class="auto internal xref">9.1.1</a>.  <a href="#name-limitations" class="internal xref">Limitations</a></p>
+</li>
+                </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2">
                 <p id="section-toc.1-1.9.2.2.1"><a href="#section-9.2" class="auto internal xref">9.2</a>.  <a href="#name-application-layer-authentic" class="internal xref">Application layer authentication</a></p>
@@ -1190,7 +1195,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
                     <p id="section-toc.1-1.9.2.2.2.1.1"><a href="#section-9.2.1" class="auto internal xref">9.2.1</a>.  <a href="#name-wimse-proof-tokens-wpts" class="internal xref">WIMSE Proof Tokens (WPTs)</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2.2.2">
-                    <p id="section-toc.1-1.9.2.2.2.2.1"><a href="#section-9.2.2" class="auto internal xref">9.2.2</a>.  <a href="#name-http-message-signatures-htt" class="internal xref">HTTP Message Signatures (HTTP Sig)</a></p>
+                    <p id="section-toc.1-1.9.2.2.2.2.1"><a href="#section-9.2.2" class="auto internal xref">9.2.2</a>.  <a href="#name-http-message-signatures" class="internal xref">HTTP Message Signatures</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2.2.3">
+                    <p id="section-toc.1-1.9.2.2.2.3.1"><a href="#section-9.2.3" class="auto internal xref">9.2.3</a>.  <a href="#name-limitations-2" class="internal xref">Limitations</a></p>
 </li>
                 </ul>
 </li>
@@ -1575,15 +1583,22 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
       <h2 id="name-agent-authentication">
 <a href="#section-9" class="section-number selfRef">9. </a><a href="#name-agent-authentication" class="section-name selfRef">Agent Authentication</a>
       </h2>
-<p id="section-9-1">Agents may authenticate to one another using a variety of mechanisms, depending on the credentials they possess, the protocols supported in the deployment environment, and the risk profile of the application. As described in the WIMSE Architecture <span>[<a href="#WIMSE_ARCH" class="cite xref">WIMSE_ARCH</a>]</span>, authentication can occur at either the network layer or the application layer, and many deployments rely on a combination of both.<a href="#section-9-1" class="pilcrow">¶</a></p>
-<div id="network-layer-authentication">
+<p id="section-9-1">Agents may authenticate using a variety of mechanisms, depending on the credentials they possess, the protocols supported in the deployment environment, and the risk profile of the application. As described in the WIMSE Architecture <span>[<a href="#WIMSE-ARCH" class="cite xref">WIMSE-ARCH</a>]</span>, authentication can occur at either the transport layer or the application layer, and many deployments rely on a combination of both.<a href="#section-9-1" class="pilcrow">¶</a></p>
+<div id="transport-layer-authentication">
 <section id="section-9.1">
-        <h3 id="name-network-layer-authenticatio">
-<a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-network-layer-authenticatio" class="section-name selfRef">Network layer authentication</a>
+        <h3 id="name-transport-layer-authenticat">
+<a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-transport-layer-authenticat" class="section-name selfRef">Transport layer authentication</a>
         </h3>
-<p id="section-9.1-1">Network-layer authentication establishes trust during the establishment of a secure transport channel. The most common mechanism used by agents is mutual TLS (mTLS), in which both endpoints present X.509-based credentials and perform a bidirectional certificate exchange as part of the TL negotiation. When paired with short-lived workload identities, such as those issued by SPIFFE or WIMSE, mTLS provides strong channel binding and cryptographic proof of control over the agent’s private key.<a href="#section-9.1-1" class="pilcrow">¶</a></p>
+<p id="section-9.1-1">Transport-layer authentication establishes trust during the establishment of a secure transport channel. The most common mechanism used by agents is mutually-authenticated TLS (mTLS), in which both endpoints present X.509-based credentials and perform a bidirectional certificate exchange as part of the TLS negotiation. When paired with short-lived workload identities, such as those issued by SPIFFE or WIMSE, mTLS provides strong channel binding and cryptographic proof of control over the agent’s private key.<a href="#section-9.1-1" class="pilcrow">¶</a></p>
 <p id="section-9.1-2">mTLS is particularly well-suited for environments where transport-level protection, peer authentication, and ephemeral workload identity are jointly required. It also simplifies authorization decisions by enabling agents to associate application-layer requests with an authenticated transport identity. One example of this is the use of mTLS in service mesh architecctures such as Istio or LinkerD.<a href="#section-9.1-2" class="pilcrow">¶</a></p>
-<p id="section-9.1-3"><strong>Limitations</strong> There are scenarios where transport-layer authentication is not desirable or cannot be relied upon. In architectures involving intermediaries, such as API gateways, service meshes, load balancers, or protocol translators, TLS sessions are often terminated and re-established, breaking the end-to-end continuity of transport-layer identity. Similarly, some deployment models (e.g., serverless platforms, multi-tenant edge environments, or cross-domain topologies) may obscure or abstract identity presented at the transport layer, making it difficult for relying parties to bind application-layer actions to a credential presented at the transport-layer. In these cases, application-layer authentication provides a more robust and portable mechanism for expressing agent identity and conveying attestation or policy-relevant attributes.<a href="#section-9.1-3" class="pilcrow">¶</a></p>
+<div id="limitations">
+<section id="section-9.1.1">
+          <h4 id="name-limitations">
+<a href="#section-9.1.1" class="section-number selfRef">9.1.1. </a><a href="#name-limitations" class="section-name selfRef">Limitations</a>
+          </h4>
+<p id="section-9.1.1-1">There are scenarios where transport-layer authentication is not desirable or cannot be relied upon. In architectures involving intermediaries, such as proxies, API gateways, service meshes, load balancers, or protocol translators, TLS sessions are often terminated and re-established, breaking the end-to-end continuity of transport-layer identity. Similarly, some deployment models (such as serverless platforms, multi-tenant edge environments, or cross-domain topologies) may obscure or abstract identity presented at the transport layer, making it difficult for relying parties to bind application-layer actions to a credential presented at the transport-layer. In these cases, application-layer authentication provides a more robust and portable mechanism for expressing agent identity and conveying attestation or policy-relevant attributes.<a href="#section-9.1.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 <div id="application-layer-authentication">
@@ -1592,23 +1607,31 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-application-layer-authentic" class="section-name selfRef">Application layer authentication</a>
         </h3>
 <p id="section-9.2-1">Application-layer authentication allows agents to authenticate independently of the underlying transport. This enables end-to-end identity preservation even when requests traverse proxies, load balancers, or protocol translation layers.<a href="#section-9.2-1" class="pilcrow">¶</a></p>
-<p id="section-9.2-2">The WIMSE working group defines the following authentication mechanisms that may be used by agents:<a href="#section-9.2-2" class="pilcrow">¶</a></p>
+<p id="section-9.2-2">The WIMSE working group defines WIMSE Proof Tokens and HTTP Message Signatures as authentication mechanisms that may be used by agents.<a href="#section-9.2-2" class="pilcrow">¶</a></p>
 <div id="wpt">
 <section id="section-9.2.1">
           <h4 id="name-wimse-proof-tokens-wpts">
 <a href="#section-9.2.1" class="section-number selfRef">9.2.1. </a><a href="#name-wimse-proof-tokens-wpts" class="section-name selfRef">WIMSE Proof Tokens (WPTs)</a>
           </h4>
-<p id="section-9.2.1-1">WIMSE Workload Proof Tokens (WPTs) are a protocol-independent, application-layer mechanism for proving possession of the private key associated with a Workload Identity Token (WIT). WPTs are generated by the agent, using the private key matching the public key in the WIT. A WPT is defined as a signed JSON Web Token (JWT) that binds an agent’s authentication to a specific message context, for example, an HTTP request, thereby providing proof of possession rather than relying on bearer semantics <span>[<a href="#WIMSE_WPT" class="cite xref">WIMSE_WPT</a>]</span>.<a href="#section-9.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-9.2.1-1">WIMSE Workload Proof Tokens (WPTs, <span>[<a href="#WIMSE-WPT" class="cite xref">WIMSE-WPT</a>]</span>) are a protocol-independent, application-layer mechanism for proving possession of the private key associated with a Workload Identity Token (WIT). WPTs are generated by the agent, using the private key matching the public key in the WIT. A WPT is defined as a signed JSON Web Token (JWT) that binds an agent’s authentication to a specific message context, for example, an HTTP request, thereby providing proof of possession rather than relying on bearer semantics.<a href="#section-9.2.1-1" class="pilcrow">¶</a></p>
 <p id="section-9.2.1-2">WPTs are designed to work alongside WITs <span>[<a href="#WIMSE-CRED" class="cite xref">WIMSE-CRED</a>]</span> and are typically short-lived to reduce the window for replay attacks.  They carry claims such as audience (aud), expiration (exp), a unique token identifier (jti), and a hash of the associated WIT (wth). A WPT may also include hashes of other related tokens (e.g., OAuth access tokens) to bind the authentication contexts to specific transaction or authorizations details.<a href="#section-9.2.1-2" class="pilcrow">¶</a></p>
 <p id="section-9.2.1-3">Although the draft currently defines a protocol binding for HTTP (via a Workload-Proof-Token header), the core format is protocol-agnostic, making it applicable to other protocols. Its JWT structure and claims model allow WPTs to be bound to different protocols and transports, including asynchronous or non-HTTP messaging systems such as Kafka and gRPC, or other future protocol bindings. This design enables relying parties to verify identity, key possession, and message binding at the application layer even in environments where transport-layer identity (e.g., mutual TLS) is insufficient or unavailable.<a href="#section-9.2.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="http-message-signatures-http-sig">
+<div id="http-message-signatures">
 <section id="section-9.2.2">
-          <h4 id="name-http-message-signatures-htt">
-<a href="#section-9.2.2" class="section-number selfRef">9.2.2. </a><a href="#name-http-message-signatures-htt" class="section-name selfRef">HTTP Message Signatures (HTTP Sig)</a>
+          <h4 id="name-http-message-signatures">
+<a href="#section-9.2.2" class="section-number selfRef">9.2.2. </a><a href="#name-http-message-signatures" class="section-name selfRef">HTTP Message Signatures</a>
           </h4>
-<p id="section-9.2.2-1">The WIMSE Workload-to-Workload Authentication with HTTP Signatures specification <span>[<a href="#WIMSE_HTTPSIG" class="cite xref">WIMSE_HTTPSIG</a>]</span> defines an application-layer authentication profile built on the HTTP Message Signatures standard <span>[<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>. It is one of the mechanisms WIMSE defines for authenticating workloads in HTTP-based interactions where transport-layer protections may be insufficient or unavailable. The protocol combines a workload’s Workload Identity Token (WIT), which conveys attested identity and binds a public key, with HTTP Message Signatures using the corresponding private key, thereby providing proof of possession and message integrity for individual HTTP requests and responses. This approach ensures end-to-end authentication and integrity even when traffic traverses intermediaries such as TLS proxies or load balancers that break transport-layer identity continuity. The profile mandates signing of key request components (e.g., method, target, content digest, and the WIT itself) and supports optional response signing to ensure full protection of workload-to-workload exchanges.<a href="#section-9.2.2-1" class="pilcrow">¶</a></p>
+<p id="section-9.2.2-1">The WIMSE Workload-to-Workload Authentication with HTTP Signatures specification <span>[<a href="#WIMSE-HTTPSIG" class="cite xref">WIMSE-HTTPSIG</a>]</span> defines an application-layer authentication profile built on the HTTP Message Signatures standard <span>[<a href="#HTTP-SIG" class="cite xref">HTTP-SIG</a>]</span>. It is one of the mechanisms WIMSE defines for authenticating workloads in HTTP-based interactions where transport-layer protections may be insufficient or unavailable. The protocol combines a workload's Workload Identity Token (WIT) (which binds the agent's identity to a public key) with HTTP Message Signatures (using the corresponding private key), thereby providing proof of possession and message integrity for individual HTTP requests and responses. This approach ensures end-to-end authentication and integrity even when traffic traverses intermediaries such as TLS proxies or load balancers that break transport-layer identity continuity. The profile mandates signing of critical request components (e.g., method, target, content digest, and the WIT itself) and supports optional response signing to ensure full protection of workload-to-workload exchanges.<a href="#section-9.2.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="limitations-1">
+<section id="section-9.2.3">
+          <h4 id="name-limitations-2">
+<a href="#section-9.2.3" class="section-number selfRef">9.2.3. </a><a href="#name-limitations-2" class="section-name selfRef">Limitations</a>
+          </h4>
+<p id="section-9.2.3-1">Unlike transport-layer authentication, application-layer authentication does not inherently provide channel binding to the underlying secure transport. As a result, implementations <span class="bcp14">MUST</span> consider the risk of message relay or replay if tokens or signed messages are accepted outside their intended context. Deployments typically mitigate these risks through short token lifetimes, audience restrictions, nonce or unique identifier checks, and binding authentication to specific requests or transaction parameters.<a href="#section-9.2.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2162,6 +2185,10 @@ CIBA<a href="#section-17.3.1-2" class="pilcrow">¶</a></p>
       <dd>
 <span class="refTitle">"OpenID Continuous Access Evaluation Profile 1.0"</span>, <span>n.d.</span>, <span>&lt;<a href="https://openid.net/specs/openid-caep-1_0-final.html">https://openid.net/specs/openid-caep-1_0-final.html</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="HTTP-SIG">[HTTP-SIG]</dt>
+      <dd>
+<span class="refAuthor">Backman, A., Ed.</span>, <span class="refAuthor">Richer, J., Ed.</span>, and <span class="refAuthor">M. Sporny</span>, <span class="refTitle">"HTTP Message Signatures"</span>, <span class="seriesInfo">RFC 9421</span>, <span class="seriesInfo">DOI 10.17487/RFC9421</span>, <time datetime="2024-02" class="refDate">February 2024</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9421">https://www.rfc-editor.org/rfc/rfc9421</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="MCP">[MCP]</dt>
       <dd>
 <span class="refTitle">"Model Context Protocol"</span>, <span>n.d.</span>, <span>&lt;<a href="https://modelcontextprotocol.io/specification">https://modelcontextprotocol.io/specification</a>&gt;</span>. </dd>
@@ -2266,10 +2293,6 @@ CIBA<a href="#section-17.3.1-2" class="pilcrow">¶</a></p>
       <dd>
 <span class="refTitle">"OAuth 2.0 Rich Authorization Requests"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/rfc9396">https://datatracker.ietf.org/doc/rfc9396</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="RFC9421">[RFC9421]</dt>
-      <dd>
-<span class="refTitle">"HTTP Message Signatures"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/rfc9421">https://datatracker.ietf.org/doc/rfc9421</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="RFC9449">[RFC9449]</dt>
       <dd>
 <span class="refTitle">"OAuth 2.0 Demonstrating Proof of Possession (DPoP)"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/rfc9449">https://datatracker.ietf.org/doc/rfc9449</a>&gt;</span>. </dd>
@@ -2314,29 +2337,29 @@ CIBA<a href="#section-17.3.1-2" class="pilcrow">¶</a></p>
       <dd>
 <span class="refTitle">"OpenID Shared Signals Framework Specification 1.0"</span>, <span>n.d.</span>, <span>&lt;<a href="https://openid.net/specs/openid-sharedsignals-framework-1_0-final.html">https://openid.net/specs/openid-sharedsignals-framework-1_0-final.html</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="WIMSE-ARCH">[WIMSE-ARCH]</dt>
+      <dd>
+<span class="refAuthor">Salowey, J. A.</span>, <span class="refAuthor">Rosomakho, Y.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Workload Identity in a Multi System Environment (WIMSE) Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-arch-06</span>, <time datetime="2025-09-30" class="refDate">30 September 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-06">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-06</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="WIMSE-CRED">[WIMSE-CRED]</dt>
       <dd>
 <span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Salowey, J. A.</span>, <span class="refAuthor">Schwenkschuster, A.</span>, <span class="refAuthor">Sheffer, Y.</span>, and <span class="refAuthor">Y. Rosomakho</span>, <span class="refTitle">"WIMSE Workload Credentials"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-workload-creds-00</span>, <time datetime="2025-11-03" class="refDate">3 November 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-00">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-00</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="WIMSE-HTTPSIG">[WIMSE-HTTPSIG]</dt>
+      <dd>
+<span class="refAuthor">Salowey, J. A.</span> and <span class="refAuthor">Y. Sheffer</span>, <span class="refTitle">"WIMSE Workload-to-Workload Authentication with HTTP Signatures"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-http-signature-01</span>, <time datetime="2026-01-08" class="refDate">8 January 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-http-signature-01">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-http-signature-01</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="WIMSE-ID">[WIMSE-ID]</dt>
       <dd>
 <span class="refAuthor">Rosomakho, Y.</span> and <span class="refAuthor">J. A. Salowey</span>, <span class="refTitle">"Workload Identifier"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-identifier-01</span>, <time datetime="2025-12-29" class="refDate">29 December 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-identifier-01">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-identifier-01</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="WIMSE_ARCH">[WIMSE_ARCH]</dt>
+<dt id="WIMSE-WPT">[WIMSE-WPT]</dt>
       <dd>
-<span class="refTitle">"Workload Identity in a Multi System Environment (WIMSE) Architecture"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/draft-ietf-wimse-arch/">https://datatracker.ietf.org/doc/draft-ietf-wimse-arch/</a>&gt;</span>. </dd>
+<span class="refAuthor">Campbell, B.</span> and <span class="refAuthor">A. Schwenkschuster</span>, <span class="refTitle">"WIMSE Workload Proof Token"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-wpt-00</span>, <time datetime="2025-11-03" class="refDate">3 November 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-wpt-00">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-wpt-00</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="WIMSE_CRED">[WIMSE_CRED]</dt>
-      <dd>
-<span class="refTitle">"WIMSE Workload Credentials"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/draft-ietf-wimse-workload-creds/">https://datatracker.ietf.org/doc/draft-ietf-wimse-workload-creds/</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="WIMSE_HTTPSIG">[WIMSE_HTTPSIG]</dt>
-      <dd>
-<span class="refTitle">"WIMSE Workload-to-Workload Authentication with HTTP Signatures"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/draft-ietf-wimse-http-signature/">https://datatracker.ietf.org/doc/draft-ietf-wimse-http-signature/</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="WIMSE_WPT">[WIMSE_WPT]</dt>
     <dd>
-<span class="refTitle">"WIMSE Proof Token"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/draft-ietf-wimse-wpt/">https://datatracker.ietf.org/doc/draft-ietf-wimse-wpt/</a>&gt;</span>. </dd>
+<span class="refTitle">"WIMSE Workload Credentials"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/draft-ietf-wimse-workload-creds/">https://datatracker.ietf.org/doc/draft-ietf-wimse-workload-creds/</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
