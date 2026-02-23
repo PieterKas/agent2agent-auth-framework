@@ -211,10 +211,19 @@ Table of Contents
 
 4.  Agent Identity Management System
 
-   An Agent Identity Management System ensure that the right Agent has
+   This document defines the term Agent Identity Management System
+   (AIMS) as a conceptual model describing the set of functions required
+   to establish, maintain, and evaluate the identity and permissions of
+   an agent workload.  AIMS does not refer to a single product,
+   protocol, or deployment architecture.  AIMS may be implemented by one
+   component or distributed across multiple systems (such as identity
+   providers, attestation services, authorization servers, policy
+   engines, and runtime enforcement points).
+
+   An Agent Identity Management System ensures that the right Agent has
    access to the right resources and tools at the right time for the
-   right reason.  An Agent identity system depends on the following
-   components to achieve its goals:
+   right reason.  An Agent identity management system depends on the
+   following components to achieve its goals:
 
    *  *Agent Identifiers:* Unique identifier assigned to every Agent.
 
@@ -246,22 +255,26 @@ Table of Contents
    *  *Agent Compliance:* Measurement of the state and fucntioning of
       the system against the stated policies.
 
+   The components form a logical stack in which higher layers depend on
+   guarantees provided by lower layers, as illustrated in Figure 2.
+
    +--------------+----------------------------------+--------------+
    |    Policy    |   Monitoring & Remediation       |  Complaince  |
-   |              +----------------------------------|              |
+   |              +----------------------------------+              |
    |              |          Authorization           |              |
-   |              +----------------------------------|              |
+   |              +----------------------------------+              |
    |              |          Authentication          |              |
-   |              +----------------------------------|              |
+   |              +----------------------------------+              |
    |              |          Provisioning            |              |
-   |              +----------------------------------|              |
+   |              +----------------------------------+              |
    |              |           Attestation            |              |
-   |              +----------------------------------|              |
+   |              +----------------------------------+              |
    |              |           Credentials            |              |
-   |              +----------------------------------|              |
+   |              +----------------------------------+              |
    |              |           Identifier             |              |
    +--------------+----------------------------------+--------------+
-             Figure 2: Agent Identity Management System
+
+                 Figure 2: Agent Identity Management System
 
 5.  Agent Identifier
 
