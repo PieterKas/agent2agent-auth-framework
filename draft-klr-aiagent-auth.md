@@ -240,7 +240,7 @@ This document describes how AI Agents should leverage existing standards defined
 # Agent Identity Management System
 This document defines the term Agent Identity Management System (AIMS) as a conceptual model describing the set of functions required to establish, maintain, and evaluate the identity and permissions of an agent workload. AIMS does not refer to a single product, protocol, or deployment architecture. AIMS may be implemented by one component or distributed across multiple systems (such as identity providers, attestation services, authorization servers, policy engines, and runtime enforcement points).
 
-An Agent Identity Management System ensures that the right Agent has access to the right resources and tools at the right time for the right reason. An Agent identity system depends on the following components to achieve its goals:
+An Agent Identity Management System ensures that the right Agent has access to the right resources and tools at the right time for the right reason. An Agent identity management system depends on the following components to achieve its goals:
 
 * **Agent Identifiers:** Unique identifier assigned to every Agent.
 * **Agent Credentials:** Cryptographic binding between the Agent Identifier and attributes of the Agent.
