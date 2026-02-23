@@ -141,68 +141,69 @@ Table of Contents
 3.  Agents are workloads
 
    An Agent is a workload that iteratively interacts with a Large
-   Language Model (LLM) and a set of tools that expose interfaces to
-   underlying services and resources until a terminating condition,
-   determined either by the LLM or by the agent’s internal logic, is
-   reached.  It may receive input from a user, or act autonomusly.
+   Language Model (LLM) and a set of Tools, Services and Resources.  An
+   agent performs its operations until a terminating condition,
+   determined either by the LLM or by the agent's internal logic, is
+   reached.  It may receive input from a user, or act autonomously.
    Figure 1 shows a conceptual model of the AI Agent as a workload and
    illustrates the high-level interaction model between the User or
-   System, the AI Agent, the Large Language Model (LLM) and the Tools
-   through which the underlying Services and Resources are accessed by
-   the Agent.
+   System, the AI Agent, the Large Language Model (LLM), Tools,
+   Services, and Resources.
 
-                 +----------------+
-                 | Large Language |
-                 |   Model (LLM)  |
-                 +----------------+
-                       ▲   |
-                      (2) (3)
-                       |   ▼
- +--------+       +------------+       +-----------+       +-----------+
- |  User  |──(1)─►|  AI Agent  |──(4)─►|   Tools   |──(5)─►| Services  |
- |   or   |       | (workload) |       |           |       |   and     |
- | System |◄─(8)──|            |◄─(7)──|           |◄─(6)──| Resources |
- +--------+       +------------+       +-----------+       +-----------+
+   In this document, Tools, Services, and Resources are treated as a
+   single category of external endpoints that an agent invokes or
+   interacts with to complete a task.  Communication within or between
+   Tools, Services, and Resources is out of scope.
 
-                Figure 1: AI Agent as a Workload
+                   +----------------+
+                   | Large Language |
+                   |   Model (LLM)  |
+                   +----------------+
+                         ▲   |
+                        (2) (3)
+                         |   ▼
+   +--------+       +------------+       +-----------+
+   |  User  |──(1)─►|  AI Agent  |──(4)─►|   Tools   |
+   |   or   |       | (workload) |       | Services  |
+   | System |◄─(6)──|            |◄─(5)──| Resources |
+   +--------+       +------------+       +-----------+
+
+                      Figure 1: AI Agent as a Workload
 
    1.  Optional: The User or System (e.g. a batch job or another Agent)
        provides an initial request or instruction to the AI Agent.
 
-   2.  The AI Agent forwards the available context to the LLM.  Context
-       is implementation and deployment specific and may include User or
-       System input, system prompt, tool descriptions, tool outputs and
-       other relevant information.
+   2.  The AI Agent provides the available context to the LLM.  Context
+       is implementation- and deployment-specific and may include User
+       or System input, system prompts, Tool descriptions, prior Tool,
+       Service and Resource outputs, and other relevant state.
 
-   3.  The LLM returns a response to the AI Agent identifying which
-       Tools it should invoke.
+   3.  The LLM returns output to the AI Agent facilitating selection of
+       Tools, Services or Resources to invoke.
 
-   4.  Based on the LLM’s output, the AI Agent invokes the relevant
-       Tools (note that a Tool may be another Agent).
+   4.  The AI Agent invokes one or more external endpoints of selected
+       Tools, Services or Resources.  A Tool endpoint may itself be
+       implemented by another AI agent.
 
-   5.  The Tools interacts with the underlying Services and Resources
-       required to fulfill the requested operation.
+   5.  The external endpoint of the Tools, Services or Resources returns
+       a result of the operation to the AI Agent, which may sends the
+       information as additional context to the Large Language Model,
+       repeating steps 2-5 until the exit condition is reached and the
+       task is completed.
 
-   6.  The underlying Services and Resources returns the information
-       requested by the Tools.
+   6.  Optional: Once the exit condition is reached in step 5, the AI
+       Agent may return a response to the User or System.  The AI Agent
+       may also return intermediate results or request additional input.
 
-   7.  The Tools returns the information collected from the Services and
-       Resources to the AI Agent, which sends the information as
-       additional context to the Large Langugage Model, repeating steps
-       2-7 until the exit condition is reached and the task is
-       completed.
-
-   8.  Optional: Once the exit condition is reached in step 7, the AI
-       Agent may return a response to the User or System.
-
-   As shown in Figure 1, the AI Agent is a workload that needs and
+   As shown in Figure 1, the AI Agent is a workload that needs an
    identifier and credentials with which it can be authenticated by the
-   User or System, Large Langugage Model and Tools.  Once it is
-   authenticated, the Large Langugage Model and Tools must determine if
-   the AI Agent is authorized to access it.  If the AI Agent is acting
-   on-behalf-of a User or System, the User or System needs to delegate
-   access to the AI Agent, and the context of the User or System needs
-   to be preserved to inform authorization decisions.
+   User or System, Large Language Model and Tools/Services/Resources.
+   Once authenticated, these parties must determine if the AI Agent is
+   authorized to access the requested Large Language Model, Tools,
+   Services or Resources.  If the AI Agent is acting on behalf of a User
+   or System, the User or System needs to delegate authority to the AI
+   Agent, and the User or System context MUST be preserved to as input
+   to authorization decisions and recorded in audit trails.
 
    This document describes how AI Agents should leverage existing
    standards defined by SPIFFE [SPIFFE], WIMSE, OAuth and OpenID SSF

@@ -1360,53 +1360,83 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
       <h2 id="name-agents-are-workloads">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-agents-are-workloads" class="section-name selfRef">Agents are workloads</a>
       </h2>
-<p id="section-3-1">An Agent is a workload that iteratively interacts with a Large Language Model (LLM) and a set of tools that expose interfaces to underlying services and resources until a terminating condition, determined either by the LLM or by the agent’s internal logic, is reached. It may receive input from a user, or act autonomusly. Figure 1 shows a conceptual model of the AI Agent as a workload and illustrates the high-level interaction model between the User or System, the AI Agent, the Large Language Model (LLM) and the Tools through which the underlying Services and Resources are accessed by the Agent.<a href="#section-3-1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-ascii-art art-text artwork" id="section-3-2">
-<pre>
-                +----------------+
-                | Large Language |
-                |   Model (LLM)  |
-                +----------------+
-                      ▲   |
-                     (2) (3)
-                      |   ▼
-+--------+       +------------+       +-----------+       +-----------+
-|  User  |──(1)─►|  AI Agent  |──(4)─►|   Tools   |──(5)─►| Services  |
-|   or   |       | (workload) |       |           |       |   and     |
-| System |◄─(8)──|            |◄─(7)──|           |◄─(6)──| Resources |
-+--------+       +------------+       +-----------+       +-----------+
-
-               Figure 1: AI Agent as a Workload
-</pre><a href="#section-3-2" class="pilcrow">¶</a>
+<p id="section-3-1">An Agent is a workload that iteratively interacts with a Large Language Model (LLM) and a set of Tools, Services and Resources. An agent performs its operations until a terminating condition, determined either by the LLM or by the agent's internal logic, is reached. It may receive input from a user, or act autonomously. <a href="#fig-ai-agent-workload" class="auto internal xref">Figure 1</a> shows a conceptual model of the AI Agent as a workload and illustrates the high-level interaction model between the User or System, the AI Agent, the Large Language Model (LLM), Tools, Services, and Resources.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-2">In this document, Tools, Services, and Resources are treated as a single category of external endpoints that an agent invokes or interacts with to complete a task. Communication within or between Tools, Services, and Resources is out of scope.<a href="#section-3-2" class="pilcrow">¶</a></p>
+<span id="name-ai-agent-as-a-workload"></span><div id="fig-ai-agent-workload">
+<figure id="figure-1">
+        <div id="section-3-3.1">
+          <div class="alignLeft art-svg artwork" id="section-3-3.1.1">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="224" width="416" viewBox="0 0 416 224" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
+              <path d="M 8,144 L 8,208" fill="none" stroke="black"></path>
+              <path d="M 80,144 L 80,208" fill="none" stroke="black"></path>
+              <path d="M 136,32 L 136,80" fill="none" stroke="black"></path>
+              <path d="M 144,144 L 144,208" fill="none" stroke="black"></path>
+              <path d="M 248,144 L 248,208" fill="none" stroke="black"></path>
+              <path d="M 272,32 L 272,80" fill="none" stroke="black"></path>
+              <path d="M 312,144 L 312,208" fill="none" stroke="black"></path>
+              <path d="M 408,144 L 408,208" fill="none" stroke="black"></path>
+              <path d="M 136,32 L 272,32" fill="none" stroke="black"></path>
+              <path d="M 136,80 L 272,80" fill="none" stroke="black"></path>
+              <path d="M 8,144 L 80,144" fill="none" stroke="black"></path>
+              <path d="M 144,144 L 248,144" fill="none" stroke="black"></path>
+              <path d="M 312,144 L 408,144" fill="none" stroke="black"></path>
+              <path d="M 8,208 L 80,208" fill="none" stroke="black"></path>
+              <path d="M 144,208 L 248,208" fill="none" stroke="black"></path>
+              <path d="M 312,208 L 408,208" fill="none" stroke="black"></path>
+              <g class="text">
+                <text x="168" y="52">Large</text>
+                <text x="228" y="52">Language</text>
+                <text x="184" y="68">Model</text>
+                <text x="232" y="68">(LLM)</text>
+                <text x="184" y="100">▲</text>
+                <text x="216" y="100">|</text>
+                <text x="184" y="116">(2)</text>
+                <text x="216" y="116">(3)</text>
+                <text x="184" y="132">|</text>
+                <text x="216" y="132">▼</text>
+                <text x="44" y="164">User</text>
+                <text x="112" y="164">──(1)─►</text>
+                <text x="172" y="164">AI</text>
+                <text x="208" y="164">Agent</text>
+                <text x="280" y="164">──(4)─►</text>
+                <text x="360" y="164">Tools</text>
+                <text x="44" y="180">or</text>
+                <text x="196" y="180">(workload)</text>
+                <text x="356" y="180">Services</text>
+                <text x="44" y="196">System</text>
+                <text x="112" y="196">◄─(6)──</text>
+                <text x="280" y="196">◄─(5)──</text>
+                <text x="360" y="196">Resources</text>
+              </g>
+            </svg><a href="#section-3-3.1.1" class="pilcrow">¶</a>
 </div>
-<ol start="1" type="1" class="normal type-1" id="section-3-3">
-<li id="section-3-3.1">
-          <p id="section-3-3.1.1">Optional: The User or System (e.g. a batch job or another Agent) provides an initial request or instruction to the AI Agent.<a href="#section-3-3.1.1" class="pilcrow">¶</a></p>
+</div>
+<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
+<a href="#name-ai-agent-as-a-workload" class="selfRef">AI Agent as a Workload</a>
+        </figcaption></figure>
+</div>
+<ol start="1" type="1" class="normal type-1" id="section-3-4">
+<li id="section-3-4.1">
+          <p id="section-3-4.1.1">Optional: The User or System (e.g. a batch job or another Agent) provides an initial request or instruction to the AI Agent.<a href="#section-3-4.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li id="section-3-3.2">
-          <p id="section-3-3.2.1">The AI Agent forwards the available context to the LLM. Context is implementation and deployment specific and may include User or System input, system prompt, tool descriptions, tool outputs and other relevant information.<a href="#section-3-3.2.1" class="pilcrow">¶</a></p>
+        <li id="section-3-4.2">
+          <p id="section-3-4.2.1">The AI Agent provides the available context to the LLM. Context is implementation- and deployment-specific and may include User or System input, system prompts, Tool descriptions, prior Tool, Service and Resource outputs, and other relevant state.<a href="#section-3-4.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li id="section-3-3.3">
-          <p id="section-3-3.3.1">The LLM returns a response to the AI Agent identifying which Tools it should invoke.<a href="#section-3-3.3.1" class="pilcrow">¶</a></p>
+        <li id="section-3-4.3">
+          <p id="section-3-4.3.1">The LLM returns output to the AI Agent facilitating selection of Tools, Services or Resources to invoke.<a href="#section-3-4.3.1" class="pilcrow">¶</a></p>
 </li>
-        <li id="section-3-3.4">
-          <p id="section-3-3.4.1">Based on the LLM’s output, the AI Agent invokes the relevant Tools (note that a Tool may be another Agent).<a href="#section-3-3.4.1" class="pilcrow">¶</a></p>
+        <li id="section-3-4.4">
+          <p id="section-3-4.4.1">The AI Agent invokes one or more external endpoints of selected Tools, Services or Resources. A Tool endpoint may itself be implemented by another AI agent.<a href="#section-3-4.4.1" class="pilcrow">¶</a></p>
 </li>
-        <li id="section-3-3.5">
-          <p id="section-3-3.5.1">The Tools interacts with the underlying Services and Resources required to fulfill the requested operation.<a href="#section-3-3.5.1" class="pilcrow">¶</a></p>
+        <li id="section-3-4.5">
+          <p id="section-3-4.5.1">The external endpoint of the Tools, Services or Resources returns a result of the operation to the AI Agent, which may sends the information as additional context to the Large Language Model, repeating steps 2-5 until the exit condition is reached and the task is completed.<a href="#section-3-4.5.1" class="pilcrow">¶</a></p>
 </li>
-        <li id="section-3-3.6">
-          <p id="section-3-3.6.1">The underlying Services and Resources returns the information requested by the Tools.<a href="#section-3-3.6.1" class="pilcrow">¶</a></p>
-</li>
-        <li id="section-3-3.7">
-          <p id="section-3-3.7.1">The Tools returns the information collected from the Services and Resources to the AI Agent, which sends the information as additional context to the Large Langugage Model, repeating steps 2-7 until the exit condition is reached and the task is completed.<a href="#section-3-3.7.1" class="pilcrow">¶</a></p>
-</li>
-        <li id="section-3-3.8">
-          <p id="section-3-3.8.1">Optional: Once the exit condition is reached in step 7, the AI Agent may return a response to the User or System.<a href="#section-3-3.8.1" class="pilcrow">¶</a></p>
+        <li id="section-3-4.6">
+          <p id="section-3-4.6.1">Optional: Once the exit condition is reached in step 5, the AI Agent may return a response to the User or System. The AI Agent may also return intermediate results or request additional input.<a href="#section-3-4.6.1" class="pilcrow">¶</a></p>
 </li>
       </ol>
-<p id="section-3-4">As shown in Figure 1, the AI Agent is a workload that needs and identifier and credentials with which it can be authenticated by the User or System, Large Langugage Model and Tools. Once it is authenticated, the Large Langugage Model and Tools must determine if the AI Agent is authorized to access it. If the AI Agent is acting on-behalf-of a User or System, the User or System needs to delegate access to the AI Agent, and the context of the User or System needs to be preserved to inform authorization decisions.<a href="#section-3-4" class="pilcrow">¶</a></p>
-<p id="section-3-5">This document describes how AI Agents should leverage existing standards defined by SPIFFE <span>[<a href="#SPIFFE" class="cite xref">SPIFFE</a>]</span>, WIMSE, OAuth and OpenID SSF <span>[<a href="#SSF" class="cite xref">SSF</a>]</span>.<a href="#section-3-5" class="pilcrow">¶</a></p>
+<p id="section-3-5">As shown in <a href="#fig-ai-agent-workload" class="auto internal xref">Figure 1</a>, the AI Agent is a workload that needs an identifier and credentials with which it can be authenticated by the User or System, Large Language Model and Tools/Services/Resources. Once authenticated, these parties must determine if the AI Agent is authorized to access the requested Large Language Model, Tools, Services or Resources. If the AI Agent is acting on behalf of a User or System, the User or System needs to delegate authority to the AI Agent, and the User or System context <span class="bcp14">MUST</span> be preserved to as input to authorization decisions and recorded in audit trails.<a href="#section-3-5" class="pilcrow">¶</a></p>
+<p id="section-3-6">This document describes how AI Agents should leverage existing standards defined by SPIFFE <span>[<a href="#SPIFFE" class="cite xref">SPIFFE</a>]</span>, WIMSE, OAuth and OpenID SSF <span>[<a href="#SSF" class="cite xref">SSF</a>]</span>.<a href="#section-3-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="agent-identity-management-system">
@@ -1568,13 +1598,13 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
       <h2 id="name-agent-authorization">
 <a href="#section-10" class="section-number selfRef">10. </a><a href="#name-agent-authorization" class="section-name selfRef">Agent Authorization</a>
       </h2>
-<p id="section-10-1">Agents act on behalf of a user, a system, or on their own behalf as shown in Figure 1 and needs to obtain authorization when interacting with protected resources.<a href="#section-10-1" class="pilcrow">¶</a></p>
+<p id="section-10-1">Agents act on behalf of a user, a system, or on their own behalf as shown in <a href="#fig-ai-agent-workload" class="auto internal xref">Figure 1</a> and needs to obtain authorization when interacting with protected resources.<a href="#section-10-1" class="pilcrow">¶</a></p>
 <div id="leverage-oauth-20-as-a-delegation-authorization-framework">
 <section id="section-10.1">
         <h3 id="name-leverage-oauth-20-as-a-dele">
 <a href="#section-10.1" class="section-number selfRef">10.1. </a><a href="#name-leverage-oauth-20-as-a-dele" class="section-name selfRef">Leverage OAuth 2.0 as a Delegation Authorization Framework</a>
         </h3>
-<p id="section-10.1-1">The OAuth 2.0 Authorization Framework <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> is widely deployed and defines an authorization delegation framework that enables an Agent to obtain limited access to a protected resource (e.g. a service or API) under well-defined policy constraints. An Agent <span class="bcp14">MUST</span> use OAuth 2.0-based mechanisms to obtain authorization from a user, a system, or on its own behalf. OAuth 2.0 defines a wide range of authorization grant flows that supports these scenarios. In these Oauth 2.0 flows, an Agent acts as an OAuth 2.0 Client to an OAuth 2.0 Authorization Server, which receives the request, evaluate the authorization policy and returns an access token, which the Agent presents to the Resource Server (i.e. the protected resources such as the LLM or Tools in Figure 1) it needs to access to complete the request.<a href="#section-10.1-1" class="pilcrow">¶</a></p>
+<p id="section-10.1-1">The OAuth 2.0 Authorization Framework <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> is widely deployed and defines an authorization delegation framework that enables an Agent to obtain limited access to a protected resource (e.g. a service or API) under well-defined policy constraints. An Agent <span class="bcp14">MUST</span> use OAuth 2.0-based mechanisms to obtain authorization from a user, a system, or on its own behalf. OAuth 2.0 defines a wide range of authorization grant flows that supports these scenarios. In these Oauth 2.0 flows, an Agent acts as an OAuth 2.0 Client to an OAuth 2.0 Authorization Server, which receives the request, evaluate the authorization policy and returns an access token, which the Agent presents to the Resource Server (i.e. the protected resources such as the LLM or Tools in <a href="#fig-ai-agent-workload" class="auto internal xref">Figure 1</a>) it needs to access to complete the request.<a href="#section-10.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="use-of-oauth-20-access-tokens">
@@ -1642,7 +1672,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
         <h3 id="name-cross-domain-access">
 <a href="#section-10.5" class="section-number selfRef">10.5. </a><a href="#name-cross-domain-access" class="section-name selfRef">Cross Domain Access</a>
         </h3>
-<p id="section-10.5-1">Agents often require access to resources that are protected by different OAuth 2.0 authorization servers. When the components in Figure 1 are protected by different logical authorization servers, an Agent <span class="bcp14">SHOULD</span> use OAuth Identity and Authorization Chaining Across Domains as defined in <span>[<a href="#OAuth.IDChaining" class="cite xref">OAuth.IDChaining</a>]</span>, or a derived specification such as the Identity Assertion JWT Authorization Grant <span>[<a href="#OAuth.IDJAG" class="cite xref">OAuth.IDJAG</a>]</span>, to obtain an access token from the relevant authorization servers.<a href="#section-10.5-1" class="pilcrow">¶</a></p>
+<p id="section-10.5-1">Agents often require access to resources that are protected by different OAuth 2.0 authorization servers. When the components in <a href="#fig-ai-agent-workload" class="auto internal xref">Figure 1</a> are protected by different logical authorization servers, an Agent <span class="bcp14">SHOULD</span> use OAuth Identity and Authorization Chaining Across Domains as defined in <span>[<a href="#OAuth.IDChaining" class="cite xref">OAuth.IDChaining</a>]</span>, or a derived specification such as the Identity Assertion JWT Authorization Grant <span>[<a href="#OAuth.IDJAG" class="cite xref">OAuth.IDJAG</a>]</span>, to obtain an access token from the relevant authorization servers.<a href="#section-10.5-1" class="pilcrow">¶</a></p>
 <p id="section-10.5-2">When using OAuth Identity and Authorization Chaining Across Domains (<span>[<a href="#OAuth.IDChaining" class="cite xref">OAuth.IDChaining</a>]</span>), an Agent <span class="bcp14">SHOULD</span> use the access token or transaction token it received to obtain a JWT authorization grant as described in section 2.3 of <span>[<a href="#OAuth.IDChaining" class="cite xref">OAuth.IDChaining</a>]</span> and then use the JWT authorization grant it receives to obtain an access token for the resource it is trying to access as defined in section 2.4 of <span>[<a href="#OAuth.IDChaining" class="cite xref">OAuth.IDChaining</a>]</span>.<a href="#section-10.5-2" class="pilcrow">¶</a></p>
 <p id="section-10.5-3">When using the Identity Assertion JWT Authorization Grant <span>[<a href="#OAuth.IDJAG" class="cite xref">OAuth.IDJAG</a>]</span>, the identity assertion (e.g. the OpenID Connect ID Token or SAML assertion) for the target end-user is used to obtain a JWT assertion (ID-JAG) as described in section 4.3 of <span>[<a href="#OAuth.IDJAG" class="cite xref">OAuth.IDJAG</a>]</span>, which is then used to obtain an access token as described in section 4.4 of <span>[<a href="#OAuth.IDJAG" class="cite xref">OAuth.IDJAG</a>]</span>.<a href="#section-10.5-3" class="pilcrow">¶</a></p>
 <p id="section-10.5-4">OAuth Identity and Authorization Chaining Across Domains (<span>[<a href="#OAuth.IDChaining" class="cite xref">OAuth.IDChaining</a>]</span>) provides a general mechanism for obtaining cross-domain access that can be used whether an identity assertion like a SAML or OpenID Connect token is available or not. The Identity Assertion JWT Authorization Grant <span>[<a href="#OAuth.IDJAG" class="cite xref">OAuth.IDJAG</a>]</span> is optimised for cases where an identity assertion like a SAML or OpenID Connect token is available from an identity provider that is trusted by all the OAuth authorization servers as it removes the need for the user to re-authenticate. This is typically used within enterprise deployments to simplify authorization delegation for multiple software-as-a-service offerings.<a href="#section-10.5-4" class="pilcrow">¶</a></p>
