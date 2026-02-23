@@ -1,9 +1,9 @@
 ---
-title: "Agent-to-Agent Authentication and Authorization"
-abbrev: "A2A-Auth"
+title: "AI Agent Authentication and Authorization"
+abbrev: "AI-Auth"
 category: info
 
-docname: draft-agent2agent-kasselman_lombardo-agent2agent-auth-latest
+docname: draft-klr-aiagent-auth-latest
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
 number:
 date:
@@ -21,7 +21,7 @@ venue:
 #  mail: WG@example.com
 #  arch: https://example.com/WG
   github: "PieterKas/agent2agent-auth-framework"
-  latest: "https://PieterKas.github.io/agent2agent-auth-framework/draft-agent2agent-kasselman_lombardo-agent2agent-auth.html"
+  latest: "https://PieterKas.github.io/agent2agent-auth-framework/draft-klr-aiagent-auth.html"
 
 author:
  -
@@ -191,7 +191,7 @@ informative:
 
 --- abstract
 
-This document proposes a framework for secure agent-to-agent (A2A) authentication and authorization leveraging existing standards such as the Workload Identity Management and Secure Exchange (WIMSE) architecture and OAuth 2.0 family of specifications. Rather than defining new protocols, this document describes how existing and widely deployed standards can be applied or extended to establish agent-to-agent authentication and authorization. By doing so, it aims to provide a framework within which to use existing standards, identify gaps and guide future standardization efforts for agent-to-agent authentication and authorization.
+This document proposes a framework for authentication and authorization of AI agent interactions. It leverages existing standards such as the Workload Identity Management and Secure Exchange (WIMSE) architecture and OAuth 2.0 family of specifications. Rather than defining new protocols, this document describes how existing and widely deployed standards can be applied or extended to establish agent authentication and authorization. By doing so, it aims to provide a framework within which to use existing standards, identify gaps and guide future standardization efforts for agent authentication and authorization.
 
 --- middle
 
