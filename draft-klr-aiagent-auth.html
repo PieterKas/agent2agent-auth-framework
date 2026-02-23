@@ -1520,10 +1520,11 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
       <h2 id="name-agent-identifier">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-agent-identifier" class="section-name selfRef">Agent Identifier</a>
       </h2>
-<p id="section-5-1">Agents <span class="bcp14">MUST</span> be uniquely identified to enable authentication and authorization. The Secure Production Identity Framework for Everyone (SPIFFE) identifier format is widely deployed and operationally mature. The SPIFFE workload identity model defines a SPIFFE identifier (SPIFFE ID) as a URI of the form <code>spiffe://&lt;trust-domain&gt;/&lt;path&gt;</code> that uniquely identifies a workload within a trust domain <span>[<a href="#SPIFFE" class="cite xref">SPIFFE</a>]</span>.<a href="#section-5-1" class="pilcrow">¶</a></p>
-<p id="section-5-2">The Workload Identity in Multi-System Environments (WIMSE) working group builds on the experiences gained by the SPIFFE community and defines the WIMSE workload identifier <span>[<a href="#WIMSE_ID" class="cite xref">WIMSE_ID</a>]</span> as a URI that uniquely identifies a workload within a given trust domain.<a href="#section-5-2" class="pilcrow">¶</a></p>
-<p id="section-5-3">Since SPIFFE IDs are URI-based workload identifiers and their structure aligns with the identifier model defined in the WIMSE identifier draft, all SPIFFE IDs can be treated as valid WIMSE identifiers.<a href="#section-5-3" class="pilcrow">¶</a></p>
-<p id="section-5-4">All Agents <span class="bcp14">MUST</span> be assigned a WIMSE identifier, which <span class="bcp14">MAY</span> be a SPIFFE ID.<a href="#section-5-4" class="pilcrow">¶</a></p>
+<p id="section-5-1">Agents <span class="bcp14">MUST</span> be uniquely identified in order to support authentication, authorization, auditing, and delegation.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-2">The Workload Identity in Multi-System Environments (WIMSE) identifier as defined by <span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span> is the canonical identifier for agents in this framework.<a href="#section-5-2" class="pilcrow">¶</a></p>
+<p id="section-5-3">A WIMSE identifier is a URI that uniquely identifies a workload within a trust domain. Authorization decisions, delegation semantics, and audit records rely on this identifier remaining stable for the lifetime of the workload identity.<a href="#section-5-3" class="pilcrow">¶</a></p>
+<p id="section-5-4">The Secure Production Identity Framework for Everyone (<span>[<a href="#SPIFFE" class="cite xref">SPIFFE</a>]</span>) identifier is a widely deployed and operationally mature implementation of the WIMSE identifier model. A SPIFFE identifier (<span>[<a href="#SPIFFE-ID" class="cite xref">SPIFFE-ID</a>]</span>) is a URI in the form of <code>spiffe://&lt;trust-domain&gt;/&lt;path&gt;</code> that uniquely identifies a workload within a trust domain.<a href="#section-5-4" class="pilcrow">¶</a></p>
+<p id="section-5-5">An agent participating in this framework <span class="bcp14">MUST</span> be assigned exactly one WIMSE identifier, which <span class="bcp14">MAY</span> be a SPIFFE ID.<a href="#section-5-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="agent_credentials">
@@ -2287,6 +2288,10 @@ CIBA<a href="#section-17.3.1-2" class="pilcrow">¶</a></p>
       <dd>
 <span class="refTitle">"Secure Production Identity Framework for Everyone"</span>, <span>n.d.</span>, <span>&lt;<a href="https://spiffe.io/docs/latest/spiffe-about/overview/">https://spiffe.io/docs/latest/spiffe-about/overview/</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="SPIFFE-ID">[SPIFFE-ID]</dt>
+      <dd>
+<span class="refTitle">"SPIFFE-ID"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md">https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="SPIFFE_BUNDLE">[SPIFFE_BUNDLE]</dt>
       <dd>
 <span class="refTitle">"SPIFFE Bundle"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE_Trust_Domain_and_Bundle.md#4-spiffe-bundle-format">https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE_Trust_Domain_and_Bundle.md#4-spiffe-bundle-format</a>&gt;</span>. </dd>
@@ -2294,10 +2299,6 @@ CIBA<a href="#section-17.3.1-2" class="pilcrow">¶</a></p>
 <dt id="SPIFFE_FEDERATION">[SPIFFE_FEDERATION]</dt>
       <dd>
 <span class="refTitle">"SPIFFE Federation"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE_Federation.md">https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE_Federation.md</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="SPIFFE_ID">[SPIFFE_ID]</dt>
-      <dd>
-<span class="refTitle">"SPIFFE-ID"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md">https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="SPIFFE_JWT">[SPIFFE_JWT]</dt>
       <dd>
@@ -2311,6 +2312,10 @@ CIBA<a href="#section-17.3.1-2" class="pilcrow">¶</a></p>
       <dd>
 <span class="refTitle">"OpenID Shared Signals Framework Specification 1.0"</span>, <span>n.d.</span>, <span>&lt;<a href="https://openid.net/specs/openid-sharedsignals-framework-1_0-final.html">https://openid.net/specs/openid-sharedsignals-framework-1_0-final.html</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="WIMSE-ID">[WIMSE-ID]</dt>
+      <dd>
+<span class="refAuthor">Rosomakho, Y.</span> and <span class="refAuthor">J. A. Salowey</span>, <span class="refTitle">"Workload Identifier"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-identifier-01</span>, <time datetime="2025-12-29" class="refDate">29 December 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-identifier-01">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-identifier-01</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="WIMSE_ARCH">[WIMSE_ARCH]</dt>
       <dd>
 <span class="refTitle">"Workload Identity in a Multi System Environment (WIMSE) Architecture"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/draft-ietf-wimse-arch/">https://datatracker.ietf.org/doc/draft-ietf-wimse-arch/</a>&gt;</span>. </dd>
@@ -2322,10 +2327,6 @@ CIBA<a href="#section-17.3.1-2" class="pilcrow">¶</a></p>
 <dt id="WIMSE_HTTPSIG">[WIMSE_HTTPSIG]</dt>
       <dd>
 <span class="refTitle">"WIMSE Workload-to-Workload Authentication with HTTP Signatures"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/draft-ietf-wimse-http-signature/">https://datatracker.ietf.org/doc/draft-ietf-wimse-http-signature/</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="WIMSE_ID">[WIMSE_ID]</dt>
-      <dd>
-<span class="refTitle">"WIMSE Identifier"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/draft-ietf-wimse-identifier/">https://datatracker.ietf.org/doc/draft-ietf-wimse-identifier/</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="WIMSE_WPT">[WIMSE_WPT]</dt>
     <dd>

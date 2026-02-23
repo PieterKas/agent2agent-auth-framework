@@ -278,26 +278,26 @@ Table of Contents
 
 5.  Agent Identifier
 
-   Agents MUST be uniquely identified to enable authentication and
-   authorization.  The Secure Production Identity Framework for Everyone
-   (SPIFFE) identifier format is widely deployed and operationally
-   mature.  The SPIFFE workload identity model defines a SPIFFE
-   identifier (SPIFFE ID) as a URI of the form spiffe://<trust-
-   domain>/<path> that uniquely identifies a workload within a trust
-   domain [SPIFFE].
+   Agents MUST be uniquely identified in order to support
+   authentication, authorization, auditing, and delegation.
 
-   The Workload Identity in Multi-System Environments (WIMSE) working
-   group builds on the experiences gained by the SPIFFE community and
-   defines the WIMSE workload identifier [WIMSE_ID] as a URI that
-   uniquely identifies a workload within a given trust domain.
+   The Workload Identity in Multi-System Environments (WIMSE) identifier
+   as defined by [WIMSE-ID] is the canonical identifier for agents in
+   this framework.
 
-   Since SPIFFE IDs are URI-based workload identifiers and their
-   structure aligns with the identifier model defined in the WIMSE
-   identifier draft, all SPIFFE IDs can be treated as valid WIMSE
-   identifiers.
+   A WIMSE identifier is a URI that uniquely identifies a workload
+   within a trust domain.  Authorization decisions, delegation
+   semantics, and audit records rely on this identifier remaining stable
+   for the lifetime of the workload identity.
 
-   All Agents MUST be assigned a WIMSE identifier, which MAY be a SPIFFE
-   ID.
+   The Secure Production Identity Framework for Everyone ([SPIFFE])
+   identifier is a widely deployed and operationally mature
+   implementation of the WIMSE identifier model.  A SPIFFE identifier
+   ([SPIFFE-ID]) is a URI in the form of spiffe://<trust-domain>/<path>
+   that uniquely identifies a workload within a trust domain.
+
+   An agent participating in this framework MUST be assigned exactly one
+   WIMSE identifier, which MAY be a SPIFFE ID.
 
 6.  Agent Credentials
 
@@ -1275,6 +1275,11 @@ Table of Contents
    [SPIFFE]   "Secure Production Identity Framework for Everyone", n.d.,
               <https://spiffe.io/docs/latest/spiffe-about/overview/>.
 
+   [SPIFFE-ID]
+              "SPIFFE-ID", n.d.,
+              <https://github.com/spiffe/spiffe/blob/main/standards/
+              SPIFFE-ID.md>.
+
    [SPIFFE_BUNDLE]
               "SPIFFE Bundle", n.d.,
               <https://github.com/spiffe/spiffe/blob/main/standards/
@@ -1284,11 +1289,6 @@ Table of Contents
               "SPIFFE Federation", n.d.,
               <https://github.com/spiffe/spiffe/blob/main/standards/
               SPIFFE_Federation.md>.
-
-   [SPIFFE_ID]
-              "SPIFFE-ID", n.d.,
-              <https://github.com/spiffe/spiffe/blob/main/standards/
-              SPIFFE-ID.md>.
 
    [SPIFFE_JWT]
               "JWT-SVID", n.d.,
@@ -1304,6 +1304,12 @@ Table of Contents
               <https://openid.net/specs/openid-sharedsignals-framework-
               1_0-final.html>.
 
+   [WIMSE-ID] Rosomakho, Y. and J. A. Salowey, "Workload Identifier",
+              Work in Progress, Internet-Draft, draft-ietf-wimse-
+              identifier-01, 29 December 2025,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
+              identifier-01>.
+
    [WIMSE_ARCH]
               "Workload Identity in a Multi System Environment (WIMSE)
               Architecture", n.d.,
@@ -1318,10 +1324,6 @@ Table of Contents
               "WIMSE Workload-to-Workload Authentication with HTTP
               Signatures", n.d., <https://datatracker.ietf.org/doc/
               draft-ietf-wimse-http-signature/>.
-
-   [WIMSE_ID] "WIMSE Identifier", n.d.,
-              <https://datatracker.ietf.org/doc/draft-ietf-wimse-
-              identifier/>.
 
    [WIMSE_WPT]
               "WIMSE Proof Token", n.d.,
