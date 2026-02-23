@@ -1798,10 +1798,36 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
       <h2 id="name-agent-monitoring-and-remedi">
 <a href="#section-11" class="section-number selfRef">11. </a><a href="#name-agent-monitoring-and-remedi" class="section-name selfRef">Agent Monitoring and Remediation</a>
       </h2>
-<p id="section-11-1">Agents operate in environments where authorization state can change after an access decision is made. Authroization state may change as a result of policy updates, session termination, device posture changes or elevated risk signals. Implementations <span class="bcp14">SHOULD</span> treat authorization as continuously evaluated rather than a one-time check, and <span class="bcp14">SHOULD</span> include monitoring and remediation mechanisms to detect and communicate changes in authorization status at runtime.<a href="#section-11-1" class="pilcrow">¶</a></p>
-<p id="section-11-2">Any particiapant in the system, including the Agent, Tool, System, LLM or other resources and service <span class="bcp14">MAY</span> subscribe to change notifications using eventing mechanisms such as the OpenID Shared Signals Framework <span>[<a href="#SSF" class="cite xref">SSF</a>]</span> with the Continuous Access Evaluation Profile <span>[<a href="#CAEP" class="cite xref">CAEP</a>]</span> to receive security and authorization-relevant signals. Upon receipt of a relevant signal (e.g., session revoked, subject disabled, token replay suspected, risk elevated), the recipient <span class="bcp14">SHOULD</span> remediate by attenuating access, such as terminating local sessions, discarding cached tokens, re-acquiring tokens with updated constraints, reducing privileges, or re-running policy evaluation before continueing to allow acccess.<a href="#section-11-2" class="pilcrow">¶</a></p>
-<p id="section-11-3">To support detection, investigation, and accountability, deployments <span class="bcp14">SHOULD</span> produce durable logs and audit trails for both authorization decisions and subsequent remediations. This includes recording the Agent, User, System,  LLM, resource or service identity, the targeted resource/tool, token identifiers or hashes, and the triggering signals that caused re-evaluation or revocation.<a href="#section-11-3" class="pilcrow">¶</a></p>
-<p id="section-11-4">End-to-end audit is enabled when Agents, Users, Systems, LLMs, Tools, services and resources have stable, verifiable identifiers that allow auditors to trace “which entity did what, using which authorization context, and why access changed over time.”<a href="#section-11-4" class="pilcrow">¶</a></p>
+<p id="section-11-1">Because agents may perform sensitive actions autonomously or on behalf of users, deployments <span class="bcp14">MUST</span> maintain sufficient observability to reconstruct agent behavior and authorization context after execution. Monitoring is therefore a security control, not solely an operational feature.<a href="#section-11-1" class="pilcrow">¶</a></p>
+<p id="section-11-2">Any particiapant in the system, including the Agent, Tool, System, LLM or other resources and service <span class="bcp14">MAY</span> subscribe to change notifications using eventing mechanisms such as the OpenID Shared Signals Framework <span>[<a href="#SSF" class="cite xref">SSF</a>]</span> with the Continuous Access Evaluation Profile <span>[<a href="#CAEP" class="cite xref">CAEP</a>]</span> to receive security and authorization-relevant signals. Upon receipt of a relevant signal (e.g., session revoked, subject disabled, token replay suspected, risk elevated), the recipient <span class="bcp14">SHOULD</span> remediate by attenuating access, such as terminating local sessions, discarding cached tokens, re-acquiring tokens with updated constraints, reducing privileges, or re-running policy evaluation before continueing to allow acccess. Recipients of such signals <span class="bcp14">MUST</span> ensure that revoked or downgraded authorization is enforced without undue delay. Cached authorization decisions and tokens that are no longer valid <span class="bcp14">MUST NOT</span> continue to be used after a revocation or risk notification is received.<a href="#section-11-2" class="pilcrow">¶</a></p>
+<p id="section-11-3">To support detection, investigation, and accountability, deployments <span class="bcp14">MUST</span> produce durable audit logs covering authorization decisions and subsequent remediations. Audit records <span class="bcp14">MUST</span> be tamper-evident and retained according to the security policy of the deployment.<a href="#section-11-3" class="pilcrow">¶</a></p>
+<p id="section-11-4">At a minimum, audit events <span class="bcp14">MUST</span> record:<a href="#section-11-4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-11-5.1">
+          <p id="section-11-5.1.1">authenticated agent identifier<a href="#section-11-5.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-11-5.2">
+          <p id="section-11-5.2.1">delegated subject (user or system), when present<a href="#section-11-5.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-11-5.3">
+          <p id="section-11-5.3.1">resource or tool being accessed<a href="#section-11-5.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-11-5.4">
+          <p id="section-11-5.4.1">action requested and authorization decision<a href="#section-11-5.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-11-5.5">
+          <p id="section-11-5.5.1">timestamp and transaction or request correlation identifier<a href="#section-11-5.5.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-11-5.6">
+          <p id="section-11-5.6.1">attestation or risk state influencing the decision<a href="#section-11-5.6.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-11-5.7">
+          <p id="section-11-5.7.1">remediation or revocation events and their cause<a href="#section-11-5.7.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="section-11-6">Monitoring systems <span class="bcp14">SHOULD</span> correlate events across Agents, Tools, Services, Resources and LLMs to detect misuse patterns such as replay, confused deputy behavior, privilege escalation, or unexpected action sequences.<a href="#section-11-6" class="pilcrow">¶</a></p>
+<p id="section-11-7">End-to-end audit is enabled when Agents, Users, Systems, LLMs, Tools, services and resources have stable, verifiable identifiers that allow auditors to trace "which entity did what, using which authorization context, and why access changed over time."<a href="#section-11-7" class="pilcrow">¶</a></p>
+<p id="section-11-8">Implementations <span class="bcp14">SHOULD</span> provide operators the ability to reconstruct a complete execution chain of an agent task, including delegated authority, intermediate calls, and resulting actions across service boundaries.<a href="#section-11-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="agent_auhtentication_and_authorization_policy">
