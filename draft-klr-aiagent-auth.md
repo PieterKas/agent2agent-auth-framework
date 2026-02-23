@@ -41,9 +41,6 @@ normative:
   RFC9334:
     title: "Remote ATtestation procedureS (RATS) Architecture"
     target: https://datatracker.ietf.org/doc/rfc9334/
-  WIMSE_ID:
-    title: "WIMSE Identifier"
-    target: https://datatracker.ietf.org/doc/draft-ietf-wimse-identifier/
   WIMSE_ARCH:
     title: "Workload Identity in a Multi System Environment (WIMSE) Architecture"
     target: https://datatracker.ietf.org/doc/draft-ietf-wimse-arch/
@@ -59,7 +56,7 @@ normative:
   SPIFFE:
     title: "Secure Production Identity Framework for Everyone"
     target: https://spiffe.io/docs/latest/spiffe-about/overview/
-  SPIFFE_ID:
+  SPIFFE-ID:
     title: SPIFFE-ID
     target: https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md
   SPIFFE_X509:
@@ -273,13 +270,15 @@ The components form a logical stack in which higher layers depend on guarantees 
 {: #fig-agent-identity-management-system title="Agent Identity Management System"}
 
 # Agent Identifier {#agent_identifiers}
-Agents MUST be uniquely identified to enable authentication and authorization. The Secure Production Identity Framework for Everyone (SPIFFE) identifier format is widely deployed and operationally mature. The SPIFFE workload identity model defines a SPIFFE identifier (SPIFFE ID) as a URI of the form `spiffe://<trust-domain>/<path>` that uniquely identifies a workload within a trust domain {{SPIFFE}}.
+Agents MUST be uniquely identified in order to support authentication, authorization, auditing, and delegation.
 
-The Workload Identity in Multi-System Environments (WIMSE) working group builds on the experiences gained by the SPIFFE community and defines the WIMSE workload identifier {{WIMSE_ID}} as a URI that uniquely identifies a workload within a given trust domain.
+The Workload Identity in Multi-System Environments (WIMSE) identifier as defined by {{!WIMSE-ID=I-D.ietf-wimse-identifier}} is the canonical identifier for agents in this framework.
 
-Since SPIFFE IDs are URI-based workload identifiers and their structure aligns with the identifier model defined in the WIMSE identifier draft, all SPIFFE IDs can be treated as valid WIMSE identifiers.
+A WIMSE identifier is a URI that uniquely identifies a workload within a trust domain. Authorization decisions, delegation semantics, and audit records rely on this identifier remaining stable for the lifetime of the workload identity.
 
-All Agents MUST be assigned a WIMSE identifier, which MAY be a SPIFFE ID.
+The Secure Production Identity Framework for Everyone ({{SPIFFE}}) identifier is a widely deployed and operationally mature implementation of the WIMSE identifier model. A SPIFFE identifier ({{SPIFFE-ID}}) is a URI in the form of `spiffe://<trust-domain>/<path>` that uniquely identifies a workload within a trust domain.
+
+An agent participating in this framework MUST be assigned exactly one WIMSE identifier, which MAY be a SPIFFE ID.
 
 # Agent Credentials {#agent_credentials}
 Agents MUST have credentials that provide a cryptographic binding to the agent identifier. These credentials are considered primary credentials that are provisioned at runtime. The cryptographic binding is essential for establishing trust since an identifier on its own is insufficient unless it is verifiably tied to a key or token controlled by the agent. WIMSE define a profile of X.509 certificates and Workload Identity Tokens (WITs) {{WIMSE_CRED}}, while SPIFFE defines SPIFFE Verified ID (SVID) profiles of JSON Web Token (JWT-SVID), X.509 certificates (X.509-SVID) and WIMSE Workload Identity Tokens (WIT-SVID). SPIFFE SVID credentials are compatible with WIMSE defined credentials. The choice of an appropriate format depends on the trust model and integration requirements.
