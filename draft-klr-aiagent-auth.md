@@ -38,9 +38,6 @@ author:
     email: yrosomakho@zscaler.com
 
 normative:
-  RFC9334:
-    title: "Remote ATtestation procedureS (RATS) Architecture"
-    target: https://datatracker.ietf.org/doc/rfc9334/
   WIMSE_ARCH:
     title: "Workload Identity in a Multi System Environment (WIMSE) Architecture"
     target: https://datatracker.ietf.org/doc/draft-ietf-wimse-arch/
@@ -292,9 +289,9 @@ Agent attestation is the identity-proofing mechanism for AI agents. Just as huma
 
 Multiple attestation mechanisms exist, and the appropriate choice is deployment and risk specific. These mechanisms may include hardware-based attestations (e.g., TEE evidence), software integrity measurements, supply-chain provenance, platform and orchestration-layer attestations, or operator assertions to name a few. Depending on the risk involved, a single attestation may be sufficient, or, in higher risk scenarios, multi-attestation may be requred.
 
-There are numerous systems that perform some kind of attestation, any of which can be used in establishing agent identity. One example of such a system is the Remote ATtestation Procedures (RATS) architecture (see {{RFC9334}}), which provides a general model for producing, conveying, and verifying attestation evidence and defines the roles of Attester, Verifier, and Relying Party, as well as the concept of Evidence, Endorsements, and Attestation Results.
+There are numerous systems that perform some kind of attestation, any of which can be used in establishing agent identity. One example of such a system is the Remote ATtestation Procedures (RATS) architecture ({{!RATS-ARCH=RFC9334}}), which provides a general model for producing, conveying, and verifying attestation evidence and defines the roles of Attester, Verifier, and Relying Party, as well as the concept of Evidence, Endorsements, and Attestation Results.
 
-Workload identity management systems can use different attestation mechanisms and implementations (including RATS), to represent attestation evidence and deliver it to credential provisioning systems. The choice of which systems to use depends on the practical constraints and risk profile of a deployment.
+An agent identity management system may incorporate different attestation mechanisms and implementations (including RATS) to collect attestation evidence and provide it to credential provisioning components. The selection of mechanisms depends on the deployment constraints and the desired level of trust assurance.
 
 # Agent Credential Provisioning {#agent_credential_provisioning}
 Agent credential provisioning refers to the runtime issuance, renewal, and rotation of the credentials an agent uses to authenticate and authorize itself to other agents. Agents may be provisioned with one or more credential types as described in {{agent_credentials}}. Unlike static secrets, agent credentials are provisioned dynamically and are intentionally short-lived, eliminating the operational burden of manual expiration management and reducing the impact of credential compromise. Agent credential provisioning must operate autonomously, scale to high-churn environments, and integrate closely with the attestation mechanisms that establish trust in the agent at each issuance or rotation event.
