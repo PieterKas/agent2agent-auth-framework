@@ -301,39 +301,47 @@ Table of Contents
 
 6.  Agent Credentials
 
-   Agents MUST have credentials that provide a cryptographic binding to
-   the agent identifier.  These credentials are considered primary
-   credentials that are provisioned at runtime.  The cryptographic
-   binding is essential for establishing trust since an identifier on
-   its own is insufficient unless it is verifiably tied to a key or
-   token controlled by the agent.  WIMSE define a profile of X.509
-   certificates and Workload Identity Tokens (WITs) [WIMSE_CRED], while
-   SPIFFE defines SPIFFE Verified ID (SVID) profiles of JSON Web Token
-   (JWT-SVID), X.509 certificates (X.509-SVID) and WIMSE Workload
-   Identity Tokens (WIT-SVID).  SPIFFE SVID credentials are compatible
-   with WIMSE defined credentials.  The choice of an appropriate format
-   depends on the trust model and integration requirements.
+   Agents MUST possess credentials that provide a cryptographic binding
+   to the agent identifier.  These credentials are considered primary
+   credentials that are provisioned at runtime.  An identifier alone is
+   insufficient unless it can be verified to be controlled by the
+   communicating agent through a cryptographic binding.
+
+   WIMSE credentials ([WIMSE-CRED]) are defined as a profile of X.509
+   certificates and Workload Identity Tokens (WITs), while SPIFFE
+   defines SPIFFE Verified ID (SVID) profiles of JSON Web Token (JWT-
+   SVID), X.509 certificates (X.509-SVID) and WIMSE Workload Identity
+   Tokens (WIT-SVID).  SPIFFE SVID credentials are compatible with WIMSE
+   defined credentials.  The choice of an appropriate format depends on
+   the trust model and integration requirements.
 
    Agent credentials SHOULD be short-lived to minimize the risk of
-   credential theft and MUST have an explicit expiration time after
+   credential theft, MUST include an explicit expiration time after
    which it is no longer accepted, and MAY carry additional attributes
-   relevant to the agent (e.g., trust domain, attestation evidence, or
-   workload metadata).
+   relevant to the agent (for example trust domain, attestation
+   evidence, or workload metadata).
 
-   In some cases, agents MAY need a secondary credential to access a
+   Deployments can improve the assurance of agent identity by protecting
+   private keys using hardware-backed or isolated cryptographic storage
+   such as TPMs, secure enclaves, or platform security modules when such
+   capabilities are available.  These mechanisms reduce key exfiltration
+   risk but are not required for interoperability.
+
+   In some cases, agents MAY need a secondary credentials to access a
    proprietary or legacy system that is not compatible with the X.509,
    JWT or WIT it is provisioned with.  In these cases an agent MAY
    exchange their primary credentials through a credential exchange
-   mechanisms (e.g., OAuth 2.0 Token Exchange, Transaction Tokens,
-   Workload Identity Federation).  This allows an agent to obtain a
-   credential targeted to a specific relying party by leveraging the
-   primary credential in its possession.
+   mechanisms (e.g., OAuth 2.0 Token Exchange [OAUTH-TOKEN-EXCHANGE],
+   Transaction Tokens [OAUTH-TRANS-TOKENS] or Workload Identity
+   Federation).  This allows an agent to obtain a credential targeted to
+   a specific relying party by leveraging the primary credential in its
+   possession.
 
-   Note: Static API keys are an anti-pattern for agent identity.  They
-   are bearer artefacts that are not cryptographically bound, don't
-   convey identity, are long lived and are operationally brittle as they
-   are difficult to rotate, making them unsuitable for secure Agent-to-
-   Agent authentication or authorization.
+   *Note*: Static API keys are an anti-pattern for agent identity.  They
+   are bearer artefacts that are not cryptographically bound, do not
+   convey identity, are typically long-lived and are operationally
+   difficult to rotate, making them unsuitable for secure agent
+   authentication or authorization.
 
 7.  Agent Attestation
 
@@ -470,7 +478,7 @@ Table of Contents
    HTTP request, thereby providing proof of possession rather than
    relying on bearer semantics [WIMSE_WPT].
 
-   WPTs are designed to work alongside WITs [WIMSE_CRED] and are
+   WPTs are designed to work alongside WITs [WIMSE-CRED] and are
    typically short-lived to reduce the window for replay attacks.  They
    carry claims such as audience (aud), expiration (exp), a unique token
    identifier (jti), and a hash of the associated WIT (wth).  A WPT may
@@ -587,10 +595,10 @@ Table of Contents
    token to the Agent.  The Agent should validate the access token,
    including verifiying that the 'aud' claim of the access token
    includes the Agent.  Once validated, the Agent SHOULD use OAuth 2.0
-   Token Exchange as defined in [RFC8693] to exchange the access token
-   it received for a new access token to access.  The Agent then uses
-   the newly issued access token to access the protected resources (LLM
-   or Tools) it needs to complete the request.
+   Token Exchange as defined in [OAUTH-TOKEN-EXCHANGE] to exchange the
+   access token it received for a new access token to access.  The Agent
+   then uses the newly issued access token to access the protected
+   resources (LLM or Tools) it needs to complete the request.
 
    If a System invokes an Agent and does not treat the Agent as an OAuth
    protected resource, the Agent MUST obtain its own OAuth access token
@@ -620,7 +628,7 @@ Table of Contents
    To avoid passing access tokens between microservices, the Agent, LLM
    or Tools SHOULD exchange the access token it receives for a
    transaction token, as defined in the Transaction Token specification
-   as defined in [OAuth.TRAT].  The transaction token allows for
+   as defined in [OAUTH-TRANS-TOKENS].  The transaction token allows for
    identity and auhtorization information to be passed along a call
    chain between microservices.  The transaction token issuer enriches
    the transaction token with context of the caller that presented the
@@ -636,7 +644,7 @@ Table of Contents
 
    A transaction token MAY be used to obtain an access token to call
    another service (e.g. another Agent, Tool or LLM) by using OAuth 2.0
-   Token Exchange as defined in [RFC8693].
+   Token Exchange as defined in [OAUTH-TOKEN-EXCHANGE].
 
 10.5.  Cross Domain Access
 
@@ -701,13 +709,14 @@ Table of Contents
    Access from the Tools to the resources and services MAY be controlled
    through a variety of auhtorization mechanisms, includidng OAuth.  If
    access is controlled through OAuth, the Tools SHOULD use OAuth 2.0
-   Token Exchange as defined in [RFC8693] to exchange the access token
-   it received for a new access token to access the resource or service
-   in question.  If the Tool needs acces to a resource protected by an
-   auhtorization server other than the Tool's own authorization server,
-   it SHOULD use the OAuth Identity and Authorization Chaining Across
-   Domains ([OAuth.IDChaining]) to obtain an access token from the
-   authroization server protecting the resource it needs to access.
+   Token Exchange as defined in [OAUTH-TOKEN-EXCHANGE] to exchange the
+   access token it received for a new access token to access the
+   resource or service in question.  If the Tool needs acces to a
+   resource protected by an auhtorization server other than the Tool's
+   own authorization server, it SHOULD use the OAuth Identity and
+   Authorization Chaining Across Domains ([OAuth.IDChaining]) to obtain
+   an access token from the authroization server protecting the resource
+   it needs to access.
 
 10.8.  OAuth 2.0 Discovery in Dynamic Environments
 
@@ -858,7 +867,7 @@ Table of Contents
    [OpenIDConnect.AuthZEN] is a new specification for exchanging
    authorization requests and decisions between the layer acting at the
    Policy Enforcement Point (PEP) and a Policy Decision Point (PDP). -
-   [OAuth.TRAT] is new specification for formatting pieces of
+   [OAUTH-TRANS-TOKENS] is new specification for formatting pieces of
    authorization in the form of transaction bound bearer tokens.
 
                        +----------------+
@@ -1083,10 +1092,10 @@ Table of Contents
          section 1.3.4 of [RFC6749];
 
       -  If it does want or need to refer to the previous context, it
-         MUST start a token exchange flow as described in [RFC8693].
-         The AI Agent will be able to decide in between obtaining tokens
-         representing a Delegation or an Impersonation as described in
-         section 1.1 of the specification.
+         MUST start a token exchange flow as described in
+         [OAUTH-TOKEN-EXCHANGE].  The AI Agent will be able to decide in
+         between obtaining tokens representing a Delegation or an
+         Impersonation as described in section 1.1 of the specification.
 
    *  If the AI Agent acts on delegation by a user:
 
@@ -1097,10 +1106,11 @@ Table of Contents
       -  If the AI Agent cannot or does not want to interact with the
          user through the client, it MAY:
 
-         o  Start a token exchange flow as described in [RFC8693].  The
-            AI Agent will be able to decide in between obtaining tokens
-            representing a Delegation or an Impersonation as described
-            in section 1.1 of the specification.
+         o  Start a token exchange flow as described in
+            [OAUTH-TOKEN-EXCHANGE].  The AI Agent will be able to decide
+            in between obtaining tokens representing a Delegation or an
+            Impersonation as described in section 1.1 of the
+            specification.
 
          o  Start a client initated backchannel authorized request as
             described in [OpenIDConnect.CIBA]
@@ -1157,6 +1167,19 @@ Table of Contents
    [MCP]      "Model Context Protocol", n.d.,
               <https://modelcontextprotocol.io/specification>.
 
+   [OAUTH-TOKEN-EXCHANGE]
+              Jones, M., Nadalin, A., Campbell, B., Ed., Bradley, J.,
+              and C. Mortimore, "OAuth 2.0 Token Exchange", RFC 8693,
+              DOI 10.17487/RFC8693, January 2020,
+              <https://www.rfc-editor.org/rfc/rfc8693>.
+
+   [OAUTH-TRANS-TOKENS]
+              Tulshibagwale, A., Fletcher, G., and P. Kasselman,
+              "Transaction Tokens", Work in Progress, Internet-Draft,
+              draft-ietf-oauth-transaction-tokens-07, 24 January 2026,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
+              transaction-tokens-07>.
+
    [OAuth.CIMD]
               "OAuth Client ID Metadata Document", n.d.,
               <https://datatracker.ietf.org/doc/draft-ietf-oauth-client-
@@ -1190,11 +1213,6 @@ Table of Contents
    [OAuth.step-up.Auth-RFC9470]
               "OAuth 2.0 Step Up Authentication Challenge Protocol",
               n.d., <https://www.rfc-editor.org/rfc/rfc9470.html>.
-
-   [OAuth.TRAT]
-              "Transaction Tokens", n.d.,
-              <https://datatracker.ietf.org/doc/draft-ietf-oauth-
-              transaction-tokens/>.
 
    [OpenIDConnect.AuthZEN]
               Gazitt, O., Ed., Brossard, D., Ed., and A. Tulshibagwale,
@@ -1238,9 +1256,6 @@ Table of Contents
 
    [RFC8628]  "OAuth 2.0 Device Authorization Grant", n.d.,
               <https://www.rfc-editor.org/rfc/rfc8628.html>.
-
-   [RFC8693]  "OAuth 2.0 Token Exchange", n.d.,
-              <https://datatracker.ietf.org/doc/rfc8693>.
 
    [RFC8725]  "JSON Web Token Best Current Practices", n.d.,
               <https://datatracker.ietf.org/doc/rfc8725>.
@@ -1303,6 +1318,14 @@ Table of Contents
    [SSF]      "OpenID Shared Signals Framework Specification 1.0", n.d.,
               <https://openid.net/specs/openid-sharedsignals-framework-
               1_0-final.html>.
+
+   [WIMSE-CRED]
+              Campbell, B., Salowey, J. A., Schwenkschuster, A.,
+              Sheffer, Y., and Y. Rosomakho, "WIMSE Workload
+              Credentials", Work in Progress, Internet-Draft, draft-
+              ietf-wimse-workload-creds-00, 3 November 2025,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
+              workload-creds-00>.
 
    [WIMSE-ID] Rosomakho, Y. and J. A. Salowey, "Workload Identifier",
               Work in Progress, Internet-Draft, draft-ietf-wimse-
