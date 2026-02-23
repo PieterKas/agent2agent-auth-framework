@@ -5,38 +5,36 @@
 Network Working Group                                       P. Kasselman
 Internet-Draft                                          Defakto Security
 Intended status: Informational                               J. Lombardo
-Expires: 22 August 2026                                              AWS
+Expires: 27 August 2026                                              AWS
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                        18 February 2026
+                                                        23 February 2026
 
 
-            Agent-to-Agent Authentication and Authorization
-      draft-agent2agent-kasselman_lombardo-agent2agent-auth-latest
+               AI Agent Authentication and Authorization
+                     draft-klr-aiagent-auth-latest
 
 Abstract
 
-   This document proposes a framework for secure agent-to-agent (A2A)
-   authentication and authorization leveraging existing standards such
-   as the Workload Identity Management and Secure Exchange (WIMSE)
-   architecture and OAuth 2.0 family of specifications.  Rather than
-   defining new protocols, this document describes how existing and
-   widely deployed standards can be applied or extended to establish
-   agent-to-agent authentication and authorization.  By doing so, it
+   This document proposes a framework for authentication and
+   authorization of AI agent interactions.  It leverages existing
+   standards such as the Workload Identity Management and Secure
+   Exchange (WIMSE) architecture and OAuth 2.0 family of specifications.
+   Rather than defining new protocols, this document describes how
+   existing and widely deployed standards can be applied or extended to
+   establish agent authentication and authorization.  By doing so, it
    aims to provide a framework within which to use existing standards,
-   identify gaps and guide future standardization efforts for agent-to-
-   agent authentication and authorization.
+   identify gaps and guide future standardization efforts for agent
+   authentication and authorization.
 
 About This Document
 
    This note is to be removed before publishing as an RFC.
 
    The latest revision of this draft can be found at
-   https://PieterKas.github.io/agent2agent-auth-framework/draft-
-   agent2agent-kasselman_lombardo-agent2agent-auth.html.  Status
-   information for this document may be found at
-   https://datatracker.ietf.org/doc/draft-agent2agent-
-   kasselman_lombardo-agent2agent-auth/.
+   https://PieterKas.github.io/agent2agent-auth-framework/draft-klr-
+   aiagent-auth.html.  Status information for this document may be found
+   at https://datatracker.ietf.org/doc/draft-klr-aiagent-auth/.
 
    Source for this draft and an issue tracker can be found at
    https://github.com/PieterKas/agent2agent-auth-framework.
@@ -56,7 +54,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 22 August 2026.
+   This Internet-Draft will expire on 27 August 2026.
 
 Copyright Notice
 
