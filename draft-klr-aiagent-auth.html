@@ -1243,16 +1243,19 @@ svg :is([fill="white"], [fill^="#fff"]) {
                 <p id="section-toc.1-1.10.2.7.1"><a href="#section-10.7" class="auto internal xref">10.7</a>.  <a href="#name-tool-to-service-acccess" class="internal xref">Tool-to-Service Acccess</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.8">
-                <p id="section-toc.1-1.10.2.8.1"><a href="#section-10.8" class="auto internal xref">10.8</a>.  <a href="#name-oauth-20-discovery-in-dynam" class="internal xref">OAuth 2.0 Discovery in Dynamic Environments</a></p>
+                <p id="section-toc.1-1.10.2.8.1"><a href="#section-10.8" class="auto internal xref">10.8</a>.  <a href="#name-privacy-considerations" class="internal xref">Privacy Considerations</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.9">
+                <p id="section-toc.1-1.10.2.9.1"><a href="#section-10.9" class="auto internal xref">10.9</a>.  <a href="#name-oauth-20-discovery-in-dynam" class="internal xref">OAuth 2.0 Discovery in Dynamic Environments</a></p>
 <ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.8.2.1">
-                    <p id="section-toc.1-1.10.2.8.2.1.1"><a href="#section-10.8.1" class="auto internal xref">10.8.1</a>.  <a href="#name-authorization-server-capabi" class="internal xref">Authorization Server Capability Discovery</a></p>
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.9.2.1">
+                    <p id="section-toc.1-1.10.2.9.2.1.1"><a href="#section-10.9.1" class="auto internal xref">10.9.1</a>.  <a href="#name-authorization-server-capabi" class="internal xref">Authorization Server Capability Discovery</a></p>
 </li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.8.2.2">
-                    <p id="section-toc.1-1.10.2.8.2.2.1"><a href="#section-10.8.2" class="auto internal xref">10.8.2</a>.  <a href="#name-protected-resource-capabili" class="internal xref">Protected Resource Capability Discovery</a></p>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.9.2.2">
+                    <p id="section-toc.1-1.10.2.9.2.2.1"><a href="#section-10.9.2" class="auto internal xref">10.9.2</a>.  <a href="#name-protected-resource-capabili" class="internal xref">Protected Resource Capability Discovery</a></p>
 </li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.8.2.3">
-                    <p id="section-toc.1-1.10.2.8.2.3.1"><a href="#section-10.8.3" class="auto internal xref">10.8.3</a>.  <a href="#name-client-capability-discovery" class="internal xref">Client Capability Discovery</a></p>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.9.2.3">
+                    <p id="section-toc.1-1.10.2.9.2.3.1"><a href="#section-10.9.3" class="auto internal xref">10.9.3</a>.  <a href="#name-client-capability-discovery" class="internal xref">Client Capability Discovery</a></p>
 </li>
                 </ul>
 </li>
@@ -1271,7 +1274,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.14.1"><a href="#section-14" class="auto internal xref">14</a>. <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.15">
-            <p id="section-toc.1-1.15.1"><a href="#section-15" class="auto internal xref">15</a>. <a href="#name-privacy-considerations" class="internal xref">Privacy Considerations</a></p>
+            <p id="section-toc.1-1.15.1"><a href="#section-15" class="auto internal xref">15</a>. <a href="#name-privacy-considerations-2" class="internal xref">Privacy Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.16">
             <p id="section-toc.1-1.16.1"><a href="#section-16" class="auto internal xref">16</a>. <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
@@ -1649,7 +1652,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
         <h3 id="name-leverage-oauth-20-as-a-dele">
 <a href="#section-10.1" class="section-number selfRef">10.1. </a><a href="#name-leverage-oauth-20-as-a-dele" class="section-name selfRef">Leverage OAuth 2.0 as a Delegation Authorization Framework</a>
         </h3>
-<p id="section-10.1-1">The OAuth 2.0 Authorization Framework <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> is widely deployed and defines an authorization delegation framework that enables an Agent to obtain limited access to a protected resource (e.g. a service or API) under well-defined policy constraints. An Agent <span class="bcp14">MUST</span> use OAuth 2.0-based mechanisms to obtain authorization from a user, a system, or on its own behalf. OAuth 2.0 defines a wide range of authorization grant flows that supports these scenarios. In these Oauth 2.0 flows, an Agent acts as an OAuth 2.0 Client to an OAuth 2.0 Authorization Server, which receives the request, evaluate the authorization policy and returns an access token, which the Agent presents to the Resource Server (i.e. the protected resources such as the LLM or Tools in <a href="#fig-ai-agent-workload" class="auto internal xref">Figure 1</a>) it needs to access to complete the request.<a href="#section-10.1-1" class="pilcrow">¶</a></p>
+<p id="section-10.1-1">The OAuth 2.0 Authorization Framework <span>[<a href="#OAUTH-FRAMEWORK" class="cite xref">OAUTH-FRAMEWORK</a>]</span> is widely deployed and defines an authorization delegation framework that enables an Agent to obtain limited access to a protected resource (e.g. a service or API) under well-defined policy constraints. An Agent <span class="bcp14">MUST</span> use OAuth 2.0-based mechanisms to obtain authorization from a user, a system, or on its own behalf. OAuth 2.0 defines a wide range of authorization grant flows that supports these scenarios. In these Oauth 2.0 flows, an Agent acts as an OAuth 2.0 Client to an OAuth 2.0 Authorization Server, which receives the request, evaluate the authorization policy and returns an access token, which the Agent presents to the Resource Server (i.e. the protected resources such as the LLM or Tools in Figure 1) it needs to access to complete the request.<a href="#section-10.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="use-of-oauth-20-access-tokens">
@@ -1657,8 +1660,9 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
         <h3 id="name-use-of-oauth-20-access-toke">
 <a href="#section-10.2" class="section-number selfRef">10.2. </a><a href="#name-use-of-oauth-20-access-toke" class="section-name selfRef">Use of OAuth 2.0 Access Tokens</a>
         </h3>
-<p id="section-10.2-1">An OAuth access token represents the authorization granted to the Agent. In many deployments, access tokens are structured as JSON Web Tokens (JWTs) <span>[<a href="#RFC9068" class="cite xref">RFC9068</a>]</span>, which include claims such as 'client_id', 'sub', 'aud', 'scope', and other attributes relevant to authorization. The access token <span class="bcp14">MUST</span> include the Agent identity as the 'client_id' claim as defined in Section 2.2 of <span>[<a href="#RFC9068" class="cite xref">RFC9068</a>]</span>.<a href="#section-10.2-1" class="pilcrow">¶</a></p>
-<p id="section-10.2-2">If the Agent is acting on-behalf of another user or system, it <span class="bcp14">MUST</span> include the user or system identifier in the 'sub' claim as defined in Section 2.2 of <span>[<a href="#RFC9068" class="cite xref">RFC9068</a>]</span>. These identitifiers <span class="bcp14">MUST</span> be used by resource servers protected by the OAuth 2.0 authorization service, along with other claims in the access token, to determine if access to a resource should be allowed. The acccess token <span class="bcp14">MAY</span> include additional claims to convey contextual, attestation-derived, or policy-related information that enables fine-grained access control. The resource server <span class="bcp14">MAY</span> use the access token and the information it contains along with other authorization systems (e.g. policy based, attribute based or role based authorization systems) when enforcing access. Where JWT access tokens are not used, opaque tokens may be issued and validated through introspection mechanisms. This framework supports both models and does not require a specific token format, provided that equivalent authorization semantics are maintained.<a href="#section-10.2-2" class="pilcrow">¶</a></p>
+<p id="section-10.2-1">An OAuth access token represents the authorization granted to the Agent. In many deployments, access tokens are structured as JSON Web Tokens (JWTs) <span>[<a href="#OAUTH-ACCESSTOKEN-JWT" class="cite xref">OAUTH-ACCESSTOKEN-JWT</a>]</span>, which include claims such as 'client_id', 'sub', 'aud', 'scope', and other attributes relevant to authorization. The access token <span class="bcp14">MUST</span> include the Agent identity as the 'client_id' claim as defined in <span><a href="https://rfc-editor.org/rfc/rfc9068#section-2.2" class="relref">Section 2.2</a> of [<a href="#OAUTH-ACCESSTOKEN-JWT" class="cite xref">OAUTH-ACCESSTOKEN-JWT</a>]</span>.<a href="#section-10.2-1" class="pilcrow">¶</a></p>
+<p id="section-10.2-2">If the Agent is acting on-behalf of another user or system, it <span class="bcp14">MUST</span> include the user or system identifier in the 'sub' claim as defined in <span><a href="https://rfc-editor.org/rfc/rfc9068#section-2.2" class="relref">Section 2.2</a> of [<a href="#OAUTH-ACCESSTOKEN-JWT" class="cite xref">OAUTH-ACCESSTOKEN-JWT</a>]</span>. These identitifiers <span class="bcp14">MUST</span> be used by resource servers protected by the OAuth 2.0 authorization service, along with other claims in the access token, to determine if access to a resource should be allowed. The acccess token <span class="bcp14">MAY</span> include additional claims to convey contextual, attestation-derived, or policy-related information that enables fine-grained access control. The resource server <span class="bcp14">MAY</span> use the access token and the information it contains along with other authorization systems (e.g. policy based, attribute based or role based authorization systems) when enforcing access. Where JWT access tokens are not used, opaque tokens may be issued and validated through introspection mechanisms. This framework supports both models and does not require a specific token format, provided that equivalent authorization semantics are maintained.<a href="#section-10.2-2" class="pilcrow">¶</a></p>
+<p id="section-10.2-3">When opaque tokens are used, the resource server <span class="bcp14">MUST</span> obtain authorization information through OAuth 2.0 Token Introspection <span>[<a href="#OAUTH-TOKEN-INTROSPECTION" class="cite xref">OAUTH-TOKEN-INTROSPECTION</a>]</span>. The introspection response provides the active state of the token and associated authorization attributes equivalent to those conveyed in structured tokens.<a href="#section-10.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="obtaining-an-oauth-20-access-token">
@@ -1672,7 +1676,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
           <h4 id="name-user-delegates-authorizatio">
 <a href="#section-10.3.1" class="section-number selfRef">10.3.1. </a><a href="#name-user-delegates-authorizatio" class="section-name selfRef">User Delegates Authorization</a>
           </h4>
-<p id="section-10.3.1-1">When a User grants authorization to an Agent to access one or more resources (Tools, LLMs), the Authorization Code Grant <span class="bcp14">MUST</span> be used as described in Section 4.1 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>.<a href="#section-10.3.1-1" class="pilcrow">¶</a></p>
+<p id="section-10.3.1-1">When a User grants authorization to an Agent to access one or more resources (Tools, LLMs), the Authorization Code Grant <span class="bcp14">MUST</span> be used as described in <span><a href="https://rfc-editor.org/rfc/rfc6749#section-4.1" class="relref">Section 4.1</a> of [<a href="#OAUTH-FRAMEWORK" class="cite xref">OAUTH-FRAMEWORK</a>]</span>.<a href="#section-10.3.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="agent_obtains_own_access_token">
@@ -1680,7 +1684,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
           <h4 id="name-agent-obtains-own-authoriza">
 <a href="#section-10.3.2" class="section-number selfRef">10.3.2. </a><a href="#name-agent-obtains-own-authoriza" class="section-name selfRef">Agent Obtains Own Authorization</a>
           </h4>
-<p id="section-10.3.2-1">Agents obtaining access tokens on their own behalf <span class="bcp14">MUST</span> use the Client Credentials Grant as described in Section 4.4 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> or the JWT Authorization Grant as described in section 2.1. of <span>[<a href="#OAuth.Private.JWT.Auth-RFC7523" class="cite xref">OAuth.Private.JWT.Auth-RFC7523</a>]</span>. When using the Client Credentials Grant, the Agent <span class="bcp14">MUST</span> authenticate itself using one of the mechanisms described in <a href="#agent_authentication" class="auto internal xref">Section 9</a> and <span class="bcp14">MUST NOT</span> use static, long lived client secrets to authenticate.<a href="#section-10.3.2-1" class="pilcrow">¶</a></p>
+<p id="section-10.3.2-1">Agents obtaining access tokens on their own behalf <span class="bcp14">MUST</span> use the Client Credentials Grant as described in <span><a href="https://rfc-editor.org/rfc/rfc6749#section-4.4" class="relref">Section 4.4</a> of [<a href="#OAUTH-FRAMEWORK" class="cite xref">OAUTH-FRAMEWORK</a>]</span> or the JWT Authorization Grant as described in <span><a href="https://rfc-editor.org/rfc/rfc7523#section-2.1" class="relref">Section 2.1</a> of [<a href="#OAUTH-CLIENTAUTH-JWT" class="cite xref">OAUTH-CLIENTAUTH-JWT</a>]</span>. When using the Client Credentials Grant, the Agent <span class="bcp14">MUST</span> authenticate itself using one of the mechanisms described in <a href="#agent_authentication" class="auto internal xref">Section 9</a> and <span class="bcp14">MUST NOT</span> use static, long lived client secrets to authenticate.<a href="#section-10.3.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="system-access-to-agents">
@@ -1688,8 +1692,8 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
           <h4 id="name-system-access-to-agents">
 <a href="#section-10.3.3" class="section-number selfRef">10.3.3. </a><a href="#name-system-access-to-agents" class="section-name selfRef">System Access to Agents</a>
           </h4>
-<p id="section-10.3.3-1">When Agents are invoked by a System (e.g. a batcch job, or another Agent), the System <span class="bcp14">SHOULD</span> treat the Agent as an OAuth protected resource. The System <span class="bcp14">SHOULD</span> obtain an access token using the same mechanisms defined for an Agent and then present the OAuth access token to the Agent. The Agent should validate the access token, including verifiying that the 'aud' claim of the access token includes the Agent. Once validated, the Agent <span class="bcp14">SHOULD</span> use OAuth 2.0 Token Exchange as defined in <span>[<a href="#OAUTH-TOKEN-EXCHANGE" class="cite xref">OAUTH-TOKEN-EXCHANGE</a>]</span> to exchange the access token it received for a new access token to access. The Agent then uses the newly issued access token to access the protected resources (LLM or Tools) it needs to complete the request.<a href="#section-10.3.3-1" class="pilcrow">¶</a></p>
-<p id="section-10.3.3-2">If a System invokes an Agent and does not treat the Agent as an OAuth protected resource, the Agent <span class="bcp14">MUST</span> obtain its own OAuth access token as described in {#agent_obtains_own_access_token}.<a href="#section-10.3.3-2" class="pilcrow">¶</a></p>
+<p id="section-10.3.3-1">When Agents are invoked by a System (e.g. a batch job, or another Agent), the System <span class="bcp14">SHOULD</span> treat the Agent as an OAuth protected resource. The System <span class="bcp14">SHOULD</span> obtain an access token using the same mechanisms defined for an Agent and then present the OAuth access token to the Agent. The Agent should validate the access token, including verifiying that the 'aud' claim of the access token includes the Agent. Once validated, the Agent <span class="bcp14">SHOULD</span> use OAuth 2.0 Token Exchange as defined in <span>[<a href="#OAUTH-TOKEN-EXCHANGE" class="cite xref">OAUTH-TOKEN-EXCHANGE</a>]</span> to exchange the access token it received for a new access token to access. The Agent then uses the newly issued access token to access the protected resources (LLM or Tools) it needs to complete the request.<a href="#section-10.3.3-1" class="pilcrow">¶</a></p>
+<p id="section-10.3.3-2">If a System invokes an Agent and does not treat the Agent as an OAuth protected resource, the Agent <span class="bcp14">MUST</span> obtain its own OAuth access token as described in <a href="#agent_obtains_own_access_token" class="auto internal xref">Section 10.3.2</a>.<a href="#section-10.3.3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="oauth-20-security-best-practices">
@@ -1697,7 +1701,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
           <h4 id="name-oauth-20-security-best-prac">
 <a href="#section-10.3.4" class="section-number selfRef">10.3.4. </a><a href="#name-oauth-20-security-best-prac" class="section-name selfRef">OAuth 2.0 Security Best Practices</a>
           </h4>
-<p id="section-10.3.4-1">Agents <span class="bcp14">MUST</span> support the Best Current Practice for OAuth 2.0 Security as described in <span>[<a href="#RFC9700" class="cite xref">RFC9700</a>]</span> when requesting acccess tokens.<a href="#section-10.3.4-1" class="pilcrow">¶</a></p>
+<p id="section-10.3.4-1">Agents <span class="bcp14">MUST</span> support the Best Current Practice for OAuth 2.0 Security as described in <span>[<a href="#OAUTH-BCP" class="cite xref">OAUTH-BCP</a>]</span> when requesting acccess tokens.<a href="#section-10.3.4-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1717,10 +1721,10 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
         <h3 id="name-cross-domain-access">
 <a href="#section-10.5" class="section-number selfRef">10.5. </a><a href="#name-cross-domain-access" class="section-name selfRef">Cross Domain Access</a>
         </h3>
-<p id="section-10.5-1">Agents often require access to resources that are protected by different OAuth 2.0 authorization servers. When the components in <a href="#fig-ai-agent-workload" class="auto internal xref">Figure 1</a> are protected by different logical authorization servers, an Agent <span class="bcp14">SHOULD</span> use OAuth Identity and Authorization Chaining Across Domains as defined in <span>[<a href="#OAuth.IDChaining" class="cite xref">OAuth.IDChaining</a>]</span>, or a derived specification such as the Identity Assertion JWT Authorization Grant <span>[<a href="#OAuth.IDJAG" class="cite xref">OAuth.IDJAG</a>]</span>, to obtain an access token from the relevant authorization servers.<a href="#section-10.5-1" class="pilcrow">¶</a></p>
-<p id="section-10.5-2">When using OAuth Identity and Authorization Chaining Across Domains (<span>[<a href="#OAuth.IDChaining" class="cite xref">OAuth.IDChaining</a>]</span>), an Agent <span class="bcp14">SHOULD</span> use the access token or transaction token it received to obtain a JWT authorization grant as described in section 2.3 of <span>[<a href="#OAuth.IDChaining" class="cite xref">OAuth.IDChaining</a>]</span> and then use the JWT authorization grant it receives to obtain an access token for the resource it is trying to access as defined in section 2.4 of <span>[<a href="#OAuth.IDChaining" class="cite xref">OAuth.IDChaining</a>]</span>.<a href="#section-10.5-2" class="pilcrow">¶</a></p>
-<p id="section-10.5-3">When using the Identity Assertion JWT Authorization Grant <span>[<a href="#OAuth.IDJAG" class="cite xref">OAuth.IDJAG</a>]</span>, the identity assertion (e.g. the OpenID Connect ID Token or SAML assertion) for the target end-user is used to obtain a JWT assertion (ID-JAG) as described in section 4.3 of <span>[<a href="#OAuth.IDJAG" class="cite xref">OAuth.IDJAG</a>]</span>, which is then used to obtain an access token as described in section 4.4 of <span>[<a href="#OAuth.IDJAG" class="cite xref">OAuth.IDJAG</a>]</span>.<a href="#section-10.5-3" class="pilcrow">¶</a></p>
-<p id="section-10.5-4">OAuth Identity and Authorization Chaining Across Domains (<span>[<a href="#OAuth.IDChaining" class="cite xref">OAuth.IDChaining</a>]</span>) provides a general mechanism for obtaining cross-domain access that can be used whether an identity assertion like a SAML or OpenID Connect token is available or not. The Identity Assertion JWT Authorization Grant <span>[<a href="#OAuth.IDJAG" class="cite xref">OAuth.IDJAG</a>]</span> is optimised for cases where an identity assertion like a SAML or OpenID Connect token is available from an identity provider that is trusted by all the OAuth authorization servers as it removes the need for the user to re-authenticate. This is typically used within enterprise deployments to simplify authorization delegation for multiple software-as-a-service offerings.<a href="#section-10.5-4" class="pilcrow">¶</a></p>
+<p id="section-10.5-1">Agents often require access to resources that are protected by different OAuth 2.0 authorization servers. When the components in <a href="#fig-ai-agent-workload" class="auto internal xref">Figure 1</a> are protected by different logical authorization servers, an Agent <span class="bcp14">SHOULD</span> use OAuth Identity and Authorization Chaining Across Domains as defined in (<span>[<a href="#OAUTH-ID-CHAIN" class="cite xref">OAUTH-ID-CHAIN</a>]</span>), or a derived specification such as the Identity Assertion JWT Authorization Grant <span>[<a href="#OAUTH-JWT-ASSERTION" class="cite xref">OAUTH-JWT-ASSERTION</a>]</span>, to obtain an access token from the relevant authorization servers.<a href="#section-10.5-1" class="pilcrow">¶</a></p>
+<p id="section-10.5-2">When using OAuth Identity and Authorization Chaining Across Domains (<span>[<a href="#OAUTH-ID-CHAIN" class="cite xref">OAUTH-ID-CHAIN</a>]</span>), an Agent <span class="bcp14">SHOULD</span> use the access token or transaction token it received to obtain a JWT authorization grant as described in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-identity-chaining-08#section-2.3" class="relref">Section 2.3</a> of [<a href="#OAUTH-ID-CHAIN" class="cite xref">OAUTH-ID-CHAIN</a>]</span> and then use the JWT authorization grant it receives to obtain an access token for the resource it is trying to access as defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-identity-chaining-08#section-2.4" class="relref">Section 2.4</a> of [<a href="#OAUTH-ID-CHAIN" class="cite xref">OAUTH-ID-CHAIN</a>]</span>.<a href="#section-10.5-2" class="pilcrow">¶</a></p>
+<p id="section-10.5-3">When using the Identity Assertion JWT Authorization Grant <span>[<a href="#OAUTH-JWT-ASSERTION" class="cite xref">OAUTH-JWT-ASSERTION</a>]</span>, the identity assertion (e.g. the OpenID Connect ID Token or SAML assertion) for the target end-user is used to obtain a JWT assertion as described in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-identity-assertion-authz-grant-01#section-4.3" class="relref">Section 4.3</a> of [<a href="#OAUTH-JWT-ASSERTION" class="cite xref">OAUTH-JWT-ASSERTION</a>]</span>, which is then used to obtain an access token as described in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-identity-assertion-authz-grant-01#section-4.4" class="relref">Section 4.4</a> of [<a href="#OAUTH-JWT-ASSERTION" class="cite xref">OAUTH-JWT-ASSERTION</a>]</span>.<a href="#section-10.5-3" class="pilcrow">¶</a></p>
+<p id="section-10.5-4">OAuth Identity and Authorization Chaining Across Domains (<span>[<a href="#OAUTH-ID-CHAIN" class="cite xref">OAUTH-ID-CHAIN</a>]</span>) provides a general mechanism for obtaining cross-domain access that can be used whether an identity assertion like a SAML or OpenID Connect token is available or not. The Identity Assertion JWT Authorization Grant <span>[<a href="#OAUTH-JWT-ASSERTION" class="cite xref">OAUTH-JWT-ASSERTION</a>]</span> is optimised for cases where an identity assertion like a SAML or OpenID Connect token is available from an identity provider that is trusted by all the OAuth authorization servers as it removes the need for the user to re-authenticate. This is typically used within enterprise deployments to simplify authorization delegation for multiple software-as-a-service offerings.<a href="#section-10.5-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="human-in-the-loop">
@@ -1728,7 +1732,9 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
         <h3 id="name-human-in-the-loop">
 <a href="#section-10.6" class="section-number selfRef">10.6. </a><a href="#name-human-in-the-loop" class="section-name selfRef">Human in the Loop</a>
         </h3>
-<p id="section-10.6-1">An OAuth authorization server <span class="bcp14">MAY</span> conclude that the level of access to a resource that an Agent, LLM or Tool is requesting requires additional authorization from the User. When it determines that additional authorization is required, it <span class="bcp14">SHOULD</span> either decline the request or request additional authorization from the User by using the OpenID foundation Client Initiated Backchannel Authentication (CIBA). This will trigger a request to the user to grant additional authorization (e.g. through a push notification). Once the user grant authorization, the authorization server issues an access token to the Agent which it may then use to complete the task.<a href="#section-10.6-1" class="pilcrow">¶</a></p>
+<p id="section-10.6-1">An OAuth authorization server <span class="bcp14">MAY</span> conclude that the level of access requested by an Agent requires explicit user confirmation. In such cases the authorization server <span class="bcp14">SHOULD</span> either decline the request or obtain additional authorization from the User using the OpenID Client Initiated Backchannel Authentication (CIBA) protocol. This triggers an out-of-band interaction allowing the user to approve or deny the requested operation without exposing credentials to the agent (for example a push notification requesting the user to approve a request through an authenticator application on their mobile device).<a href="#section-10.6-1" class="pilcrow">¶</a></p>
+<p id="section-10.6-2">Interactive agent frameworks may also solicit user confirmation directly during task execution (for example tool invocation approval or parameter confirmation). Such interactions do not by themselves constitute authorization and <span class="bcp14">MUST</span> be bound to a verifiable authorization grant issued by the authorization server. The agent <span class="bcp14">SHOULD</span> therefore translate user confirmation into an OAuth authorization event (e.g., step-up authorization via CIBA) before accessing protected resources.<a href="#section-10.6-2" class="pilcrow">¶</a></p>
+<p id="section-10.6-3">This model aligns with user-solicitation patterns such as those described by the Model Context Protocol (<span>[<a href="#MCP" class="cite xref">MCP</a>]</span>), where an agent pauses execution and requests user confirmation before performing sensitive actions. The final authorization decision remains with the authorization server, and the agent <span class="bcp14">MUST NOT</span> treat local UI confirmation alone as sufficient authorization.<a href="#section-10.6-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="tool-to-service-acccess">
@@ -1737,39 +1743,50 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <a href="#section-10.7" class="section-number selfRef">10.7. </a><a href="#name-tool-to-service-acccess" class="section-name selfRef">Tool-to-Service Acccess</a>
         </h3>
 <p id="section-10.7-1">Tools expose interfaces to underlying services and resources. Access to the Tools <span class="bcp14">SHOULD</span> be controlled by OAuth which <span class="bcp14">MAY</span> be augmented by policy, attribute or role based authorization systems (amongst others). If the Tools are implemented as one or more microservices, it should use transaction tokens to reduce risk as described in <a href="#trat-risk-reduction" class="auto internal xref">Section 10.4</a> to avoid passing access tokens around within the Tool implementation.<a href="#section-10.7-1" class="pilcrow">¶</a></p>
-<p id="section-10.7-2">Access from the Tools to the resources and services <span class="bcp14">MAY</span> be controlled through a variety of auhtorization mechanisms, includidng OAuth. If access is controlled through OAuth, the Tools <span class="bcp14">SHOULD</span> use OAuth 2.0 Token Exchange as defined in <span>[<a href="#OAUTH-TOKEN-EXCHANGE" class="cite xref">OAUTH-TOKEN-EXCHANGE</a>]</span> to exchange the access token it received for a new access token to access the resource or service in question. If the Tool needs acces to a resource protected by an auhtorization server other than the Tool's own authorization server, it <span class="bcp14">SHOULD</span> use the OAuth Identity and Authorization Chaining Across Domains (<span>[<a href="#OAuth.IDChaining" class="cite xref">OAuth.IDChaining</a>]</span>) to obtain an access token from the authroization server protecting the resource it needs to access.<a href="#section-10.7-2" class="pilcrow">¶</a></p>
+<p id="section-10.7-2">Access from the Tools to the resources and services <span class="bcp14">MAY</span> be controlled through a variety of auhtorization mechanisms, includidng OAuth. If access is controlled through OAuth, the Tools <span class="bcp14">SHOULD</span> use OAuth 2.0 Token Exchange as defined in <span>[<a href="#OAUTH-TOKEN-EXCHANGE" class="cite xref">OAUTH-TOKEN-EXCHANGE</a>]</span> to exchange the access token it received for a new access token to access the resource or service in question. If the Tool needs access to a resource protected by an auhtorization server other than the Tool's own authorization server, it <span class="bcp14">SHOULD</span> use the OAuth Identity and Authorization Chaining Across Domains (<span>[<a href="#OAUTH-ID-CHAIN" class="cite xref">OAUTH-ID-CHAIN</a>]</span>) to obtain an access token from the authroization server protecting the resource it needs to access.<a href="#section-10.7-2" class="pilcrow">¶</a></p>
+<p id="section-10.7-3"><strong>Note:</strong> It is an anti-pattern for Tools to forward access tokens it received from the Agent to Services or Resources. It increases the risk of credential theft and lateral attacks.<a href="#section-10.7-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="privacy-considerations">
+<section id="section-10.8">
+        <h3 id="name-privacy-considerations">
+<a href="#section-10.8" class="section-number selfRef">10.8. </a><a href="#name-privacy-considerations" class="section-name selfRef">Privacy Considerations</a>
+        </h3>
+<p id="section-10.8-1">Authorization tokens may contain user identifiers, agent identifiers, audience restrictions, transaction details, and contextual attributes. Deployments <span class="bcp14">SHOULD</span> minimize disclosure of personally identifiable or sensitive information in tokens and prefer audience-restricted and short-lived tokens. Where possible, opaque tokens with introspection <span class="bcp14">SHOULD</span> be preferred when claim minimization is required.<a href="#section-10.8-1" class="pilcrow">¶</a></p>
+<p id="section-10.8-2">Agents <span class="bcp14">SHOULD</span> request only the minimum scopes and authorization details necessary to complete a task. Resource servers <span class="bcp14">SHOULD</span> avoid logging full tokens and instead log token identifiers or hashes. When authorization context is propagated across services, derived or down-scoped tokens (such as transaction tokens) <span class="bcp14">SHOULD</span> be used to reduce correlation and replay risk.<a href="#section-10.8-2" class="pilcrow">¶</a></p>
+<p id="section-10.8-3">Implementations <span class="bcp14">MUST</span> ensure that user identity information delegated to agents is not exposed to unrelated services and that cross-domain authorization exchanges only disclose information required for the target authorization decision.<a href="#section-10.8-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="oauth-20-discovery-in-dynamic-environments">
-<section id="section-10.8">
+<section id="section-10.9">
         <h3 id="name-oauth-20-discovery-in-dynam">
-<a href="#section-10.8" class="section-number selfRef">10.8. </a><a href="#name-oauth-20-discovery-in-dynam" class="section-name selfRef">OAuth 2.0 Discovery in Dynamic Environments</a>
+<a href="#section-10.9" class="section-number selfRef">10.9. </a><a href="#name-oauth-20-discovery-in-dynam" class="section-name selfRef">OAuth 2.0 Discovery in Dynamic Environments</a>
         </h3>
-<p id="section-10.8-1">In dynamic Agent deployments (e.g., ephemeral workloads, multi-tenant services, and frequently changing endpoint topology), Agents and other participants <span class="bcp14">MAY</span> use OAuth discovery mechanisms to reduce static configuration and to bind runtime decisions to verifiable metadata.<a href="#section-10.8-1" class="pilcrow">¶</a></p>
+<p id="section-10.9-1">In dynamic Agent deployments (e.g., ephemeral workloads, multi-tenant services, and frequently changing endpoint topology), Agents and other participants <span class="bcp14">MAY</span> use OAuth discovery mechanisms to reduce static configuration and to bind runtime decisions to verifiable metadata.<a href="#section-10.9-1" class="pilcrow">¶</a></p>
 <div id="authorization-server-capability-discovery">
-<section id="section-10.8.1">
+<section id="section-10.9.1">
           <h4 id="name-authorization-server-capabi">
-<a href="#section-10.8.1" class="section-number selfRef">10.8.1. </a><a href="#name-authorization-server-capabi" class="section-name selfRef">Authorization Server Capability Discovery</a>
+<a href="#section-10.9.1" class="section-number selfRef">10.9.1. </a><a href="#name-authorization-server-capabi" class="section-name selfRef">Authorization Server Capability Discovery</a>
           </h4>
-<p id="section-10.8.1-1">An Agent that needs to obtain tokens <span class="bcp14">MAY</span> discover authorization server endpoints and capabilities using OAuth 2.0 Authorization Server Metadata <span>[<a href="#RFC8414" class="cite xref">RFC8414</a>]</span> and/or OpenID Connect Discovery <span>[<a href="#OpenIDConnect.Discovery" class="cite xref">OpenIDConnect.Discovery</a>]</span>. This allows the Agent to learn the as issuer identifier, authorization and token endpoints, supported grant types, client authentication methods, signing keys (via jwks_uri), and other relevant capabilities without preconfiguring them.<a href="#section-10.8.1-1" class="pilcrow">¶</a></p>
+<p id="section-10.9.1-1">An Agent that needs to obtain tokens <span class="bcp14">MAY</span> discover authorization server endpoints and capabilities using OAuth 2.0 Authorization Server Metadata <span>[<a href="#OAUTH-SERVER-METADATA" class="cite xref">OAUTH-SERVER-METADATA</a>]</span> and/or OpenID Connect Discovery <span>[<a href="#OpenIDConnect.Discovery" class="cite xref">OpenIDConnect.Discovery</a>]</span>. This allows the Agent to learn the as issuer identifier, authorization and token endpoints, supported grant types, client authentication methods, signing keys (via jwks_uri), and other relevant capabilities without preconfiguring them.<a href="#section-10.9.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="protected-resource-capability-discovery">
-<section id="section-10.8.2">
+<section id="section-10.9.2">
           <h4 id="name-protected-resource-capabili">
-<a href="#section-10.8.2" class="section-number selfRef">10.8.2. </a><a href="#name-protected-resource-capabili" class="section-name selfRef">Protected Resource Capability Discovery</a>
+<a href="#section-10.9.2" class="section-number selfRef">10.9.2. </a><a href="#name-protected-resource-capabili" class="section-name selfRef">Protected Resource Capability Discovery</a>
           </h4>
-<p id="section-10.8.2-1">When an Agent is invoking a Tool, the Agent <span class="bcp14">MAY</span> use OAuth 2.0 Protected Resource Metadata <span>[<a href="#RFC9728" class="cite xref">RFC9728</a>]</span> to discover how the resource is protected, including the resource identifier and the applicable Authorization Server(s) that protects Tool access. This enables an Agent to select the correct issuer/audience and token acquisition flow at runtime, even when resources are deployed or moved dynamically.<a href="#section-10.8.2-1" class="pilcrow">¶</a></p>
-<p id="section-10.8.2-2">A Tool that atttempts to acccess and OAuth protected resource <span class="bcp14">MAY</span> use OAuth 2.0 Protected Resource Metadata <span>[<a href="#RFC9728" class="cite xref">RFC9728</a>]</span> in a similar way as an Agent. Similarly, a System may use <span>[<a href="#RFC9728" class="cite xref">RFC9728</a>]</span> when accessing an Agent.<a href="#section-10.8.2-2" class="pilcrow">¶</a></p>
+<p id="section-10.9.2-1">When an Agent is invoking a Tool, the Agent <span class="bcp14">MAY</span> use OAuth 2.0 Protected Resource Metadata <span>[<a href="#OAUTH-RESOURCE-METADATA" class="cite xref">OAUTH-RESOURCE-METADATA</a>]</span> to discover how the resource is protected, including the resource identifier and the applicable Authorization Server(s) that protects Tool access. This enables an Agent to select the correct issuer/audience and token acquisition flow at runtime, even when resources are deployed or moved dynamically.<a href="#section-10.9.2-1" class="pilcrow">¶</a></p>
+<p id="section-10.9.2-2">A Tool that atttempts to acccess and OAuth protected resource <span class="bcp14">MAY</span> use OAuth 2.0 Protected Resource Metadata <span>[<a href="#OAUTH-RESOURCE-METADATA" class="cite xref">OAUTH-RESOURCE-METADATA</a>]</span> in a similar way as an Agent. Similarly, a System may use <span>[<a href="#OAUTH-RESOURCE-METADATA" class="cite xref">OAUTH-RESOURCE-METADATA</a>]</span> when accessing an Agent.<a href="#section-10.9.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="client-capability-discovery">
-<section id="section-10.8.3">
+<section id="section-10.9.3">
           <h4 id="name-client-capability-discovery">
-<a href="#section-10.8.3" class="section-number selfRef">10.8.3. </a><a href="#name-client-capability-discovery" class="section-name selfRef">Client Capability Discovery</a>
+<a href="#section-10.9.3" class="section-number selfRef">10.9.3. </a><a href="#name-client-capability-discovery" class="section-name selfRef">Client Capability Discovery</a>
           </h4>
-<p id="section-10.8.3-1">Other actors (e.g., Authorization Servers, registrars, or policy systems) may need to learn about any entities (System, Agent, Tool) that acts as OAuth clients. Where supported, they <span class="bcp14">MAY</span> use Client ID Metadata Documents <span>[<a href="#OAuth.CIMD" class="cite xref">OAuth.CIMD</a>]</span>, which allow a client to host its metadata at a URL-valued client_id so that the relying party can retrieve client properties (e.g., redirect URIs, software statement, display information, and other registered client metadata) without prior bilateral registration.<a href="#section-10.8.3-1" class="pilcrow">¶</a></p>
-<p id="section-10.8.3-2">As an alternative, entities acting as OAuth clients <span class="bcp14">MAY</span> register their capabilities with authroization servers as defined in the OAuth 2.0 Dynamic Client Registration Protocol <span>[<a href="#RFC7591" class="cite xref">RFC7591</a>]</span>.<a href="#section-10.8.3-2" class="pilcrow">¶</a></p>
+<p id="section-10.9.3-1">Other actors (e.g., Authorization Servers, registrars, or policy systems) may need to learn about any entities (System, Agent, Tool) that acts as OAuth clients. Where supported, they <span class="bcp14">MAY</span> use Client ID Metadata Documents <span>[<a href="#OAUTH-CLIENT-METADATA" class="cite xref">OAUTH-CLIENT-METADATA</a>]</span>, which allow a client to host its metadata at a URL-valued client_id so that the relying party can retrieve client properties (e.g., redirect URIs, software statement, display information, and other registered client metadata) without prior bilateral registration.<a href="#section-10.9.3-1" class="pilcrow">¶</a></p>
+<p id="section-10.9.3-2">As an alternative, entities acting as OAuth clients <span class="bcp14">MAY</span> register their capabilities with authroization servers as defined in the OAuth 2.0 Dynamic Client Registration Protocol <span>[<a href="#OAUTH-REGISTRATION" class="cite xref">OAUTH-REGISTRATION</a>]</span>.<a href="#section-10.9.3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1812,10 +1829,10 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <p id="section-14-1">TODO Security<a href="#section-14-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="privacy-considerations">
+<div id="privacy-considerations-1">
 <section id="section-15">
-      <h2 id="name-privacy-considerations">
-<a href="#section-15" class="section-number selfRef">15. </a><a href="#name-privacy-considerations" class="section-name selfRef">Privacy Considerations</a>
+      <h2 id="name-privacy-considerations-2">
+<a href="#section-15" class="section-number selfRef">15. </a><a href="#name-privacy-considerations-2" class="section-name selfRef">Privacy Considerations</a>
       </h2>
 <p id="section-15-1">TODO Privac<a href="#section-15-1" class="pilcrow">¶</a></p>
 </section>
@@ -1840,7 +1857,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 - Acquisition of the piece of authorization by the caller at the authorization server authoritative for the component it wants to communication
 - Validation of the piece of authorization in the context of the request by the component<a href="#section-17-1" class="pilcrow">¶</a></p>
 <p id="section-17-2">Those phases rely on the following standards for enforcement of the access control:
-- <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> is an established and maintained framework of specifications for requesting, acquiring, and proving ownership of pieces of authorization in the form of bearer tokens.
+- <span>[<a href="#OAUTH-FRAMEWORK" class="cite xref">OAUTH-FRAMEWORK</a>]</span> is an established and maintained framework of specifications for requesting, acquiring, and proving ownership of pieces of authorization in the form of bearer tokens.
 - <span>[<a href="#OpenIDConnect.AuthZEN" class="cite xref">OpenIDConnect.AuthZEN</a>]</span> is a new specification for exchanging authorization requests and decisions between the layer acting at the Policy Enforcement Point (PEP) and a Policy Decision Point (PDP).
 - <span>[<a href="#OAUTH-TRANS-TOKENS" class="cite xref">OAUTH-TRANS-TOKENS</a>]</span> is new specification for formatting pieces of authorization in the form of transaction bound bearer tokens.<a href="#section-17-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-ascii-art art-text artwork" id="section-17-3">
@@ -1890,14 +1907,14 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
           <h4 id="name-flow">
 <a href="#section-17.1.1" class="section-number selfRef">17.1.1. </a><a href="#name-flow" class="section-name selfRef">Flow</a>
           </h4>
-<p id="section-17.1.1-1">Following <span>[<a href="#RFC9728" class="cite xref">RFC9728</a>]</span>, the System <span class="bcp14">MUST</span> act as an OAuth2 client. It <span class="bcp14">MUST</span> interact with the AI Agent on its metadata endpoint which <span class="bcp14">MUST</span> be an OAuth 2.0 protected resource as defined by <span>[<a href="#RFC9728" class="cite xref">RFC9728</a>]</span>.<a href="#section-17.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-17.1.1-1">Following <span>[<a href="#OAUTH-RESOURCE-METADATA" class="cite xref">OAUTH-RESOURCE-METADATA</a>]</span>, the System <span class="bcp14">MUST</span> act as an OAuth2 client. It <span class="bcp14">MUST</span> interact with the AI Agent on its metadata endpoint which <span class="bcp14">MUST</span> be an OAuth 2.0 protected resource as defined by <span>[<a href="#OAUTH-RESOURCE-METADATA" class="cite xref">OAUTH-RESOURCE-METADATA</a>]</span>.<a href="#section-17.1.1-1" class="pilcrow">¶</a></p>
 <p id="section-17.1.1-2">The System will then understand which Authorization Server <span class="bcp14">MUST</span> be the authority this AI Agent; which scopes or authorization details values <span class="bcp14">MAY</span> be required to access this AI Agent; and if extension mechanisms <span class="bcp14">MAY</span> be required to fulfil.<a href="#section-17.1.1-2" class="pilcrow">¶</a></p>
 <div id="security">
 <section id="section-17.1.1.1">
             <h5 id="name-security">
 <a href="#section-17.1.1.1" class="section-number selfRef">17.1.1.1. </a><a href="#name-security" class="section-name selfRef">Security</a>
             </h5>
-<p id="section-17.1.1.1-1">The System <span class="bcp14">MUST</span> follow the best current practices described in <span>[<a href="#RFC9700" class="cite xref">RFC9700</a>]</span>.<a href="#section-17.1.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-17.1.1.1-1">The System <span class="bcp14">MUST</span> follow the best current practices described in <span>[<a href="#OAUTH-BCP" class="cite xref">OAUTH-BCP</a>]</span>.<a href="#section-17.1.1.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1913,16 +1930,16 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
             <h5 id="name-flow-2">
 <a href="#section-17.1.2.1" class="section-number selfRef">17.1.2.1. </a><a href="#name-flow-2" class="section-name selfRef">Flow</a>
             </h5>
-<p id="section-17.1.2.1-1">For this, the System <span class="bcp14">MUST</span> use one of the grant types described in <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> as follows:<a href="#section-17.1.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-17.1.2.1-1">For this, the System <span class="bcp14">MUST</span> use one of the grant types described in <span>[<a href="#OAUTH-FRAMEWORK" class="cite xref">OAUTH-FRAMEWORK</a>]</span> as follows:<a href="#section-17.1.2.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-17.1.2.1-2.1">
-                <p id="section-17.1.2.1-2.1.1">In a case of the System is acting on its behalf, it <span class="bcp14">MUST</span> start a client credential grant flow as described in section 1.3.4 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>;<a href="#section-17.1.2.1-2.1.1" class="pilcrow">¶</a></p>
+                <p id="section-17.1.2.1-2.1.1">In a case of the System is acting on its behalf, it <span class="bcp14">MUST</span> start a client credential grant flow as described in <span><a href="https://rfc-editor.org/rfc/rfc6749#section-1.3.4" class="relref">Section 1.3.4</a> of [<a href="#OAUTH-FRAMEWORK" class="cite xref">OAUTH-FRAMEWORK</a>]</span>;<a href="#section-17.1.2.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-17.1.2.1-2.2">
                 <p id="section-17.1.2.1-2.2.1">In the case of the System is acting on behalf of a user:<a href="#section-17.1.2.1-2.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-17.1.2.1-2.2.2.1">
-                    <p id="section-17.1.2.1-2.2.2.1.1">If the System can interact directly with the user (e.g., browser-based), the System <span class="bcp14">MUST</span> use the authorization code grant flow as described in Section 4.1 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>;<a href="#section-17.1.2.1-2.2.2.1.1" class="pilcrow">¶</a></p>
+                    <p id="section-17.1.2.1-2.2.2.1.1">If the System can interact directly with the user (e.g., browser-based), the System <span class="bcp14">MUST</span> use the authorization code grant flow as described in <span><a href="https://rfc-editor.org/rfc/rfc6749#section-4.1" class="relref">Section 4.1</a> of [<a href="#OAUTH-FRAMEWORK" class="cite xref">OAUTH-FRAMEWORK</a>]</span>;<a href="#section-17.1.2.1-2.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="section-17.1.2.1-2.2.2.2">
                     <p id="section-17.1.2.1-2.2.2.2.1">If the System has limited input capabilities, but the User is present at the device, the System <span class="bcp14">MUST</span> use the Device Authorization Grant <span>[<a href="#RFC8628" class="cite xref">RFC8628</a>]</span>;<a href="#section-17.1.2.1-2.2.2.2.1" class="pilcrow">¶</a></p>
@@ -1952,8 +1969,8 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
             </h5>
 <p id="section-17.1.2.3-1">The System <span class="bcp14">MUST</span> act as an OAuth2 Client which <span class="bcp14">MAY</span> be assigned a WIMSE identifier, which <span class="bcp14">MAY</span> be a SPIFFE ID.<a href="#section-17.1.2.3-1" class="pilcrow">¶</a></p>
 <p id="section-17.1.2.3-2">If so, the System <span class="bcp14">MUST</span> provide a way to resolve one value to the other, either through:
-- A metadata document URL used OAuth2 Client identifier as defined in <span>[<a href="#OAuth.CIMD" class="cite xref">OAuth.CIMD</a>]</span>;
-- Metadata information provided as part of the Private Key JWT OAuth client credential as defined in <span>[<a href="#OAuth.Private.JWT.Auth-RFC7523" class="cite xref">OAuth.Private.JWT.Auth-RFC7523</a>]</span>
+- A metadata document URL used OAuth2 Client identifier as defined in <span>[<a href="#OAUTH-CLIENT-METADATA" class="cite xref">OAUTH-CLIENT-METADATA</a>]</span>;
+- Metadata information provided as part of the Private Key JWT OAuth client credential as defined in <span>[<a href="#OAUTH-CLIENTAUTH-JWT" class="cite xref">OAUTH-CLIENTAUTH-JWT</a>]</span>
 - Public Certificate information provided as part of the mutual TLS OAuth client credential as defined in <span>[<a href="#OAuth.mTLS.Auth-RFC8705" class="cite xref">OAuth.mTLS.Auth-RFC8705</a>]</span><a href="#section-17.1.2.3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1963,7 +1980,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <a href="#section-17.1.2.4" class="section-number selfRef">17.1.2.4. </a><a href="#name-authentication" class="section-name selfRef">Authentication</a>
             </h5>
 <p id="section-17.1.2.4-1">The System <span class="bcp14">MUST</span> authentication using either:
-- Private Key JWT OAuth client authentication as defined in <span>[<a href="#OAuth.Private.JWT.Auth-RFC7523" class="cite xref">OAuth.Private.JWT.Auth-RFC7523</a>]</span>
+- Private Key JWT OAuth client authentication as defined in <span>[<a href="#OAUTH-CLIENTAUTH-JWT" class="cite xref">OAUTH-CLIENTAUTH-JWT</a>]</span>
 - Mutual TLS OAuth client authentication as defined in <span>[<a href="#OAuth.mTLS.Auth-RFC8705" class="cite xref">OAuth.mTLS.Auth-RFC8705</a>]</span><a href="#section-17.1.2.4-1" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1972,7 +1989,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
             <h5 id="name-security-2">
 <a href="#section-17.1.2.5" class="section-number selfRef">17.1.2.5. </a><a href="#name-security-2" class="section-name selfRef">Security</a>
             </h5>
-<p id="section-17.1.2.5-1">The System <span class="bcp14">MUST</span> follow the best current practices described in <span>[<a href="#RFC9700" class="cite xref">RFC9700</a>]</span> for the interactions with the AI Agent and <span>[<a href="#RFC8725" class="cite xref">RFC8725</a>]</span> when handling JWTs.<a href="#section-17.1.2.5-1" class="pilcrow">¶</a></p>
+<p id="section-17.1.2.5-1">The System <span class="bcp14">MUST</span> follow the best current practices described in <span>[<a href="#OAUTH-BCP" class="cite xref">OAUTH-BCP</a>]</span> for the interactions with the AI Agent and <span>[<a href="#RFC8725" class="cite xref">RFC8725</a>]</span> when handling JWTs.<a href="#section-17.1.2.5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1987,7 +2004,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
             <h5 id="name-flow-3">
 <a href="#section-17.1.3.1" class="section-number selfRef">17.1.3.1. </a><a href="#name-flow-3" class="section-name selfRef">Flow</a>
             </h5>
-<p id="section-17.1.3.1-1">To access an AI Agent, the System <span class="bcp14">MUST</span> present its authorization credential as defined in section 7 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> as well as defined in <span>[<a href="#RFC6750" class="cite xref">RFC6750</a>]</span>. The client <span class="bcp14">MUST</span> be able to process error codes as defined in section 3 of <span>[<a href="#RFC6750" class="cite xref">RFC6750</a>]</span>.<a href="#section-17.1.3.1-1" class="pilcrow">¶</a></p>
+<p id="section-17.1.3.1-1">To access an AI Agent, the System <span class="bcp14">MUST</span> present its authorization credential as defined in <span><a href="https://rfc-editor.org/rfc/rfc6749#section-7" class="relref">Section 7</a> of [<a href="#OAUTH-FRAMEWORK" class="cite xref">OAUTH-FRAMEWORK</a>]</span> as well as defined in <span>[<a href="#RFC6750" class="cite xref">RFC6750</a>]</span>. The client <span class="bcp14">MUST</span> be able to process error codes as defined in section 3 of <span>[<a href="#RFC6750" class="cite xref">RFC6750</a>]</span>.<a href="#section-17.1.3.1-1" class="pilcrow">¶</a></p>
 <p id="section-17.1.3.1-2">The AI Agent <span class="bcp14">MAY</span> request additional details to be provided through a new authorization credentials using <span>[<a href="#OAuth.step-up.Auth-RFC9470" class="cite xref">OAuth.step-up.Auth-RFC9470</a>]</span> or error codes as defined in <span>[<a href="#RFC6750" class="cite xref">RFC6750</a>]</span>.<a href="#section-17.1.3.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1996,7 +2013,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
             <h5 id="name-security-3">
 <a href="#section-17.1.3.2" class="section-number selfRef">17.1.3.2. </a><a href="#name-security-3" class="section-name selfRef">Security</a>
             </h5>
-<p id="section-17.1.3.2-1">The client <span class="bcp14">MUST</span> follow the best current practices described in <span>[<a href="#RFC9700" class="cite xref">RFC9700</a>]</span>.<a href="#section-17.1.3.2-1" class="pilcrow">¶</a></p>
+<p id="section-17.1.3.2-1">The client <span class="bcp14">MUST</span> follow the best current practices described in <span>[<a href="#OAUTH-BCP" class="cite xref">OAUTH-BCP</a>]</span>.<a href="#section-17.1.3.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2011,9 +2028,9 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
             <h5 id="name-flow-4">
 <a href="#section-17.1.4.1" class="section-number selfRef">17.1.4.1. </a><a href="#name-flow-4" class="section-name selfRef">Flow</a>
             </h5>
-<p id="section-17.1.4.1-1">The AI Agent <span class="bcp14">MUST</span> validate the presented token as described in <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> as well as defined in <span>[<a href="#RFC6750" class="cite xref">RFC6750</a>]</span>.<a href="#section-17.1.4.1-1" class="pilcrow">¶</a></p>
-<p id="section-17.1.4.1-2">If token introspection is required, the AI Agent <span class="bcp14">MUST</span> follow <span>[<a href="#RFC7662" class="cite xref">RFC7662</a>]</span> as well as <span>[<a href="#RFC9701" class="cite xref">RFC9701</a>]</span>.<a href="#section-17.1.4.1-2" class="pilcrow">¶</a></p>
-<p id="section-17.1.4.1-3">If the provided token is a JWT profiled token as defined in <span>[<a href="#RFC9068" class="cite xref">RFC9068</a>]</span>, the AI Agent <span class="bcp14">MUST</span> follow the section 2 of this specification as part of the token validation.<a href="#section-17.1.4.1-3" class="pilcrow">¶</a></p>
+<p id="section-17.1.4.1-1">The AI Agent <span class="bcp14">MUST</span> validate the presented token as described in <span>[<a href="#OAUTH-FRAMEWORK" class="cite xref">OAUTH-FRAMEWORK</a>]</span> as well as defined in <span>[<a href="#RFC6750" class="cite xref">RFC6750</a>]</span>.<a href="#section-17.1.4.1-1" class="pilcrow">¶</a></p>
+<p id="section-17.1.4.1-2">If token introspection is required, the AI Agent <span class="bcp14">MUST</span> follow <span>[<a href="#OAUTH-TOKEN-INTROSPECTION" class="cite xref">OAUTH-TOKEN-INTROSPECTION</a>]</span> as well as <span>[<a href="#RFC9701" class="cite xref">RFC9701</a>]</span>.<a href="#section-17.1.4.1-2" class="pilcrow">¶</a></p>
+<p id="section-17.1.4.1-3">If the provided token is a JWT profiled token as defined in <span>[<a href="#OAUTH-ACCESSTOKEN-JWT" class="cite xref">OAUTH-ACCESSTOKEN-JWT</a>]</span>, the AI Agent <span class="bcp14">MUST</span> follow the section 2 of this specification as part of the token validation.<a href="#section-17.1.4.1-3" class="pilcrow">¶</a></p>
 <p id="section-17.1.4.1-4">If the AI Agent delegates its access control logic to a Policy decision point, it <span class="bcp14">MUST</span> follow <span>[<a href="#OpenIDConnect.AuthZEN" class="cite xref">OpenIDConnect.AuthZEN</a>]</span> specification for requesting and receiving a decision for the access.<a href="#section-17.1.4.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2072,7 +2089,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
               <p id="section-17.2.2-3.1.1">If the AI Agent acts on its behalf as a system:<a href="#section-17.2.2-3.1.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-17.2.2-3.1.2.1">
-                  <p id="section-17.2.2-3.1.2.1.1">If it does not want or need to refer to the previous context, it <span class="bcp14">MUST</span> start a client credential grant flow as described in section 1.3.4 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>;<a href="#section-17.2.2-3.1.2.1.1" class="pilcrow">¶</a></p>
+                  <p id="section-17.2.2-3.1.2.1.1">If it does not want or need to refer to the previous context, it <span class="bcp14">MUST</span> start a client credential grant flow as described in <span><a href="https://rfc-editor.org/rfc/rfc6749#section-1.3.4" class="relref">Section 1.3.4</a> of [<a href="#OAUTH-FRAMEWORK" class="cite xref">OAUTH-FRAMEWORK</a>]</span>;<a href="#section-17.2.2-3.1.2.1.1" class="pilcrow">¶</a></p>
 </li>
                 <li class="normal" id="section-17.2.2-3.1.2.2">
                   <p id="section-17.2.2-3.1.2.2.1">If it does want or need to refer to the previous context, it <span class="bcp14">MUST</span> start a token exchange flow as described in <span>[<a href="#OAUTH-TOKEN-EXCHANGE" class="cite xref">OAUTH-TOKEN-EXCHANGE</a>]</span>. The AI Agent will be able to decide in between obtaining tokens representing a Delegation or an Impersonation as described in section 1.1 of the specification.<a href="#section-17.2.2-3.1.2.2.1" class="pilcrow">¶</a></p>
@@ -2083,7 +2100,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
               <p id="section-17.2.2-3.2.1">If the AI Agent acts on delegation by a user:<a href="#section-17.2.2-3.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-17.2.2-3.2.2.1">
-                  <p id="section-17.2.2-3.2.2.1.1">If the AI Agent can interact and want to interact with the user through the client, it <span class="bcp14">MUST</span> start an authorization code grant flow as described in section 1.3.1 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>;<a href="#section-17.2.2-3.2.2.1.1" class="pilcrow">¶</a></p>
+                  <p id="section-17.2.2-3.2.2.1.1">If the AI Agent can interact and want to interact with the user through the client, it <span class="bcp14">MUST</span> start an authorization code grant flow as described in <span><a href="https://rfc-editor.org/rfc/rfc6749#section-1.3.1" class="relref">Section 1.3.1</a> of [<a href="#OAUTH-FRAMEWORK" class="cite xref">OAUTH-FRAMEWORK</a>]</span>;<a href="#section-17.2.2-3.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
                 <li class="normal" id="section-17.2.2-3.2.2.2">
                   <p id="section-17.2.2-3.2.2.2.1">If the AI Agent cannot or does not want to interact with the user through the client, it <span class="bcp14">MAY</span>:<a href="#section-17.2.2-3.2.2.2.1" class="pilcrow">¶</a></p>
@@ -2193,33 +2210,61 @@ CIBA<a href="#section-17.3.1-2" class="pilcrow">¶</a></p>
       <dd>
 <span class="refTitle">"Model Context Protocol"</span>, <span>n.d.</span>, <span>&lt;<a href="https://modelcontextprotocol.io/specification">https://modelcontextprotocol.io/specification</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="OAUTH-ACCESSTOKEN-JWT">[OAUTH-ACCESSTOKEN-JWT]</dt>
+      <dd>
+<span class="refAuthor">Bertocci, V.</span>, <span class="refTitle">"JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens"</span>, <span class="seriesInfo">RFC 9068</span>, <span class="seriesInfo">DOI 10.17487/RFC9068</span>, <time datetime="2021-10" class="refDate">October 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9068">https://www.rfc-editor.org/rfc/rfc9068</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OAUTH-BCP">[OAUTH-BCP]</dt>
+      <dd>
+<span class="refAuthor">Lodderstedt, T.</span>, <span class="refAuthor">Bradley, J.</span>, <span class="refAuthor">Labunets, A.</span>, and <span class="refAuthor">D. Fett</span>, <span class="refTitle">"Best Current Practice for OAuth 2.0 Security"</span>, <span class="seriesInfo">BCP 240</span>, <span class="seriesInfo">RFC 9700</span>, <span class="seriesInfo">DOI 10.17487/RFC9700</span>, <time datetime="2025-01" class="refDate">January 2025</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9700">https://www.rfc-editor.org/rfc/rfc9700</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OAUTH-CLIENT-METADATA">[OAUTH-CLIENT-METADATA]</dt>
+      <dd>
+<span class="refAuthor">Parecki, A.</span> and <span class="refAuthor">E. Smith</span>, <span class="refTitle">"OAuth Client ID Metadata Document"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-client-id-metadata-document-00</span>, <time datetime="2025-10-08" class="refDate">8 October 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-client-id-metadata-document-00">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-client-id-metadata-document-00</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OAUTH-CLIENTAUTH-JWT">[OAUTH-CLIENTAUTH-JWT]</dt>
+      <dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Campbell, B.</span>, and <span class="refAuthor">C. Mortimore</span>, <span class="refTitle">"JSON Web Token (JWT) Profile for OAuth 2.0 Client Authentication and Authorization Grants"</span>, <span class="seriesInfo">RFC 7523</span>, <span class="seriesInfo">DOI 10.17487/RFC7523</span>, <time datetime="2015-05" class="refDate">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7523">https://www.rfc-editor.org/rfc/rfc7523</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OAUTH-FRAMEWORK">[OAUTH-FRAMEWORK]</dt>
+      <dd>
+<span class="refAuthor">Hardt, D., Ed.</span>, <span class="refTitle">"The OAuth 2.0 Authorization Framework"</span>, <span class="seriesInfo">RFC 6749</span>, <span class="seriesInfo">DOI 10.17487/RFC6749</span>, <time datetime="2012-10" class="refDate">October 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6749">https://www.rfc-editor.org/rfc/rfc6749</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OAUTH-ID-CHAIN">[OAUTH-ID-CHAIN]</dt>
+      <dd>
+<span class="refAuthor">Schwenkschuster, A.</span>, <span class="refAuthor">Kasselman, P.</span>, <span class="refAuthor">Burgin, K.</span>, <span class="refAuthor">Jenkins, M. J.</span>, and <span class="refAuthor">B. Campbell</span>, <span class="refTitle">"OAuth Identity and Authorization Chaining Across Domains"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-identity-chaining-08</span>, <time datetime="2026-02-09" class="refDate">9 February 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-identity-chaining-08">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-identity-chaining-08</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OAUTH-JWT-ASSERTION">[OAUTH-JWT-ASSERTION]</dt>
+      <dd>
+<span class="refAuthor">Parecki, A.</span>, <span class="refAuthor">McGuinness, K.</span>, and <span class="refAuthor">B. Campbell</span>, <span class="refTitle">"Identity Assertion JWT Authorization Grant"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-identity-assertion-authz-grant-01</span>, <time datetime="2025-10-19" class="refDate">19 October 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-identity-assertion-authz-grant-01">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-identity-assertion-authz-grant-01</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OAUTH-REGISTRATION">[OAUTH-REGISTRATION]</dt>
+      <dd>
+<span class="refAuthor">Richer, J., Ed.</span>, <span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Bradley, J.</span>, <span class="refAuthor">Machulak, M.</span>, and <span class="refAuthor">P. Hunt</span>, <span class="refTitle">"OAuth 2.0 Dynamic Client Registration Protocol"</span>, <span class="seriesInfo">RFC 7591</span>, <span class="seriesInfo">DOI 10.17487/RFC7591</span>, <time datetime="2015-07" class="refDate">July 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7591">https://www.rfc-editor.org/rfc/rfc7591</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OAUTH-RESOURCE-METADATA">[OAUTH-RESOURCE-METADATA]</dt>
+      <dd>
+<span class="refAuthor">Jones, M.B.</span>, <span class="refAuthor">Hunt, P.</span>, and <span class="refAuthor">A. Parecki</span>, <span class="refTitle">"OAuth 2.0 Protected Resource Metadata"</span>, <span class="seriesInfo">RFC 9728</span>, <span class="seriesInfo">DOI 10.17487/RFC9728</span>, <time datetime="2025-04" class="refDate">April 2025</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9728">https://www.rfc-editor.org/rfc/rfc9728</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OAUTH-SERVER-METADATA">[OAUTH-SERVER-METADATA]</dt>
+      <dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Sakimura, N.</span>, and <span class="refAuthor">J. Bradley</span>, <span class="refTitle">"OAuth 2.0 Authorization Server Metadata"</span>, <span class="seriesInfo">RFC 8414</span>, <span class="seriesInfo">DOI 10.17487/RFC8414</span>, <time datetime="2018-06" class="refDate">June 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8414">https://www.rfc-editor.org/rfc/rfc8414</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="OAUTH-TOKEN-EXCHANGE">[OAUTH-TOKEN-EXCHANGE]</dt>
       <dd>
 <span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Nadalin, A.</span>, <span class="refAuthor">Campbell, B., Ed.</span>, <span class="refAuthor">Bradley, J.</span>, and <span class="refAuthor">C. Mortimore</span>, <span class="refTitle">"OAuth 2.0 Token Exchange"</span>, <span class="seriesInfo">RFC 8693</span>, <span class="seriesInfo">DOI 10.17487/RFC8693</span>, <time datetime="2020-01" class="refDate">January 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8693">https://www.rfc-editor.org/rfc/rfc8693</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OAUTH-TOKEN-INTROSPECTION">[OAUTH-TOKEN-INTROSPECTION]</dt>
+      <dd>
+<span class="refAuthor">Richer, J., Ed.</span>, <span class="refTitle">"OAuth 2.0 Token Introspection"</span>, <span class="seriesInfo">RFC 7662</span>, <span class="seriesInfo">DOI 10.17487/RFC7662</span>, <time datetime="2015-10" class="refDate">October 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7662">https://www.rfc-editor.org/rfc/rfc7662</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="OAUTH-TRANS-TOKENS">[OAUTH-TRANS-TOKENS]</dt>
       <dd>
 <span class="refAuthor">Tulshibagwale, A.</span>, <span class="refAuthor">Fletcher, G.</span>, and <span class="refAuthor">P. Kasselman</span>, <span class="refTitle">"Transaction Tokens"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-transaction-tokens-07</span>, <time datetime="2026-01-24" class="refDate">24 January 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-transaction-tokens-07">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-transaction-tokens-07</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="OAuth.CIMD">[OAuth.CIMD]</dt>
-      <dd>
-<span class="refTitle">"OAuth Client ID Metadata Document"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/draft-ietf-oauth-client-id-metadata-document">https://datatracker.ietf.org/doc/draft-ietf-oauth-client-id-metadata-document</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="OAuth.IDChaining">[OAuth.IDChaining]</dt>
-      <dd>
-<span class="refTitle">"OAuth Identity and Authorization Chaining Across Domains"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/draft-ietf-oauth-identity-chaining/">https://datatracker.ietf.org/doc/draft-ietf-oauth-identity-chaining/</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="OAuth.IDJAG">[OAuth.IDJAG]</dt>
-      <dd>
-<span class="refTitle">"Identity Assertion JWT Authorization Grant"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/draft-ietf-oauth-identity-assertion-authz-grant/01/">https://datatracker.ietf.org/doc/draft-ietf-oauth-identity-assertion-authz-grant/01/</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="OAuth.mTLS.Auth-RFC8705">[OAuth.mTLS.Auth-RFC8705]</dt>
       <dd>
 <span class="refTitle">"OAuth 2.0 Mutual-TLS Client Authentication and Certificate-Bound Access Tokens"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/rfc8705">https://datatracker.ietf.org/doc/html/rfc8705</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="OAuth.Private.JWT.Auth-RFC7523">[OAuth.Private.JWT.Auth-RFC7523]</dt>
-      <dd>
-<span class="refTitle">"JSON Web Token (JWT) Profile for OAuth 2.0 Client Authentication and Authorization Grants"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/rfc7523">https://datatracker.ietf.org/doc/html/rfc7523</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="OAuth.SPIFFE.Client.Auth">[OAuth.SPIFFE.Client.Auth]</dt>
       <dd>
@@ -2249,29 +2294,13 @@ CIBA<a href="#section-17.3.1-2" class="pilcrow">¶</a></p>
       <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="RFC6749">[RFC6749]</dt>
-      <dd>
-<span class="refTitle">"The OAuth 2.0 Authorization Framework"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/rfc6749">https://datatracker.ietf.org/doc/rfc6749</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="RFC6750">[RFC6750]</dt>
       <dd>
 <span class="refTitle">"The OAuth 2.0 Authorization Framework: Bearer Token Usage"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/rfc6750">https://datatracker.ietf.org/doc/rfc6750</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="RFC7591">[RFC7591]</dt>
-      <dd>
-<span class="refTitle">"OAuth 2.0 Dynamic Client Registration Protocol"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/rfc7591">https://datatracker.ietf.org/doc/html/rfc7591</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC7662">[RFC7662]</dt>
-      <dd>
-<span class="refTitle">"OAuth 2.0 Token Introspection"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/rfc7662">https://datatracker.ietf.org/doc/rfc7662</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="RFC8174">[RFC8174]</dt>
       <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC8414">[RFC8414]</dt>
-      <dd>
-<span class="refTitle">"OAuth 2.0 Authorization Server Metadata"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/rfc8414">https://datatracker.ietf.org/doc/html/rfc8414</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8628">[RFC8628]</dt>
       <dd>
@@ -2280,10 +2309,6 @@ CIBA<a href="#section-17.3.1-2" class="pilcrow">¶</a></p>
 <dt id="RFC8725">[RFC8725]</dt>
       <dd>
 <span class="refTitle">"JSON Web Token Best Current Practices"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/rfc8725">https://datatracker.ietf.org/doc/rfc8725</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC9068">[RFC9068]</dt>
-      <dd>
-<span class="refTitle">"JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/rfc9068">https://datatracker.ietf.org/doc/rfc9068</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9126">[RFC9126]</dt>
       <dd>
@@ -2297,17 +2322,9 @@ CIBA<a href="#section-17.3.1-2" class="pilcrow">¶</a></p>
       <dd>
 <span class="refTitle">"OAuth 2.0 Demonstrating Proof of Possession (DPoP)"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/rfc9449">https://datatracker.ietf.org/doc/rfc9449</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="RFC9700">[RFC9700]</dt>
-      <dd>
-<span class="refTitle">"Best Current Practice for OAuth 2.0 Security"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/rfc9700">https://datatracker.ietf.org/doc/rfc9700</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="RFC9701">[RFC9701]</dt>
       <dd>
 <span class="refTitle">"JWT Response for OAuth 2.0 Token Introspection"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/rfc9701">https://datatracker.ietf.org/doc/rfc9701</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC9728">[RFC9728]</dt>
-      <dd>
-<span class="refTitle">"OAuth 2.0 Protected Resource Metadata"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/rfc9728/">https://datatracker.ietf.org/doc/rfc9728/</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="SPIFFE">[SPIFFE]</dt>
       <dd>
