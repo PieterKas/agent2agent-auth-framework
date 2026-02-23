@@ -38,15 +38,6 @@ author:
     email: yrosomakho@zscaler.com
 
 normative:
-  WIMSE_ARCH:
-    title: "Workload Identity in a Multi System Environment (WIMSE) Architecture"
-    target: https://datatracker.ietf.org/doc/draft-ietf-wimse-arch/
-  WIMSE_WPT:
-    title: "WIMSE Proof Token"
-    target: https://datatracker.ietf.org/doc/draft-ietf-wimse-wpt/
-  WIMSE_HTTPSIG:
-    title: "WIMSE Workload-to-Workload Authentication with HTTP Signatures"
-    target: https://datatracker.ietf.org/doc/draft-ietf-wimse-http-signature/
   WIMSE_CRED:
     title: "WIMSE Workload Credentials"
     target: https://datatracker.ietf.org/doc/draft-ietf-wimse-workload-creds/
@@ -68,9 +59,6 @@ normative:
   SPIFFE_FEDERATION:
     title: SPIFFE Federation
     target: https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE_Federation.md
-  RFC9421:
-    title: HTTP Message Signatures
-    target: https://datatracker.ietf.org/doc/rfc9421
   RFC6749:
     title: The OAuth 2.0 Authorization Framework
     target: https://datatracker.ietf.org/doc/rfc6749
@@ -306,29 +294,33 @@ The use of short-lived credentials provides a signiifcant improvement in the ris
 Deployed frameworks such as {{SPIFFE}} provide proven mechanisms for automated, short-lived credential provisioning at runtime. In addition to issuing short-lived credentials, {{SPIFFE}} also provisions ephemeral cryptographic key material bound to each credential, further reducing the risks associated with compromising long-lived keys.
 
 # Agent Authentication {#agent_authentication}
-Agents may authenticate to one another using a variety of mechanisms, depending on the credentials they possess, the protocols supported in the deployment environment, and the risk profile of the application. As described in the WIMSE Architecture {{WIMSE_ARCH}}, authentication can occur at either the network layer or the application layer, and many deployments rely on a combination of both.
+Agents may authenticate using a variety of mechanisms, depending on the credentials they possess, the protocols supported in the deployment environment, and the risk profile of the application. As described in the WIMSE Architecture {{!WIMSE-ARCH=I-D.ietf-wimse-arch}}, authentication can occur at either the transport layer or the application layer, and many deployments rely on a combination of both.
 
-## Network layer authentication
-Network-layer authentication establishes trust during the establishment of a secure transport channel. The most common mechanism used by agents is mutual TLS (mTLS), in which both endpoints present X.509-based credentials and perform a bidirectional certificate exchange as part of the TL negotiation. When paired with short-lived workload identities, such as those issued by SPIFFE or WIMSE, mTLS provides strong channel binding and cryptographic proof of control over the agent’s private key.
+## Transport layer authentication
+Transport-layer authentication establishes trust during the establishment of a secure transport channel. The most common mechanism used by agents is mutually-authenticated TLS (mTLS), in which both endpoints present X.509-based credentials and perform a bidirectional certificate exchange as part of the TLS negotiation. When paired with short-lived workload identities, such as those issued by SPIFFE or WIMSE, mTLS provides strong channel binding and cryptographic proof of control over the agent’s private key.
 
 mTLS is particularly well-suited for environments where transport-level protection, peer authentication, and ephemeral workload identity are jointly required. It also simplifies authorization decisions by enabling agents to associate application-layer requests with an authenticated transport identity. One example of this is the use of mTLS in service mesh architecctures such as Istio or LinkerD.
 
-**Limitations** There are scenarios where transport-layer authentication is not desirable or cannot be relied upon. In architectures involving intermediaries, such as API gateways, service meshes, load balancers, or protocol translators, TLS sessions are often terminated and re-established, breaking the end-to-end continuity of transport-layer identity. Similarly, some deployment models (e.g., serverless platforms, multi-tenant edge environments, or cross-domain topologies) may obscure or abstract identity presented at the transport layer, making it difficult for relying parties to bind application-layer actions to a credential presented at the transport-layer. In these cases, application-layer authentication provides a more robust and portable mechanism for expressing agent identity and conveying attestation or policy-relevant attributes.
+### Limitations
+There are scenarios where transport-layer authentication is not desirable or cannot be relied upon. In architectures involving intermediaries, such as proxies, API gateways, service meshes, load balancers, or protocol translators, TLS sessions are often terminated and re-established, breaking the end-to-end continuity of transport-layer identity. Similarly, some deployment models (such as serverless platforms, multi-tenant edge environments, or cross-domain topologies) may obscure or abstract identity presented at the transport layer, making it difficult for relying parties to bind application-layer actions to a credential presented at the transport-layer. In these cases, application-layer authentication provides a more robust and portable mechanism for expressing agent identity and conveying attestation or policy-relevant attributes.
 
 ## Application layer authentication
 Application-layer authentication allows agents to authenticate independently of the underlying transport. This enables end-to-end identity preservation even when requests traverse proxies, load balancers, or protocol translation layers.
 
-The WIMSE working group defines the following authentication mechanisms that may be used by agents:
+The WIMSE working group defines WIMSE Proof Tokens and HTTP Message Signatures as authentication mechanisms that may be used by agents.
 
 ### WIMSE Proof Tokens (WPTs) {#wpt}
-WIMSE Workload Proof Tokens (WPTs) are a protocol-independent, application-layer mechanism for proving possession of the private key associated with a Workload Identity Token (WIT). WPTs are generated by the agent, using the private key matching the public key in the WIT. A WPT is defined as a signed JSON Web Token (JWT) that binds an agent’s authentication to a specific message context, for example, an HTTP request, thereby providing proof of possession rather than relying on bearer semantics {{WIMSE_WPT}}.
+WIMSE Workload Proof Tokens (WPTs, {{!WIMSE-WPT=I-D.ietf-wimse-wpt}}) are a protocol-independent, application-layer mechanism for proving possession of the private key associated with a Workload Identity Token (WIT). WPTs are generated by the agent, using the private key matching the public key in the WIT. A WPT is defined as a signed JSON Web Token (JWT) that binds an agent’s authentication to a specific message context, for example, an HTTP request, thereby providing proof of possession rather than relying on bearer semantics.
 
 WPTs are designed to work alongside WITs {{WIMSE-CRED}} and are typically short-lived to reduce the window for replay attacks.  They carry claims such as audience (aud), expiration (exp), a unique token identifier (jti), and a hash of the associated WIT (wth). A WPT may also include hashes of other related tokens (e.g., OAuth access tokens) to bind the authentication contexts to specific transaction or authorizations details.
 
 Although the draft currently defines a protocol binding for HTTP (via a Workload-Proof-Token header), the core format is protocol-agnostic, making it applicable to other protocols. Its JWT structure and claims model allow WPTs to be bound to different protocols and transports, including asynchronous or non-HTTP messaging systems such as Kafka and gRPC, or other future protocol bindings. This design enables relying parties to verify identity, key possession, and message binding at the application layer even in environments where transport-layer identity (e.g., mutual TLS) is insufficient or unavailable.
 
-###  HTTP Message Signatures (HTTP Sig)
-The WIMSE Workload-to-Workload Authentication with HTTP Signatures specification {{WIMSE_HTTPSIG}} defines an application-layer authentication profile built on the HTTP Message Signatures standard {{RFC9421}}. It is one of the mechanisms WIMSE defines for authenticating workloads in HTTP-based interactions where transport-layer protections may be insufficient or unavailable. The protocol combines a workload’s Workload Identity Token (WIT), which conveys attested identity and binds a public key, with HTTP Message Signatures using the corresponding private key, thereby providing proof of possession and message integrity for individual HTTP requests and responses. This approach ensures end-to-end authentication and integrity even when traffic traverses intermediaries such as TLS proxies or load balancers that break transport-layer identity continuity. The profile mandates signing of key request components (e.g., method, target, content digest, and the WIT itself) and supports optional response signing to ensure full protection of workload-to-workload exchanges.
+### HTTP Message Signatures
+The WIMSE Workload-to-Workload Authentication with HTTP Signatures specification {{!WIMSE-HTTPSIG=I-D.ietf-wimse-http-signature}} defines an application-layer authentication profile built on the HTTP Message Signatures standard {{!HTTP-SIG=RFC9421}}. It is one of the mechanisms WIMSE defines for authenticating workloads in HTTP-based interactions where transport-layer protections may be insufficient or unavailable. The protocol combines a workload's Workload Identity Token (WIT) (which binds the agent's identity to a public key) with HTTP Message Signatures (using the corresponding private key), thereby providing proof of possession and message integrity for individual HTTP requests and responses. This approach ensures end-to-end authentication and integrity even when traffic traverses intermediaries such as TLS proxies or load balancers that break transport-layer identity continuity. The profile mandates signing of critical request components (e.g., method, target, content digest, and the WIT itself) and supports optional response signing to ensure full protection of workload-to-workload exchanges.
+
+### Limitations
+Unlike transport-layer authentication, application-layer authentication does not inherently provide channel binding to the underlying secure transport. As a result, implementations MUST consider the risk of message relay or replay if tokens or signed messages are accepted outside their intended context. Deployments typically mitigate these risks through short token lifetimes, audience restrictions, nonce or unique identifier checks, and binding authentication to specific requests or transaction parameters.
 
 # Agent Authorization {#agent_authorization}
 Agents act on behalf of a user, a system, or on their own behalf as shown in {{fig-ai-agent-workload}} and needs to obtain authorization when interacting with protected resources.
