@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-22T02:25:15.698094+00:00",
+  "timestamp": "2026-02-24T02:23:03.018359+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -431,6 +431,76 @@
       "updatedAt": "2026-02-13T13:12:00Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 36,
+      "id": "I_kwDOQP22qc7tEoM4",
+      "title": "Remove reference to SPIFFE Federation or mention it",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/36",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "PieterKas"
+      ],
+      "labels": [],
+      "body": "Possibly in cross domain or auth sections.",
+      "createdAt": "2026-02-23T10:24:01Z",
+      "updatedAt": "2026-02-23T10:24:04Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 37,
+      "id": "I_kwDOQP22qc7tEqqv",
+      "title": "Align attestation section with WIMSE architecture",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/37",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "yaroslavros"
+      ],
+      "labels": [],
+      "body": "Instead of redefining attestation approaches, let's se iff we can follow the WIMSE architecture draft instead.",
+      "createdAt": "2026-02-23T10:26:20Z",
+      "updatedAt": "2026-02-23T10:26:20Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 38,
+      "id": "I_kwDOQP22qc7tI9Gx",
+      "title": "Confusing order of functions for AIMS",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/38",
+      "state": "OPEN",
+      "author": "identitymonk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "PieterKas"
+      ],
+      "labels": [],
+      "body": "The current draft establish the order has:\n\n- Agent Identifiers: Unique identifier assigned to every Agent.\n- Agent Credentials: Cryptographic binding between the Agent Identifier and attributes of the Agent.\n- Agent Attestation: Mechanisms for determining and assigning the identifier and issue credentials based on measurements of the Agent's environment.\n- Agent Credential Provisioning: The mechanism for provisioning credentials to the agent at runtime.\n\n1. Credentials here is not a function but an outcome - We could talk about credentialling but then it would collide with the definition is Attestation and Provisioning\n2. Same for identifier: It is an outcome not an action - We could talk about Identification\n3. Attestation and Provisioning are both talking about issuing the credentials - I think it should be only provisioning  that should have this function and definition\n4. Attestation should be before identifier - I attest this workload is of type A therefore I create an identifier an identifier.\n\n\nI propose:\n\n~~~aasvg\n+--------------+----------------------------------+--------------+\n|    Policy    |   Monitoring & Remediation       |  Compliance  |\n|              +----------------------------------+              |\n|              |          Authorization           |              |\n|              +----------------------------------+              |\n|              |          Authentication          |              |\n|              +----------------------------------+              |\n|              |          Credentialling          |              |\n|              +----------------------------------+              |\n|              |          Identification          |              |\n|              +----------------------------------+              |\n|              |           Attestation            |              |\n+--------------+----------------------------------+--------------+\n~~~\n\n> note: there is a typo on compliance\n\n",
+      "createdAt": "2026-02-23T14:44:12Z",
+      "updatedAt": "2026-02-23T14:44:21Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 39,
+      "id": "I_kwDOQP22qc7tJHCw",
+      "title": "Section 6. Agent Credentials",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/39",
+      "state": "OPEN",
+      "author": "identitymonk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "this section should point towards the proper mechanisms for validation of credentials:\n\n- x509: Key usages, and extended key usages, CRLs, OCSP\n- JWT: signature, `typ` header, status list, instrospection, CIMD\n- WIT: ??\n",
+      "createdAt": "2026-02-23T14:51:52Z",
+      "updatedAt": "2026-02-23T14:51:52Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -772,234 +842,851 @@
       "id": "PR_kwDOQP22qc7FXJAc",
       "title": "Renamed draft",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/27",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Adjusted title/abstract, updated readme and codeowners.",
       "createdAt": "2026-02-21T18:27:42Z",
-      "updatedAt": "2026-02-21T18:27:42Z",
+      "updatedAt": "2026-02-23T10:11:48Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
       "baseRefOid": "5e76e8d2b1f13cc5bbd2695056ecc50ecbcc95c4",
       "headRepository": "yaroslavros/agent2agent-auth-framework",
       "headRefName": "main",
-      "headRefOid": "640373ceafb3931e31d590948cd09192f7e85e30",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "26cd4e85a02e673b9c69e966ed4193b70c16cf84",
+      "closedAt": "2026-02-23T10:11:48Z",
+      "mergedAt": "2026-02-23T10:11:48Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "3c4278550f5049703524ff5d2e5a52bcf6280e15"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc7kxYR7",
+          "commit": {
+            "abbreviatedOid": "640373c"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-22T15:36:32Z",
+          "updatedAt": "2026-02-22T15:36:32Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "A bit of wordsmithing.\n\n```suggestion\nThis document proposes a framework for authentication and authorization of AI agent interactions. It leverages existing standards such as the Workload Identity Management and Secure Exchange (WIMSE) architecture and OAuth 2.0 family of specifications. Rather than defining new protocols, this document describes how existing and widely deployed standards can be applied or extended to establish agent authentication and authorization. By doing so, it aims to provide a framework within which to use existing standards, identify gaps and guide future standardization efforts for agent authentication and authorization.\n```",
+              "createdAt": "2026-02-22T15:36:32Z",
+              "updatedAt": "2026-02-22T15:36:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7kxYiN",
+          "commit": {
+            "abbreviatedOid": "640373c"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2026-02-22T15:37:10Z",
+          "updatedAt": "2026-02-22T15:37:10Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOQP22qc7k4_7H",
+          "commit": {
+            "abbreviatedOid": "26cd4e8"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-02-23T10:11:32Z",
+          "updatedAt": "2026-02-23T10:11:32Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 28,
       "id": "PR_kwDOQP22qc7FXQvv",
       "title": "Unify tools services",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/28",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "- unified high level interaction with Tools/Services/Resources\r\n- improved wording and diagram",
       "createdAt": "2026-02-21T18:49:20Z",
-      "updatedAt": "2026-02-21T19:01:17Z",
+      "updatedAt": "2026-02-23T10:16:50Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
       "baseRefOid": "5e76e8d2b1f13cc5bbd2695056ecc50ecbcc95c4",
       "headRepository": "yaroslavros/agent2agent-auth-framework",
       "headRefName": "unify-tools-services",
-      "headRefOid": "0adddd55dcb04dabf8b7f0666385b16ba752a775",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "9cf543514875b4dacf7b93dd46f437bc09dce6dd",
+      "closedAt": "2026-02-23T10:16:50Z",
+      "mergedAt": "2026-02-23T10:16:50Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "19c0054f1f2b6b9ca47db495b825c895079db421"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc7kxZN1",
+          "commit": {
+            "abbreviatedOid": "0adddd5"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-22T15:38:35Z",
+          "updatedAt": "2026-02-22T15:38:35Z",
+          "comments": [
+            {
+              "originalPosition": 36,
+              "body": "```suggestion\r\nAn Agent is a workload that iteratively interacts with a Large Language Model (LLM) and a set of Tools, Services and Resources. An agent performs its operations until a terminating condition, determined either by the LLM or by the agent's internal logic, is reached. It may receive input from a user, or act autonomously. {{fig-ai-agent-workload}} shows a conceptual model of the AI Agent as a workload and illustrates the high-level interaction model between the User or System, the AI Agent, the Large Language Model (LLM), Tools, Services, and Resources.\r\n```",
+              "createdAt": "2026-02-22T15:38:35Z",
+              "updatedAt": "2026-02-23T10:14:34Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7kxaVZ",
+          "commit": {
+            "abbreviatedOid": "0adddd5"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-22T15:40:54Z",
+          "updatedAt": "2026-02-22T15:40:54Z",
+          "comments": [
+            {
+              "originalPosition": 72,
+              "body": "```suggestion\n2. The AI Agent provides the available context to the LLM. Context is implementation- and deployment-specific and may include User or System input, system prompts, Tool descriptions, prior Tool, Service and Resource outputs, and other relevant state.\n```",
+              "createdAt": "2026-02-22T15:40:54Z",
+              "updatedAt": "2026-02-22T15:40:54Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7kxagT",
+          "commit": {
+            "abbreviatedOid": "0adddd5"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-22T15:41:16Z",
+          "updatedAt": "2026-02-22T15:41:16Z",
+          "comments": [
+            {
+              "originalPosition": 73,
+              "body": "```suggestion\n3. The LLM returns output to the AI Agent facilitating selection of Tools, Services or Resources to invoke.\n```",
+              "createdAt": "2026-02-22T15:41:16Z",
+              "updatedAt": "2026-02-22T15:41:16Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7kxbJh",
+          "commit": {
+            "abbreviatedOid": "0adddd5"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-22T15:42:12Z",
+          "updatedAt": "2026-02-22T15:42:12Z",
+          "comments": [
+            {
+              "originalPosition": 74,
+              "body": "```suggestion\n4. The AI Agent invokes one or more external endpoints of selected Tools, Services or Resources. A Tool endpoint may itself be implemented by another AI agent.\n```",
+              "createdAt": "2026-02-22T15:42:12Z",
+              "updatedAt": "2026-02-22T15:42:12Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7kxcbO",
+          "commit": {
+            "abbreviatedOid": "0adddd5"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-22T15:43:32Z",
+          "updatedAt": "2026-02-22T15:43:33Z",
+          "comments": [
+            {
+              "originalPosition": 75,
+              "body": "```suggestion\n5. The external endpoint of the Tools, Services or Resources returns a result of the operation to the AI Agent, which may sends the information as additional context to the Large Language Model, repeating steps 2-5 until the exit condition is reached and the task is completed.\n```",
+              "createdAt": "2026-02-22T15:43:32Z",
+              "updatedAt": "2026-02-22T15:43:44Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7kxdbq",
+          "commit": {
+            "abbreviatedOid": "0adddd5"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-22T15:44:20Z",
+          "updatedAt": "2026-02-22T15:44:20Z",
+          "comments": [
+            {
+              "originalPosition": 76,
+              "body": "```suggestion\n6. Optional: Once the exit condition is reached in step 5, the AI Agent may return a response to the User or System. The AI Agent may also return intermediate results or request additional input.\n```",
+              "createdAt": "2026-02-22T15:44:20Z",
+              "updatedAt": "2026-02-22T15:44:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7kxgu9",
+          "commit": {
+            "abbreviatedOid": "0adddd5"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-22T15:48:34Z",
+          "updatedAt": "2026-02-22T15:48:34Z",
+          "comments": [
+            {
+              "originalPosition": 79,
+              "body": "```suggestion\nAs shown in {{fig-ai-agent-workload}}, the AI Agent is a workload that needs an identifier and credentials with which it can be authenticated by the User or System, Large Language Model and Tools/Services/Resources. Once authenticated, these parties must determine if the AI Agent is authorized to access the requested Large Language Model, Tools, Services or Resources. If the AI Agent is acting on behalf of a User or System, the User or System needs to delegate authority to the AI Agent, and the User or System context MUST be preserved to as input to authorization decisions and recorded in audit trails.\n```",
+              "createdAt": "2026-02-22T15:48:34Z",
+              "updatedAt": "2026-02-22T15:48:34Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7kxhC1",
+          "commit": {
+            "abbreviatedOid": "0adddd5"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2026-02-22T15:49:04Z",
+          "updatedAt": "2026-02-22T15:49:04Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOQP22qc7kzhAF",
+          "commit": {
+            "abbreviatedOid": "0adddd5"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-23T00:00:30Z",
+          "updatedAt": "2026-02-23T00:00:30Z",
+          "comments": [
+            {
+              "originalPosition": 36,
+              "body": "> Tools, Services and Resource that expose interfaces to underlying services and resources\r\n\r\nI think this needs to be wordsmithed a bit.\r\n\r\nHow about splitting this along the lines of:\r\n\r\nAn Agent is a workload that iteratively interacts with a Large Language Model (LLM) and a set of Tools, Services and Resources. Agent performs its operation until a terminating condition, determined either by the LLM or by the agent's internal logic, is reached. ",
+              "createdAt": "2026-02-23T00:00:30Z",
+              "updatedAt": "2026-02-23T00:00:30Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7kzhZC",
+          "commit": {
+            "abbreviatedOid": "0adddd5"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-23T00:02:33Z",
+          "updatedAt": "2026-02-23T00:02:33Z",
+          "comments": [
+            {
+              "originalPosition": 72,
+              "body": "Using \"1\" numbering is actually correct. Markdown magic automatically numbers things on rendering/compilation.",
+              "createdAt": "2026-02-23T00:02:33Z",
+              "updatedAt": "2026-02-23T00:02:33Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7k5FIZ",
+          "commit": {
+            "abbreviatedOid": "9cf5435"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-02-23T10:16:34Z",
+          "updatedAt": "2026-02-23T10:16:34Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 29,
       "id": "PR_kwDOQP22qc7FXUD4",
       "title": "Agent system",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/29",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "- Clarified that AIMS is defined in this document\r\n- Improved diagram and wording around it",
       "createdAt": "2026-02-21T18:57:27Z",
-      "updatedAt": "2026-02-21T18:57:28Z",
+      "updatedAt": "2026-02-23T10:17:40Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
       "baseRefOid": "5e76e8d2b1f13cc5bbd2695056ecc50ecbcc95c4",
       "headRepository": "yaroslavros/agent2agent-auth-framework",
       "headRefName": "agent-system",
-      "headRefOid": "f01d7f631f6975d6d641d49c456939d861927e00",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "026f6c4580a866d8ea10720455e713cbee68aafb",
+      "closedAt": "2026-02-23T10:17:40Z",
+      "mergedAt": "2026-02-23T10:17:40Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "e972a384c68ccd1534564878259b9d3ea62ada58"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc7kxiET",
+          "commit": {
+            "abbreviatedOid": "f01d7f6"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-22T15:50:54Z",
+          "updatedAt": "2026-02-22T15:50:54Z",
+          "comments": [
+            {
+              "originalPosition": 38,
+              "body": "```suggestion\nAn Agent Identity Management System ensures that the right Agent has access to the right resources and tools at the right time for the right reason. An Agent identity management system depends on the following components to achieve its goals:\n```",
+              "createdAt": "2026-02-22T15:50:54Z",
+              "updatedAt": "2026-02-22T15:50:54Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7kxiJo",
+          "commit": {
+            "abbreviatedOid": "f01d7f6"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2026-02-22T15:51:05Z",
+          "updatedAt": "2026-02-22T15:51:05Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOQP22qc7k5GBA",
+          "commit": {
+            "abbreviatedOid": "026f6c4"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-02-23T10:17:21Z",
+          "updatedAt": "2026-02-23T10:17:21Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 30,
       "id": "PR_kwDOQP22qc7FXpYN",
       "title": "Cleaned up agent identifier section",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/30",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-02-21T19:54:32Z",
-      "updatedAt": "2026-02-21T19:54:33Z",
+      "updatedAt": "2026-02-23T10:18:03Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
       "baseRefOid": "5e76e8d2b1f13cc5bbd2695056ecc50ecbcc95c4",
       "headRepository": "yaroslavros/agent2agent-auth-framework",
       "headRefName": "agent-identifier",
       "headRefOid": "ed7b9141ead611c9205db39a66e8846bb4d8b9b2",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-02-23T10:18:03Z",
+      "mergedAt": "2026-02-23T10:18:03Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "c1b1e236a6ac1c5016f54cbc49d007a40772b43d"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc7kxjBR",
+          "commit": {
+            "abbreviatedOid": "ed7b914"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-02-22T15:53:51Z",
+          "updatedAt": "2026-02-22T15:53:51Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 31,
       "id": "PR_kwDOQP22qc7FX0rW",
       "title": "Agent credentials",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/31",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Updated agent credentials section:\r\n- Added non-normative hardware credentials storage recommendation\r\n- Cleaned up text and references",
       "createdAt": "2026-02-21T20:16:46Z",
-      "updatedAt": "2026-02-21T20:16:47Z",
+      "updatedAt": "2026-02-23T10:24:43Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
       "baseRefOid": "5e76e8d2b1f13cc5bbd2695056ecc50ecbcc95c4",
       "headRepository": "yaroslavros/agent2agent-auth-framework",
       "headRefName": "agent-credentials",
-      "headRefOid": "513fcad4119d1ce9a7509f982d87ee6bea9f4eb0",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
-      "reviews": []
+      "headRefOid": "5eee96b9b825eecb77214c3c993f72da0cadbc24",
+      "closedAt": "2026-02-23T10:24:43Z",
+      "mergedAt": "2026-02-23T10:24:43Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "5533f3da9f40069b64428c9722426ea117867285"
+      },
+      "comments": [
+        {
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "body": "If we are not referencing SPIFFE_FEDERATION anymore we should drop it from normative references list.",
+          "createdAt": "2026-02-23T00:04:49Z",
+          "updatedAt": "2026-02-23T00:04:49Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc7kxnog",
+          "commit": {
+            "abbreviatedOid": "513fcad"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-22T16:01:08Z",
+          "updatedAt": "2026-02-22T16:01:08Z",
+          "comments": [
+            {
+              "originalPosition": 67,
+              "body": "SPIFFE Federation for me feels more like a way to have your primary cred accepted in another domain, rather than getting a new cred? The other pattern I have seen used a lot is Workload Identity Federation (sadly underspecified - something we may need to rectify)\n\n```suggestion\nIn some cases, agents MAY need a secondary credentials to access a proprietary or legacy system that is not compatible with the X.509, JWT or WIT it is provisioned with. In these cases an agent MAY exchange their primary credentials through a credential exchange mechanisms (e.g., OAuth 2.0 Token Exchange {{!OAUTH-TOKEN-EXCHANGE=RFC8693}}, Transaction Tokens {{!OAUTH-TRANS-TOKENS=I-D.ietf-oauth-transaction-tokens}} or Workload Identity Federation). This allows an agent to obtain a credential targeted to a specific relying party by leveraging the primary credential in its possession.\n```",
+              "createdAt": "2026-02-22T16:01:08Z",
+              "updatedAt": "2026-02-22T16:01:08Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7kxoXd",
+          "commit": {
+            "abbreviatedOid": "513fcad"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-22T16:01:59Z",
+          "updatedAt": "2026-02-22T16:02:00Z",
+          "comments": [
+            {
+              "originalPosition": 69,
+              "body": "```suggestion\n**Note**: Static API keys are an anti-pattern for agent identity. They are bearer artefacts that are not cryptographically bound, do not convey identity, are typically long-lived and are operationally difficult to rotate, making them unsuitable for secure agent authentication or authorization.\n```",
+              "createdAt": "2026-02-22T16:01:59Z",
+              "updatedAt": "2026-02-22T16:02:00Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7kxrg2",
+          "commit": {
+            "abbreviatedOid": "513fcad"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2026-02-22T16:04:41Z",
+          "updatedAt": "2026-02-22T16:04:41Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOQP22qc7k5PaZ",
+          "commit": {
+            "abbreviatedOid": "5eee96b"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-02-23T10:24:35Z",
+          "updatedAt": "2026-02-23T10:24:35Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 32,
       "id": "PR_kwDOQP22qc7FX2id",
       "title": "Agent attestation",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/32",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Minor changes to wording and cleaned up reference",
       "createdAt": "2026-02-21T20:23:16Z",
-      "updatedAt": "2026-02-21T20:23:17Z",
+      "updatedAt": "2026-02-23T10:31:08Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
-      "baseRefOid": "5e76e8d2b1f13cc5bbd2695056ecc50ecbcc95c4",
+      "baseRefOid": "5533f3da9f40069b64428c9722426ea117867285",
       "headRepository": "yaroslavros/agent2agent-auth-framework",
       "headRefName": "agent-attestation",
-      "headRefOid": "60c643f818f014afa6562b024ab785bfac83398f",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "a748c6e18a35ff4ec87dc0f87075d943bb5395e5",
+      "closedAt": "2026-02-23T10:31:08Z",
+      "mergedAt": "2026-02-23T10:31:08Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "e395e09ee68d8e3f9148c499004c9c5b1b82925f"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc7kxup8",
+          "commit": {
+            "abbreviatedOid": "60c643f"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-22T16:07:13Z",
+          "updatedAt": "2026-02-22T16:07:13Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "Is there something in the WIMSE architecture draft we can reference so we can redirect any discussion about workload attestation to that doc rather than doing it here?",
+              "createdAt": "2026-02-22T16:07:13Z",
+              "updatedAt": "2026-02-22T16:07:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7kziNX",
+          "commit": {
+            "abbreviatedOid": "60c643f"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-23T00:06:25Z",
+          "updatedAt": "2026-02-23T00:06:25Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "There are debates going on about level of detail that the architecture should go into when it comes to attestation. Let's open a tracking issue for this document and resolve it once architecture attestation settles.",
+              "createdAt": "2026-02-23T00:06:25Z",
+              "updatedAt": "2026-02-23T00:06:26Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 33,
       "id": "PR_kwDOQP22qc7FX9_9",
       "title": "Agent authentication update",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/33",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Cleaned up references, renamed \"Network\" to \"Transport\" and added Application layer authentication limitations",
       "createdAt": "2026-02-21T20:38:31Z",
-      "updatedAt": "2026-02-21T20:38:31Z",
+      "updatedAt": "2026-02-23T10:31:51Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
-      "baseRefOid": "5e76e8d2b1f13cc5bbd2695056ecc50ecbcc95c4",
+      "baseRefOid": "e395e09ee68d8e3f9148c499004c9c5b1b82925f",
       "headRepository": "yaroslavros/agent2agent-auth-framework",
       "headRefName": "agent-auth",
-      "headRefOid": "814ac66fa34f99bf639f9b6f8465ef9eb8cb221b",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "ba708228232553905e3dafc675db325949aaab98",
+      "closedAt": "2026-02-23T10:31:51Z",
+      "mergedAt": "2026-02-23T10:31:50Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "70a8df9f41331cf4f197902785357bab589357b8"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc7kx26T",
+          "commit": {
+            "abbreviatedOid": "814ac66"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-22T16:15:22Z",
+          "updatedAt": "2026-02-22T16:15:22Z",
+          "comments": [
+            {
+              "originalPosition": 92,
+              "body": "```suggestion\nThe WIMSE Workload-to-Workload Authentication with HTTP Signatures specification {{!WIMSE-HTTPSIG=I-D.ietf-wimse-http-signature}} defines an application-layer authentication profile built on the HTTP Message Signatures standard {{!HTTP-SIG=RFC9421}}. It is one of the mechanisms WIMSE defines for authenticating workloads in HTTP-based interactions where transport-layer protections may be insufficient or unavailable. The protocol combines a workload's Workload Identity Token (WIT) (which binds the agent's identity to a public key) with HTTP Message Signatures (using the corresponding private key), thereby providing proof of possession and message integrity for individual HTTP requests and responses. This approach ensures end-to-end authentication and integrity even when traffic traverses intermediaries such as TLS proxies or load balancers that break transport-layer identity continuity. The profile mandates signing of critical request components (e.g., method, target, content digest, and the WIT itself) and supports optional response signing to ensure full protection of workload-to-workload exchanges.\n```",
+              "createdAt": "2026-02-22T16:15:22Z",
+              "updatedAt": "2026-02-22T16:15:22Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7kx3sG",
+          "commit": {
+            "abbreviatedOid": "814ac66"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2026-02-22T16:16:12Z",
+          "updatedAt": "2026-02-22T16:16:12Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 34,
       "id": "PR_kwDOQP22qc7FYKEy",
       "title": "Updated Agent Authorization section",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/34",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "- Cleaned up references\r\n- Extended Human in the Loop\r\n- Added token introspection reference\r\n- Added privacy considerations",
       "createdAt": "2026-02-21T21:03:46Z",
-      "updatedAt": "2026-02-21T21:03:47Z",
+      "updatedAt": "2026-02-23T10:43:18Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
-      "baseRefOid": "5e76e8d2b1f13cc5bbd2695056ecc50ecbcc95c4",
+      "baseRefOid": "70a8df9f41331cf4f197902785357bab589357b8",
       "headRepository": "yaroslavros/agent2agent-auth-framework",
       "headRefName": "authorization",
-      "headRefOid": "1f249296e87adfb2da5e0c101e2aaf78f861cf7e",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "cbb16adfa3fc3cdf324ef372de5dc58d93e0ee73",
+      "closedAt": "2026-02-23T10:43:18Z",
+      "mergedAt": "2026-02-23T10:43:18Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "06008f5742ef1a3fc1a67f01db70deb1e955f6a6"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc7kx_y2",
+          "commit": {
+            "abbreviatedOid": "1f24929"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-22T16:24:00Z",
+          "updatedAt": "2026-02-22T16:24:00Z",
+          "comments": [
+            {
+              "originalPosition": 163,
+              "body": "```suggestion\r\nAn OAuth authorization server MAY conclude that the level of access requested by an Agent requires explicit user confirmation. In such cases the authorization server SHOULD either decline the request or obtain additional authorization from the User using the OpenID Client Initiated Backchannel Authentication (CIBA) protocol. This triggers an out-of-band interaction allowing the user to approve or deny the requested operation without exposing credentials to the agent (for example a push notification requesting the user to approve a request through an authenticator application on their mobile device).\r\n```",
+              "createdAt": "2026-02-22T16:24:00Z",
+              "updatedAt": "2026-02-23T10:32:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7kyD1v",
+          "commit": {
+            "abbreviatedOid": "1f24929"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-22T16:27:34Z",
+          "updatedAt": "2026-02-22T16:27:35Z",
+          "comments": [
+            {
+              "originalPosition": 173,
+              "body": "```suggestion\nAccess from the Tools to the resources and services MAY be controlled through a variety of auhtorization mechanisms, includidng OAuth. If access is controlled through OAuth, the Tools SHOULD use OAuth 2.0 Token Exchange as defined in {{OAUTH-TOKEN-EXCHANGE}} to exchange the access token it received for a new access token to access the resource or service in question. If the Tool needs access to a resource protected by an auhtorization server other than the Tool's own authorization server, it SHOULD use the OAuth Identity and Authorization Chaining Across Domains ({{OAUTH-ID-CHAIN}}) to obtain an access token from the authroization server protecting the resource it needs to access.\n\n**Note:** It is an anti-pattern for Tools to forward access tokens it received from the Agent to Services or Resources. It increases the risk of credential theft and lateral attacks.\n```",
+              "createdAt": "2026-02-22T16:27:34Z",
+              "updatedAt": "2026-02-22T16:27:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7kyFt1",
+          "commit": {
+            "abbreviatedOid": "1f24929"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2026-02-22T16:29:24Z",
+          "updatedAt": "2026-02-22T16:29:24Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOQP22qc7kzifw",
+          "commit": {
+            "abbreviatedOid": "1f24929"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-23T00:07:46Z",
+          "updatedAt": "2026-02-23T00:07:46Z",
+          "comments": [
+            {
+              "originalPosition": 163,
+              "body": "Final dot missing",
+              "createdAt": "2026-02-23T00:07:46Z",
+              "updatedAt": "2026-02-23T00:07:46Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7k5bJl",
+          "commit": {
+            "abbreviatedOid": "7d04657"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-02-23T10:35:26Z",
+          "updatedAt": "2026-02-23T10:35:26Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 35,
       "id": "PR_kwDOQP22qc7FYNZ9",
       "title": "Strengthen Monitoring and Remediation",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/35",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-02-21T21:11:52Z",
-      "updatedAt": "2026-02-21T21:11:53Z",
+      "updatedAt": "2026-02-23T10:43:53Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
       "baseRefOid": "5e76e8d2b1f13cc5bbd2695056ecc50ecbcc95c4",
       "headRepository": "yaroslavros/agent2agent-auth-framework",
       "headRefName": "monitoring",
-      "headRefOid": "37b9255e56f55954ab34ca310c3bef94cc26f677",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "73b892296ffe10dd157fb3d00e918f5acd155565",
+      "closedAt": "2026-02-23T10:43:53Z",
+      "mergedAt": "2026-02-23T10:43:53Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "ec4a131756aa7288f731af558e22473f216a201b"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc7kyGdd",
+          "commit": {
+            "abbreviatedOid": "37b9255"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-22T16:31:19Z",
+          "updatedAt": "2026-02-22T16:31:19Z",
+          "comments": [
+            {
+              "originalPosition": 55,
+              "body": "```suggestion\nMonitoring systems SHOULD correlate events across Agents, Tools, Services, Resources and LLMs to detect misuse patterns such as replay, confused deputy behavior, privilege escalation, or unexpected action sequences.\n```",
+              "createdAt": "2026-02-22T16:31:19Z",
+              "updatedAt": "2026-02-22T16:31:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7kyGkj",
+          "commit": {
+            "abbreviatedOid": "37b9255"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2026-02-22T16:31:40Z",
+          "updatedAt": "2026-02-22T16:31:40Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOQP22qc7k5lDJ",
+          "commit": {
+            "abbreviatedOid": "73b8922"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-02-23T10:43:41Z",
+          "updatedAt": "2026-02-23T10:43:41Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
