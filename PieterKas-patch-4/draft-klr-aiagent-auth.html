@@ -1,0 +1,2068 @@
+<!DOCTYPE html>
+<html lang="en" class="Internet-Draft">
+<head>
+<meta charset="utf-8">
+<meta content="Common,Latin" name="scripts">
+<meta content="initial-scale=1.0" name="viewport">
+<title>AI Agent Authentication and Authorization</title>
+<meta content="Pieter Kasselman" name="author">
+<meta content="Jean-François Lombardo" name="author">
+<meta content="Yaroslav Rosomakho" name="author">
+<meta content="
+       This document proposes a framework for authentication and authorization of AI agent interactions. It leverages existing standards such as the Workload Identity Management and Secure Exchange (WIMSE) architecture and OAuth 2.0 family of specifications. Rather than defining new protocols, this document describes how existing and widely deployed standards can be applied or extended to establish agent authentication and authorization. By doing so, it aims to provide a framework within which to use existing standards, identify gaps and guide future standardization efforts for agent authentication and authorization. 
+    " name="description">
+<meta content="xml2rfc 3.31.0" name="generator">
+<meta content="next generation" name="keyword">
+<meta content="unicorn" name="keyword">
+<meta content="sparkling distributed ledger" name="keyword">
+<meta content="draft-klr-aiagent-auth-latest" name="ietf.draft">
+<!-- Generator version information:
+  xml2rfc 3.31.0
+    Python 3.12.12
+    ConfigArgParse 1.7
+    google-i18n-address 3.1.1
+    intervaltree 3.2.1
+    Jinja2 3.1.6
+    lxml 6.0.2
+    platformdirs 4.5.1
+    pycountry 24.6.1
+    PyYAML 6.0.3
+    requests 2.32.5
+    wcwidth 0.3.0
+-->
+<link href="draft-klr-aiagent-auth.xml" rel="alternate" type="application/rfc+xml">
+<link href="#copyright" rel="license">
+<style type="text/css">@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Lora SemiBold'), local('Lora-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-semibold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+}
+
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-greek.woff2') format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-greek.woff2') format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  color-scheme: light dark;
+  --background-color: #fff;
+  --text-color: #222;
+  --title-color: #191919;
+  --link-color: #2a6496;
+  --highlight-color: #f9f9f9;
+  --line-color: #eee;
+  --pilcrow-weak: #ddd;
+  --pilcrow-strong: #bbb;
+  --small-font-size: 14.5px;
+  --font-mono: 'Oxygen Mono', monospace;
+  --font-title: "Sofia Sans Semi Condensed", sans-serif;
+  scrollbar-color: #bbb #eee;
+}
+body {
+  max-width: 600px;
+  margin: 75px auto;
+  padding: 0 5px;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  font: 16px/22px "Lora", serif;
+  scroll-behavior: smooth;
+}
+
+.ears {
+  display: none;
+}
+
+/* headings */
+section {
+  clear: both;
+}
+.section-number {
+  padding-right: 0.5em;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-title);
+  font-weight: 680;
+  margin: 0.8em 0 0.3em;
+  font-size-adjust: 0.5;
+  color: var(--title-color);
+}
+h1#title {
+  font-size: 32px;
+  line-height: 40px;
+  clear: both;
+}
+h1#title, h1#rfcnum {
+  margin: 1.5em 0 0.2em;
+}
+h1#rfcnum + h1#title {
+  margin: 0.2em 0;
+}
+
+h1, h2, h3 {
+  font-size: 22px;
+  line-height: 27px;
+}
+h4, h5, h6 {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+/* general structure */
+.author {
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+#abstract+p {
+  font-size: 18px;
+  line-height: 24px;
+}
+#abstract+p code, #abstract+p samp, #abstract+p tt {
+  font-size: 16px;
+  line-height: 0;
+}
+
+p {
+  padding: 0;
+  margin: 0.5em 0;
+  text-align: left;
+}
+div {
+  margin: 0;
+}
+.alignRight.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignRight.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignRight {
+  margin: 1em 0;
+}
+.alignRight > *:first-child {
+  border: none;
+  margin: 0;
+  float: right;
+  clear: both;
+}
+.alignRight > *:nth-child(2) {
+  clear: both;
+  display: block;
+  border: none;
+}
+svg {
+  display: block;
+}
+/* font-family isn't space-separated, but =~ will have to do */
+svg[font-family~="monospace" i], svg [font-family~="monospace" i] {
+  font-family: var(--font-mono);
+}
+.alignCenter.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignCenter.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignCenter {
+  margin: 1em 0;
+}
+.alignCenter > *:first-child {
+  border: none;
+  /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
+     support flexbox yet.
+  */
+  display: table;
+  margin: 0 auto;
+}
+
+/* lists */
+ol, ul {
+  padding: 0;
+  margin: 0 0 0.5em 2em;
+  & :is(ol, ul) {
+    margin-left: 1em;
+  }
+}
+li {
+  margin: 0 0 0.25em 0;
+}
+ul.empty, .ulEmpty {
+  list-style-type: none;
+  & li {
+    margin-top: 0.5em;
+  }
+}
+:is(ul, ol).compact, .ulCompact, .olCompact {
+  margin: 0 0 0 2em;
+  & li {
+    margin: 0;
+    & :first-child { margin-top: 0; }
+    & :last-child { margin-bottom: 0; }
+  }
+}
+
+/* definition lists */
+dl {
+  clear: left;
+  --indent: 3ch;
+  /* --indent: attr(indent ch); not supported in any browser, but we can dream */
+  &.olPercent {
+    --indent: 5ch;
+    & > dt {
+      min-width: calc(var(--indent) - 2ch);
+    }
+  }
+  &.olPercent > dt {
+    float: none;
+  }
+
+  dl > dd > & {
+    margin-top: 0.5em;
+    margin-bottom: 0;
+  }
+}
+dl:not(.dlNewline) > dt {
+  float: left;
+  margin-right: 2ch;
+  min-width: 8ch;
+}
+dl > dd {
+  margin-bottom: .8em;
+  margin-left: var(--indent) !important; /* stupid element overrides */
+  min-height: 2ex;
+}
+:is(dl.compact, .dlCompact) > dd {
+  margin-bottom: 0;
+  & > :is(:first-child, .break:first-child + *) {
+    margin-top: 0;
+  }
+  & > :is(:last-child) {
+    margin-bottom: 0;
+  }
+}
+:is(dd, span).break {
+  display: none;
+}
+
+/* links */
+a, a[href].selfRef:hover {
+  text-decoration: none;
+}
+a[href] {
+  color: var(--link-color);
+}
+a[href].selfRef, .iref + a[href].internal {
+  color: var(--text-color);
+}
+a[href]:hover {
+  text-decoration: underline;
+}
+a[href].selfRef:hover {
+  background-color: var(--highlight-color);
+}
+a.xref:is(.cite, .auto), :is(#status-of-memo, #copyright) a {
+  white-space: nowrap;
+}
+
+/* Figures */
+tt, code, pre {
+  background-color: var(--highlight-color);
+  font: 14px/22px var(--font-mono);
+}
+tt, code {
+  /* changing the font for inline elements leads to different ascender
+     and descender heights; as we want to retain baseline alignment,
+     remove leading to avoid altering the final height of lines
+     note: this fails if these blocks take an entire line,
+     a different solution would be great */
+  line-height: 0;
+}
+:is(h1, h2, h3, h4, h5, h6) :is(tt, code) {
+  font-size: 84%;
+}
+pre {
+  border: 1px solid var(--line-color);
+  font-size: 13.5px;
+  line-height: 16px;
+  letter-spacing: -0.2px;
+  margin: 5px;
+  padding: 5px;
+}
+img {
+  max-width: 100%;
+}
+figure {
+  margin: 0.5em 0;
+  padding: 0;
+}
+figure blockquote {
+  margin: 0.8em 0.4em 0.4em;
+}
+figcaption, caption {
+  font-style: italic;
+  margin: 0.5em 1.5em;
+  text-align: left;
+  caption-side: bottom;
+}
+@media screen {
+  /* Auto-collapse boilerplate. */
+  :is(#status-of-memo, #copyright) p {
+    margin: -2px 0;
+    max-height: 0;
+    transition: max-height 2s ease, margin 0.5s ease 0.5s;
+    overflow: hidden;
+  }
+  :is(#status-of-memo, #copyright):hover p,
+  :is(#status-of-memo, #copyright) h2:target ~ p {
+    margin: 0.5em 0;
+    max-height: 500px;
+    overflow: auto;
+  }
+  pre, svg {
+    display: inline-block;
+    /* In the horizontal direction, sometimes people make over-sized figures.
+       Scrollbars for those is therefore necessary: auto adds them as necessary..
+       In the vertical direction, the line-height can combine with the font
+       asender/descender height to produce scrollbars: hidden avoids that. */
+    overflow: auto hidden;
+  }
+  pre {
+    max-width: 100%;
+    width: calc(100% - 22px - 1em);
+  }
+  svg {
+    max-width: calc(100% - 22px - 1em);
+  }
+  figure pre {
+    display: block;
+    width: calc(100% - 25px);
+  }
+  :is(pre, svg) + .pilcrow {
+    display: inline-block;
+    vertical-align: text-bottom;
+    padding-bottom: 8px;
+  }
+}
+
+/* aside, blockquote */
+aside, blockquote {
+  margin-left: 0;
+  padding: 0 2em;
+  font-style: italic;
+}
+blockquote {
+  margin: 1em 0;
+  border-left: 2px var(--pilcrow-strong) solid;
+}
+cite {
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+
+/* tables */
+table {
+  width: auto;
+  max-width: 100%;
+  margin: 0 0 1em;
+  border-collapse: collapse;
+}
+table.right {
+  margin-left: auto;
+}
+table.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+table.left {
+  margin-right: auto;
+}
+table .text-left {
+  text-align: left;
+}
+table .text-center {
+  text-align: center;
+}
+table .text-right {
+  text-align: right;
+}
+
+thead, tbody {
+  border: 1px solid var(--line-color);
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 5px 10px;
+}
+th {
+  background-color: var(--line-color);
+}
+:is(tr:nth-child(2n), thead+tbody > tr:nth-child(2n+1)) > td {
+  background-color: var(--background-color);
+}
+:is(tr:nth-child(2n+1), thead+tbody > tr:nth-child(2n)) > td {
+  background-color: var(--highlight-color);
+}
+table caption {
+  margin: 0;
+  padding: 3px 0 3px 1em;
+}
+table p {
+  margin: 0;
+}
+
+/* pilcrow */
+a.pilcrow {
+  margin-left: 3px;
+  opacity: 0.2;
+  user-select: none;
+  &[href] {
+    color: var(--pilcrow-weak);
+    &:hover { text-decoration: none; }
+  }
+}
+@media not print {
+  :hover > a.pilcrow, a.pilcrow:focus {
+    opacity: 1;
+  }
+  a.pilcrow[href]:hover {
+    color: var(--pilcrow-strong);
+    background-color: transparent;
+  }
+}
+@media print {
+  a.pilcrow {
+    display: none;
+  }
+}
+
+/* misc */
+hr {
+  border: 0;
+  border-top: 1px solid var(--line-color);
+}
+.bcp14 {
+  font-variant: small-caps;
+  font-weight: 600;
+  font-size: var(--small-font-size);
+}
+.role {
+  font-variant: all-small-caps;
+}
+sub, sup {
+  line-height: 1;
+  font-size: 80%;
+}
+
+/* info block */
+#identifiers {
+  margin: 0;
+  font-size: var(--small-font-size);
+  line-height: 18px;
+  --identifier-width: 15ch;
+  & dt {
+    width: var(--identifier-width);
+    min-width: var(--identifier-width);
+    clear: left;
+    float: left;
+    text-align: right;
+    margin-right: 1ch;
+  }
+  & dd {
+    margin: 0;
+    margin-left: calc(1em + var(--identifier-width)) !important;
+    min-width: 5em;
+  }
+  & .authors {
+    & .author {
+      display: inline-block;
+      margin-right: 1.5em;
+    }
+    & .org {
+      font-style: italic;
+    }
+  }
+}
+
+/* The prepared/rendered info at the very bottom of the page */
+.docInfo {
+  color: #999;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 2em;
+}
+.docInfo .prepared {
+  float: right;
+}
+
+/* table of contents */
+#toc {
+  padding: 0.75em 0 2em 0;
+  margin-bottom: 1em;
+
+  & nav {
+    & ul {
+      margin: 0 0.5em 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    & li {
+      line-height: 1.3em;
+      margin: 2px 0;
+      padding-left: 1.2em;
+      text-indent: -1.2em;
+    }
+  }
+  & a.xref {
+    white-space: normal;
+  }
+}
+
+.references {
+  & > dt {
+    text-align: right;
+    font-weight: bold;
+    min-width: 10ch;
+    margin-right: 1.5ch;
+    &:target::before {
+      content: "⇒";
+      margin: 0 10px 0 -25px;
+    }
+  }
+  & > dd {
+    margin-left: 12ch !important;
+    overflow: visible;
+    & .refInstance {
+      margin-bottom: 0.8em;
+    }
+    & .ascii {
+      margin-bottom: 0.25em;
+    }
+  }
+}
+
+#rfc\.index\.index + ul {
+  margin-left: 0;
+}
+
+/* authors */
+address.vcard {
+  font-style: normal;
+  max-width: 20em;
+  margin: 1em auto 1em 0;
+
+  & .nameRole {
+    font-weight: 700;
+    margin-left: 0;
+  }
+  & .label {
+    margin: 0.5em 0;
+  }
+  & .type {
+    display: none;
+  }
+  & .alternative-contact {
+    margin: 0.5em 0 0.25em 0;
+  }
+  & .non-ascii {
+    margin: 0 0 0 2em;
+  }
+  & div.left {
+    text-align: left;
+  }
+  & div.right {
+    text-align: right;
+  }
+}
+
+hr.addr {
+  border-top: 1px dashed;
+  margin: 0;
+  color: #ddd;
+  max-width: calc(100% - 16px);
+}
+@media (min-width: 500px) {
+  #authors-addresses > section {
+    column-count: 2;
+    column-gap: 20px;
+  }
+  #authors-addresses > section > h2 {
+    column-span: all;
+  }
+  /* hack for break-inside: avoid-column */
+  #authors-addresses address {
+    display: inline-block;
+    break-inside: avoid-column;
+  }
+}
+
+/* Comments */
+.rfcEditorRemove p:first-of-type {
+  font-style: italic;
+}
+.cref {
+  background-color: rgba(249, 232, 105, 0.3);
+  padding: 2px 4px;
+}
+.crefSource {
+  font-style: italic;
+}
+
+@media screen {
+  #toc nav {
+    font-family: var(--font-title);
+    font-weight: 360;
+    & > ul { margin-bottom: 2em; }
+    & ul {
+      margin: 0 0 0 4px;
+      & :is(p, li) {
+        margin: 2px 0;
+      }
+    }
+  }
+  #toc a.toplink {
+    float: right;
+  }
+}
+@media not screen {
+  #toc a.toplink {
+    display: none;
+  }
+}
+
+
+/* TOC layout for smaller screens */
+@media screen and (max-width: 929px) {
+  #toc {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding: 1px 0 0 0;
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+    opacity: 0.6;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 2px 0 2px 6px;
+    padding-right: 1em;
+    font-size: 18px;
+    line-height: 24px;
+    min-width: 190px;
+    text-align: right;
+    background-color: #444;
+    color: white;
+    cursor: pointer;
+    &::before { /* css hamburger */
+      float: right;
+      position: relative;
+      width: 1em;
+      height: 1px;
+      left: -164px;
+      margin: 8px 0 0 0;
+      background: white none repeat scroll 0 0;
+      box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+      content: "";
+    }
+  }
+  #toc nav {
+    display: none;
+    background-color: var(--background-color);
+    padding: 0.5em 1em 1em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    height: calc(100vh - 48px);
+    border-left: 1px solid #ddd;
+  }
+  #toc.active {
+    opacity: 1;
+    & nav { display: block; }
+  }
+  /* Make the collapsed ToC header render white on gray also when it's a link */
+  #toc h2 a,
+  #toc h2 a:is(:link, :focus, :hover),
+  #toc a.toplink,
+  #toc a.toplink:hover {
+    color: white;
+    background-color: #444;
+    text-decoration: none;
+  }
+  #toc a.toplink {
+    margin: 2px 0.5em 0;
+  }
+}
+
+/* TOC layout for wide screens */
+@media screen and (min-width: 930px) {
+  body {
+    padding-right: 360px;
+    padding-right: calc(min(180px + 20%, 500px));
+  }
+  #toc {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    right: calc(50vw - 480px);
+    width: 312px;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 0.25em 1em 1em 0;
+  }
+  #toc nav {
+    display: block;
+    height: calc(90vh - 84px);
+    bottom: 0;
+    padding: 0.5em 0 2em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+  img { /* future proofing */
+    max-width: 100%;
+    height: auto;
+  }
+  #toc a.toplink {
+    margin: 8px 0.5em 0;
+  }
+}
+
+/* pagination */
+@media print {
+  body {
+    width: 100%;
+  }
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  #n-copyright-notice {
+    border-bottom: none;
+  }
+  #toc, #n-introduction {
+    page-break-before: always;
+  }
+  #toc {
+    border-top: none;
+    padding-top: 0;
+  }
+  figure, pre, .vcard {
+    page-break-inside: avoid;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  :is(h2, h3, h4, h5, h6)+*, dd {
+    page-break-before: avoid;
+  }
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 10pt;
+  }
+  table {
+    border: 1px solid #ddd;
+  }
+  td {
+    border-top: 1px solid #ddd;
+  }
+}
+
+@page :first {
+  padding-top: 0;
+  @top-left {
+    content: normal;
+    border: none;
+  }
+  @top-center {
+    content: normal;
+    border: none;
+  }
+  @top-right {
+    content: normal;
+    border: none;
+  }
+}
+
+@page {
+  size: A4;
+  margin-bottom: 45mm;
+  padding-top: 20px;
+}
+
+/* Dark mode. */
+@media (prefers-color-scheme: dark) {
+:root {
+  --background-color: #121212;
+  --text-color: #f0f0f0;
+  --title-color: #fff;
+  --link-color: #4da4f0;
+  --highlight-color: #282828;
+  --line-color: #444;
+  --pilcrow-weak: #444;
+  --pilcrow-strong: #666;
+  scrollbar-color: #777 #333;
+}
+}
+
+/* SVG Trick: a prefix match works because only black and white are allowed */
+svg :is([stroke="black"], [stroke^="#000"]) {
+  stroke: var(--text-color);
+}
+svg :is([stroke="white"], [stroke^="#fff"]) {
+  stroke: var(--background-color);
+}
+svg :is([fill="black"], [fill^="#000"], :not([fill])) {
+  fill: var(--text-color);
+}
+svg :is([fill="white"], [fill^="#fff"]) {
+  fill: var(--background-color);
+}
+</style>
+
+</head>
+<body class="xml2rfc">
+<table class="ears">
+<thead><tr>
+<td class="left">Internet-Draft</td>
+<td class="center">AI-Auth</td>
+<td class="right">February 2026</td>
+</tr></thead>
+<tfoot><tr>
+<td class="left">Kasselman, et al.</td>
+<td class="center">Expires 28 August 2026</td>
+<td class="right">[Page]</td>
+</tr></tfoot>
+</table>
+<div id="external-metadata" class="document-information"></div>
+<div id="internal-metadata" class="document-information">
+<dl id="identifiers">
+<dt class="label-workgroup">Workgroup:</dt>
+<dd class="workgroup">Network Working Group</dd>
+<dt class="label-internet-draft">Internet-Draft:</dt>
+<dd class="internet-draft">draft-klr-aiagent-auth-latest</dd>
+<dt class="label-published">Published:</dt>
+<dd class="published">
+<time datetime="2026-02-24" class="published">24 February 2026</time>
+    </dd>
+<dt class="label-intended-status">Intended Status:</dt>
+<dd class="intended-status">Informational</dd>
+<dt class="label-expires">Expires:</dt>
+<dd class="expires"><time datetime="2026-08-28">28 August 2026</time></dd>
+<dt class="label-authors">Authors:</dt>
+<dd class="authors">
+<div class="author">
+      <div class="author-name">P. Kasselman</div>
+<div class="org">Defakto Security</div>
+</div>
+<div class="author">
+      <div class="author-name">J. Lombardo</div>
+<div class="org">AWS</div>
+</div>
+<div class="author">
+      <div class="author-name">Y. Rosomakho</div>
+<div class="org">Zscaler</div>
+</div>
+</dd>
+</dl>
+</div>
+<h1 id="title">AI Agent Authentication and Authorization</h1>
+<section id="section-abstract">
+      <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
+<p id="section-abstract-1">This document proposes a framework for authentication and authorization of AI agent interactions. It leverages existing standards such as the Workload Identity Management and Secure Exchange (WIMSE) architecture and OAuth 2.0 family of specifications. Rather than defining new protocols, this document describes how existing and widely deployed standards can be applied or extended to establish agent authentication and authorization. By doing so, it aims to provide a framework within which to use existing standards, identify gaps and guide future standardization efforts for agent authentication and authorization.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+</section>
+<section class="note rfcEditorRemove" id="section-note.1">
+      <h2 id="name-about-this-document">
+<a href="#name-about-this-document" class="section-name selfRef">About This Document</a>
+      </h2>
+<p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
+<p id="section-note.1-2">
+        The latest revision of this draft can be found at <span><a href="https://PieterKas.github.io/agent2agent-auth-framework/draft-klr-aiagent-auth.html">https://PieterKas.github.io/agent2agent-auth-framework/draft-klr-aiagent-auth.html</a></span>.
+        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-klr-aiagent-auth/">https://datatracker.ietf.org/doc/draft-klr-aiagent-auth/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
+<p id="section-note.1-3">Source for this draft and an issue tracker can be found at
+        <span><a href="https://github.com/PieterKas/agent2agent-auth-framework">https://github.com/PieterKas/agent2agent-auth-framework</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
+</section>
+<div id="status-of-memo">
+<section id="section-boilerplate.1">
+        <h2 id="name-status-of-this-memo">
+<a href="#name-status-of-this-memo" class="section-name selfRef">Status of This Memo</a>
+        </h2>
+<p id="section-boilerplate.1-1">
+        This Internet-Draft is submitted in full conformance with the
+        provisions of BCP 78 and BCP 79.<a href="#section-boilerplate.1-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-2">
+        Internet-Drafts are working documents of the Internet Engineering Task
+        Force (IETF). Note that other groups may also distribute working
+        documents as Internet-Drafts. The list of current Internet-Drafts is
+        at <span><a href="https://datatracker.ietf.org/drafts/current/">https://datatracker.ietf.org/drafts/current/</a></span>.<a href="#section-boilerplate.1-2" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-3">
+        Internet-Drafts are draft documents valid for a maximum of six months
+        and may be updated, replaced, or obsoleted by other documents at any
+        time. It is inappropriate to use Internet-Drafts as reference
+        material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-4">
+        This Internet-Draft will expire on 28 August 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="copyright">
+<section id="section-boilerplate.2">
+        <h2 id="name-copyright-notice">
+<a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
+        </h2>
+<p id="section-boilerplate.2-1">
+            Copyright (c) 2026 IETF Trust and the persons identified as the
+            document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.2-2">
+            This document is subject to BCP 78 and the IETF Trust's Legal
+            Provisions Relating to IETF Documents
+            (<span><a href="https://trustee.ietf.org/license-info">https://trustee.ietf.org/license-info</a></span>) in effect on the date of
+            publication of this document. Please review these documents
+            carefully, as they describe your rights and restrictions with
+            respect to this document. Code Components extracted from this
+            document must include Revised BSD License text as described in
+            Section 4.e of the Trust Legal Provisions and are provided without
+            warranty as described in the Revised BSD License.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="toc">
+<section id="section-toc.1">
+        <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
+<a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
+        </h2>
+<nav class="toc"><ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
+            <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
+            <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
+            <p id="section-toc.1-1.3.1" class="keepWithNext"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-agents-are-workloads" class="internal xref">Agents are workloads</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-agent-identity-management-s" class="internal xref">Agent Identity Management System</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-agent-identifier" class="internal xref">Agent Identifier</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-agent-credentials" class="internal xref">Agent Credentials</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-agent-attestation" class="internal xref">Agent Attestation</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-agent-credential-provisioni" class="internal xref">Agent Credential Provisioning</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-agent-authentication" class="internal xref">Agent Authentication</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.1">
+                <p id="section-toc.1-1.9.2.1.1"><a href="#section-9.1" class="auto internal xref">9.1</a>.  <a href="#name-transport-layer-authenticat" class="internal xref">Transport layer authentication</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.1.2.1">
+                    <p id="section-toc.1-1.9.2.1.2.1.1"><a href="#section-9.1.1" class="auto internal xref">9.1.1</a>.  <a href="#name-limitations" class="internal xref">Limitations</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2">
+                <p id="section-toc.1-1.9.2.2.1"><a href="#section-9.2" class="auto internal xref">9.2</a>.  <a href="#name-application-layer-authentic" class="internal xref">Application layer authentication</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2.2.1">
+                    <p id="section-toc.1-1.9.2.2.2.1.1"><a href="#section-9.2.1" class="auto internal xref">9.2.1</a>.  <a href="#name-wimse-proof-tokens-wpts" class="internal xref">WIMSE Proof Tokens (WPTs)</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2.2.2">
+                    <p id="section-toc.1-1.9.2.2.2.2.1"><a href="#section-9.2.2" class="auto internal xref">9.2.2</a>.  <a href="#name-http-message-signatures" class="internal xref">HTTP Message Signatures</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2.2.3">
+                    <p id="section-toc.1-1.9.2.2.2.3.1"><a href="#section-9.2.3" class="auto internal xref">9.2.3</a>.  <a href="#name-limitations-2" class="internal xref">Limitations</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#section-10" class="auto internal xref">10</a>. <a href="#name-agent-authorization" class="internal xref">Agent Authorization</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.1">
+                <p id="section-toc.1-1.10.2.1.1"><a href="#section-10.1" class="auto internal xref">10.1</a>.  <a href="#name-leverage-oauth-20-as-a-dele" class="internal xref">Leverage OAuth 2.0 as a Delegation Authorization Framework</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.2">
+                <p id="section-toc.1-1.10.2.2.1"><a href="#section-10.2" class="auto internal xref">10.2</a>.  <a href="#name-use-of-oauth-20-access-toke" class="internal xref">Use of OAuth 2.0 Access Tokens</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.3">
+                <p id="section-toc.1-1.10.2.3.1"><a href="#section-10.3" class="auto internal xref">10.3</a>.  <a href="#name-obtaining-an-oauth-20-acces" class="internal xref">Obtaining an OAuth 2.0 Access Token</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.3.2.1">
+                    <p id="section-toc.1-1.10.2.3.2.1.1"><a href="#section-10.3.1" class="auto internal xref">10.3.1</a>.  <a href="#name-user-delegates-authorizatio" class="internal xref">User Delegates Authorization</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.3.2.2">
+                    <p id="section-toc.1-1.10.2.3.2.2.1"><a href="#section-10.3.2" class="auto internal xref">10.3.2</a>.  <a href="#name-agent-obtains-own-authoriza" class="internal xref">Agent Obtains Own Authorization</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.3.2.3">
+                    <p id="section-toc.1-1.10.2.3.2.3.1"><a href="#section-10.3.3" class="auto internal xref">10.3.3</a>.  <a href="#name-system-access-to-agents" class="internal xref">System Access to Agents</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.3.2.4">
+                    <p id="section-toc.1-1.10.2.3.2.4.1"><a href="#section-10.3.4" class="auto internal xref">10.3.4</a>.  <a href="#name-oauth-20-security-best-prac" class="internal xref">OAuth 2.0 Security Best Practices</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.4">
+                <p id="section-toc.1-1.10.2.4.1"><a href="#section-10.4" class="auto internal xref">10.4</a>.  <a href="#name-risk-reduction-with-transac" class="internal xref">Risk reduction with Transaction Tokens</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.5">
+                <p id="section-toc.1-1.10.2.5.1"><a href="#section-10.5" class="auto internal xref">10.5</a>.  <a href="#name-cross-domain-access" class="internal xref">Cross Domain Access</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.6">
+                <p id="section-toc.1-1.10.2.6.1"><a href="#section-10.6" class="auto internal xref">10.6</a>.  <a href="#name-human-in-the-loop" class="internal xref">Human in the Loop</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.7">
+                <p id="section-toc.1-1.10.2.7.1"><a href="#section-10.7" class="auto internal xref">10.7</a>.  <a href="#name-tool-to-service-acccess" class="internal xref">Tool-to-Service Acccess</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.8">
+                <p id="section-toc.1-1.10.2.8.1"><a href="#section-10.8" class="auto internal xref">10.8</a>.  <a href="#name-privacy-considerations" class="internal xref">Privacy Considerations</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.9">
+                <p id="section-toc.1-1.10.2.9.1"><a href="#section-10.9" class="auto internal xref">10.9</a>.  <a href="#name-oauth-20-discovery-in-dynam" class="internal xref">OAuth 2.0 Discovery in Dynamic Environments</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.9.2.1">
+                    <p id="section-toc.1-1.10.2.9.2.1.1"><a href="#section-10.9.1" class="auto internal xref">10.9.1</a>.  <a href="#name-authorization-server-capabi" class="internal xref">Authorization Server Capability Discovery</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.9.2.2">
+                    <p id="section-toc.1-1.10.2.9.2.2.1"><a href="#section-10.9.2" class="auto internal xref">10.9.2</a>.  <a href="#name-protected-resource-capabili" class="internal xref">Protected Resource Capability Discovery</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.9.2.3">
+                    <p id="section-toc.1-1.10.2.9.2.3.1"><a href="#section-10.9.3" class="auto internal xref">10.9.3</a>.  <a href="#name-client-capability-discovery" class="internal xref">Client Capability Discovery</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
+            <p id="section-toc.1-1.11.1"><a href="#section-11" class="auto internal xref">11</a>. <a href="#name-agent-monitoring-and-remedi" class="internal xref">Agent Monitoring and Remediation</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
+            <p id="section-toc.1-1.12.1"><a href="#section-12" class="auto internal xref">12</a>. <a href="#name-agent-authentication-and-au" class="internal xref">Agent Authentication and Authorization Policy</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13">
+            <p id="section-toc.1-1.13.1"><a href="#section-13" class="auto internal xref">13</a>. <a href="#name-agent-compliance" class="internal xref">Agent Compliance</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14">
+            <p id="section-toc.1-1.14.1"><a href="#section-14" class="auto internal xref">14</a>. <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.15">
+            <p id="section-toc.1-1.15.1"><a href="#section-15" class="auto internal xref">15</a>. <a href="#name-privacy-considerations-2" class="internal xref">Privacy Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.16">
+            <p id="section-toc.1-1.16.1"><a href="#section-16" class="auto internal xref">16</a>. <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.17">
+            <p id="section-toc.1-1.17.1"><a href="#section-17" class="auto internal xref">17</a>. <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.18">
+            <p id="section-toc.1-1.18.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.19">
+            <p id="section-toc.1-1.19.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
+</li>
+        </ul>
+</nav>
+</section>
+</div>
+<div id="introduction">
+<section id="section-1">
+      <h2 id="name-introduction">
+<a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
+      </h2>
+<p id="section-1-1">TODO Introduction<a href="#section-1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="conventions-and-definitions">
+<section id="section-2">
+      <h2 id="name-conventions-and-definitions">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-conventions-and-definitions" class="section-name selfRef">Conventions and Definitions</a>
+      </h2>
+<p id="section-2-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
+"<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
+described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
+appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="agents-are-workloads">
+<section id="section-3">
+      <h2 id="name-agents-are-workloads">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-agents-are-workloads" class="section-name selfRef">Agents are workloads</a>
+      </h2>
+<p id="section-3-1">An Agent is a workload that iteratively interacts with a Large Language Model (LLM) and a set of Tools, Services and Resources. An agent performs its operations until a terminating condition, determined either by the LLM or by the agent's internal logic, is reached. It may receive input from a user, or act autonomously. <a href="#fig-ai-agent-workload" class="auto internal xref">Figure 1</a> shows a conceptual model of the AI Agent as a workload and illustrates the high-level interaction model between the User or System, the AI Agent, the Large Language Model (LLM), Tools, Services, and Resources.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-2">In this document, Tools, Services, and Resources are treated as a single category of external endpoints that an agent invokes or interacts with to complete a task. Communication within or between Tools, Services, and Resources is out of scope.<a href="#section-3-2" class="pilcrow">¶</a></p>
+<span id="name-ai-agent-as-a-workload"></span><div id="fig-ai-agent-workload">
+<figure id="figure-1">
+        <div id="section-3-3.1">
+          <div class="alignLeft art-svg artwork" id="section-3-3.1.1">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="224" width="416" viewBox="0 0 416 224" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
+              <path d="M 8,144 L 8,208" fill="none" stroke="black"></path>
+              <path d="M 80,144 L 80,208" fill="none" stroke="black"></path>
+              <path d="M 136,32 L 136,80" fill="none" stroke="black"></path>
+              <path d="M 144,144 L 144,208" fill="none" stroke="black"></path>
+              <path d="M 248,144 L 248,208" fill="none" stroke="black"></path>
+              <path d="M 272,32 L 272,80" fill="none" stroke="black"></path>
+              <path d="M 312,144 L 312,208" fill="none" stroke="black"></path>
+              <path d="M 408,144 L 408,208" fill="none" stroke="black"></path>
+              <path d="M 136,32 L 272,32" fill="none" stroke="black"></path>
+              <path d="M 136,80 L 272,80" fill="none" stroke="black"></path>
+              <path d="M 8,144 L 80,144" fill="none" stroke="black"></path>
+              <path d="M 144,144 L 248,144" fill="none" stroke="black"></path>
+              <path d="M 312,144 L 408,144" fill="none" stroke="black"></path>
+              <path d="M 8,208 L 80,208" fill="none" stroke="black"></path>
+              <path d="M 144,208 L 248,208" fill="none" stroke="black"></path>
+              <path d="M 312,208 L 408,208" fill="none" stroke="black"></path>
+              <g class="text">
+                <text x="168" y="52">Large</text>
+                <text x="228" y="52">Language</text>
+                <text x="184" y="68">Model</text>
+                <text x="232" y="68">(LLM)</text>
+                <text x="184" y="100">▲</text>
+                <text x="216" y="100">|</text>
+                <text x="184" y="116">(2)</text>
+                <text x="216" y="116">(3)</text>
+                <text x="184" y="132">|</text>
+                <text x="216" y="132">▼</text>
+                <text x="44" y="164">User</text>
+                <text x="112" y="164">──(1)─►</text>
+                <text x="172" y="164">AI</text>
+                <text x="208" y="164">Agent</text>
+                <text x="280" y="164">──(4)─►</text>
+                <text x="360" y="164">Tools</text>
+                <text x="44" y="180">or</text>
+                <text x="196" y="180">(workload)</text>
+                <text x="356" y="180">Services</text>
+                <text x="44" y="196">System</text>
+                <text x="112" y="196">◄─(6)──</text>
+                <text x="280" y="196">◄─(5)──</text>
+                <text x="360" y="196">Resources</text>
+              </g>
+            </svg><a href="#section-3-3.1.1" class="pilcrow">¶</a>
+</div>
+</div>
+<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
+<a href="#name-ai-agent-as-a-workload" class="selfRef">AI Agent as a Workload</a>
+        </figcaption></figure>
+</div>
+<ol start="1" type="1" class="normal type-1" id="section-3-4">
+<li id="section-3-4.1">
+          <p id="section-3-4.1.1">Optional: The User or System (e.g. a batch job or another Agent) provides an initial request or instruction to the AI Agent.<a href="#section-3-4.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-3-4.2">
+          <p id="section-3-4.2.1">The AI Agent provides the available context to the LLM. Context is implementation- and deployment-specific and may include User or System input, system prompts, Tool descriptions, prior Tool, Service and Resource outputs, and other relevant state.<a href="#section-3-4.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-3-4.3">
+          <p id="section-3-4.3.1">The LLM returns output to the AI Agent facilitating selection of Tools, Services or Resources to invoke.<a href="#section-3-4.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-3-4.4">
+          <p id="section-3-4.4.1">The AI Agent invokes one or more external endpoints of selected Tools, Services or Resources. A Tool endpoint may itself be implemented by another AI agent.<a href="#section-3-4.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-3-4.5">
+          <p id="section-3-4.5.1">The external endpoint of the Tools, Services or Resources returns a result of the operation to the AI Agent, which may sends the information as additional context to the Large Language Model, repeating steps 2-5 until the exit condition is reached and the task is completed.<a href="#section-3-4.5.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-3-4.6">
+          <p id="section-3-4.6.1">Optional: Once the exit condition is reached in step 5, the AI Agent may return a response to the User or System. The AI Agent may also return intermediate results or request additional input.<a href="#section-3-4.6.1" class="pilcrow">¶</a></p>
+</li>
+      </ol>
+<p id="section-3-5">As shown in <a href="#fig-ai-agent-workload" class="auto internal xref">Figure 1</a>, the AI Agent is a workload that needs an identifier and credentials with which it can be authenticated by the User or System, Large Language Model and Tools/Services/Resources. Once authenticated, these parties must determine if the AI Agent is authorized to access the requested Large Language Model, Tools, Services or Resources. If the AI Agent is acting on behalf of a User or System, the User or System needs to delegate authority to the AI Agent, and the User or System context <span class="bcp14">MUST</span> be preserved to as input to authorization decisions and recorded in audit trails.<a href="#section-3-5" class="pilcrow">¶</a></p>
+<p id="section-3-6">This document describes how AI Agents should leverage existing standards defined by SPIFFE <span>[<a href="#SPIFFE" class="cite xref">SPIFFE</a>]</span>, WIMSE, OAuth and OpenID SSF <span>[<a href="#SSF" class="cite xref">SSF</a>]</span>.<a href="#section-3-6" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="agent-identity-management-system">
+<section id="section-4">
+      <h2 id="name-agent-identity-management-s">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-agent-identity-management-s" class="section-name selfRef">Agent Identity Management System</a>
+      </h2>
+<p id="section-4-1">This document defines the term Agent Identity Management System (AIMS) as a conceptual model describing the set of functions required to establish, maintain, and evaluate the identity and permissions of an agent workload. AIMS does not refer to a single product, protocol, or deployment architecture. AIMS may be implemented by one component or distributed across multiple systems (such as identity providers, attestation services, authorization servers, policy engines, and runtime enforcement points).<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-2">An Agent Identity Management System ensures that the right Agent has access to the right resources and tools at the right time for the right reason. An Agent identity management system depends on the following components to achieve its goals:<a href="#section-4-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-4-3.1">
+          <p id="section-4-3.1.1"><strong>Agent Identifiers:</strong> Unique identifier assigned to every Agent.<a href="#section-4-3.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-4-3.2">
+          <p id="section-4-3.2.1"><strong>Agent Credentials:</strong> Cryptographic binding between the Agent Identifier and attributes of the Agent.<a href="#section-4-3.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-4-3.3">
+          <p id="section-4-3.3.1"><strong>Agent Attestation:</strong> Mechanisms for determining and assigning the identifier and issue credentials based on measurements of the Agent's environment.<a href="#section-4-3.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-4-3.4">
+          <p id="section-4-3.4.1"><strong>Agent Credential Provisioning:</strong> The mechanism for provisioning credentials to the agent at runtime.<a href="#section-4-3.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-4-3.5">
+          <p id="section-4-3.5.1"><strong>Agent Authentication:</strong> Protocols and mechanisms used by the Agent to authenticate itself to Large Langugage Models or Tools (resource or server) in the system.<a href="#section-4-3.5.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-4-3.6">
+          <p id="section-4-3.6.1"><strong>Agent Authorization:</strong> Protocols and systems used to determine if an Agent is allowed to access a Large Langugage Model or Tool (resource or server).<a href="#section-4-3.6.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-4-3.7">
+          <p id="section-4-3.7.1"><strong>Agent Monitoring and Remediation:</strong> Protocols and mechanisms to dynamically modify the authorization decisions based on observed behaviour and system state.<a href="#section-4-3.7.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-4-3.8">
+          <p id="section-4-3.8.1"><strong>Agent Auhtentication and Authorization Policy:</strong> The configuration and rules for each of the Agent Identity Management System.<a href="#section-4-3.8.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-4-3.9">
+          <p id="section-4-3.9.1"><strong>Agent Compliance:</strong> Measurement of the state and fucntioning of the system against the stated policies.<a href="#section-4-3.9.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="section-4-4">The components form a logical stack in which higher layers depend on guarantees provided by lower layers, as illustrated in <a href="#fig-agent-identity-management-system" class="auto internal xref">Figure 2</a>.<a href="#section-4-4" class="pilcrow">¶</a></p>
+<span id="name-agent-identity-management-sy"></span><div id="fig-agent-identity-management-system">
+<figure id="figure-2">
+        <div id="section-4-5.1">
+          <div class="alignLeft art-svg artwork" id="section-4-5.1.1">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="272" width="536" viewBox="0 0 536 272" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
+              <path d="M 8,32 L 8,256" fill="none" stroke="black"></path>
+              <path d="M 128,32 L 128,256" fill="none" stroke="black"></path>
+              <path d="M 408,32 L 408,256" fill="none" stroke="black"></path>
+              <path d="M 528,32 L 528,256" fill="none" stroke="black"></path>
+              <path d="M 8,32 L 528,32" fill="none" stroke="black"></path>
+              <path d="M 128,64 L 408,64" fill="none" stroke="black"></path>
+              <path d="M 128,96 L 408,96" fill="none" stroke="black"></path>
+              <path d="M 128,128 L 408,128" fill="none" stroke="black"></path>
+              <path d="M 128,160 L 408,160" fill="none" stroke="black"></path>
+              <path d="M 128,192 L 408,192" fill="none" stroke="black"></path>
+              <path d="M 128,224 L 408,224" fill="none" stroke="black"></path>
+              <path d="M 8,256 L 528,256" fill="none" stroke="black"></path>
+              <g class="text">
+                <text x="68" y="52">Policy</text>
+                <text x="196" y="52">Monitoring</text>
+                <text x="248" y="52">&amp;</text>
+                <text x="304" y="52">Remediation</text>
+                <text x="468" y="52">Complaince</text>
+                <text x="264" y="84">Authorization</text>
+                <text x="268" y="116">Authentication</text>
+                <text x="260" y="148">Provisioning</text>
+                <text x="264" y="180">Attestation</text>
+                <text x="264" y="212">Credentials</text>
+                <text x="260" y="244">Identifier</text>
+              </g>
+            </svg><a href="#section-4-5.1.1" class="pilcrow">¶</a>
+</div>
+</div>
+<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
+<a href="#name-agent-identity-management-sy" class="selfRef">Agent Identity Management System</a>
+        </figcaption></figure>
+</div>
+</section>
+</div>
+<div id="agent_identifiers">
+<section id="section-5">
+      <h2 id="name-agent-identifier">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-agent-identifier" class="section-name selfRef">Agent Identifier</a>
+      </h2>
+<p id="section-5-1">Agents <span class="bcp14">MUST</span> be uniquely identified in order to support authentication, authorization, auditing, and delegation.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-2">The Workload Identity in Multi-System Environments (WIMSE) identifier as defined by <span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span> is the canonical identifier for agents in this framework.<a href="#section-5-2" class="pilcrow">¶</a></p>
+<p id="section-5-3">A WIMSE identifier is a URI that uniquely identifies a workload within a trust domain. Authorization decisions, delegation semantics, and audit records rely on this identifier remaining stable for the lifetime of the workload identity.<a href="#section-5-3" class="pilcrow">¶</a></p>
+<p id="section-5-4">The Secure Production Identity Framework for Everyone (<span>[<a href="#SPIFFE" class="cite xref">SPIFFE</a>]</span>) identifier is a widely deployed and operationally mature implementation of the WIMSE identifier model. A SPIFFE identifier (<span>[<a href="#SPIFFE-ID" class="cite xref">SPIFFE-ID</a>]</span>) is a URI in the form of <code>spiffe://&lt;trust-domain&gt;/&lt;path&gt;</code> that uniquely identifies a workload within a trust domain.<a href="#section-5-4" class="pilcrow">¶</a></p>
+<p id="section-5-5">An agent participating in this framework <span class="bcp14">MUST</span> be assigned exactly one WIMSE identifier, which <span class="bcp14">MAY</span> be a SPIFFE ID.<a href="#section-5-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="agent_credentials">
+<section id="section-6">
+      <h2 id="name-agent-credentials">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-agent-credentials" class="section-name selfRef">Agent Credentials</a>
+      </h2>
+<p id="section-6-1">Agents <span class="bcp14">MUST</span> possess credentials that provide a cryptographic binding to the agent identifier. These credentials are considered primary credentials that are provisioned at runtime. An identifier alone is insufficient unless it can be verified to be controlled by the communicating agent through a cryptographic binding.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-2">WIMSE credentials (<span>[<a href="#WIMSE-CRED" class="cite xref">WIMSE-CRED</a>]</span>) are defined as a profile of X.509 certificates and Workload Identity Tokens (WITs), while SPIFFE defines SPIFFE Verified ID (SVID) profiles of JSON Web Token (JWT-SVID), X.509 certificates (X.509-SVID) and WIMSE Workload Identity Tokens (WIT-SVID). SPIFFE SVID credentials are compatible with WIMSE defined credentials. The choice of an appropriate format depends on the trust model and integration requirements.<a href="#section-6-2" class="pilcrow">¶</a></p>
+<p id="section-6-3">Agent credentials <span class="bcp14">SHOULD</span> be short-lived to minimize the risk of credential theft, <span class="bcp14">MUST</span> include an explicit expiration time after which it is no longer accepted, and <span class="bcp14">MAY</span> carry additional attributes relevant to the agent (for example trust domain, attestation evidence, or workload metadata).<a href="#section-6-3" class="pilcrow">¶</a></p>
+<p id="section-6-4">Deployments can improve the assurance of agent identity by protecting private keys using hardware-backed or isolated cryptographic storage such as TPMs, secure enclaves, or platform security modules when such capabilities are available. These mechanisms reduce key exfiltration risk but are not required for interoperability.<a href="#section-6-4" class="pilcrow">¶</a></p>
+<p id="section-6-5">In some cases, agents <span class="bcp14">MAY</span> need a secondary credentials to access a proprietary or legacy system that is not compatible with the X.509, JWT or WIT it is provisioned with. In these cases an agent <span class="bcp14">MAY</span> exchange their primary credentials through a credential exchange mechanisms (e.g., OAuth 2.0 Token Exchange <span>[<a href="#OAUTH-TOKEN-EXCHANGE" class="cite xref">OAUTH-TOKEN-EXCHANGE</a>]</span>, Transaction Tokens <span>[<a href="#OAUTH-TRANS-TOKENS" class="cite xref">OAUTH-TRANS-TOKENS</a>]</span> or Workload Identity Federation). This allows an agent to obtain a credential targeted to a specific relying party by leveraging the primary credential in its possession.<a href="#section-6-5" class="pilcrow">¶</a></p>
+<p id="section-6-6"><strong>Note</strong>: Static API keys are an anti-pattern for agent identity. They are bearer artefacts that are not cryptographically bound, do not convey identity, are typically long-lived and are operationally difficult to rotate, making them unsuitable for secure agent authentication or authorization.<a href="#section-6-6" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="agent_attestation">
+<section id="section-7">
+      <h2 id="name-agent-attestation">
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-agent-attestation" class="section-name selfRef">Agent Attestation</a>
+      </h2>
+<p id="section-7-1">Agent attestation is the identity-proofing mechanism for AI agents. Just as humans rely on identity proofing during account creation or credential issuance, agents require a means to demonstrate what they are, how they were instantiated, and under what conditions they are operating. Attestation evidence feeds into the credential issuance process and determines whether a credential is issued, the type of credential issued and the contents of the credential.<a href="#section-7-1" class="pilcrow">¶</a></p>
+<p id="section-7-2">Multiple attestation mechanisms exist, and the appropriate choice is deployment and risk specific. These mechanisms may include hardware-based attestations (e.g., TEE evidence), software integrity measurements, supply-chain provenance, platform and orchestration-layer attestations, or operator assertions to name a few. Depending on the risk involved, a single attestation may be sufficient, or, in higher risk scenarios, multi-attestation may be requred.<a href="#section-7-2" class="pilcrow">¶</a></p>
+<p id="section-7-3">There are numerous systems that perform some kind of attestation, any of which can be used in establishing agent identity. One example of such a system is the Remote ATtestation Procedures (RATS) architecture (<span>[<a href="#RATS-ARCH" class="cite xref">RATS-ARCH</a>]</span>), which provides a general model for producing, conveying, and verifying attestation evidence and defines the roles of Attester, Verifier, and Relying Party, as well as the concept of Evidence, Endorsements, and Attestation Results.<a href="#section-7-3" class="pilcrow">¶</a></p>
+<p id="section-7-4">An agent identity management system may incorporate different attestation mechanisms and implementations (including RATS) to collect attestation evidence and provide it to credential provisioning components. The selection of mechanisms depends on the deployment constraints and the desired level of trust assurance.<a href="#section-7-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="agent_credential_provisioning">
+<section id="section-8">
+      <h2 id="name-agent-credential-provisioni">
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-agent-credential-provisioni" class="section-name selfRef">Agent Credential Provisioning</a>
+      </h2>
+<p id="section-8-1">Agent credential provisioning refers to the runtime issuance, renewal, and rotation of the credentials an agent uses to authenticate and authorize itself to other agents. Agents may be provisioned with one or more credential types as described in <a href="#agent_credentials" class="auto internal xref">Section 6</a>. Unlike static secrets, agent credentials are provisioned dynamically and are intentionally short-lived, eliminating the operational burden of manual expiration management and reducing the impact of credential compromise. Agent credential provisioning must operate autonomously, scale to high-churn environments, and integrate closely with the attestation mechanisms that establish trust in the agent at each issuance or rotation event.<a href="#section-8-1" class="pilcrow">¶</a></p>
+<p id="section-8-2">Agent credential provisioning typically includes two phases:<a href="#section-8-2" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-8-3">
+<li id="section-8-3.1">
+          <p id="section-8-3.1.1"><strong>Initial Provisioning</strong>: The process by which an agent first acquires a credential bound to its identity. This often occurs immediately after deployment or instantiation and is based on verified properties of the agent (e.g., deployment context, attestation evidence, or orchestration metadata).<a href="#section-8-3.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-8-3.2">
+          <p id="section-8-3.2.1"><strong>Rotation/Renewal</strong>: The automatic refresh of short-lived credentials before expiration. Continuous rotation ensures that credentials remain valid only for the minimum necessary time and that authorization state reflects current operational conditions.<a href="#section-8-3.2.1" class="pilcrow">¶</a></p>
+</li>
+      </ol>
+<p id="section-8-4">The use of short-lived credentials provides a signiifcant improvement in the risk profile and risk of credential exposure. It provides an alternative to explicit revocation mechanisms and simplifies lifecycle management in large, automated environments while removing the risks of downtime as a result of credential expiry.<a href="#section-8-4" class="pilcrow">¶</a></p>
+<p id="section-8-5">Deployed frameworks such as <span>[<a href="#SPIFFE" class="cite xref">SPIFFE</a>]</span> provide proven mechanisms for automated, short-lived credential provisioning at runtime. In addition to issuing short-lived credentials, <span>[<a href="#SPIFFE" class="cite xref">SPIFFE</a>]</span> also provisions ephemeral cryptographic key material bound to each credential, further reducing the risks associated with compromising long-lived keys.<a href="#section-8-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="agent_authentication">
+<section id="section-9">
+      <h2 id="name-agent-authentication">
+<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-agent-authentication" class="section-name selfRef">Agent Authentication</a>
+      </h2>
+<p id="section-9-1">Agents may authenticate using a variety of mechanisms, depending on the credentials they possess, the protocols supported in the deployment environment, and the risk profile of the application. As described in the WIMSE Architecture <span>[<a href="#WIMSE-ARCH" class="cite xref">WIMSE-ARCH</a>]</span>, authentication can occur at either the transport layer or the application layer, and many deployments rely on a combination of both.<a href="#section-9-1" class="pilcrow">¶</a></p>
+<div id="transport-layer-authentication">
+<section id="section-9.1">
+        <h3 id="name-transport-layer-authenticat">
+<a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-transport-layer-authenticat" class="section-name selfRef">Transport layer authentication</a>
+        </h3>
+<p id="section-9.1-1">Transport-layer authentication establishes trust during the establishment of a secure transport channel. The most common mechanism used by agents is mutually-authenticated TLS (mTLS), in which both endpoints present X.509-based credentials and perform a bidirectional certificate exchange as part of the TLS negotiation. When paired with short-lived workload identities, such as those issued by SPIFFE or WIMSE, mTLS provides strong channel binding and cryptographic proof of control over the agent’s private key.<a href="#section-9.1-1" class="pilcrow">¶</a></p>
+<p id="section-9.1-2">mTLS is particularly well-suited for environments where transport-level protection, peer authentication, and ephemeral workload identity are jointly required. It also simplifies authorization decisions by enabling agents to associate application-layer requests with an authenticated transport identity. One example of this is the use of mTLS in service mesh architecctures such as Istio or LinkerD.<a href="#section-9.1-2" class="pilcrow">¶</a></p>
+<div id="limitations">
+<section id="section-9.1.1">
+          <h4 id="name-limitations">
+<a href="#section-9.1.1" class="section-number selfRef">9.1.1. </a><a href="#name-limitations" class="section-name selfRef">Limitations</a>
+          </h4>
+<p id="section-9.1.1-1">There are scenarios where transport-layer authentication is not desirable or cannot be relied upon. In architectures involving intermediaries, such as proxies, API gateways, service meshes, load balancers, or protocol translators, TLS sessions are often terminated and re-established, breaking the end-to-end continuity of transport-layer identity. Similarly, some deployment models (such as serverless platforms, multi-tenant edge environments, or cross-domain topologies) may obscure or abstract identity presented at the transport layer, making it difficult for relying parties to bind application-layer actions to a credential presented at the transport-layer. In these cases, application-layer authentication provides a more robust and portable mechanism for expressing agent identity and conveying attestation or policy-relevant attributes.<a href="#section-9.1.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="application-layer-authentication">
+<section id="section-9.2">
+        <h3 id="name-application-layer-authentic">
+<a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-application-layer-authentic" class="section-name selfRef">Application layer authentication</a>
+        </h3>
+<p id="section-9.2-1">Application-layer authentication allows agents to authenticate independently of the underlying transport. This enables end-to-end identity preservation even when requests traverse proxies, load balancers, or protocol translation layers.<a href="#section-9.2-1" class="pilcrow">¶</a></p>
+<p id="section-9.2-2">The WIMSE working group defines WIMSE Proof Tokens and HTTP Message Signatures as authentication mechanisms that may be used by agents.<a href="#section-9.2-2" class="pilcrow">¶</a></p>
+<div id="wpt">
+<section id="section-9.2.1">
+          <h4 id="name-wimse-proof-tokens-wpts">
+<a href="#section-9.2.1" class="section-number selfRef">9.2.1. </a><a href="#name-wimse-proof-tokens-wpts" class="section-name selfRef">WIMSE Proof Tokens (WPTs)</a>
+          </h4>
+<p id="section-9.2.1-1">WIMSE Workload Proof Tokens (WPTs, <span>[<a href="#WIMSE-WPT" class="cite xref">WIMSE-WPT</a>]</span>) are a protocol-independent, application-layer mechanism for proving possession of the private key associated with a Workload Identity Token (WIT). WPTs are generated by the agent, using the private key matching the public key in the WIT. A WPT is defined as a signed JSON Web Token (JWT) that binds an agent’s authentication to a specific message context, for example, an HTTP request, thereby providing proof of possession rather than relying on bearer semantics.<a href="#section-9.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-9.2.1-2">WPTs are designed to work alongside WITs <span>[<a href="#WIMSE-CRED" class="cite xref">WIMSE-CRED</a>]</span> and are typically short-lived to reduce the window for replay attacks.  They carry claims such as audience (aud), expiration (exp), a unique token identifier (jti), and a hash of the associated WIT (wth). A WPT may also include hashes of other related tokens (e.g., OAuth access tokens) to bind the authentication contexts to specific transaction or authorizations details.<a href="#section-9.2.1-2" class="pilcrow">¶</a></p>
+<p id="section-9.2.1-3">Although the draft currently defines a protocol binding for HTTP (via a Workload-Proof-Token header), the core format is protocol-agnostic, making it applicable to other protocols. Its JWT structure and claims model allow WPTs to be bound to different protocols and transports, including asynchronous or non-HTTP messaging systems such as Kafka and gRPC, or other future protocol bindings. This design enables relying parties to verify identity, key possession, and message binding at the application layer even in environments where transport-layer identity (e.g., mutual TLS) is insufficient or unavailable.<a href="#section-9.2.1-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="http-message-signatures">
+<section id="section-9.2.2">
+          <h4 id="name-http-message-signatures">
+<a href="#section-9.2.2" class="section-number selfRef">9.2.2. </a><a href="#name-http-message-signatures" class="section-name selfRef">HTTP Message Signatures</a>
+          </h4>
+<p id="section-9.2.2-1">The WIMSE Workload-to-Workload Authentication with HTTP Signatures specification <span>[<a href="#WIMSE-HTTPSIG" class="cite xref">WIMSE-HTTPSIG</a>]</span> defines an application-layer authentication profile built on the HTTP Message Signatures standard <span>[<a href="#HTTP-SIG" class="cite xref">HTTP-SIG</a>]</span>. It is one of the mechanisms WIMSE defines for authenticating workloads in HTTP-based interactions where transport-layer protections may be insufficient or unavailable. The protocol combines a workload's Workload Identity Token (WIT) (which binds the agent's identity to a public key) with HTTP Message Signatures (using the corresponding private key), thereby providing proof of possession and message integrity for individual HTTP requests and responses. This approach ensures end-to-end authentication and integrity even when traffic traverses intermediaries such as TLS proxies or load balancers that break transport-layer identity continuity. The profile mandates signing of critical request components (e.g., method, target, content digest, and the WIT itself) and supports optional response signing to ensure full protection of workload-to-workload exchanges.<a href="#section-9.2.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="limitations-1">
+<section id="section-9.2.3">
+          <h4 id="name-limitations-2">
+<a href="#section-9.2.3" class="section-number selfRef">9.2.3. </a><a href="#name-limitations-2" class="section-name selfRef">Limitations</a>
+          </h4>
+<p id="section-9.2.3-1">Unlike transport-layer authentication, application-layer authentication does not inherently provide channel binding to the underlying secure transport. As a result, implementations <span class="bcp14">MUST</span> consider the risk of message relay or replay if tokens or signed messages are accepted outside their intended context. Deployments typically mitigate these risks through short token lifetimes, audience restrictions, nonce or unique identifier checks, and binding authentication to specific requests or transaction parameters.<a href="#section-9.2.3-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="agent_authorization">
+<section id="section-10">
+      <h2 id="name-agent-authorization">
+<a href="#section-10" class="section-number selfRef">10. </a><a href="#name-agent-authorization" class="section-name selfRef">Agent Authorization</a>
+      </h2>
+<p id="section-10-1">Agents act on behalf of a user, a system, or on their own behalf as shown in <a href="#fig-ai-agent-workload" class="auto internal xref">Figure 1</a> and needs to obtain authorization when interacting with protected resources.<a href="#section-10-1" class="pilcrow">¶</a></p>
+<div id="leverage-oauth-20-as-a-delegation-authorization-framework">
+<section id="section-10.1">
+        <h3 id="name-leverage-oauth-20-as-a-dele">
+<a href="#section-10.1" class="section-number selfRef">10.1. </a><a href="#name-leverage-oauth-20-as-a-dele" class="section-name selfRef">Leverage OAuth 2.0 as a Delegation Authorization Framework</a>
+        </h3>
+<p id="section-10.1-1">The OAuth 2.0 Authorization Framework <span>[<a href="#OAUTH-FRAMEWORK" class="cite xref">OAUTH-FRAMEWORK</a>]</span> is widely deployed and defines an authorization delegation framework that enables an Agent to obtain limited access to a protected resource (e.g. a service or API) under well-defined policy constraints. An Agent <span class="bcp14">MUST</span> use OAuth 2.0-based mechanisms to obtain authorization from a user, a system, or on its own behalf. OAuth 2.0 defines a wide range of authorization grant flows that supports these scenarios. In these Oauth 2.0 flows, an Agent acts as an OAuth 2.0 Client to an OAuth 2.0 Authorization Server, which receives the request, evaluate the authorization policy and returns an access token, which the Agent presents to the Resource Server (i.e. the protected resources such as the LLM or Tools in Figure 1) it needs to access to complete the request.<a href="#section-10.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="use-of-oauth-20-access-tokens">
+<section id="section-10.2">
+        <h3 id="name-use-of-oauth-20-access-toke">
+<a href="#section-10.2" class="section-number selfRef">10.2. </a><a href="#name-use-of-oauth-20-access-toke" class="section-name selfRef">Use of OAuth 2.0 Access Tokens</a>
+        </h3>
+<p id="section-10.2-1">An OAuth access token represents the authorization granted to the Agent. In many deployments, access tokens are structured as JSON Web Tokens (JWTs) <span>[<a href="#OAUTH-ACCESSTOKEN-JWT" class="cite xref">OAUTH-ACCESSTOKEN-JWT</a>]</span>, which include claims such as 'client_id', 'sub', 'aud', 'scope', and other attributes relevant to authorization. The access token <span class="bcp14">MUST</span> include the Agent identity as the 'client_id' claim as defined in <span><a href="https://rfc-editor.org/rfc/rfc9068#section-2.2" class="relref">Section 2.2</a> of [<a href="#OAUTH-ACCESSTOKEN-JWT" class="cite xref">OAUTH-ACCESSTOKEN-JWT</a>]</span>.<a href="#section-10.2-1" class="pilcrow">¶</a></p>
+<p id="section-10.2-2">If the Agent is acting on-behalf of another user or system, it <span class="bcp14">MUST</span> include the user or system identifier in the 'sub' claim as defined in <span><a href="https://rfc-editor.org/rfc/rfc9068#section-2.2" class="relref">Section 2.2</a> of [<a href="#OAUTH-ACCESSTOKEN-JWT" class="cite xref">OAUTH-ACCESSTOKEN-JWT</a>]</span>. These identitifiers <span class="bcp14">MUST</span> be used by resource servers protected by the OAuth 2.0 authorization service, along with other claims in the access token, to determine if access to a resource should be allowed. The acccess token <span class="bcp14">MAY</span> include additional claims to convey contextual, attestation-derived, or policy-related information that enables fine-grained access control. The resource server <span class="bcp14">MAY</span> use the access token and the information it contains along with other authorization systems (e.g. policy based, attribute based or role based authorization systems) when enforcing access. Where JWT access tokens are not used, opaque tokens may be issued and validated through introspection mechanisms. This framework supports both models and does not require a specific token format, provided that equivalent authorization semantics are maintained.<a href="#section-10.2-2" class="pilcrow">¶</a></p>
+<p id="section-10.2-3">When opaque tokens are used, the resource server <span class="bcp14">MUST</span> obtain authorization information through OAuth 2.0 Token Introspection <span>[<a href="#OAUTH-TOKEN-INTROSPECTION" class="cite xref">OAUTH-TOKEN-INTROSPECTION</a>]</span>. The introspection response provides the active state of the token and associated authorization attributes equivalent to those conveyed in structured tokens.<a href="#section-10.2-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="obtaining-an-oauth-20-access-token">
+<section id="section-10.3">
+        <h3 id="name-obtaining-an-oauth-20-acces">
+<a href="#section-10.3" class="section-number selfRef">10.3. </a><a href="#name-obtaining-an-oauth-20-acces" class="section-name selfRef">Obtaining an OAuth 2.0 Access Token</a>
+        </h3>
+<p id="section-10.3-1">Agents <span class="bcp14">MUST</span> obtain OAuth 2.0 accss tokens using standards OAuth 2.0 Authorization Flows.<a href="#section-10.3-1" class="pilcrow">¶</a></p>
+<div id="user-delegates-authorization">
+<section id="section-10.3.1">
+          <h4 id="name-user-delegates-authorizatio">
+<a href="#section-10.3.1" class="section-number selfRef">10.3.1. </a><a href="#name-user-delegates-authorizatio" class="section-name selfRef">User Delegates Authorization</a>
+          </h4>
+<p id="section-10.3.1-1">When a User grants authorization to an Agent to access one or more resources (Tools, LLMs), the Authorization Code Grant <span class="bcp14">MUST</span> be used as described in <span><a href="https://rfc-editor.org/rfc/rfc6749#section-4.1" class="relref">Section 4.1</a> of [<a href="#OAUTH-FRAMEWORK" class="cite xref">OAUTH-FRAMEWORK</a>]</span>.<a href="#section-10.3.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="agent_obtains_own_access_token">
+<section id="section-10.3.2">
+          <h4 id="name-agent-obtains-own-authoriza">
+<a href="#section-10.3.2" class="section-number selfRef">10.3.2. </a><a href="#name-agent-obtains-own-authoriza" class="section-name selfRef">Agent Obtains Own Authorization</a>
+          </h4>
+<p id="section-10.3.2-1">Agents obtaining access tokens on their own behalf <span class="bcp14">MUST</span> use the Client Credentials Grant as described in <span><a href="https://rfc-editor.org/rfc/rfc6749#section-4.4" class="relref">Section 4.4</a> of [<a href="#OAUTH-FRAMEWORK" class="cite xref">OAUTH-FRAMEWORK</a>]</span> or the JWT Authorization Grant as described in <span><a href="https://rfc-editor.org/rfc/rfc7523#section-2.1" class="relref">Section 2.1</a> of [<a href="#OAUTH-CLIENTAUTH-JWT" class="cite xref">OAUTH-CLIENTAUTH-JWT</a>]</span>. When using the Client Credentials Grant, the Agent <span class="bcp14">MUST</span> authenticate itself using one of the mechanisms described in <a href="#agent_authentication" class="auto internal xref">Section 9</a> and <span class="bcp14">MUST NOT</span> use static, long lived client secrets to authenticate.<a href="#section-10.3.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="system-access-to-agents">
+<section id="section-10.3.3">
+          <h4 id="name-system-access-to-agents">
+<a href="#section-10.3.3" class="section-number selfRef">10.3.3. </a><a href="#name-system-access-to-agents" class="section-name selfRef">System Access to Agents</a>
+          </h4>
+<p id="section-10.3.3-1">When Agents are invoked by a System (e.g. a batch job, or another Agent), the System <span class="bcp14">SHOULD</span> treat the Agent as an OAuth protected resource. The System <span class="bcp14">SHOULD</span> obtain an access token using the same mechanisms defined for an Agent and then present the OAuth access token to the Agent. The Agent should validate the access token, including verifiying that the 'aud' claim of the access token includes the Agent. Once validated, the Agent <span class="bcp14">SHOULD</span> use OAuth 2.0 Token Exchange as defined in <span>[<a href="#OAUTH-TOKEN-EXCHANGE" class="cite xref">OAUTH-TOKEN-EXCHANGE</a>]</span> to exchange the access token it received for a new access token to access. The Agent then uses the newly issued access token to access the protected resources (LLM or Tools) it needs to complete the request.<a href="#section-10.3.3-1" class="pilcrow">¶</a></p>
+<p id="section-10.3.3-2">If a System invokes an Agent and does not treat the Agent as an OAuth protected resource, the Agent <span class="bcp14">MUST</span> obtain its own OAuth access token as described in <a href="#agent_obtains_own_access_token" class="auto internal xref">Section 10.3.2</a>.<a href="#section-10.3.3-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="oauth-20-security-best-practices">
+<section id="section-10.3.4">
+          <h4 id="name-oauth-20-security-best-prac">
+<a href="#section-10.3.4" class="section-number selfRef">10.3.4. </a><a href="#name-oauth-20-security-best-prac" class="section-name selfRef">OAuth 2.0 Security Best Practices</a>
+          </h4>
+<p id="section-10.3.4-1">Agents <span class="bcp14">MUST</span> support the Best Current Practice for OAuth 2.0 Security as described in <span>[<a href="#OAUTH-BCP" class="cite xref">OAUTH-BCP</a>]</span> when requesting acccess tokens.<a href="#section-10.3.4-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="trat-risk-reduction">
+<section id="section-10.4">
+        <h3 id="name-risk-reduction-with-transac">
+<a href="#section-10.4" class="section-number selfRef">10.4. </a><a href="#name-risk-reduction-with-transac" class="section-name selfRef">Risk reduction with Transaction Tokens</a>
+        </h3>
+<p id="section-10.4-1">Resources servers, whether they are LLMs, Tools or Agents (in the Agent-to-Agent case) may be composed of multiple microservices that are invoked to complete a request. The access tokens presented to the Agent, LLM or Tools can typically be used with multiple transactions and consequently have broader scope than needed to complete any specific transaction. Passing the access token from one microservice to another within an Agent, LLM or the Tools invoked by the Agent increases the risk of token theft and replay attaccks. For example, an attacker may discover and access token passed between microservices in a log file or crash dump, exfiltrate it, and use it to invoke a new transaction with different parameters (e.g. increase the trnasaction amount, or invoke an unrelated call as part of executing a lateral move).<a href="#section-10.4-1" class="pilcrow">¶</a></p>
+<p id="section-10.4-2">To avoid passing access tokens between microservices, the Agent, LLM or Tools <span class="bcp14">SHOULD</span> exchange the access token it receives for a transaction token, as defined in the Transaction Token specification as defined in <span>[<a href="#OAUTH-TRANS-TOKENS" class="cite xref">OAUTH-TRANS-TOKENS</a>]</span>. The transaction token allows for identity and auhtorization information to be passed along a call chain between microservices. The transaction token issuer enriches the transaction token with context of the caller that presented the access token (e.g. IP address etc), transaction context (transaction amount), identity information and a unique transaction identifier. This results in a dowscoped token that is bound to a specific transaction that cannot be used as an access token, with another transaction, or within the same transaction with modified transaction details (e.g. change in transaction amount). Transaction tokens are typically short lived, further lmiting the risk in case they are obtained by an attacker by liomiting the time window during which these tokens will be accepted.<a href="#section-10.4-2" class="pilcrow">¶</a></p>
+<p id="section-10.4-3">A transaction token <span class="bcp14">MAY</span> be used to obtain an access token to call another service (e.g. another Agent, Tool or LLM) by using OAuth 2.0 Token Exchange as defined in <span>[<a href="#OAUTH-TOKEN-EXCHANGE" class="cite xref">OAUTH-TOKEN-EXCHANGE</a>]</span>.<a href="#section-10.4-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="cross-domain-access">
+<section id="section-10.5">
+        <h3 id="name-cross-domain-access">
+<a href="#section-10.5" class="section-number selfRef">10.5. </a><a href="#name-cross-domain-access" class="section-name selfRef">Cross Domain Access</a>
+        </h3>
+<p id="section-10.5-1">Agents often require access to resources that are protected by different OAuth 2.0 authorization servers. When the components in <a href="#fig-ai-agent-workload" class="auto internal xref">Figure 1</a> are protected by different logical authorization servers, an Agent <span class="bcp14">SHOULD</span> use OAuth Identity and Authorization Chaining Across Domains as defined in (<span>[<a href="#OAUTH-ID-CHAIN" class="cite xref">OAUTH-ID-CHAIN</a>]</span>), or a derived specification such as the Identity Assertion JWT Authorization Grant <span>[<a href="#OAUTH-JWT-ASSERTION" class="cite xref">OAUTH-JWT-ASSERTION</a>]</span>, to obtain an access token from the relevant authorization servers.<a href="#section-10.5-1" class="pilcrow">¶</a></p>
+<p id="section-10.5-2">When using OAuth Identity and Authorization Chaining Across Domains (<span>[<a href="#OAUTH-ID-CHAIN" class="cite xref">OAUTH-ID-CHAIN</a>]</span>), an Agent <span class="bcp14">SHOULD</span> use the access token or transaction token it received to obtain a JWT authorization grant as described in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-identity-chaining-08#section-2.3" class="relref">Section 2.3</a> of [<a href="#OAUTH-ID-CHAIN" class="cite xref">OAUTH-ID-CHAIN</a>]</span> and then use the JWT authorization grant it receives to obtain an access token for the resource it is trying to access as defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-identity-chaining-08#section-2.4" class="relref">Section 2.4</a> of [<a href="#OAUTH-ID-CHAIN" class="cite xref">OAUTH-ID-CHAIN</a>]</span>.<a href="#section-10.5-2" class="pilcrow">¶</a></p>
+<p id="section-10.5-3">When using the Identity Assertion JWT Authorization Grant <span>[<a href="#OAUTH-JWT-ASSERTION" class="cite xref">OAUTH-JWT-ASSERTION</a>]</span>, the identity assertion (e.g. the OpenID Connect ID Token or SAML assertion) for the target end-user is used to obtain a JWT assertion as described in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-identity-assertion-authz-grant-01#section-4.3" class="relref">Section 4.3</a> of [<a href="#OAUTH-JWT-ASSERTION" class="cite xref">OAUTH-JWT-ASSERTION</a>]</span>, which is then used to obtain an access token as described in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-identity-assertion-authz-grant-01#section-4.4" class="relref">Section 4.4</a> of [<a href="#OAUTH-JWT-ASSERTION" class="cite xref">OAUTH-JWT-ASSERTION</a>]</span>.<a href="#section-10.5-3" class="pilcrow">¶</a></p>
+<p id="section-10.5-4">OAuth Identity and Authorization Chaining Across Domains (<span>[<a href="#OAUTH-ID-CHAIN" class="cite xref">OAUTH-ID-CHAIN</a>]</span>) provides a general mechanism for obtaining cross-domain access that can be used whether an identity assertion like a SAML or OpenID Connect token is available or not. The Identity Assertion JWT Authorization Grant <span>[<a href="#OAUTH-JWT-ASSERTION" class="cite xref">OAUTH-JWT-ASSERTION</a>]</span> is optimised for cases where an identity assertion like a SAML or OpenID Connect token is available from an identity provider that is trusted by all the OAuth authorization servers as it removes the need for the user to re-authenticate. This is typically used within enterprise deployments to simplify authorization delegation for multiple software-as-a-service offerings.<a href="#section-10.5-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="human-in-the-loop">
+<section id="section-10.6">
+        <h3 id="name-human-in-the-loop">
+<a href="#section-10.6" class="section-number selfRef">10.6. </a><a href="#name-human-in-the-loop" class="section-name selfRef">Human in the Loop</a>
+        </h3>
+<p id="section-10.6-1">An OAuth authorization server <span class="bcp14">MAY</span> conclude that the level of access requested by an Agent requires explicit user confirmation. In such cases the authorization server <span class="bcp14">SHOULD</span> either decline the request or obtain additional authorization from the User using the OpenID Client Initiated Backchannel Authentication (CIBA) protocol. This triggers an out-of-band interaction allowing the user to approve or deny the requested operation without exposing credentials to the agent (for example a push notification requesting the user to approve a request through an authenticator application on their mobile device).<a href="#section-10.6-1" class="pilcrow">¶</a></p>
+<p id="section-10.6-2">Interactive agent frameworks may also solicit user confirmation directly during task execution (for example tool invocation approval or parameter confirmation). Such interactions do not by themselves constitute authorization and <span class="bcp14">MUST</span> be bound to a verifiable authorization grant issued by the authorization server. The agent <span class="bcp14">SHOULD</span> therefore translate user confirmation into an OAuth authorization event (e.g., step-up authorization via CIBA) before accessing protected resources.<a href="#section-10.6-2" class="pilcrow">¶</a></p>
+<p id="section-10.6-3">This model aligns with user-solicitation patterns such as those described by the Model Context Protocol (<span>[<a href="#MCP" class="cite xref">MCP</a>]</span>), where an agent pauses execution and requests user confirmation before performing sensitive actions. The final authorization decision remains with the authorization server, and the agent <span class="bcp14">MUST NOT</span> treat local UI confirmation alone as sufficient authorization.<a href="#section-10.6-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="tool-to-service-acccess">
+<section id="section-10.7">
+        <h3 id="name-tool-to-service-acccess">
+<a href="#section-10.7" class="section-number selfRef">10.7. </a><a href="#name-tool-to-service-acccess" class="section-name selfRef">Tool-to-Service Acccess</a>
+        </h3>
+<p id="section-10.7-1">Tools expose interfaces to underlying services and resources. Access to the Tools <span class="bcp14">SHOULD</span> be controlled by OAuth which <span class="bcp14">MAY</span> be augmented by policy, attribute or role based authorization systems (amongst others). If the Tools are implemented as one or more microservices, it should use transaction tokens to reduce risk as described in <a href="#trat-risk-reduction" class="auto internal xref">Section 10.4</a> to avoid passing access tokens around within the Tool implementation.<a href="#section-10.7-1" class="pilcrow">¶</a></p>
+<p id="section-10.7-2">Access from the Tools to the resources and services <span class="bcp14">MAY</span> be controlled through a variety of auhtorization mechanisms, includidng OAuth. If access is controlled through OAuth, the Tools <span class="bcp14">SHOULD</span> use OAuth 2.0 Token Exchange as defined in <span>[<a href="#OAUTH-TOKEN-EXCHANGE" class="cite xref">OAUTH-TOKEN-EXCHANGE</a>]</span> to exchange the access token it received for a new access token to access the resource or service in question. If the Tool needs access to a resource protected by an auhtorization server other than the Tool's own authorization server, it <span class="bcp14">SHOULD</span> use the OAuth Identity and Authorization Chaining Across Domains (<span>[<a href="#OAUTH-ID-CHAIN" class="cite xref">OAUTH-ID-CHAIN</a>]</span>) to obtain an access token from the authroization server protecting the resource it needs to access.<a href="#section-10.7-2" class="pilcrow">¶</a></p>
+<p id="section-10.7-3"><strong>Note:</strong> It is an anti-pattern for Tools to forward access tokens it received from the Agent to Services or Resources. It increases the risk of credential theft and lateral attacks.<a href="#section-10.7-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="privacy-considerations">
+<section id="section-10.8">
+        <h3 id="name-privacy-considerations">
+<a href="#section-10.8" class="section-number selfRef">10.8. </a><a href="#name-privacy-considerations" class="section-name selfRef">Privacy Considerations</a>
+        </h3>
+<p id="section-10.8-1">Authorization tokens may contain user identifiers, agent identifiers, audience restrictions, transaction details, and contextual attributes. Deployments <span class="bcp14">SHOULD</span> minimize disclosure of personally identifiable or sensitive information in tokens and prefer audience-restricted and short-lived tokens. Where possible, opaque tokens with introspection <span class="bcp14">SHOULD</span> be preferred when claim minimization is required.<a href="#section-10.8-1" class="pilcrow">¶</a></p>
+<p id="section-10.8-2">Agents <span class="bcp14">SHOULD</span> request only the minimum scopes and authorization details necessary to complete a task. Resource servers <span class="bcp14">SHOULD</span> avoid logging full tokens and instead log token identifiers or hashes. When authorization context is propagated across services, derived or down-scoped tokens (such as transaction tokens) <span class="bcp14">SHOULD</span> be used to reduce correlation and replay risk.<a href="#section-10.8-2" class="pilcrow">¶</a></p>
+<p id="section-10.8-3">Implementations <span class="bcp14">MUST</span> ensure that user identity information delegated to agents is not exposed to unrelated services and that cross-domain authorization exchanges only disclose information required for the target authorization decision.<a href="#section-10.8-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="oauth-20-discovery-in-dynamic-environments">
+<section id="section-10.9">
+        <h3 id="name-oauth-20-discovery-in-dynam">
+<a href="#section-10.9" class="section-number selfRef">10.9. </a><a href="#name-oauth-20-discovery-in-dynam" class="section-name selfRef">OAuth 2.0 Discovery in Dynamic Environments</a>
+        </h3>
+<p id="section-10.9-1">In dynamic Agent deployments (e.g., ephemeral workloads, multi-tenant services, and frequently changing endpoint topology), Agents and other participants <span class="bcp14">MAY</span> use OAuth discovery mechanisms to reduce static configuration and to bind runtime decisions to verifiable metadata.<a href="#section-10.9-1" class="pilcrow">¶</a></p>
+<div id="authorization-server-capability-discovery">
+<section id="section-10.9.1">
+          <h4 id="name-authorization-server-capabi">
+<a href="#section-10.9.1" class="section-number selfRef">10.9.1. </a><a href="#name-authorization-server-capabi" class="section-name selfRef">Authorization Server Capability Discovery</a>
+          </h4>
+<p id="section-10.9.1-1">An Agent that needs to obtain tokens <span class="bcp14">MAY</span> discover authorization server endpoints and capabilities using OAuth 2.0 Authorization Server Metadata <span>[<a href="#OAUTH-SERVER-METADATA" class="cite xref">OAUTH-SERVER-METADATA</a>]</span> and/or OpenID Connect Discovery <span>[<a href="#OpenIDConnect.Discovery" class="cite xref">OpenIDConnect.Discovery</a>]</span>. This allows the Agent to learn the as issuer identifier, authorization and token endpoints, supported grant types, client authentication methods, signing keys (via jwks_uri), and other relevant capabilities without preconfiguring them.<a href="#section-10.9.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="protected-resource-capability-discovery">
+<section id="section-10.9.2">
+          <h4 id="name-protected-resource-capabili">
+<a href="#section-10.9.2" class="section-number selfRef">10.9.2. </a><a href="#name-protected-resource-capabili" class="section-name selfRef">Protected Resource Capability Discovery</a>
+          </h4>
+<p id="section-10.9.2-1">When an Agent is invoking a Tool, the Agent <span class="bcp14">MAY</span> use OAuth 2.0 Protected Resource Metadata <span>[<a href="#OAUTH-RESOURCE-METADATA" class="cite xref">OAUTH-RESOURCE-METADATA</a>]</span> to discover how the resource is protected, including the resource identifier and the applicable Authorization Server(s) that protects Tool access. This enables an Agent to select the correct issuer/audience and token acquisition flow at runtime, even when resources are deployed or moved dynamically.<a href="#section-10.9.2-1" class="pilcrow">¶</a></p>
+<p id="section-10.9.2-2">A Tool that atttempts to acccess and OAuth protected resource <span class="bcp14">MAY</span> use OAuth 2.0 Protected Resource Metadata <span>[<a href="#OAUTH-RESOURCE-METADATA" class="cite xref">OAUTH-RESOURCE-METADATA</a>]</span> in a similar way as an Agent. Similarly, a System may use <span>[<a href="#OAUTH-RESOURCE-METADATA" class="cite xref">OAUTH-RESOURCE-METADATA</a>]</span> when accessing an Agent.<a href="#section-10.9.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="client-capability-discovery">
+<section id="section-10.9.3">
+          <h4 id="name-client-capability-discovery">
+<a href="#section-10.9.3" class="section-number selfRef">10.9.3. </a><a href="#name-client-capability-discovery" class="section-name selfRef">Client Capability Discovery</a>
+          </h4>
+<p id="section-10.9.3-1">Other actors (e.g., Authorization Servers, registrars, or policy systems) may need to learn about any entities (System, Agent, Tool) that acts as OAuth clients. Where supported, they <span class="bcp14">MAY</span> use Client ID Metadata Documents <span>[<a href="#OAUTH-CLIENT-METADATA" class="cite xref">OAUTH-CLIENT-METADATA</a>]</span>, which allow a client to host its metadata at a URL-valued client_id so that the relying party can retrieve client properties (e.g., redirect URIs, software statement, display information, and other registered client metadata) without prior bilateral registration.<a href="#section-10.9.3-1" class="pilcrow">¶</a></p>
+<p id="section-10.9.3-2">As an alternative, entities acting as OAuth clients <span class="bcp14">MAY</span> register their capabilities with authroization servers as defined in the OAuth 2.0 Dynamic Client Registration Protocol <span>[<a href="#OAUTH-REGISTRATION" class="cite xref">OAUTH-REGISTRATION</a>]</span>.<a href="#section-10.9.3-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="agent_monitoring_and_remediation">
+<section id="section-11">
+      <h2 id="name-agent-monitoring-and-remedi">
+<a href="#section-11" class="section-number selfRef">11. </a><a href="#name-agent-monitoring-and-remedi" class="section-name selfRef">Agent Monitoring and Remediation</a>
+      </h2>
+<p id="section-11-1">Because agents may perform sensitive actions autonomously or on behalf of users, deployments <span class="bcp14">MUST</span> maintain sufficient observability to reconstruct agent behavior and authorization context after execution. Monitoring is therefore a security control, not solely an operational feature.<a href="#section-11-1" class="pilcrow">¶</a></p>
+<p id="section-11-2">Any particiapant in the system, including the Agent, Tool, System, LLM or other resources and service <span class="bcp14">MAY</span> subscribe to change notifications using eventing mechanisms such as the OpenID Shared Signals Framework <span>[<a href="#SSF" class="cite xref">SSF</a>]</span> with the Continuous Access Evaluation Profile <span>[<a href="#CAEP" class="cite xref">CAEP</a>]</span> to receive security and authorization-relevant signals. Upon receipt of a relevant signal (e.g., session revoked, subject disabled, token replay suspected, risk elevated), the recipient <span class="bcp14">SHOULD</span> remediate by attenuating access, such as terminating local sessions, discarding cached tokens, re-acquiring tokens with updated constraints, reducing privileges, or re-running policy evaluation before continueing to allow acccess. Recipients of such signals <span class="bcp14">MUST</span> ensure that revoked or downgraded authorization is enforced without undue delay. Cached authorization decisions and tokens that are no longer valid <span class="bcp14">MUST NOT</span> continue to be used after a revocation or risk notification is received.<a href="#section-11-2" class="pilcrow">¶</a></p>
+<p id="section-11-3">To support detection, investigation, and accountability, deployments <span class="bcp14">MUST</span> produce durable audit logs covering authorization decisions and subsequent remediations. Audit records <span class="bcp14">MUST</span> be tamper-evident and retained according to the security policy of the deployment.<a href="#section-11-3" class="pilcrow">¶</a></p>
+<p id="section-11-4">At a minimum, audit events <span class="bcp14">MUST</span> record:<a href="#section-11-4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-11-5.1">
+          <p id="section-11-5.1.1">authenticated agent identifier<a href="#section-11-5.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-11-5.2">
+          <p id="section-11-5.2.1">delegated subject (user or system), when present<a href="#section-11-5.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-11-5.3">
+          <p id="section-11-5.3.1">resource or tool being accessed<a href="#section-11-5.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-11-5.4">
+          <p id="section-11-5.4.1">action requested and authorization decision<a href="#section-11-5.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-11-5.5">
+          <p id="section-11-5.5.1">timestamp and transaction or request correlation identifier<a href="#section-11-5.5.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-11-5.6">
+          <p id="section-11-5.6.1">attestation or risk state influencing the decision<a href="#section-11-5.6.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-11-5.7">
+          <p id="section-11-5.7.1">remediation or revocation events and their cause<a href="#section-11-5.7.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="section-11-6">Monitoring systems <span class="bcp14">SHOULD</span> correlate events across Agents, Tools, Services, Resources and LLMs to detect misuse patterns such as replay, confused deputy behavior, privilege escalation, or unexpected action sequences.<a href="#section-11-6" class="pilcrow">¶</a></p>
+<p id="section-11-7">End-to-end audit is enabled when Agents, Users, Systems, LLMs, Tools, services and resources have stable, verifiable identifiers that allow auditors to trace "which entity did what, using which authorization context, and why access changed over time."<a href="#section-11-7" class="pilcrow">¶</a></p>
+<p id="section-11-8">Implementations <span class="bcp14">SHOULD</span> provide operators the ability to reconstruct a complete execution chain of an agent task, including delegated authority, intermediate calls, and resulting actions across service boundaries.<a href="#section-11-8" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="agent_auhtentication_and_authorization_policy">
+<section id="section-12">
+      <h2 id="name-agent-authentication-and-au">
+<a href="#section-12" class="section-number selfRef">12. </a><a href="#name-agent-authentication-and-au" class="section-name selfRef">Agent Authentication and Authorization Policy</a>
+      </h2>
+<p id="section-12-1">The configuration and runtime parameters for Agent Identifiers <a href="#agent_identifiers" class="auto internal xref">Section 5</a>, Agent Credentials <a href="#agent_credentials" class="auto internal xref">Section 6</a>, Agent Attestation <a href="#agent_attestation" class="auto internal xref">Section 7</a>, Agent Credential Provisioning <a href="#agent_credential_provisioning" class="auto internal xref">Section 8</a>, Agent Authentication <a href="#agent_authentication" class="auto internal xref">Section 9</a>, Agent Authorization <a href="#agent_authorization" class="auto internal xref">Section 10</a> and Agent Monitoring and Remediation <a href="#agent_monitoring_and_remediation" class="auto internal xref">Section 11</a> collectively constitute the authentication and authorization policy within which the Agent operates.<a href="#section-12-1" class="pilcrow">¶</a></p>
+<p id="section-12-2">Because these parameters are highly deployment- and risk-model-specific (and often reflect local governance, regulatory, and operational constraints), the policy model and document format are out of scope for this framework and are not recommended as a target for standardization within this specification. Implementations <span class="bcp14">MAY</span> represent policy in any suitable “policy-as-code” or configuration format (e.g., JSON/YAML), provided it is versioned, reviewable, and supports consistent evaluation across the components participating in the end-to-end flow.<a href="#section-12-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="agent_compliance">
+<section id="section-13">
+      <h2 id="name-agent-compliance">
+<a href="#section-13" class="section-number selfRef">13. </a><a href="#name-agent-compliance" class="section-name selfRef">Agent Compliance</a>
+      </h2>
+<p id="section-13-1">Compliance for Agent-based systems <span class="bcp14">SHOULD</span> be assessed by auditing observed behavior and recorded evidence (logs, signals, and authorization decisions) against the deployment’s Agent Authentication and Authorization Policy <a href="#agent_auhtentication_and_authorization_policy" class="auto internal xref">Section 12</a>. Since compliance criteria are specific to individual deployments, organizations, industries and jurisdictions, they are out of scope for this framework though implementers <span class="bcp14">SHOULD</span> ensure strong observability and accountable governance, subject to their specific business needs.<a href="#section-13-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="security-considerations">
+<section id="section-14">
+      <h2 id="name-security-considerations">
+<a href="#section-14" class="section-number selfRef">14. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+      </h2>
+<p id="section-14-1">TODO Security<a href="#section-14-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="privacy-considerations-1">
+<section id="section-15">
+      <h2 id="name-privacy-considerations-2">
+<a href="#section-15" class="section-number selfRef">15. </a><a href="#name-privacy-considerations-2" class="section-name selfRef">Privacy Considerations</a>
+      </h2>
+<p id="section-15-1">TODO Privac<a href="#section-15-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="iana-considerations">
+<section id="section-16">
+      <h2 id="name-iana-considerations">
+<a href="#section-16" class="section-number selfRef">16. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+      </h2>
+<p id="section-16-1">This document has no IANA actions.<a href="#section-16-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="sec-normative-references">
+<section id="section-17">
+      <h2 id="name-normative-references">
+<a href="#section-17" class="section-number selfRef">17. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+      </h2>
+<dl class="references">
+<dt id="A2A">[A2A]</dt>
+      <dd>
+<span class="refTitle">"Agent2Agent (A2A) Protocol"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/a2aproject/A2A">https://github.com/a2aproject/A2A</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="ACP">[ACP]</dt>
+      <dd>
+<span class="refTitle">"Agentic Commerce Protocol"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.agenticcommerce.dev/docs">https://www.agenticcommerce.dev/docs</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="AP2">[AP2]</dt>
+      <dd>
+<span class="refTitle">"Agent Payments Protocol (AP2)"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/google-agentic-commerce/AP2">https://github.com/google-agentic-commerce/AP2</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="CAEP">[CAEP]</dt>
+      <dd>
+<span class="refTitle">"OpenID Continuous Access Evaluation Profile 1.0"</span>, <span>n.d.</span>, <span>&lt;<a href="https://openid.net/specs/openid-caep-1_0-final.html">https://openid.net/specs/openid-caep-1_0-final.html</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="HTTP-SIG">[HTTP-SIG]</dt>
+      <dd>
+<span class="refAuthor">Backman, A., Ed.</span>, <span class="refAuthor">Richer, J., Ed.</span>, and <span class="refAuthor">M. Sporny</span>, <span class="refTitle">"HTTP Message Signatures"</span>, <span class="seriesInfo">RFC 9421</span>, <span class="seriesInfo">DOI 10.17487/RFC9421</span>, <time datetime="2024-02" class="refDate">February 2024</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9421">https://www.rfc-editor.org/rfc/rfc9421</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="MCP">[MCP]</dt>
+      <dd>
+<span class="refTitle">"Model Context Protocol"</span>, <span>n.d.</span>, <span>&lt;<a href="https://modelcontextprotocol.io/specification">https://modelcontextprotocol.io/specification</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OAUTH-ACCESSTOKEN-JWT">[OAUTH-ACCESSTOKEN-JWT]</dt>
+      <dd>
+<span class="refAuthor">Bertocci, V.</span>, <span class="refTitle">"JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens"</span>, <span class="seriesInfo">RFC 9068</span>, <span class="seriesInfo">DOI 10.17487/RFC9068</span>, <time datetime="2021-10" class="refDate">October 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9068">https://www.rfc-editor.org/rfc/rfc9068</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OAUTH-BCP">[OAUTH-BCP]</dt>
+      <dd>
+<span class="refAuthor">Lodderstedt, T.</span>, <span class="refAuthor">Bradley, J.</span>, <span class="refAuthor">Labunets, A.</span>, and <span class="refAuthor">D. Fett</span>, <span class="refTitle">"Best Current Practice for OAuth 2.0 Security"</span>, <span class="seriesInfo">BCP 240</span>, <span class="seriesInfo">RFC 9700</span>, <span class="seriesInfo">DOI 10.17487/RFC9700</span>, <time datetime="2025-01" class="refDate">January 2025</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9700">https://www.rfc-editor.org/rfc/rfc9700</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OAUTH-CLIENT-METADATA">[OAUTH-CLIENT-METADATA]</dt>
+      <dd>
+<span class="refAuthor">Parecki, A.</span> and <span class="refAuthor">E. Smith</span>, <span class="refTitle">"OAuth Client ID Metadata Document"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-client-id-metadata-document-00</span>, <time datetime="2025-10-08" class="refDate">8 October 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-client-id-metadata-document-00">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-client-id-metadata-document-00</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OAUTH-CLIENTAUTH-JWT">[OAUTH-CLIENTAUTH-JWT]</dt>
+      <dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Campbell, B.</span>, and <span class="refAuthor">C. Mortimore</span>, <span class="refTitle">"JSON Web Token (JWT) Profile for OAuth 2.0 Client Authentication and Authorization Grants"</span>, <span class="seriesInfo">RFC 7523</span>, <span class="seriesInfo">DOI 10.17487/RFC7523</span>, <time datetime="2015-05" class="refDate">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7523">https://www.rfc-editor.org/rfc/rfc7523</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OAUTH-FRAMEWORK">[OAUTH-FRAMEWORK]</dt>
+      <dd>
+<span class="refAuthor">Hardt, D., Ed.</span>, <span class="refTitle">"The OAuth 2.0 Authorization Framework"</span>, <span class="seriesInfo">RFC 6749</span>, <span class="seriesInfo">DOI 10.17487/RFC6749</span>, <time datetime="2012-10" class="refDate">October 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6749">https://www.rfc-editor.org/rfc/rfc6749</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OAUTH-ID-CHAIN">[OAUTH-ID-CHAIN]</dt>
+      <dd>
+<span class="refAuthor">Schwenkschuster, A.</span>, <span class="refAuthor">Kasselman, P.</span>, <span class="refAuthor">Burgin, K.</span>, <span class="refAuthor">Jenkins, M. J.</span>, and <span class="refAuthor">B. Campbell</span>, <span class="refTitle">"OAuth Identity and Authorization Chaining Across Domains"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-identity-chaining-08</span>, <time datetime="2026-02-09" class="refDate">9 February 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-identity-chaining-08">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-identity-chaining-08</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OAUTH-JWT-ASSERTION">[OAUTH-JWT-ASSERTION]</dt>
+      <dd>
+<span class="refAuthor">Parecki, A.</span>, <span class="refAuthor">McGuinness, K.</span>, and <span class="refAuthor">B. Campbell</span>, <span class="refTitle">"Identity Assertion JWT Authorization Grant"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-identity-assertion-authz-grant-01</span>, <time datetime="2025-10-19" class="refDate">19 October 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-identity-assertion-authz-grant-01">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-identity-assertion-authz-grant-01</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OAUTH-REGISTRATION">[OAUTH-REGISTRATION]</dt>
+      <dd>
+<span class="refAuthor">Richer, J., Ed.</span>, <span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Bradley, J.</span>, <span class="refAuthor">Machulak, M.</span>, and <span class="refAuthor">P. Hunt</span>, <span class="refTitle">"OAuth 2.0 Dynamic Client Registration Protocol"</span>, <span class="seriesInfo">RFC 7591</span>, <span class="seriesInfo">DOI 10.17487/RFC7591</span>, <time datetime="2015-07" class="refDate">July 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7591">https://www.rfc-editor.org/rfc/rfc7591</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OAUTH-RESOURCE-METADATA">[OAUTH-RESOURCE-METADATA]</dt>
+      <dd>
+<span class="refAuthor">Jones, M.B.</span>, <span class="refAuthor">Hunt, P.</span>, and <span class="refAuthor">A. Parecki</span>, <span class="refTitle">"OAuth 2.0 Protected Resource Metadata"</span>, <span class="seriesInfo">RFC 9728</span>, <span class="seriesInfo">DOI 10.17487/RFC9728</span>, <time datetime="2025-04" class="refDate">April 2025</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9728">https://www.rfc-editor.org/rfc/rfc9728</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OAUTH-SERVER-METADATA">[OAUTH-SERVER-METADATA]</dt>
+      <dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Sakimura, N.</span>, and <span class="refAuthor">J. Bradley</span>, <span class="refTitle">"OAuth 2.0 Authorization Server Metadata"</span>, <span class="seriesInfo">RFC 8414</span>, <span class="seriesInfo">DOI 10.17487/RFC8414</span>, <time datetime="2018-06" class="refDate">June 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8414">https://www.rfc-editor.org/rfc/rfc8414</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OAUTH-TOKEN-EXCHANGE">[OAUTH-TOKEN-EXCHANGE]</dt>
+      <dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Nadalin, A.</span>, <span class="refAuthor">Campbell, B., Ed.</span>, <span class="refAuthor">Bradley, J.</span>, and <span class="refAuthor">C. Mortimore</span>, <span class="refTitle">"OAuth 2.0 Token Exchange"</span>, <span class="seriesInfo">RFC 8693</span>, <span class="seriesInfo">DOI 10.17487/RFC8693</span>, <time datetime="2020-01" class="refDate">January 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8693">https://www.rfc-editor.org/rfc/rfc8693</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OAUTH-TOKEN-INTROSPECTION">[OAUTH-TOKEN-INTROSPECTION]</dt>
+      <dd>
+<span class="refAuthor">Richer, J., Ed.</span>, <span class="refTitle">"OAuth 2.0 Token Introspection"</span>, <span class="seriesInfo">RFC 7662</span>, <span class="seriesInfo">DOI 10.17487/RFC7662</span>, <time datetime="2015-10" class="refDate">October 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7662">https://www.rfc-editor.org/rfc/rfc7662</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OAUTH-TRANS-TOKENS">[OAUTH-TRANS-TOKENS]</dt>
+      <dd>
+<span class="refAuthor">Tulshibagwale, A.</span>, <span class="refAuthor">Fletcher, G.</span>, and <span class="refAuthor">P. Kasselman</span>, <span class="refTitle">"Transaction Tokens"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-transaction-tokens-07</span>, <time datetime="2026-01-24" class="refDate">24 January 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-transaction-tokens-07">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-transaction-tokens-07</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OAuth.mTLS.Auth-RFC8705">[OAuth.mTLS.Auth-RFC8705]</dt>
+      <dd>
+<span class="refTitle">"OAuth 2.0 Mutual-TLS Client Authentication and Certificate-Bound Access Tokens"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/rfc8705">https://datatracker.ietf.org/doc/html/rfc8705</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OAuth.SPIFFE.Client.Auth">[OAuth.SPIFFE.Client.Auth]</dt>
+      <dd>
+<span class="refTitle">"OAuth SPIFFE Client Authentication"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/draft-ietf-oauth-spiffe-client-auth">https://datatracker.ietf.org/doc/draft-ietf-oauth-spiffe-client-auth</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OAuth.step-up.Auth-RFC9470">[OAuth.step-up.Auth-RFC9470]</dt>
+      <dd>
+<span class="refTitle">"OAuth 2.0 Step Up Authentication Challenge Protocol"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9470.html">https://www.rfc-editor.org/rfc/rfc9470.html</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OpenIDConnect.AuthZEN">[OpenIDConnect.AuthZEN]</dt>
+      <dd>
+<span class="refAuthor">Gazitt, O., Ed.</span>, <span class="refAuthor">Brossard, D., Ed.</span>, and <span class="refAuthor">A. Tulshibagwale, Ed.</span>, <span class="refTitle">"Authorization API 1.0"</span>, <time datetime="2026" class="refDate">2026</time>, <span>&lt;<a href="https://openid.net/specs/authorization-api-1_0.html">https://openid.net/specs/authorization-api-1_0.html</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OpenIDConnect.CIBA">[OpenIDConnect.CIBA]</dt>
+      <dd>
+<span class="refTitle">"OpenID Connect Client-Initiated Backchannel Authentication Flow - Core 1.0"</span>, <span>n.d.</span>, <span>&lt;<a href="https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html">https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OpenIDConnect.Discovery">[OpenIDConnect.Discovery]</dt>
+      <dd>
+<span class="refTitle">"OpenID Connect Discovery 1.0"</span>, <span>n.d.</span>, <span>&lt;<a href="https://openid.net/specs/openid-connect-discovery-1_0-final.html">https://openid.net/specs/openid-connect-discovery-1_0-final.html</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RATS-ARCH">[RATS-ARCH]</dt>
+      <dd>
+<span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Thaler, D.</span>, <span class="refAuthor">Richardson, M.</span>, <span class="refAuthor">Smith, N.</span>, and <span class="refAuthor">W. Pan</span>, <span class="refTitle">"Remote ATtestation procedureS (RATS) Architecture"</span>, <span class="seriesInfo">RFC 9334</span>, <span class="seriesInfo">DOI 10.17487/RFC9334</span>, <time datetime="2023-01" class="refDate">January 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9334">https://www.rfc-editor.org/rfc/rfc9334</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC2119">[RFC2119]</dt>
+      <dd>
+<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6750">[RFC6750]</dt>
+      <dd>
+<span class="refTitle">"The OAuth 2.0 Authorization Framework: Bearer Token Usage"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/rfc6750">https://datatracker.ietf.org/doc/rfc6750</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8174">[RFC8174]</dt>
+      <dd>
+<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8628">[RFC8628]</dt>
+      <dd>
+<span class="refTitle">"OAuth 2.0 Device Authorization Grant"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8628.html">https://www.rfc-editor.org/rfc/rfc8628.html</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8725">[RFC8725]</dt>
+      <dd>
+<span class="refTitle">"JSON Web Token Best Current Practices"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/rfc8725">https://datatracker.ietf.org/doc/rfc8725</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9126">[RFC9126]</dt>
+      <dd>
+<span class="refTitle">"OAuth 2.0 Pushed Authorization Requests"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/rfc9126">https://datatracker.ietf.org/doc/rfc9126</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9396">[RFC9396]</dt>
+      <dd>
+<span class="refTitle">"OAuth 2.0 Rich Authorization Requests"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/rfc9396">https://datatracker.ietf.org/doc/rfc9396</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9449">[RFC9449]</dt>
+      <dd>
+<span class="refTitle">"OAuth 2.0 Demonstrating Proof of Possession (DPoP)"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/rfc9449">https://datatracker.ietf.org/doc/rfc9449</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9701">[RFC9701]</dt>
+      <dd>
+<span class="refTitle">"JWT Response for OAuth 2.0 Token Introspection"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/rfc9701">https://datatracker.ietf.org/doc/rfc9701</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="SPIFFE">[SPIFFE]</dt>
+      <dd>
+<span class="refTitle">"Secure Production Identity Framework for Everyone"</span>, <span>n.d.</span>, <span>&lt;<a href="https://spiffe.io/docs/latest/spiffe-about/overview/">https://spiffe.io/docs/latest/spiffe-about/overview/</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="SPIFFE-ID">[SPIFFE-ID]</dt>
+      <dd>
+<span class="refTitle">"SPIFFE-ID"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md">https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="SPIFFE_BUNDLE">[SPIFFE_BUNDLE]</dt>
+      <dd>
+<span class="refTitle">"SPIFFE Bundle"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE_Trust_Domain_and_Bundle.md#4-spiffe-bundle-format">https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE_Trust_Domain_and_Bundle.md#4-spiffe-bundle-format</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="SPIFFE_FEDERATION">[SPIFFE_FEDERATION]</dt>
+      <dd>
+<span class="refTitle">"SPIFFE Federation"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE_Federation.md">https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE_Federation.md</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="SPIFFE_JWT">[SPIFFE_JWT]</dt>
+      <dd>
+<span class="refTitle">"JWT-SVID"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/spiffe/spiffe/blob/main/standards/JWT-SVID.md">https://github.com/spiffe/spiffe/blob/main/standards/JWT-SVID.md</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="SPIFFE_X509">[SPIFFE_X509]</dt>
+      <dd>
+<span class="refTitle">"X509-SVID"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/spiffe/spiffe/blob/main/standards/X509-SVID.md">https://github.com/spiffe/spiffe/blob/main/standards/X509-SVID.md</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="SSF">[SSF]</dt>
+      <dd>
+<span class="refTitle">"OpenID Shared Signals Framework Specification 1.0"</span>, <span>n.d.</span>, <span>&lt;<a href="https://openid.net/specs/openid-sharedsignals-framework-1_0-final.html">https://openid.net/specs/openid-sharedsignals-framework-1_0-final.html</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="WIMSE-ARCH">[WIMSE-ARCH]</dt>
+      <dd>
+<span class="refAuthor">Salowey, J. A.</span>, <span class="refAuthor">Rosomakho, Y.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Workload Identity in a Multi System Environment (WIMSE) Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-arch-06</span>, <time datetime="2025-09-30" class="refDate">30 September 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-06">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-06</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="WIMSE-CRED">[WIMSE-CRED]</dt>
+      <dd>
+<span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Salowey, J. A.</span>, <span class="refAuthor">Schwenkschuster, A.</span>, <span class="refAuthor">Sheffer, Y.</span>, and <span class="refAuthor">Y. Rosomakho</span>, <span class="refTitle">"WIMSE Workload Credentials"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-workload-creds-00</span>, <time datetime="2025-11-03" class="refDate">3 November 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-00">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-00</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="WIMSE-HTTPSIG">[WIMSE-HTTPSIG]</dt>
+      <dd>
+<span class="refAuthor">Salowey, J. A.</span> and <span class="refAuthor">Y. Sheffer</span>, <span class="refTitle">"WIMSE Workload-to-Workload Authentication with HTTP Signatures"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-http-signature-01</span>, <time datetime="2026-01-08" class="refDate">8 January 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-http-signature-01">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-http-signature-01</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="WIMSE-ID">[WIMSE-ID]</dt>
+      <dd>
+<span class="refAuthor">Rosomakho, Y.</span> and <span class="refAuthor">J. A. Salowey</span>, <span class="refTitle">"Workload Identifier"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-identifier-01</span>, <time datetime="2025-12-29" class="refDate">29 December 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-identifier-01">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-identifier-01</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="WIMSE-WPT">[WIMSE-WPT]</dt>
+      <dd>
+<span class="refAuthor">Campbell, B.</span> and <span class="refAuthor">A. Schwenkschuster</span>, <span class="refTitle">"WIMSE Workload Proof Token"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-wpt-00</span>, <time datetime="2025-11-03" class="refDate">3 November 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-wpt-00">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-wpt-00</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="WIMSE_CRED">[WIMSE_CRED]</dt>
+    <dd>
+<span class="refTitle">"WIMSE Workload Credentials"</span>, <span>n.d.</span>, <span>&lt;<a href="https://datatracker.ietf.org/doc/draft-ietf-wimse-workload-creds/">https://datatracker.ietf.org/doc/draft-ietf-wimse-workload-creds/</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
+<div id="acknowledgments">
+<section id="appendix-A">
+      <h2 id="name-acknowledgments">
+<a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
+      </h2>
+<p id="appendix-A-1">TODO acknowledge.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="authors-addresses">
+<section id="appendix-B">
+      <h2 id="name-authors-addresses">
+<a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
+      </h2>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Pieter Kasselman</span></div>
+<div dir="auto" class="left"><span class="org">Defakto Security</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:pieter@defakto.security" class="email">pieter@defakto.security</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Jean-François Lombardo</span></div>
+<div dir="auto" class="left"><span class="org">AWS</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:jeffsec@amazon.com" class="email">jeffsec@amazon.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Yaroslav Rosomakho</span></div>
+<div dir="auto" class="left"><span class="org">Zscaler</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:yrosomakho@zscaler.com" class="email">yrosomakho@zscaler.com</a>
+</div>
+</address>
+</section>
+</div>
+<script>const toc = document.getElementById("toc");
+toc.querySelector("h2").addEventListener("click", e => {
+  toc.classList.toggle("active");
+});
+toc.querySelector("nav").addEventListener("click", e => {
+  toc.classList.remove("active");
+});
+</script>
+</body>
+</html>
