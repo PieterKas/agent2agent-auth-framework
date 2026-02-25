@@ -195,11 +195,11 @@ An Agent Identity Management System ensures that the right Agent has access to t
 * **Agent Credentials:** Cryptographic binding between the Agent Identifier and attributes of the Agent.
 * **Agent Attestation:** Mechanisms for determining and assigning the identifier and issue credentials based on measurements of the Agent's environment.
 * **Agent Credential Provisioning:** The mechanism for provisioning credentials to the agent at runtime.
-* **Agent Authentication:** Protocols and mechanisms used by the Agent to authenticate itself to Large Langugage Models or Tools (resource or server) in the system.
-* **Agent Authorization:** Protocols and systems used to determine if an Agent is allowed to access a Large Langugage Model or Tool (resource or server).
-* **Agent Monitoring and Remediation:** Protocols and mechanisms to dynamically modify the authorization decisions based on observed behaviour and system state.
-* **Agent Auhtentication and Authorization Policy:** The configuration and rules for each of the Agent Identity Management System.
-* **Agent Compliance:** Measurement of the state and fucntioning of the system against the stated policies.
+* **Agent Authentication:** Protocols and mechanisms used by the Agent to authenticate itself to Large Language Models or Tools (resource or server) in the system.
+* **Agent Authorization:** Protocols and systems used to determine if an Agent is allowed to access a Large Language Model or Tool (resource or server).
+* **Agent Monitoring and Remediation:** Protocols and mechanisms to dynamically modify the authorization decisions based on observed behavior and system state.
+* **Agent Authentication and Authorization Policy:** The configuration and rules for each of the Agent Identity Management System.
+* **Agent Compliance:** Measurement of the state and functioning of the system against the stated policies.
 
 The components form a logical stack in which higher layers depend on guarantees provided by lower layers, as illustrated in {{fig-agent-identity-management-system}}.
 
