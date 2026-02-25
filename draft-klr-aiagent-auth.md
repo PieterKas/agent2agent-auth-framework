@@ -134,14 +134,21 @@ informative:
 
 --- abstract
 
-This document proposes a framework for authentication and authorization of AI agent interactions. It leverages existing standards such as the Workload Identity Management and Secure Exchange (WIMSE) architecture and OAuth 2.0 family of specifications. Rather than defining new protocols, this document describes how existing and widely deployed standards can be applied or extended to establish agent authentication and authorization. By doing so, it aims to provide a framework within which to use existing standards, identify gaps and guide future standardization efforts for agent authentication and authorization.
+This document proposes a model for authentication and authorization of AI agent interactions. It leverages existing standards such as the Workload Identity in Multi-System Environments (WIMSE) architecture and OAuth 2.0 family of specifications. Rather than defining new protocols, this document describes how existing and widely deployed standards can be applied or extended to establish agent authentication and authorization. By doing so, it aims to provide a framework within which to use existing standards, identify gaps and guide future standardization efforts for agent authentication and authorization.
 
 --- middle
 
 # Introduction
 
-TODO Introduction
+The rapid emergence of AI agents as autonomous workloads has sparked considerable innovation in authentication and authorization approaches. However, many of these efforts develop solutions in isolation, often reinventing existing mechanisms unaware of applicable prior art. This fragmentation risks creating incompatible implementations, duplicated development effort, and missed opportunities to leverage decades of established identity and authorization standards.
 
+This document aims to help close that gap by providing a comprehensive model demonstrating how existing, widely-deployed standards can be composed and applied to solve agent authentication and authorization challenges. Rather than proposing new protocols, this work focuses on integrating proven standards into a coherent framework tailored to the specific requirements of AI agent workloads.
+
+By doing so, this document serves two complementary goals:
+
+1. **Consolidation of prior art**: It establishes a baseline by showing how existing standards address the core identity, authentication, authorization, and monitoring needs of agent-based systems. Implementers and standards developers can reference this framework to avoid redundant work and ensure interoperability.
+
+2. **Foundation for future work**: As the agent ecosystem matures, having such a framework aids in identifying gaps and clarifies where extensions or profiles of existing standards are needed. This provides a foundation for more focused standardization efforts in areas needing novel work rather than variations of existing approaches.
 
 # Conventions and Definitions
 
