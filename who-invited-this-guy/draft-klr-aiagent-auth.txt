@@ -257,21 +257,21 @@ Table of Contents
       credentials to the agent at runtime.
 
    *  *Agent Authentication:* Protocols and mechanisms used by the Agent
-      to authenticate itself to Large Langugage Models or Tools
-      (resource or server) in the system.
+      to authenticate itself to Large Language Models or Tools (resource
+      or server) in the system.
 
    *  *Agent Authorization:* Protocols and systems used to determine if
-      an Agent is allowed to access a Large Langugage Model or Tool
+      an Agent is allowed to access a Large Language Model or Tool
       (resource or server).
 
    *  *Agent Monitoring and Remediation:* Protocols and mechanisms to
       dynamically modify the authorization decisions based on observed
-      behaviour and system state.
+      behavior and system state.
 
-   *  *Agent Auhtentication and Authorization Policy:* The configuration
+   *  *Agent Authentication and Authorization Policy:* The configuration
       and rules for each of the Agent Identity Management System.
 
-   *  *Agent Compliance:* Measurement of the state and fucntioning of
+   *  *Agent Compliance:* Measurement of the state and functioning of
       the system against the stated policies.
 
    The components form a logical stack in which higher layers depend on
