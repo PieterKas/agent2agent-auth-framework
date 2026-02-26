@@ -142,7 +142,7 @@ This document proposes a model for authentication and authorization of AI agent 
 
 The rapid emergence of AI agents as autonomous workloads has sparked considerable innovation in authentication and authorization approaches. However, many of these efforts develop solutions in isolation, often reinventing existing mechanisms unaware of applicable prior art. This fragmentation risks creating incompatible implementations, duplicated development effort, and missed opportunities to leverage decades of established identity and authorization standards.
 
-This document aims to help close that gap by providing a comprehensive model demonstrating how existing, widely-deployed standards can be composed and applied to solve agent authentication and authorization challenges. Rather than proposing new protocols, this work focuses on integrating proven standards into a coherent framework tailored to the specific requirements of AI agent workloads.
+This document aims to help close that gap by providing a comprehensive model demonstrating how existing, well-established standards and some emergent specifications can be composed and applied to solve agent authentication and authorization challenges. Rather than proposing new protocols, this work focuses on integrating proven standards into a coherent framework tailored to the specific requirements of AI agent workloads.
 
 By doing so, this document serves two complementary goals:
 
