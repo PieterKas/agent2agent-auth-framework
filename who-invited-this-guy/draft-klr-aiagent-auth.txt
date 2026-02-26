@@ -421,7 +421,7 @@ Table of Contents
        credentials remain valid only for the minimum necessary time and
        that authorization state reflects current operational conditions.
 
-   The use of short-lived credentials provides a signiifcant improvement
+   The use of short-lived credentials provides a significant improvement
    in the risk profile and risk of credential exposure.  It provides an
    alternative to explicit revocation mechanisms and simplifies
    lifecycle management in large, automated environments while removing
@@ -459,7 +459,7 @@ Table of Contents
    identity are jointly required.  It also simplifies authorization
    decisions by enabling agents to associate application-layer requests
    with an authenticated transport identity.  One example of this is the
-   use of mTLS in service mesh architecctures such as Istio or LinkerD.
+   use of mTLS in service mesh architectures such as Istio or LinkerD.
 
 9.1.1.  Limitations
 
