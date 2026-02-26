@@ -353,11 +353,11 @@ Table of Contents
    mechanisms (e.g., OAuth 2.0 Token Exchange [OAUTH-TOKEN-EXCHANGE],
    Transaction Tokens [OAUTH-TRANS-TOKENS] or Workload Identity
    Federation).  This allows an agent to obtain a credential targeted to
-   a specific relying party by leveraging the primary credential in its
+   a specific system by leveraging the primary credential in its
    possession.
 
-   *Note*: Static API keys are an anti-pattern for agent identity.  They
-   are bearer artefacts that are not cryptographically bound, do not
+   *Note*: Static API keys are an antipattern for agent identity.  They
+   are bearer artifacts that are not cryptographically bound, do not
    convey identity, are typically long-lived and are operationally
    difficult to rotate, making them unsuitable for secure agent
    authentication or authorization.
