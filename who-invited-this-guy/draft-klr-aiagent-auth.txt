@@ -378,7 +378,7 @@ Table of Contents
    measurements, supply-chain provenance, platform and orchestration-
    layer attestations, or operator assertions to name a few.  Depending
    on the risk involved, a single attestation may be sufficient, or, in
-   higher risk scenarios, multi-attestation may be requred.
+   higher risk scenarios, multi-attestation may be required.
 
    There are numerous systems that perform some kind of attestation, any
    of which can be used in establishing agent identity.  One example of
