@@ -5,10 +5,10 @@
 Network Working Group                                       P. Kasselman
 Internet-Draft                                          Defakto Security
 Intended status: Informational                               J. Lombardo
-Expires: 29 August 2026                                              AWS
+Expires: 30 August 2026                                              AWS
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                        25 February 2026
+                                                        26 February 2026
 
 
                AI Agent Authentication and Authorization
@@ -54,7 +54,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 August 2026.
+   This Internet-Draft will expire on 30 August 2026.
 
 Copyright Notice
 
@@ -126,12 +126,12 @@ Table of Contents
    authorization standards.
 
    This document aims to help close that gap by providing a
-   comprehensive model demonstrating how existing, widely-deployed
-   standards can be composed and applied to solve agent authentication
-   and authorization challenges.  Rather than proposing new protocols,
-   this work focuses on integrating proven standards into a coherent
-   framework tailored to the specific requirements of AI agent
-   workloads.
+   comprehensive model demonstrating how existing, well-established
+   standards and some emergent specifications can be composed and
+   applied to solve agent authentication and authorization challenges.
+   Rather than proposing new protocols, this work focuses on integrating
+   proven standards into a coherent framework tailored to the specific
+   requirements of AI agent workloads.
 
    By doing so, this document serves two complementary goals:
 
