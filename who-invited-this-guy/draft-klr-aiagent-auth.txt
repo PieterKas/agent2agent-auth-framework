@@ -533,8 +533,8 @@ Table of Contents
    when traffic traverses intermediaries such as TLS proxies or load
    balancers that break transport-layer identity continuity.  The
    profile mandates signing of some request components (e.g., method,
-   request-target, content digest, and the WIT itself) and supports
-   optional response signing.
+   request-target (which likely cover what you'd expect), content
+   digest, and the WIT itself) and supports optional response signing.
 
 9.2.3.  Limitations
 
