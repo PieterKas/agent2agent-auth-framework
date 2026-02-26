@@ -550,7 +550,7 @@ Table of Contents
 10.  Agent Authorization
 
    Agents act on behalf of a user, a system, or on their own behalf as
-   shown in Figure 1 and needs to obtain authorization when interacting
+   shown in Figure 1 and need to obtain authorization when interacting
    with protected resources.
 
 10.1.  Leverage OAuth 2.0 as a Delegation Authorization Framework
