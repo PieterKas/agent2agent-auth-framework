@@ -346,14 +346,14 @@ Table of Contents
    capabilities are available.  These mechanisms reduce key exfiltration
    risk but are not required for interoperability.
 
-   In some cases, agents MAY need a secondary credentials to access a
-   proprietary or legacy system that is not compatible with the X.509,
-   JWT or WIT it is provisioned with.  In these cases an agent MAY
-   exchange their primary credentials through a credential exchange
+   In some cases, agents MAY need secondary credentials to access a
+   proprietary or legacy environment that is not compatible with the
+   X.509, JWT or WIT it is provisioned with.  In these cases an agent
+   MAY exchange their primary credentials through a credential exchange
    mechanisms (e.g., OAuth 2.0 Token Exchange [OAUTH-TOKEN-EXCHANGE],
    Transaction Tokens [OAUTH-TRANS-TOKENS] or Workload Identity
    Federation).  This allows an agent to obtain a credential targeted to
-   a specific system by leveraging the primary credential in its
+   a specific environment by leveraging the primary credential in its
    possession.
 
    *Note*: Static API keys are an antipattern for agent identity.  They
