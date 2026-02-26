@@ -471,11 +471,11 @@ Table of Contents
    layer identity.  Similarly, some deployment models (such as
    serverless platforms, multi-tenant edge environments, or cross-domain
    topologies) may obscure or abstract identity presented at the
-   transport layer, making it difficult for relying parties to bind
-   application-layer actions to a credential presented at the transport-
-   layer.  In these cases, application-layer authentication provides a
-   more robust and portable mechanism for expressing agent identity and
-   conveying attestation or policy-relevant attributes.
+   transport layer, making it difficult to bind application-layer
+   actions to a credential presented at the transport layer.  In these
+   cases, application-layer authentication provides a more robust and
+   portable mechanism for expressing agent identity and conveying
+   attestation or policy-relevant attributes.
 
 9.2.  Application layer authentication
 
