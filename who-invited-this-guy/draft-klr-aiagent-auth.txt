@@ -502,9 +502,9 @@ Table of Contents
    typically short-lived to reduce the window for replay attacks.  They
    carry claims such as audience (aud), expiration (exp), a unique token
    identifier (jti), and a hash of the associated WIT (wth).  A WPT may
-   also include hashes of other related tokens (e.g., OAuth access
-   tokens) to bind the authentication contexts to specific transaction
-   or authorizations details.
+   also include hashes of other related tokens (e.g., a Transaction
+   Token) to bind the authentication contexts to specific transaction or
+   authorizations details.
 
    Although the draft currently defines a protocol binding for HTTP (via
    a Workload-Proof-Token header), the core format is protocol-agnostic,
@@ -512,7 +512,7 @@ Table of Contents
    claims model allow WPTs to be bound to different protocols and
    transports, including asynchronous or non-HTTP messaging systems such
    as Kafka and gRPC, or other future protocol bindings.  This design
-   enables relying parties to verify identity, key possession, and
+   enables receiving systems to verify identity, key possession, and
    message binding at the application layer even in environments where
    transport-layer identity (e.g., mutual TLS) is insufficient or
    unavailable.
