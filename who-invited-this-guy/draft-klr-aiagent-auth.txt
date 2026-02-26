@@ -532,10 +532,9 @@ Table of Contents
    This approach ensures end-to-end authentication and integrity even
    when traffic traverses intermediaries such as TLS proxies or load
    balancers that break transport-layer identity continuity.  The
-   profile mandates signing of critical request components (e.g.,
-   method, target, content digest, and the WIT itself) and supports
-   optional response signing to ensure full protection of workload-to-
-   workload exchanges.
+   profile mandates signing of some request components (e.g., method,
+   request-target, content digest, and the WIT itself) and supports
+   optional response signing.
 
 9.2.3.  Limitations
 
