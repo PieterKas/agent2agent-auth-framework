@@ -8,6 +8,8 @@ Intended status: Informational                               J. Lombardo
 Expires: 31 August 2026                                              AWS
                                                             Y. Rosomakho
                                                                  Zscaler
+                                                             B. Campbell
+                                                           Ping Identity
                                                         27 February 2026
 
 
@@ -1213,3 +1215,8 @@ Authors' Addresses
    Yaroslav Rosomakho
    Zscaler
    Email: yrosomakho@zscaler.com
+
+
+   Brian Campbell
+   Ping Identity
+   Email: bcampbell@pingidentity.com
