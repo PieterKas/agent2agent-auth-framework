@@ -5,10 +5,10 @@
 Network Working Group                                       P. Kasselman
 Internet-Draft                                          Defakto Security
 Intended status: Informational                               J. Lombardo
-Expires: 28 August 2026                                              AWS
+Expires: 31 August 2026                                              AWS
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                        24 February 2026
+                                                        27 February 2026
 
 
                AI Agent Authentication and Authorization
@@ -54,7 +54,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 28 August 2026.
+   This Internet-Draft will expire on 31 August 2026.
 
 Copyright Notice
 
@@ -270,8 +270,8 @@ Table of Contents
    authentication, authorization, auditing, and delegation.
 
    The Workload Identity in Multi-System Environments (WIMSE) identifier
-   as defined by [WIMSE-ID] is the canonical identifier for agents in
-   this framework.
+   as defined by [WIMSE-ID] is the primary identifier for agents in this
+   framework.
 
    A WIMSE identifier is a URI that uniquely identifies a workload
    within a trust domain.  Authorization decisions, delegation
