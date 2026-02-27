@@ -351,19 +351,23 @@ Table of Contents
    on the risk involved, a single attestation may be sufficient, or, in
    higher risk scenarios, multi-attestation may be requred.
 
-   There are numerous systems that perform some kind of attestation, any
-   of which can be used in establishing agent identity.  One example of
-   such a system is the Remote ATtestation Procedures (RATS)
-   architecture ([RATS-ARCH]), which provides a general model for
-   producing, conveying, and verifying attestation evidence and defines
-   the roles of Attester, Verifier, and Relying Party, as well as the
-   concept of Evidence, Endorsements, and Attestation Results.
+   There are numerous systems that perform some form of attestation, any
+   of which can contribute to establishing agent identity.  For example,
+   SPIFFE implementations can attest workloads using platform and
+   environment specific mechanisms.  At a high level, an attesting
+   component gathers workload and execution context signals (such as
+   where the workload is running and relevant platform identity
+   attributes), presents those signals for verification to an issuer,
+   and, as long as verification succeeds, binds the workload to a SPIFFE
+   identifier and issues credentials (such as SVID) for subsequent
+   authentication and authorization.
 
-   An agent identity management system may incorporate different
-   attestation mechanisms and implementations (including RATS) to
-   collect attestation evidence and provide it to credential
-   provisioning components.  The selection of mechanisms depends on the
-   deployment constraints and the desired level of trust assurance.
+   An agent identity management system may incorporate multiple
+   attestation mechanisms and implementations to collect evidence and
+   supply it to credential provisioning components.  The selection of
+   mechanisms depends on deployment constraints (such as the underlying
+   platform and available identity signals) and the desired level of
+   trust assurance.
 
 8.  Agent Credential Provisioning
 
@@ -1051,12 +1055,6 @@ Table of Contents
               "OpenID Connect Discovery 1.0", n.d.,
               <https://openid.net/specs/openid-connect-discovery-
               1_0-final.html>.
-
-   [RATS-ARCH]
-              Birkholz, H., Thaler, D., Richardson, M., Smith, N., and
-              W. Pan, "Remote ATtestation procedureS (RATS)
-              Architecture", RFC 9334, DOI 10.17487/RFC9334, January
-              2023, <https://www.rfc-editor.org/rfc/rfc9334>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
