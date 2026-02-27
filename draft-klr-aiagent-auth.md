@@ -418,6 +418,6 @@ This document has no IANA actions.
 --- back
 
 # Acknowledgments
-{:numbered="false"}
+The authors would like to thank Brian Campbell for providing valuable input and feedback for this work.
 
 TODO acknowledge.
