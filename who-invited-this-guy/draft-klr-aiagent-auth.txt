@@ -5,10 +5,10 @@
 Network Working Group                                       P. Kasselman
 Internet-Draft                                          Defakto Security
 Intended status: Informational                               J. Lombardo
-Expires: 30 August 2026                                              AWS
+Expires: 31 August 2026                                              AWS
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                        26 February 2026
+                                                        27 February 2026
 
 
                AI Agent Authentication and Authorization
@@ -54,7 +54,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 30 August 2026.
+   This Internet-Draft will expire on 31 August 2026.
 
 Copyright Notice
 
@@ -555,19 +555,20 @@ Table of Contents
 
 10.1.  Leverage OAuth 2.0 as a Delegation Authorization Framework
 
-   The OAuth 2.0 Authorization Framework [OAUTH-FRAMEWORK] is widely
-   deployed and defines an authorization delegation framework that
+   The widely deployed OAuth 2.0 Authorization Framework
+   [OAUTH-FRAMEWORK] is a mechanism for delegated authorization that
    enables an Agent to obtain limited access to a protected resource
-   (e.g. a service or API) under well-defined policy constraints.  An
-   Agent MUST use OAuth 2.0-based mechanisms to obtain authorization
-   from a user, a system, or on its own behalf.  OAuth 2.0 defines a
-   wide range of authorization grant flows that supports these
-   scenarios.  In these Oauth 2.0 flows, an Agent acts as an OAuth 2.0
-   Client to an OAuth 2.0 Authorization Server, which receives the
-   request, evaluate the authorization policy and returns an access
-   token, which the Agent presents to the Resource Server (i.e. the
-   protected resources such as the LLM or Tools in Figure 1) it needs to
-   access to complete the request.
+   (e.g., a service or API), intermediated by an Authorization Server,
+   often with the explicit approval of the authenticated User.  An Agent
+   uses OAuth 2.0-based mechanisms to obtain authorization from a user,
+   a system, or on its own behalf.  OAuth 2.0 defines a wide range of
+   authorization grant flows that supports these scenarios.  In these
+   Oauth 2.0 flows, an Agent acts as an OAuth 2.0 Client to an OAuth 2.0
+   Authorization Server, which receives the request, evaluate the
+   authorization policy and returns an access token, which the Agent
+   presents to the Resource Server (i.e. the protected resources such as
+   the LLM or Tools in Figure 1, which can evaluate its authorization
+   policy and complete the request.
 
 10.2.  Use of OAuth 2.0 Access Tokens
 
@@ -575,32 +576,36 @@ Table of Contents
    Agent.  In many deployments, access tokens are structured as JSON Web
    Tokens (JWTs) [OAUTH-ACCESSTOKEN-JWT], which include claims such as
    'client_id', 'sub', 'aud', 'scope', and other attributes relevant to
-   authorization.  The access token MUST include the Agent identity as
-   the 'client_id' claim as defined in Section 2.2 of
+   authorization.  The access token includes the Agent identity as the
+   'client_id' claim as defined in Section 2.2 of
    [OAUTH-ACCESSTOKEN-JWT].
 
-   If the Agent is acting on-behalf of another user or system, it MUST
-   include the user or system identifier in the 'sub' claim as defined
-   in Section 2.2 of [OAUTH-ACCESSTOKEN-JWT].  These identitifiers MUST
-   be used by resource servers protected by the OAuth 2.0 authorization
+   When the Agent is acting on-behalf of another user or system, the
+   user or system identifier is conveyed in the 'sub' claim as defined
+   in Section 2.2 of [OAUTH-ACCESSTOKEN-JWT].  These identifiers MUST be
+   used by resource servers protected by the OAuth 2.0 authorization
    service, along with other claims in the access token, to determine if
-   access to a resource should be allowed.  The acccess token MAY
-   include additional claims to convey contextual, attestation-derived,
+   access to a resource should be allowed.  The access token typically
+   includes additional claims to convey contextual, attestation-derived,
    or policy-related information that enables fine-grained access
-   control.  The resource server MAY use the access token and the
+   control.  The resource server uses the access token and the
    information it contains along with other authorization systems (e.g.
    policy based, attribute based or role based authorization systems)
-   when enforcing access.  Where JWT access tokens are not used, opaque
-   tokens may be issued and validated through introspection mechanisms.
+   when enforcing access control.  JWT access tokens can be validated
+   directly by resource servers while other formats that are opaque to
+   the resource server can be validated through a mechanism that calls
+   back to the authorization server (the mechanism is called
+   introspection despite the word having nearly the opposite meaning).
    This framework supports both models and does not require a specific
    token format, provided that equivalent authorization semantics are
    maintained.
 
-   When opaque tokens are used, the resource server MUST obtain
-   authorization information through OAuth 2.0 Token Introspection
-   [OAUTH-TOKEN-INTROSPECTION].  The introspection response provides the
-   active state of the token and associated authorization attributes
-   equivalent to those conveyed in structured tokens.
+   A resource server in receipt of tokens opaque to it are able to
+   obtain authorization and other information of the token through OAuth
+   2.0 Token Introspection [OAUTH-TOKEN-INTROSPECTION].  The
+   introspection response provides the active state of the token and
+   associated authorization attributes equivalent to those conveyed in
+   structured tokens.
 
 10.3.  Obtaining an OAuth 2.0 Access Token
 
