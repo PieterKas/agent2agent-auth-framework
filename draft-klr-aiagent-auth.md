@@ -36,6 +36,10 @@ author:
     fullname: Yaroslav Rosomakho
     organization: Zscaler
     email: yrosomakho@zscaler.com
+ -
+    fullname: Brian Campbell
+    organization: Ping Identity
+    email: bcampbell@pingidentity.com
 
 normative:
   WIMSE_CRED:
