@@ -601,8 +601,8 @@ Table of Contents
    maintained.
 
    A resource server in receipt of tokens opaque to it are able to
-   obtain authorization and other information of the token through OAuth
-   2.0 Token Introspection [OAUTH-TOKEN-INTROSPECTION].  The
+   obtain authorization and other information from the token through
+   OAuth 2.0 Token Introspection [OAUTH-TOKEN-INTROSPECTION].  The
    introspection response provides the active state of the token and
    associated authorization attributes equivalent to those conveyed in
    structured tokens.
