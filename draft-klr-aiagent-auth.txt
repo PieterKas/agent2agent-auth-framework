@@ -183,15 +183,17 @@ Table of Contents
        Agent may return a response to the User or System.  The AI Agent
        may also return intermediate results or request additional input.
 
-   As shown in Figure 1, the AI Agent is a workload that needs an
-   identifier and credentials with which it can be authenticated by the
-   User or System, Large Language Model and Tools/Services/Resources.
-   Once authenticated, these parties must determine if the AI Agent is
-   authorized to access the requested Large Language Model, Tools,
-   Services or Resources.  If the AI Agent is acting on behalf of a User
-   or System, the User or System needs to delegate authority to the AI
-   Agent, and the User or System context MUST be preserved to as input
-   to authorization decisions and recorded in audit trails.
+   As shown in Figure 1, the AI agent is a workload that needs an
+   identifier and credentials so it can be authenticated by the Tools,
+   Services, Resources, Large Langugage Model, System and the User (via
+   the underlying operating system or platform, similar to existing
+   applications and services).  Once authenticated, these parties must
+   determine if the AI Agent is authorized to access the requested Large
+   Language Model, Tools, Services or Resources.  If the AI Agent is
+   acting on behalf of a User or System, the User or System needs to
+   delegate authority to the AI Agent, and the User or System context
+   MUST be preserved to as input to authorization decisions and recorded
+   in audit trails.
 
    This document describes how AI Agents should leverage existing
    standards defined by SPIFFE [SPIFFE], WIMSE, OAuth and OpenID SSF
@@ -549,8 +551,8 @@ Table of Contents
    the 'client_id' claim as defined in Section 2.2 of
    [OAUTH-ACCESSTOKEN-JWT].
 
-   If the Agent is acting on-behalf of another user or system, it MUST
-   include the user or system identifier in the 'sub' claim as defined
+   If the Agent is acting on-behalf of another User or System, it MUST
+   include the User or System identifier in the 'sub' claim as defined
    in Section 2.2 of [OAUTH-ACCESSTOKEN-JWT].  These identitifiers MUST
    be used by resource servers protected by the OAuth 2.0 authorization
    service, along with other claims in the access token, to determine if
