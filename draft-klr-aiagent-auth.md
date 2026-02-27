@@ -218,7 +218,7 @@ The components form a logical stack in which higher layers depend on guarantees 
 # Agent Identifier {#agent_identifiers}
 Agents MUST be uniquely identified in order to support authentication, authorization, auditing, and delegation.
 
-The Workload Identity in Multi-System Environments (WIMSE) identifier as defined by {{!WIMSE-ID=I-D.ietf-wimse-identifier}} is the canonical identifier for agents in this framework.
+The Workload Identity in Multi-System Environments (WIMSE) identifier as defined by {{!WIMSE-ID=I-D.ietf-wimse-identifier}} is the primary identifier for agents in this framework.
 
 A WIMSE identifier is a URI that uniquely identifies a workload within a trust domain. Authorization decisions, delegation semantics, and audit records rely on this identifier remaining stable for the lifetime of the workload identity.
 
