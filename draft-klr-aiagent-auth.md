@@ -38,54 +38,12 @@ author:
     email: yrosomakho@zscaler.com
 
 normative:
-  WIMSE_CRED:
-    title: "WIMSE Workload Credentials"
-    target: https://datatracker.ietf.org/doc/draft-ietf-wimse-workload-creds/
   SPIFFE:
     title: "Secure Production Identity Framework for Everyone"
     target: https://spiffe.io/docs/latest/spiffe-about/overview/
   SPIFFE-ID:
     title: SPIFFE-ID
     target: https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md
-  SPIFFE_X509:
-    title: X509-SVID
-    target: https://github.com/spiffe/spiffe/blob/main/standards/X509-SVID.md
-  SPIFFE_JWT:
-    title: JWT-SVID
-    target: https://github.com/spiffe/spiffe/blob/main/standards/JWT-SVID.md
-  SPIFFE_BUNDLE:
-    title: SPIFFE Bundle
-    target: https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE_Trust_Domain_and_Bundle.md#4-spiffe-bundle-format
-  SPIFFE_FEDERATION:
-    title: SPIFFE Federation
-    target: https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE_Federation.md
-  RFC9449:
-    title: OAuth 2.0 Demonstrating Proof of Possession (DPoP)
-    target: https://datatracker.ietf.org/doc/rfc9449
-  RFC9396:
-    title: OAuth 2.0 Rich Authorization Requests
-    target: https://datatracker.ietf.org/doc/rfc9396
-  RFC9126:
-    title: OAuth 2.0 Pushed Authorization Requests
-    target: https://datatracker.ietf.org/doc/rfc9126
-  RFC8725:
-    title: JSON Web Token Best Current Practices
-    target: https://datatracker.ietf.org/doc/rfc8725
-  RFC6750:
-    title: "The OAuth 2.0 Authorization Framework: Bearer Token Usage"
-    target: https://datatracker.ietf.org/doc/rfc6750
-  RFC9701:
-    title: JWT Response for OAuth 2.0 Token Introspection
-    target: https://datatracker.ietf.org/doc/rfc9701
-  RFC8628:
-    title: OAuth 2.0 Device Authorization Grant
-    target: https://www.rfc-editor.org/rfc/rfc8628.html
-  OAuth.mTLS.Auth-RFC8705:
-    title: OAuth 2.0 Mutual-TLS Client Authentication and Certificate-Bound Access Tokens
-    target: https://datatracker.ietf.org/doc/html/rfc8705
-  OAuth.step-up.Auth-RFC9470:
-    title: OAuth 2.0 Step Up Authentication Challenge Protocol
-    target: https://www.rfc-editor.org/rfc/rfc9470.html
   OpenIDConnect.AuthZEN:
     title: Authorization API 1.0
     target: https://openid.net/specs/authorization-api-1_0.html
@@ -106,9 +64,6 @@ normative:
   OpenIDConnect.CIBA:
     title: OpenID Connect Client-Initiated Backchannel Authentication Flow - Core 1.0
     target: https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html
-  OAuth.SPIFFE.Client.Auth:
-    title: OAuth SPIFFE Client Authentication
-    target: https://datatracker.ietf.org/doc/draft-ietf-oauth-spiffe-client-auth
   MCP:
     title: Model Context Protocol
     target: https://modelcontextprotocol.io/specification
