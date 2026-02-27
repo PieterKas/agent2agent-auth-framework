@@ -643,12 +643,12 @@ Table of Contents
    resource.  The System SHOULD obtain an access token using the same
    mechanisms defined for an Agent and then present the OAuth access
    token to the Agent.  The Agent should validate the access token,
-   including verifiying that the 'aud' claim of the access token
-   includes the Agent.  Once validated, the Agent SHOULD use OAuth 2.0
-   Token Exchange as defined in [OAUTH-TOKEN-EXCHANGE] to exchange the
-   access token it received for a new access token to access.  The Agent
-   then uses the newly issued access token to access the protected
-   resources (LLM or Tools) it needs to complete the request.
+   including verifying that the 'aud' claim of the access token includes
+   the Agent.  Once validated, the Agent SHOULD use OAuth 2.0 Token
+   Exchange as defined in [OAUTH-TOKEN-EXCHANGE] to exchange the access
+   token it received for a new access token to access.  The Agent then
+   uses the newly issued access token to access the protected resources
+   (LLM or Tools) it needs to complete the request.
 
    If a System invokes an Agent and does not treat the Agent as an OAuth
    protected resource, the Agent MUST obtain its own OAuth access token
@@ -657,7 +657,7 @@ Table of Contents
 10.3.4.  OAuth 2.0 Security Best Practices
 
    Agents MUST support the Best Current Practice for OAuth 2.0 Security
-   as described in [OAUTH-BCP] when requesting acccess tokens.
+   as described in [OAUTH-BCP] when requesting access tokens.
 
 10.4.  Risk reduction with Transaction Tokens
 
@@ -672,24 +672,24 @@ Table of Contents
    example, an attacker may discover and access token passed between
    microservices in a log file or crash dump, exfiltrate it, and use it
    to invoke a new transaction with different parameters (e.g. increase
-   the trnasaction amount, or invoke an unrelated call as part of
+   the transaction amount, or invoke an unrelated call as part of
    executing a lateral move).
 
    To avoid passing access tokens between microservices, the Agent, LLM
    or Tools SHOULD exchange the access token it receives for a
    transaction token, as defined in the Transaction Token specification
    as defined in [OAUTH-TRANS-TOKENS].  The transaction token allows for
-   identity and auhtorization information to be passed along a call
+   identity and authorization information to be passed along a call
    chain between microservices.  The transaction token issuer enriches
    the transaction token with context of the caller that presented the
    access token (e.g. IP address etc), transaction context (transaction
    amount), identity information and a unique transaction identifier.
-   This results in a dowscoped token that is bound to a specific
+   This results in a downscoped token that is bound to a specific
    transaction that cannot be used as an access token, with another
    transaction, or within the same transaction with modified transaction
    details (e.g. change in transaction amount).  Transaction tokens are
-   typically short lived, further lmiting the risk in case they are
-   obtained by an attacker by liomiting the time window during which
+   typically short-lived, further limiting the risk in case they are
+   obtained by an attacker by limiting the time window during which
    these tokens will be accepted.
 
    A transaction token MAY be used to obtain an access token to call
