@@ -351,14 +351,13 @@ Table of Contents
 
    There are numerous systems that perform some form of attestation, any
    of which can contribute to establishing agent identity.  For example,
-   SPIFFE deployments (e.g., SPIRE-type implementations) can attest
-   workloads using platform and environment specific mechanisms.  At a
-   high level, an attesting component (an agent in SPIRE-type
-   implementations) gathers workload and execution context signals (such
-   as where the workload is running and relevant platform identity
+   SPIFFE implementations can attest workloads using platform and
+   environment specific mechanisms.  At a high level, an attesting
+   component gathers workload and execution context signals (such as
+   where the workload is running and relevant platform identity
    attributes), presents those signals for verification to an issuer,
-   and—if verification succeeds, binds the workload to a SPIFFE
-   identifier and issues credentials (e.g., an SVID) for subsequent
+   and, as long as verification succeeds, binds the workload to a SPIFFE
+   identifier and issues credentials (such as SVID) for subsequent
    authentication and authorization.
 
    An agent identity management system may incorporate multiple
