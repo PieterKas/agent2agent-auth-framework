@@ -5,12 +5,12 @@
 Network Working Group                                       P. Kasselman
 Internet-Draft                                          Defakto Security
 Intended status: Informational                               J. Lombardo
-Expires: 31 August 2026                                              AWS
+Expires: 1 September 2026                                            AWS
                                                             Y. Rosomakho
                                                                  Zscaler
                                                              B. Campbell
                                                            Ping Identity
-                                                        27 February 2026
+                                                        28 February 2026
 
 
                AI Agent Authentication and Authorization
@@ -56,7 +56,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 31 August 2026.
+   This Internet-Draft will expire on 1 September 2026.
 
 Copyright Notice
 
@@ -95,7 +95,7 @@ Table of Contents
      10.3.  Obtaining an OAuth 2.0 Access Token
        10.3.1.  User Delegates Authorization
        10.3.2.  Agent Obtains Own Authorization
-       10.3.3.  System Access to Agents
+       10.3.3.  Agents Accessed by Systems or Other Agents
        10.3.4.  OAuth 2.0 Security Best Practices
      10.4.  Risk reduction with Transaction Tokens
      10.5.  Cross Domain Access
@@ -568,8 +568,8 @@ Table of Contents
    enables an Agent to obtain limited access to a protected resource
    (e.g., a service or API), intermediated by an Authorization Server,
    often with the explicit approval of the authenticated User.  An Agent
-   uses OAuth 2.0-based mechanisms to obtain authorization from a user,
-   a system, or on its own behalf.  OAuth 2.0 defines a wide range of
+   uses OAuth 2.0-based mechanisms to obtain authorization from a User,
+   a System, or on its own behalf.  OAuth 2.0 defines a wide range of
    authorization grant flows that supports these scenarios.  In these
    Oauth 2.0 flows, an Agent acts as an OAuth 2.0 Client to an OAuth 2.0
    Authorization Server, which receives the request, evaluate the
@@ -617,47 +617,45 @@ Table of Contents
 
 10.3.  Obtaining an OAuth 2.0 Access Token
 
-   Agents MUST obtain OAuth 2.0 accss tokens using standards OAuth 2.0
-   Authorization Flows.
+   OAuth 2.0 defines a number authorization grant flows in support of
+   different authorization scenarios.  The appropriate flow depends on
+   the specific authorization scenario and the nature of User
+   involvement.  The following subsections describe the most relevant
+   flows for Agent authorization.
 
 10.3.1.  User Delegates Authorization
 
-   When a User grants authorization to an Agent to access one or more
-   resources (Tools, LLMs), the Authorization Code Grant MUST be used as
-   described in Section 4.1 of [OAUTH-FRAMEWORK].
+   When a User grants authorization to an Agent for access to one or
+   more resources (Tools, LLMs, etc.), the Authorization Code Grant, as
+   described in Section 4.1 of [OAUTH-FRAMEWORK], is the canonical means
+   of obtaining an access token.  This redirection-based flow involves
+   an interactive authorization process in which the user authenticates
+   to the authorization server and explicitly approves the requested
+   access.  The resulting access token reflects the user's consent and
+   can be used by the agent to access resources on behalf of the user.
 
 10.3.2.  Agent Obtains Own Authorization
 
-   Agents obtaining access tokens on their own behalf MUST use the
-   Client Credentials Grant as described in Section 4.4 of
-   [OAUTH-FRAMEWORK] or the JWT Authorization Grant as described in
-   Section 2.1 of [OAUTH-CLIENTAUTH-JWT].  When using the Client
-   Credentials Grant, the Agent MUST authenticate itself using one of
-   the mechanisms described in Section 9 and MUST NOT use static, long
-   lived client secrets to authenticate.
+   Agents obtaining access tokens on their own behalf can use the Client
+   Credentials Grant as described in Section 4.4 of [OAUTH-FRAMEWORK] or
+   the JWT Authorization Grant as described in Section 2.1 of
+   [OAUTH-CLIENTAUTH-JWT].  When using the Client Credentials Grant, the
+   Agent authenticates itself using one of the mechanisms described in
+   Section 9 and not with the use of static, long-lived client secrets.
+   When using the JWT Authorization Grant, the Agent will be identified
+   in the subject of the JWT assertion.
 
-10.3.3.  System Access to Agents
+10.3.3.  Agents Accessed by Systems or Other Agents
 
-   When Agents are invoked by a System (e.g. a batch job, or another
-   Agent), the System SHOULD treat the Agent as an OAuth protected
-   resource.  The System SHOULD obtain an access token using the same
-   mechanisms defined for an Agent and then present the OAuth access
-   token to the Agent.  The Agent should validate the access token,
-   including verifying that the 'aud' claim of the access token includes
-   the Agent.  Once validated, the Agent SHOULD use OAuth 2.0 Token
-   Exchange as defined in [OAUTH-TOKEN-EXCHANGE] to exchange the access
-   token it received for a new access token to access.  The Agent then
-   uses the newly issued access token to access the protected resources
-   (LLM or Tools) it needs to complete the request.
-
-   If a System invokes an Agent and does not treat the Agent as an OAuth
-   protected resource, the Agent MUST obtain its own OAuth access token
-   as described in Section 10.3.2.
+   Agents themselves can act in the role of an OAuth protected resource
+   and be invoked by a System (e.g. a batch job) or another Agent.  The
+   System obtains an access token using an appropriate mechanism and
+   then invokes the Agent presenting the access token.
 
 10.3.4.  OAuth 2.0 Security Best Practices
 
-   Agents MUST support the Best Current Practice for OAuth 2.0 Security
-   as described in [OAUTH-BCP] when requesting access tokens.
+   The Best Current Practice for OAuth 2.0 Security as described in
+   [OAUTH-BCP] are applicable when requesting and using access tokens.
 
 10.4.  Risk reduction with Transaction Tokens
 
@@ -668,7 +666,7 @@ Table of Contents
    transactions and consequently have broader scope than needed to
    complete any specific transaction.  Passing the access token from one
    microservice to another within an Agent, LLM or the Tools invoked by
-   the Agent increases the risk of token theft and replay attaccks.  For
+   the Agent increases the risk of token theft and replay attacks.  For
    example, an attacker may discover and access token passed between
    microservices in a log file or crash dump, exfiltrate it, and use it
    to invoke a new transaction with different parameters (e.g. increase
@@ -726,7 +724,7 @@ Table of Contents
    ([OAUTH-ID-CHAIN]) provides a general mechanism for obtaining cross-
    domain access that can be used whether an identity assertion like a
    SAML or OpenID Connect token is available or not.  The Identity
-   Assertion JWT Authorization Grant [OAUTH-JWT-ASSERTION] is optimised
+   Assertion JWT Authorization Grant [OAUTH-JWT-ASSERTION] is optimized
    for cases where an identity assertion like a SAML or OpenID Connect
    token is available from an identity provider that is trusted by all
    the OAuth authorization servers as it removes the need for the user
@@ -773,15 +771,15 @@ Table of Contents
    implementation.
 
    Access from the Tools to the resources and services MAY be controlled
-   through a variety of auhtorization mechanisms, includidng OAuth.  If
+   through a variety of authorization mechanisms, including OAuth.  If
    access is controlled through OAuth, the Tools SHOULD use OAuth 2.0
    Token Exchange as defined in [OAUTH-TOKEN-EXCHANGE] to exchange the
    access token it received for a new access token to access the
    resource or service in question.  If the Tool needs access to a
-   resource protected by an auhtorization server other than the Tool's
+   resource protected by an authorization server other than the Tool's
    own authorization server, it SHOULD use the OAuth Identity and
    Authorization Chaining Across Domains ([OAUTH-ID-CHAIN]) to obtain an
-   access token from the authroization server protecting the resource it
+   access token from the authorization server protecting the resource it
    needs to access.
 
    *Note:* It is an anti-pattern for Tools to forward access tokens it
@@ -839,7 +837,7 @@ Table of Contents
    acquisition flow at runtime, even when resources are deployed or
    moved dynamically.
 
-   A Tool that atttempts to acccess and OAuth protected resource MAY use
+   A Tool that attempts to access and OAuth protected resource MAY use
    OAuth 2.0 Protected Resource Metadata [OAUTH-RESOURCE-METADATA] in a
    similar way as an Agent.  Similarly, a System may use
    [OAUTH-RESOURCE-METADATA] when accessing an Agent.
@@ -856,7 +854,7 @@ Table of Contents
    without prior bilateral registration.
 
    As an alternative, entities acting as OAuth clients MAY register
-   their capabilities with authroization servers as defined in the OAuth
+   their capabilities with authorization servers as defined in the OAuth
    2.0 Dynamic Client Registration Protocol [OAUTH-REGISTRATION].
 
 11.  Agent Monitoring and Remediation
@@ -867,21 +865,21 @@ Table of Contents
    execution.  Monitoring is therefore a security control, not solely an
    operational feature.
 
-   Any particiapant in the system, including the Agent, Tool, System,
-   LLM or other resources and service MAY subscribe to change
-   notifications using eventing mechanisms such as the OpenID Shared
-   Signals Framework [SSF] with the Continuous Access Evaluation Profile
-   [CAEP] to receive security and authorization-relevant signals.  Upon
-   receipt of a relevant signal (e.g., session revoked, subject
-   disabled, token replay suspected, risk elevated), the recipient
-   SHOULD remediate by attenuating access, such as terminating local
-   sessions, discarding cached tokens, re-acquiring tokens with updated
-   constraints, reducing privileges, or re-running policy evaluation
-   before continueing to allow acccess.  Recipients of such signals MUST
-   ensure that revoked or downgraded authorization is enforced without
-   undue delay.  Cached authorization decisions and tokens that are no
-   longer valid MUST NOT continue to be used after a revocation or risk
-   notification is received.
+   Any participant in the system, including the Agent, Tool, System, LLM
+   or other resources and service MAY subscribe to change notifications
+   using eventing mechanisms such as the OpenID Shared Signals Framework
+   [SSF] with the Continuous Access Evaluation Profile [CAEP] to receive
+   security and authorization-relevant signals.  Upon receipt of a
+   relevant signal (e.g., session revoked, subject disabled, token
+   replay suspected, risk elevated), the recipient SHOULD remediate by
+   attenuating access, such as terminating local sessions, discarding
+   cached tokens, re-acquiring tokens with updated constraints, reducing
+   privileges, or re-running policy evaluation before continueing to
+   allow acccess.  Recipients of such signals MUST ensure that revoked
+   or downgraded authorization is enforced without undue delay.  Cached
+   authorization decisions and tokens that are no longer valid MUST NOT
+   continue to be used after a revocation or risk notification is
+   received.
 
    To support detection, investigation, and accountability, deployments
    MUST produce durable audit logs covering authorization decisions and
@@ -955,7 +953,7 @@ Table of Contents
 
 15.  Privacy Considerations
 
-   TODO Privac
+   TODO Privacy
 
 16.  IANA Considerations
 
