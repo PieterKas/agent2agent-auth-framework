@@ -665,30 +665,30 @@ Table of Contents
    the Agent, LLM or Tools can typically be used with multiple
    transactions and consequently have broader scope than needed to
    complete any specific transaction.  Passing the access token from one
-   microservice to another within an Agent, LLM or the Tools invoked by
-   the Agent increases the risk of token theft and replay attacks.  For
-   example, an attacker may discover and access token passed between
+   microservice to another within an invoked Agent, LLM or the Tools
+   increases the risk of token theft and replay attacks.  For example,
+   an attacker may discover and access token passed between
    microservices in a log file or crash dump, exfiltrate it, and use it
    to invoke a new transaction with different parameters (e.g. increase
    the transaction amount, or invoke an unrelated call as part of
    executing a lateral move).
 
    To avoid passing access tokens between microservices, the Agent, LLM
-   or Tools SHOULD exchange the access token it receives for a
-   transaction token, as defined in the Transaction Token specification
-   as defined in [OAUTH-TRANS-TOKENS].  The transaction token allows for
-   identity and authorization information to be passed along a call
-   chain between microservices.  The transaction token issuer enriches
-   the transaction token with context of the caller that presented the
-   access token (e.g. IP address etc), transaction context (transaction
-   amount), identity information and a unique transaction identifier.
-   This results in a downscoped token that is bound to a specific
-   transaction that cannot be used as an access token, with another
-   transaction, or within the same transaction with modified transaction
-   details (e.g. change in transaction amount).  Transaction tokens are
-   typically short-lived, further limiting the risk in case they are
-   obtained by an attacker by limiting the time window during which
-   these tokens will be accepted.
+   or Tools can exchange the received access token for a transaction
+   token, as defined in the Transaction Token specification
+   [OAUTH-TRANS-TOKENS].  The transaction token allows for identity and
+   authorization information to be passed along the internal call chain
+   of microservices.  The transaction token issuer enriches the
+   transaction token with context of the caller that presented the
+   access token (e.g. IP address, etc.), transaction context
+   (transaction amount), identity information and a unique transaction
+   identifier.  This results in a downscoped token that is bound to a
+   specific transaction and cannot be used as an access token, with
+   another transaction, or within the same transaction with modified
+   transaction details (e.g. change in transaction amount).  Transaction
+   tokens are typically short-lived, further limiting the risk in case
+   they are obtained by an attacker by limiting the time window during
+   which these tokens will be accepted.
 
    A transaction token MAY be used to obtain an access token to call
    another service (e.g. another Agent, Tool or LLM) by using OAuth 2.0
