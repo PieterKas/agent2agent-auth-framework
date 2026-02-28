@@ -100,8 +100,8 @@ Table of Contents
      10.4.  Risk reduction with Transaction Tokens
      10.5.  Cross Domain Access
      10.6.  Human in the Loop
-     10.7.  Tool-to-Service Acccess
-     10.8.  Privacy Considerations
+     10.7.  Tool-to-Service Access
+     10.8.  Privacy Considerations {privacy-considerations}
      10.9.  OAuth 2.0 Discovery in Dynamic Environments
        10.9.1.  Authorization Server Capability Discovery
        10.9.2.  Protected Resource Capability Discovery
@@ -760,33 +760,31 @@ Table of Contents
    authorization server, and the agent MUST NOT treat local UI
    confirmation alone as sufficient authorization.
 
-10.7.  Tool-to-Service Acccess
+10.7.  Tool-to-Service Access
 
    Tools expose interfaces to underlying services and resources.  Access
-   to the Tools SHOULD be controlled by OAuth which MAY be augmented by
-   policy, attribute or role based authorization systems (amongst
-   others).  If the Tools are implemented as one or more microservices,
-   it should use transaction tokens to reduce risk as described in
-   Section 10.4 to avoid passing access tokens around within the Tool
-   implementation.
+   to the Tools can be controlled by OAuth and augmented by policy,
+   attribute or role based authorization systems (amongst others).  If
+   the Tools are implemented as one or more microservices, it should use
+   transaction tokens to reduce risk as described in Section 10.4 to
+   avoid passing access tokens around within the Tool implementation.
 
    Access from the Tools to the resources and services MAY be controlled
    through a variety of authorization mechanisms, including OAuth.  If
-   access is controlled through OAuth, the Tools SHOULD use OAuth 2.0
-   Token Exchange as defined in [OAUTH-TOKEN-EXCHANGE] to exchange the
-   access token it received for a new access token to access the
-   resource or service in question.  If the Tool needs access to a
-   resource protected by an authorization server other than the Tool's
-   own authorization server, it SHOULD use the OAuth Identity and
-   Authorization Chaining Across Domains ([OAUTH-ID-CHAIN]) to obtain an
-   access token from the authorization server protecting the resource it
-   needs to access.
+   access is controlled through OAuth, the Tools can use OAuth 2.0 Token
+   Exchange as defined in [OAUTH-TOKEN-EXCHANGE] to exchange the access
+   token it received for a new access token to access the resource or
+   service in question.  When the Tool needs access to a resource
+   protected by an authorization server other than the Tool's own
+   authorization server, the OAuth Identity and Authorization Chaining
+   Across Domains ([OAUTH-ID-CHAIN]) can be used to obtain an access
+   token from the authorization server protecting that resource.
 
    *Note:* It is an anti-pattern for Tools to forward access tokens it
    received from the Agent to Services or Resources.  It increases the
    risk of credential theft and lateral attacks.
 
-10.8.  Privacy Considerations
+10.8.  Privacy Considerations {privacy-considerations}
 
    Authorization tokens may contain user identifiers, agent identifiers,
    audience restrictions, transaction details, and contextual
@@ -818,13 +816,13 @@ Table of Contents
 
 10.9.1.  Authorization Server Capability Discovery
 
-   An Agent that needs to obtain tokens MAY discover authorization
+   An Agent that needs to obtain tokens can discover authorization
    server endpoints and capabilities using OAuth 2.0 Authorization
    Server Metadata [OAUTH-SERVER-METADATA] and/or OpenID Connect
    Discovery [OpenIDConnect.Discovery].  This allows the Agent to learn
-   the as issuer identifier, authorization and token endpoints,
-   supported grant types, client authentication methods, signing keys
-   (via jwks_uri), and other relevant capabilities without
+   the authorization server issuer identifier, authorization and token
+   endpoints, supported grant types, client authentication methods,
+   signing keys (via jwks_uri), and other relevant capabilities without
    preconfiguring them.
 
 10.9.2.  Protected Resource Capability Discovery
@@ -849,9 +847,9 @@ Table of Contents
    that acts as OAuth clients.  Where supported, they MAY use Client ID
    Metadata Documents [OAUTH-CLIENT-METADATA], which allow a client to
    host its metadata at a URL-valued client_id so that the relying party
-   can retrieve client properties (e.g., redirect URIs, software
-   statement, display information, and other registered client metadata)
-   without prior bilateral registration.
+   can retrieve client properties (e.g., redirect URIs, display
+   information, and other registered client metadata) without prior
+   bilateral registration.
 
    As an alternative, entities acting as OAuth clients MAY register
    their capabilities with authorization servers as defined in the OAuth
@@ -953,7 +951,7 @@ Table of Contents
 
 15.  Privacy Considerations
 
-   TODO Privacy
+   TODO Privacy but there's also Section 15...
 
 16.  IANA Considerations
 

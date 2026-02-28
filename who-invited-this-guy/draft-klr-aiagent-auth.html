@@ -1245,10 +1245,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
                 <p id="section-toc.1-1.10.2.6.1"><a href="#section-10.6" class="auto internal xref">10.6</a>.  <a href="#name-human-in-the-loop" class="internal xref">Human in the Loop</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.7">
-                <p id="section-toc.1-1.10.2.7.1"><a href="#section-10.7" class="auto internal xref">10.7</a>.  <a href="#name-tool-to-service-acccess" class="internal xref">Tool-to-Service Acccess</a></p>
+                <p id="section-toc.1-1.10.2.7.1"><a href="#section-10.7" class="auto internal xref">10.7</a>.  <a href="#name-tool-to-service-access" class="internal xref">Tool-to-Service Access</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.8">
-                <p id="section-toc.1-1.10.2.8.1"><a href="#section-10.8" class="auto internal xref">10.8</a>.  <a href="#name-privacy-considerations" class="internal xref">Privacy Considerations</a></p>
+                <p id="section-toc.1-1.10.2.8.1"><a href="#section-10.8" class="auto internal xref">10.8</a>.  <a href="#name-privacy-considerations-priv" class="internal xref">Privacy Considerations {privacy-considerations}</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.9">
                 <p id="section-toc.1-1.10.2.9.1"><a href="#section-10.9" class="auto internal xref">10.9</a>.  <a href="#name-oauth-20-discovery-in-dynam" class="internal xref">OAuth 2.0 Discovery in Dynamic Environments</a></p>
@@ -1279,7 +1279,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.14.1"><a href="#section-14" class="auto internal xref">14</a>. <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.15">
-            <p id="section-toc.1-1.15.1"><a href="#section-15" class="auto internal xref">15</a>. <a href="#name-privacy-considerations-2" class="internal xref">Privacy Considerations</a></p>
+            <p id="section-toc.1-1.15.1"><a href="#section-15" class="auto internal xref">15</a>. <a href="#name-privacy-considerations" class="internal xref">Privacy Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.16">
             <p id="section-toc.1-1.16.1"><a href="#section-16" class="auto internal xref">16</a>. <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
@@ -1696,20 +1696,20 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <p id="section-10.6-3">This model aligns with user-solicitation patterns such as those described by the Model Context Protocol (<span>[<a href="#MCP" class="cite xref">MCP</a>]</span>), where an agent pauses execution and requests user confirmation before performing sensitive actions. The final authorization decision remains with the authorization server, and the agent <span class="bcp14">MUST NOT</span> treat local UI confirmation alone as sufficient authorization.<a href="#section-10.6-3" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="tool-to-service-acccess">
+<div id="tool-to-service-access">
 <section id="section-10.7">
-        <h3 id="name-tool-to-service-acccess">
-<a href="#section-10.7" class="section-number selfRef">10.7. </a><a href="#name-tool-to-service-acccess" class="section-name selfRef">Tool-to-Service Acccess</a>
+        <h3 id="name-tool-to-service-access">
+<a href="#section-10.7" class="section-number selfRef">10.7. </a><a href="#name-tool-to-service-access" class="section-name selfRef">Tool-to-Service Access</a>
         </h3>
-<p id="section-10.7-1">Tools expose interfaces to underlying services and resources. Access to the Tools <span class="bcp14">SHOULD</span> be controlled by OAuth which <span class="bcp14">MAY</span> be augmented by policy, attribute or role based authorization systems (amongst others). If the Tools are implemented as one or more microservices, it should use transaction tokens to reduce risk as described in <a href="#trat-risk-reduction" class="auto internal xref">Section 10.4</a> to avoid passing access tokens around within the Tool implementation.<a href="#section-10.7-1" class="pilcrow">¶</a></p>
-<p id="section-10.7-2">Access from the Tools to the resources and services <span class="bcp14">MAY</span> be controlled through a variety of authorization mechanisms, including OAuth. If access is controlled through OAuth, the Tools <span class="bcp14">SHOULD</span> use OAuth 2.0 Token Exchange as defined in <span>[<a href="#OAUTH-TOKEN-EXCHANGE" class="cite xref">OAUTH-TOKEN-EXCHANGE</a>]</span> to exchange the access token it received for a new access token to access the resource or service in question. If the Tool needs access to a resource protected by an authorization server other than the Tool's own authorization server, it <span class="bcp14">SHOULD</span> use the OAuth Identity and Authorization Chaining Across Domains (<span>[<a href="#OAUTH-ID-CHAIN" class="cite xref">OAUTH-ID-CHAIN</a>]</span>) to obtain an access token from the authorization server protecting the resource it needs to access.<a href="#section-10.7-2" class="pilcrow">¶</a></p>
+<p id="section-10.7-1">Tools expose interfaces to underlying services and resources. Access to the Tools can be controlled by OAuth and augmented by policy, attribute or role based authorization systems (amongst others). If the Tools are implemented as one or more microservices, it should use transaction tokens to reduce risk as described in <a href="#trat-risk-reduction" class="auto internal xref">Section 10.4</a> to avoid passing access tokens around within the Tool implementation.<a href="#section-10.7-1" class="pilcrow">¶</a></p>
+<p id="section-10.7-2">Access from the Tools to the resources and services <span class="bcp14">MAY</span> be controlled through a variety of authorization mechanisms, including OAuth. If access is controlled through OAuth, the Tools can use OAuth 2.0 Token Exchange as defined in <span>[<a href="#OAUTH-TOKEN-EXCHANGE" class="cite xref">OAUTH-TOKEN-EXCHANGE</a>]</span> to exchange the access token it received for a new access token to access the resource or service in question. When the Tool needs access to a resource protected by an authorization server other than the Tool's own authorization server, the OAuth Identity and Authorization Chaining Across Domains (<span>[<a href="#OAUTH-ID-CHAIN" class="cite xref">OAUTH-ID-CHAIN</a>]</span>) can be used to obtain an access token from the authorization server protecting that resource.<a href="#section-10.7-2" class="pilcrow">¶</a></p>
 <p id="section-10.7-3"><strong>Note:</strong> It is an anti-pattern for Tools to forward access tokens it received from the Agent to Services or Resources. It increases the risk of credential theft and lateral attacks.<a href="#section-10.7-3" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="privacy-considerations">
+<div id="privacy-considerations-privacy-considerations">
 <section id="section-10.8">
-        <h3 id="name-privacy-considerations">
-<a href="#section-10.8" class="section-number selfRef">10.8. </a><a href="#name-privacy-considerations" class="section-name selfRef">Privacy Considerations</a>
+        <h3 id="name-privacy-considerations-priv">
+<a href="#section-10.8" class="section-number selfRef">10.8. </a><a href="#name-privacy-considerations-priv" class="section-name selfRef">Privacy Considerations {privacy-considerations}</a>
         </h3>
 <p id="section-10.8-1">Authorization tokens may contain user identifiers, agent identifiers, audience restrictions, transaction details, and contextual attributes. Deployments <span class="bcp14">SHOULD</span> minimize disclosure of personally identifiable or sensitive information in tokens and prefer audience-restricted and short-lived tokens. Where possible, opaque tokens with introspection <span class="bcp14">SHOULD</span> be preferred when claim minimization is required.<a href="#section-10.8-1" class="pilcrow">¶</a></p>
 <p id="section-10.8-2">Agents <span class="bcp14">SHOULD</span> request only the minimum scopes and authorization details necessary to complete a task. Resource servers <span class="bcp14">SHOULD</span> avoid logging full tokens and instead log token identifiers or hashes. When authorization context is propagated across services, derived or down-scoped tokens (such as transaction tokens) <span class="bcp14">SHOULD</span> be used to reduce correlation and replay risk.<a href="#section-10.8-2" class="pilcrow">¶</a></p>
@@ -1727,7 +1727,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
           <h4 id="name-authorization-server-capabi">
 <a href="#section-10.9.1" class="section-number selfRef">10.9.1. </a><a href="#name-authorization-server-capabi" class="section-name selfRef">Authorization Server Capability Discovery</a>
           </h4>
-<p id="section-10.9.1-1">An Agent that needs to obtain tokens <span class="bcp14">MAY</span> discover authorization server endpoints and capabilities using OAuth 2.0 Authorization Server Metadata <span>[<a href="#OAUTH-SERVER-METADATA" class="cite xref">OAUTH-SERVER-METADATA</a>]</span> and/or OpenID Connect Discovery <span>[<a href="#OpenIDConnect.Discovery" class="cite xref">OpenIDConnect.Discovery</a>]</span>. This allows the Agent to learn the as issuer identifier, authorization and token endpoints, supported grant types, client authentication methods, signing keys (via jwks_uri), and other relevant capabilities without preconfiguring them.<a href="#section-10.9.1-1" class="pilcrow">¶</a></p>
+<p id="section-10.9.1-1">An Agent that needs to obtain tokens can discover authorization server endpoints and capabilities using OAuth 2.0 Authorization Server Metadata <span>[<a href="#OAUTH-SERVER-METADATA" class="cite xref">OAUTH-SERVER-METADATA</a>]</span> and/or OpenID Connect Discovery <span>[<a href="#OpenIDConnect.Discovery" class="cite xref">OpenIDConnect.Discovery</a>]</span>. This allows the Agent to learn the authorization server issuer identifier, authorization and token endpoints, supported grant types, client authentication methods, signing keys (via jwks_uri), and other relevant capabilities without preconfiguring them.<a href="#section-10.9.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="protected-resource-capability-discovery">
@@ -1744,7 +1744,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
           <h4 id="name-client-capability-discovery">
 <a href="#section-10.9.3" class="section-number selfRef">10.9.3. </a><a href="#name-client-capability-discovery" class="section-name selfRef">Client Capability Discovery</a>
           </h4>
-<p id="section-10.9.3-1">Other actors (e.g., Authorization Servers, registrars, or policy systems) may need to learn about any entities (System, Agent, Tool) that acts as OAuth clients. Where supported, they <span class="bcp14">MAY</span> use Client ID Metadata Documents <span>[<a href="#OAUTH-CLIENT-METADATA" class="cite xref">OAUTH-CLIENT-METADATA</a>]</span>, which allow a client to host its metadata at a URL-valued client_id so that the relying party can retrieve client properties (e.g., redirect URIs, software statement, display information, and other registered client metadata) without prior bilateral registration.<a href="#section-10.9.3-1" class="pilcrow">¶</a></p>
+<p id="section-10.9.3-1">Other actors (e.g., Authorization Servers, registrars, or policy systems) may need to learn about any entities (System, Agent, Tool) that acts as OAuth clients. Where supported, they <span class="bcp14">MAY</span> use Client ID Metadata Documents <span>[<a href="#OAUTH-CLIENT-METADATA" class="cite xref">OAUTH-CLIENT-METADATA</a>]</span>, which allow a client to host its metadata at a URL-valued client_id so that the relying party can retrieve client properties (e.g., redirect URIs, display information, and other registered client metadata) without prior bilateral registration.<a href="#section-10.9.3-1" class="pilcrow">¶</a></p>
 <p id="section-10.9.3-2">As an alternative, entities acting as OAuth clients <span class="bcp14">MAY</span> register their capabilities with authorization servers as defined in the OAuth 2.0 Dynamic Client Registration Protocol <span>[<a href="#OAUTH-REGISTRATION" class="cite xref">OAUTH-REGISTRATION</a>]</span>.<a href="#section-10.9.3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1814,12 +1814,12 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <p id="section-14-1">TODO Security<a href="#section-14-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="privacy-considerations-1">
+<div id="privacy-considerations">
 <section id="section-15">
-      <h2 id="name-privacy-considerations-2">
-<a href="#section-15" class="section-number selfRef">15. </a><a href="#name-privacy-considerations-2" class="section-name selfRef">Privacy Considerations</a>
+      <h2 id="name-privacy-considerations">
+<a href="#section-15" class="section-number selfRef">15. </a><a href="#name-privacy-considerations" class="section-name selfRef">Privacy Considerations</a>
       </h2>
-<p id="section-15-1">TODO Privacy<a href="#section-15-1" class="pilcrow">¶</a></p>
+<p id="section-15-1">TODO Privacy but there's also <a href="#privacy-considerations" class="auto internal xref">Section 15</a>...<a href="#section-15-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
