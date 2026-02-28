@@ -872,9 +872,9 @@ Table of Contents
    replay suspected, risk elevated), the recipient SHOULD remediate by
    attenuating access, such as terminating local sessions, discarding
    cached tokens, re-acquiring tokens with updated constraints, reducing
-   privileges, or re-running policy evaluation before continueing to
-   allow acccess.  Recipients of such signals MUST ensure that revoked
-   or downgraded authorization is enforced without undue delay.  Cached
+   privileges, or re-running policy evaluation before continuing to
+   allow access.  Recipients of such signals MUST ensure that revoked or
+   downgraded authorization is enforced without undue delay.  Cached
    authorization decisions and tokens that are no longer valid MUST NOT
    continue to be used after a revocation or risk notification is
    received.
