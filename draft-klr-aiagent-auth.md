@@ -377,7 +377,7 @@ When an Agent is invoking a Tool, the Agent MAY use OAuth 2.0 Protected Resource
 A Tool that attempts to access and OAuth protected resource MAY use OAuth 2.0 Protected Resource Metadata {{OAUTH-RESOURCE-METADATA}} in a similar way as an Agent. Similarly, a System may use {{OAUTH-RESOURCE-METADATA}} when accessing an Agent.
 
 ### Client Capability Discovery
-Other actors (e.g., Authorization Servers, registrars, or policy systems) may need to learn about any entities (System, Agent, Tool) that acts as OAuth clients. Where supported, they MAY use Client ID Metadata Documents {{!OAUTH-CLIENT-METADATA=I-D.ietf-oauth-client-id-metadata-document}}, which allow a client to host its metadata at a URL-valued client_id so that the relying party can retrieve client properties (e.g., redirect URIs, software statement, display information, and other registered client metadata) without prior bilateral registration.
+Other actors (e.g., Authorization Servers, registrars, or policy systems) may need to learn about any entities (System, Agent, Tool) that acts as OAuth clients. Where supported, they MAY use Client ID Metadata Documents {{!OAUTH-CLIENT-METADATA=I-D.ietf-oauth-client-id-metadata-document}}, which allow a client to host its metadata at a URL-valued client_id so that the relying party can retrieve client properties (e.g., redirect URIs, display information, and other registered client metadata) without prior bilateral registration.
 
 As an alternative, entities acting as OAuth clients MAY register their capabilities with authorization servers as defined in the OAuth 2.0 Dynamic Client Registration Protocol {{!OAUTH-REGISTRATION=RFC7591}}.
 
