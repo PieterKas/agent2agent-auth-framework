@@ -5,10 +5,10 @@
 Network Working Group                                       P. Kasselman
 Internet-Draft                                          Defakto Security
 Intended status: Informational                               J. Lombardo
-Expires: 31 August 2026                                              AWS
+Expires: 2 September 2026                                            AWS
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                        27 February 2026
+                                                            1 March 2026
 
 
                AI Agent Authentication and Authorization
@@ -54,7 +54,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 31 August 2026.
+   This Internet-Draft will expire on 2 September 2026.
 
 Copyright Notice
 
@@ -1026,20 +1026,6 @@ Table of Contents
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
               transaction-tokens-07>.
 
-   [OAuth.mTLS.Auth-RFC8705]
-              "OAuth 2.0 Mutual-TLS Client Authentication and
-              Certificate-Bound Access Tokens", n.d.,
-              <https://datatracker.ietf.org/doc/html/rfc8705>.
-
-   [OAuth.SPIFFE.Client.Auth]
-              "OAuth SPIFFE Client Authentication", n.d.,
-              <https://datatracker.ietf.org/doc/draft-ietf-oauth-spiffe-
-              client-auth>.
-
-   [OAuth.step-up.Auth-RFC9470]
-              "OAuth 2.0 Step Up Authentication Challenge Protocol",
-              n.d., <https://www.rfc-editor.org/rfc/rfc9470.html>.
-
    [OpenIDConnect.AuthZEN]
               Gazitt, O., Ed., Brossard, D., Ed., and A. Tulshibagwale,
               Ed., "Authorization API 1.0", 2026,
@@ -1061,30 +1047,9 @@ Table of Contents
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
 
-   [RFC6750]  "The OAuth 2.0 Authorization Framework: Bearer Token
-              Usage", n.d., <https://datatracker.ietf.org/doc/rfc6750>.
-
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
-
-   [RFC8628]  "OAuth 2.0 Device Authorization Grant", n.d.,
-              <https://www.rfc-editor.org/rfc/rfc8628.html>.
-
-   [RFC8725]  "JSON Web Token Best Current Practices", n.d.,
-              <https://datatracker.ietf.org/doc/rfc8725>.
-
-   [RFC9126]  "OAuth 2.0 Pushed Authorization Requests", n.d.,
-              <https://datatracker.ietf.org/doc/rfc9126>.
-
-   [RFC9396]  "OAuth 2.0 Rich Authorization Requests", n.d.,
-              <https://datatracker.ietf.org/doc/rfc9396>.
-
-   [RFC9449]  "OAuth 2.0 Demonstrating Proof of Possession (DPoP)",
-              n.d., <https://datatracker.ietf.org/doc/rfc9449>.
-
-   [RFC9701]  "JWT Response for OAuth 2.0 Token Introspection", n.d.,
-              <https://datatracker.ietf.org/doc/rfc9701>.
 
    [SPIFFE]   "Secure Production Identity Framework for Everyone", n.d.,
               <https://spiffe.io/docs/latest/spiffe-about/overview/>.
@@ -1093,26 +1058,6 @@ Table of Contents
               "SPIFFE-ID", n.d.,
               <https://github.com/spiffe/spiffe/blob/main/standards/
               SPIFFE-ID.md>.
-
-   [SPIFFE_BUNDLE]
-              "SPIFFE Bundle", n.d.,
-              <https://github.com/spiffe/spiffe/blob/main/standards/
-              SPIFFE_Trust_Domain_and_Bundle.md#4-spiffe-bundle-format>.
-
-   [SPIFFE_FEDERATION]
-              "SPIFFE Federation", n.d.,
-              <https://github.com/spiffe/spiffe/blob/main/standards/
-              SPIFFE_Federation.md>.
-
-   [SPIFFE_JWT]
-              "JWT-SVID", n.d.,
-              <https://github.com/spiffe/spiffe/blob/main/standards/JWT-
-              SVID.md>.
-
-   [SPIFFE_X509]
-              "X509-SVID", n.d.,
-              <https://github.com/spiffe/spiffe/blob/main/standards/
-              X509-SVID.md>.
 
    [SSF]      "OpenID Shared Signals Framework Specification 1.0", n.d.,
               <https://openid.net/specs/openid-sharedsignals-framework-
@@ -1153,11 +1098,6 @@ Table of Contents
               wimse-wpt-00, 3 November 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
               wpt-00>.
-
-   [WIMSE_CRED]
-              "WIMSE Workload Credentials", n.d.,
-              <https://datatracker.ietf.org/doc/draft-ietf-wimse-
-              workload-creds/>.
 
 Acknowledgments
 
