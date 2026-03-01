@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-26T02:12:45.824208+00:00",
+  "timestamp": "2026-03-01T02:40:04.484064+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -330,25 +330,41 @@
       "labels": [],
       "body": "@PieterKas With the large list of RFC listed, I propose instead of pointing to {{RFC1234}} to point to a name following this proposed convention: `{{OAuth.something.somethingelse-RFC1234}}`\n\nThis will helps the readers to see something like {{OAuth.Private.JWT.Auth-RFC7523}} instead of just {{RFC7523}}.\n\nThis works well with non IETF sources too like our many references to the OpenID Foundation specifications.",
       "createdAt": "2026-02-02T13:57:19Z",
-      "updatedAt": "2026-02-02T13:57:19Z",
+      "updatedAt": "2026-02-27T13:53:39Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I think a pass at reconciliation and consistency of the references would be worthwhile. I'm not a big fan of big long ones like {{OAuth.Private.JWT.Auth-RFC7523}} that might also be misleading but YMMV. The markdown could also probably be shorted too while not getting the warnings from the build. \n\n```\n*** warning: explicit settings completely override canned bibxml in reference RFC9449\n*** warning: explicit settings completely override canned bibxml in reference RFC9396\n*** warning: explicit settings completely override canned bibxml in reference RFC9126\n*** warning: explicit settings completely override canned bibxml in reference RFC8725\n*** warning: explicit settings completely override canned bibxml in reference RFC6750\n*** warning: explicit settings completely override canned bibxml in reference RFC9701\n*** warning: explicit settings completely override canned bibxml in reference RFC8628\n```",
+          "createdAt": "2026-02-27T13:53:39Z",
+          "updatedAt": "2026-02-27T13:53:39Z"
+        }
+      ]
     },
     {
       "number": 18,
       "id": "I_kwDOQP22qc7ped-Q",
       "title": "Should we mention RATS at all",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/18",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "I wonder if it helps mentioning RATS - it is not widely deployed. Perhaps only mention it as one example of a definition of such a system?",
       "createdAt": "2026-02-09T15:55:58Z",
-      "updatedAt": "2026-02-09T15:55:58Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-02-27T16:46:03Z",
+      "closedAt": "2026-02-27T16:46:03Z",
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I don't get the impression that RATS is currently (or likely to be) anything more than an aspirational science project kind of thing. I'd argue that mentioning it in this work detracts more than helps with the goals as I understand them. Some insights into how SPIFEE actually works in this regard might be more meaningful (the following Agent Credential Provisioning section does mention it but something in Agent Attestatio\u0272 seems appropriate). ",
+          "createdAt": "2026-02-26T12:46:38Z",
+          "updatedAt": "2026-02-26T13:29:06Z"
+        }
+      ]
     },
     {
       "number": 19,
@@ -531,6 +547,77 @@
       "body": "Copy of text removed from draft prior to IETF 125 - to be re-introduced at a future date.\n\n-----------------------End of \"High Level Map\"------------------------------\n\n-----------------------Early Thoughts on Detailed Spec Below------------------------------\n\n# Agent Authorization - Next Level Detail\n\nDuring Agent execution, authorization must be enforced at all the components involved in the process to provide an in-depth protection of the resources that might be interacted with. For each component, we must consider the following 3 phases:\n- Negotiation between the component and its caller on the required pieces of authorization required to interact with the component\n- Acquisition of the piece of authorization by the caller at the authorization server authoritative for the component it wants to communication\n- Validation of the piece of authorization in the context of the request by the component\n\nThose phases rely on the following standards for enforcement of the access control:\n- {{OAUTH-FRAMEWORK}} is an established and maintained framework of specifications for requesting, acquiring, and proving ownership of pieces of authorization in the form of bearer tokens.\n- {{OpenIDConnect.AuthZEN}} is a new specification for exchanging authorization requests and decisions between the layer acting at the Policy Enforcement Point (PEP) and a Policy Decision Point (PDP).\n- {{OAUTH-TRANS-TOKENS}} is new specification for formatting pieces of authorization in the form of transaction bound bearer tokens.\n\n~~~ ascii-art\n                       +----------------+\n                       | Large Language |\n                       |   Model (LLM)  |\n                       +----------------+\n                              \u25b2   |\n                              \u2502   |               \u250c(H)\u2510\n                              |   \u25bc               \u25bc   \u2502\n+--------------+         +------------+         +-------------+         +-----------+\n|  User /      |\u2500(A)(C)\u2500\u25ba|  AI Agent  |\u2500(E)(H)\u2500\u25ba| Agent /     |\u2500(J)(M)\u2500\u25ba| Services  |\n|      /       |         | (workload) |         |      /      |         |   and     |\n|     / System |\u25c4\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500|            |\u25c4\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500|     / Tools |\u25c4\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500| Resources |\n+--------------+         +------------+         +-------------+         +-----------+\n     \u25b2                       \u25b2  \u25b2                   \u25b2   \u25b2                    \u25b2\n     |    \u250c\u2500\u2500(F)\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518  |                   |   |                    |\n     |    |   \u250c\u2500\u2500\u2500(D)\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518                  (I)  |                    |\n     |    |   |  +---------------+                  |  (K)                  (N)\n    (B)   |   |  |    Policy     |                  |   |                    |\n     |    |   \u2514\u2500\u25ba|   Decision    |\u25c4\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518   |                    |\n     |    |      |    Point      |\u25c4\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n     |    |      +---------------+                      |\n     |    |             \u25b2                               |\n     |    |          (G)(L)                             |\n     |    |             \u25bc                               |\n     |    |      +---------------+                      |\n     |    \u2514\u2500\u2500\u2500\u2500\u2500\u25ba| Authorization |\u25c4\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n     \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u25ba|   server      |\n                 +---------------+\n~~~\n\n\n> Key point - OAuth is broadly supported and provides a delegation model for users to clients (aka Agents). Agents can obtain access tokens directly (client credentials flow, using above authentication methods) or it can be delegated to them by a user (OAuth flows). Make point that the access token includes the client_id, which is the same as the Agent ID (ore related to it) and can be used for authorization decisions, along with other claims in an Access Token (reference JWT Access token spec). Make provision for opaque tokens as well. Discuss Downscoping of Agent authorization using transaction tokens. Discuss cross-domain authorization (use cases) and how it may be achieved (identity chaining and cross-domain authorization). Discuss human in the loop authorization. Note concerns, refer to cross-device BCP as examples of consent phishing attacks. Talk about CIBA as a protocol.\n\n## System to AI Agent\n### (A) Negotiation - OPTIONAL\n\n#### Flow\n\nFollowing {{OAUTH-RESOURCE-METADATA}}, the System MUST act as an OAuth2 client. It MUST interact with the AI Agent on its metadata endpoint which MUST be an OAuth 2.0 protected resource as defined by {{OAUTH-RESOURCE-METADATA}}.\n\nThe System will then understand which Authorization Server MUST be the authority this AI Agent; which scopes or authorization details values MAY be required to access this AI Agent; and if extension mechanisms MAY be required to fulfil.\n\n#### Security\n\nThe System MUST follow the best current practices described in {{OAUTH-BCP}}.\n\n### (B) Initial Authorization\n\nBased on the information collected as part of (A) or based on its configuration, the System MUST initiate an authorization request to the Authorization Server acting as authority for the AI Agent.\n\n#### Flow\n\nFor this, the System MUST use one of the grant types described in {{OAUTH-FRAMEWORK}} as follows:\n\n- In a case of the System is acting on its behalf, it MUST start a client credential grant flow as described in {{Section 1.3.4 of OAUTH-FRAMEWORK}};\n- In the case of the System is acting on behalf of a user:\n  - If the System can interact directly with the user (e.g., browser-based), the System MUST use the authorization code grant flow as described in {{Section 4.1 of OAUTH-FRAMEWORK}};\n  - If the System has limited input capabilities, but the User is present at the device, the System MUST use the Device Authorization Grant {{RFC8628}};\n  - If the User is not present at the consuming device (decoupled flow), the System MUST use Client-Initiated Backchannel Authentication {{OpenIDConnect.CIBA}}.\n\n#### Extensions\n\nAs part of the grant flow, the User / System MUST also fulfill all the expected extensions it has an understanding of. For example, not exhaustively:\n- Binding the requested tokens to a possessed key as defined in {{RFC9449}} or {#wpt}\n- Requesting additional authorization details as defined in {{RFC9396}} or {{RFC9126}}\n\n#### Identification\n\nThe System MUST act as an OAuth2 Client which MAY be assigned a WIMSE identifier, which MAY be a SPIFFE ID.\n\nIf so, the System MUST provide a way to resolve one value to the other, either through:\n- A metadata document URL used OAuth2 Client identifier as defined in {{OAUTH-CLIENT-METADATA}};\n- Metadata information provided as part of the Private Key JWT OAuth client credential as defined in {{OAUTH-CLIENTAUTH-JWT}}\n- Public Certificate information provided as part of the mutual TLS OAuth client credential as defined in {{OAuth.mTLS.Auth-RFC8705}}\n\n#### Authentication\n\nThe System MUST authentication using either:\n- Private Key JWT OAuth client authentication as defined in {{OAUTH-CLIENTAUTH-JWT}}\n- Mutual TLS OAuth client authentication as defined in {{OAuth.mTLS.Auth-RFC8705}}\n\n#### Security\n\nThe System MUST follow the best current practices described in {{OAUTH-BCP}} for the interactions with the AI Agent and {{RFC8725}} when handling JWTs.\n\n### (C) Access to the AI Agent\n\n#### Flow\n\nTo access an AI Agent, the System MUST present its authorization credential as defined in {{Section 7 of OAUTH-FRAMEWORK}} as well as defined in {{RFC6750}}. The client MUST be able to process error codes as defined in section 3 of {{RFC6750}}.\n\nThe AI Agent MAY request additional details to be provided through a new authorization credentials using {{OAuth.step-up.Auth-RFC9470}} or error codes as defined in {{RFC6750}}.\n\n#### Security\n\nThe client MUST follow the best current practices described in {{OAUTH-BCP}}.\n\n### (D) Controlling access to the AI Agent\n\n#### Flow\n\nThe AI Agent MUST validate the presented token as described in {{OAUTH-FRAMEWORK}} as well as defined in {{RFC6750}}.\n\nIf token introspection is required, the AI Agent MUST follow {{OAUTH-TOKEN-INTROSPECTION}} as well as {{RFC9701}}.\n\nIf the provided token is a JWT profiled token as defined in {{OAUTH-ACCESSTOKEN-JWT}}, the AI Agent MUST follow the section 2 of this specification as part of the token validation.\n\nIf the AI Agent delegates its access control logic to a Policy decision point, it MUST follow {{OpenIDConnect.AuthZEN}} specification for requesting and receiving a decision for the access.\n\n#### Security\n\nTODO\n\n## AI Agent To Other Agent / Tools\n\nInteractions between an AI Agent and Tools are globally specified by {{MCP}}. Those sections only focus on the Identification, authentication, and authorization aspects of the specification.\n\nInteractions between an AI Agent and other AI Agents are globally specified by {{A2A}}. Note that derived specifications and domain specific specification have emerged like {{AP2}} for Agent payment interaction, {{ACP}} for Agent to commerce flows. Those sections only focus on the Identification, authentication, and authorization aspects of those specifications.\n\n### (E) Negotiation\n\n#### Case of a Tool\nFollowing {{MCP}}, the AI Agent MUST interact with Tools on the metadata endpoint of an OAuth 2.0 protected resource to understand which Authorization Server is the authority this resource; which scopes or authorization details values MAY be required to access this resources; and if proof of possession needs to be presented as standardized with {{RFC9449}}.\n\n#### Case of an Agent\n\nFollowing {{A2A}}, the AI Agent MUST interact with the other Agent through their Agent Card. If Extended Agent Card is implemented, the calling AI Agent MUST collect the information to understand which Authorization Server is the authority this resource; which scopes or authorization details values MAY be required to access this resources; and if proof of possession needs to be presented as standardized with {{RFC9449}}.\n\n{{ACP}} and {{AP2}} Agents are expected to follow the same Agent Card feature as {{A2A}} Agents.\n\n### (F) AI Agent Authorization\n\nBased on the information collected as part of (E), the AI Agent is initiating an authorization request with the Authorization Server acting as authority for the AI Tools.\n\nSuch authorization request can allow to down, change or translate scope; enrich the authorization with new details based on the context; extend the time boundaries of the authorization; or change from a delegation mode to an impersonation mode and reversely.\n\n- If the AI Agent acts on its behalf as a system:\n  - If it does not want or need to refer to the previous context, it MUST start a client credential grant flow as described in {{Section 1.3.4 of OAUTH-FRAMEWORK}};\n  - If it does want or need to refer to the previous context, it MUST start a token exchange flow as described in {{OAUTH-TOKEN-EXCHANGE}}. The AI Agent will be able to decide in between obtaining tokens representing a Delegation or an Impersonation as described in section 1.1 of the specification.\n- If the AI Agent acts on delegation by a user:\n  - If the AI Agent can interact and want to interact with the user through the client, it MUST start an authorization code grant flow as described in {{Section 1.3.1 of OAUTH-FRAMEWORK}};\n  - If the AI Agent cannot or does not want to interact with the user through the client, it MAY:\n    - Start a token exchange flow as described in {{OAUTH-TOKEN-EXCHANGE}}. The AI Agent will be able to decide in between obtaining tokens representing a Delegation or an Impersonation as described in section 1.1 of the specification.\n    - Start a client initated backchannel authorized request as described in {{OpenIDConnect.CIBA}}\n\nIf the AI Agent knows that the underlying actions\n\n> Transaction Tokens\n\n### Security\n\nIf the metadata documents are cryptographically signed, the AI Agent MUST validate the signature before using the information for any authentication and authorization decision.\n\n## Agent-to-Resource Authorization\nPresent token, peform additional authorization (RBAC etc?)\nDirect or via tools\nResources, services.\n\nAgent -> Tool -> Service -> Resource\n\n### Human-in-the loop\nAgent framework problem -> human in the loop - confirm something that it can already do - Agent framework capability - confirmation. Risk management flow.\nHuman in the loop - request esalated privelages. Step-up authorization - refernece the draft (maybe)\n\nMCP Elicitation to Agent to perform some browser things - start authz code grant flow.\nCIBA\n\n## Case of Multi-Domain Authorization\n\n### Cross Domain Agent-to-Agent Authorization\nIdentiyt chaining, ID-Jag.\n\n## Agent to Agent Authorization",
       "createdAt": "2026-02-24T19:21:21Z",
       "updatedAt": "2026-02-24T19:21:21Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 43,
+      "id": "I_kwDOQP22qc7uIe3G",
+      "title": "Users ain't gonna auth AIAW this way",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/43",
+      "state": "CLOSED",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "> AI Agent is a workload that needs an identifier and credentials with which it can be authenticated by the User or System\n> \n> While I think I get the intent here, I believe the idea of a user authenticating an AI Agent workload by its WIMSE/SPIFEE id and credential is nothing short of absurd.  \n\n _Originally posted by @bc-pi in [#42](https://github.com/PieterKas/agent2agent-auth-framework/pull/42/changes#r2858701546)_",
+      "createdAt": "2026-02-26T12:17:36Z",
+      "updatedAt": "2026-02-27T19:47:21Z",
+      "closedAt": "2026-02-27T19:47:20Z",
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "In a literal sense, I agree. \n\nPerhaps we should distinguish between the mechanisms and user experience around it? Mostly these days we delegate the authentication of an application or service to the udnerlying platform (Windows, iOS, Android, Chrome does the credential checking and identification, revocation checking and so forth.). I have not checked a SSL cert in decades. \n\nHere is a simple PR to remove the offending langugage. I am doing the minimalist thing here. Feel free to make it more minimalist still. see #45",
+          "createdAt": "2026-02-26T15:28:06Z",
+          "updatedAt": "2026-02-26T15:28:06Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I didn't see [your comment](https://github.com/PieterKas/agent2agent-auth-framework/issues/43#issuecomment-3967351780) until after [approving the PR with a comment](https://github.com/PieterKas/agent2agent-auth-framework/pull/45#pullrequestreview-3863841400). Apologies. ",
+          "createdAt": "2026-02-26T23:13:03Z",
+          "updatedAt": "2026-02-26T23:13:03Z"
+        }
+      ]
+    },
+    {
+      "number": 44,
+      "id": "I_kwDOQP22qc7uIj9A",
+      "title": "canonical seems a bit much",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/44",
+      "state": "CLOSED",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "> canonical\n> \n> feels like a pretty strong word for something that's pretty nascent  \n\n _Originally posted by @bc-pi in [#42](https://github.com/PieterKas/agent2agent-auth-framework/pull/42/changes#r2858723542)_",
+      "createdAt": "2026-02-26T12:22:33Z",
+      "updatedAt": "2026-02-27T19:46:47Z",
+      "closedAt": "2026-02-27T19:46:47Z",
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "#46 is better ",
+          "createdAt": "2026-02-26T22:13:11Z",
+          "updatedAt": "2026-02-26T22:13:11Z"
+        }
+      ]
+    },
+    {
+      "number": 50,
+      "id": "I_kwDOQP22qc7un8qn",
+      "title": "CIBA != HITL",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/50",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "> I am aware it's commonly positioned this way but CIBA isn\u2019t a great fit for agentic HITL scenarios \n\n _Originally posted by @bc-pi in [#42](https://github.com/PieterKas/agent2agent-auth-framework/pull/42/changes#r2866768994)_",
+      "createdAt": "2026-02-28T00:40:35Z",
+      "updatedAt": "2026-02-28T00:40:35Z",
       "closedAt": null,
       "comments": []
     }
@@ -1745,6 +1832,492 @@
       "mergeCommit": {
         "oid": "3aec8d03bf70feb555ed6d6507ee5197dafe1bbf"
       },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 42,
+      "id": "PR_kwDOQP22qc7GhRKH",
+      "title": "early review",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/42",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "[okay, can't do anymore. No longer a WIP (note that WIP is different that WIT or WPT but who says we have trouble with terminology?).] \r\n\r\nreview is ready for review\r\n\r\npreview at https://pieterkas.github.io/agent2agent-auth-framework/who-invited-this-guy/draft-klr-aiagent-auth.html",
+      "createdAt": "2026-02-26T11:52:48Z",
+      "updatedAt": "2026-02-28T03:13:27Z",
+      "baseRepository": "PieterKas/agent2agent-auth-framework",
+      "baseRefName": "main",
+      "baseRefOid": "197dc5b255c255d0b74461a4879b69640a5602e5",
+      "headRepository": "PieterKas/agent2agent-auth-framework",
+      "headRefName": "who-invited-this-guy",
+      "headRefOid": "e7103279dae0f3266447033594d7e7094e851c71",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc7mG2fL",
+          "commit": {
+            "abbreviatedOid": "3a88cfa"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-26T12:16:26Z",
+          "updatedAt": "2026-02-26T12:16:27Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "> AI Agent is a workload that needs an identifier and credentials with which it can be authenticated by the User or System\n\nWhile I think I get the intent here, I believe the idea of a user authenticating an AI Agent workload by its WIMSE/SPIFEE id and credential is nothing short of absurd. \n\nhttps://github.com/PieterKas/agent2agent-auth-framework/issues/43 created to track that ",
+              "createdAt": "2026-02-26T12:16:27Z",
+              "updatedAt": "2026-02-26T12:19:09Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7mG8LF",
+          "commit": {
+            "abbreviatedOid": "3a88cfa"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-26T12:21:44Z",
+          "updatedAt": "2026-02-26T12:21:44Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "> canonical\n\nfeels like a pretty strong word for something that's pretty nascent \n\nnow at https://github.com/PieterKas/agent2agent-auth-framework/issues/44",
+              "createdAt": "2026-02-26T12:21:44Z",
+              "updatedAt": "2026-02-26T12:23:08Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7mLqLc",
+          "commit": {
+            "abbreviatedOid": "9fa7491"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-26T15:40:03Z",
+          "updatedAt": "2026-02-26T15:40:03Z",
+          "comments": [
+            {
+              "originalPosition": 46,
+              "body": "System is a bit of a loaded word - I also noticed that you end up having to do this even to access some of the popular LLMs (take your SPIFFE ID and swap it for an API Key held in vault). How about:\n\n```suggestion\nIn some cases, agents MAY need secondary credentials to access a proprietary or legacy environment that is not compatible with the X.509, JWT or WIT it is provisioned with. In these cases an agent MAY exchange their primary credentials through a credential exchange mechanisms (e.g., OAuth 2.0 Token Exchange {{!OAUTH-TOKEN-EXCHANGE=RFC8693}}, Transaction Tokens {{!OAUTH-TRANS-TOKENS=I-D.ietf-oauth-transaction-tokens}} or Workload Identity Federation). This allows an agent to obtain a credential targeted to a specific environment by leveraging the primary credential in its possession.\n```",
+              "createdAt": "2026-02-26T15:40:03Z",
+              "updatedAt": "2026-02-26T15:40:03Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7mRbi-",
+          "commit": {
+            "abbreviatedOid": "9fa7491"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-26T20:14:53Z",
+          "updatedAt": "2026-02-26T20:14:53Z",
+          "comments": [
+            {
+              "originalPosition": 46,
+              "body": "so many loaded terms (you can attest to that!) - I was just looking to unburden this text of the load that comes with \"relying party\" and went with \"system\" b/c it was used earlier in the paragraph. \"environment\" to me feels equally loaded but similarly okay. ",
+              "createdAt": "2026-02-26T20:14:53Z",
+              "updatedAt": "2026-02-26T20:22:43Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7mRwGw",
+          "commit": {
+            "abbreviatedOid": "9fa7491"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-26T20:36:21Z",
+          "updatedAt": "2026-02-26T20:36:21Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "With as much love and respect for @martinthomson as can possibly be expressed, I can't help but wonder how many documents still have these keywords in them?",
+              "createdAt": "2026-02-26T20:36:21Z",
+              "updatedAt": "2026-02-26T20:36:21Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7mTY77",
+          "commit": {
+            "abbreviatedOid": "3a88cfa"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-26T22:18:46Z",
+          "updatedAt": "2026-02-26T22:18:46Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "and #45 from @PieterKas \r\n ",
+              "createdAt": "2026-02-26T22:18:46Z",
+              "updatedAt": "2026-02-26T22:18:46Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7mTcco",
+          "commit": {
+            "abbreviatedOid": "aedfde9"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-26T22:22:48Z",
+          "updatedAt": "2026-02-26T22:22:48Z",
+          "comments": [
+            {
+              "originalPosition": 100,
+              "body": "I hate this sentence but don't know what to do with it. At least it'll have me on annotate/blame history, if this goes in, which is nice... ",
+              "createdAt": "2026-02-26T22:22:48Z",
+              "updatedAt": "2026-02-27T13:28:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7mVGb7",
+          "commit": {
+            "abbreviatedOid": "0afe03c"
+          },
+          "author": "martinthomson",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-27T00:43:44Z",
+          "updatedAt": "2026-02-27T00:43:52Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "Not nearly enough.  As a challenge to you both: see if you can get some worse keywords into your RFCs.",
+              "createdAt": "2026-02-27T00:43:44Z",
+              "updatedAt": "2026-02-27T00:43:52Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7mfP85",
+          "commit": {
+            "abbreviatedOid": "0afe03c"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-27T13:28:09Z",
+          "updatedAt": "2026-02-27T13:28:09Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "I wake up everyday with newfound determination to do my part. Challenge accepted. ",
+              "createdAt": "2026-02-27T13:28:09Z",
+              "updatedAt": "2026-02-27T13:28:09Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7mf2f3",
+          "commit": {
+            "abbreviatedOid": "abf3af0"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-27T14:02:50Z",
+          "updatedAt": "2026-02-27T14:02:51Z",
+          "comments": [
+            {
+              "originalPosition": 114,
+              "body": "```suggestion\nA resource server in receipt of tokens opaque to it are able to obtain authorization and other information from the token through OAuth 2.0 Token Introspection {{!OAUTH-TOKEN-INTROSPECTION=RFC7662}}. The introspection response provides the active state of the token and associated authorization attributes equivalent to those conveyed in structured tokens.\n```",
+              "createdAt": "2026-02-27T14:02:50Z",
+              "updatedAt": "2026-02-27T14:02:51Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7mp5BQ",
+          "commit": {
+            "abbreviatedOid": "16c47dc"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-28T00:40:07Z",
+          "updatedAt": "2026-02-28T00:40:07Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "I am aware it's commonly positioned this way but CIBA isn\u2019t a great fit for agentic HITL scenarios",
+              "createdAt": "2026-02-28T00:40:07Z",
+              "updatedAt": "2026-02-28T00:40:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7mp528",
+          "commit": {
+            "abbreviatedOid": "16c47dc"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-28T00:41:29Z",
+          "updatedAt": "2026-02-28T00:41:29Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "CIBA != HITL #50 to track that as addressing it now is above my pay grade. ",
+              "createdAt": "2026-02-28T00:41:29Z",
+              "updatedAt": "2026-02-28T00:43:38Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7mq2Ga",
+          "commit": {
+            "abbreviatedOid": "e710327"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Awesome work, Brian.\nThank you for thorough review!",
+          "createdAt": "2026-02-28T03:13:27Z",
+          "updatedAt": "2026-02-28T03:13:27Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 45,
+      "id": "PR_kwDOQP22qc7Gk6pK",
+      "title": "Clarify User authenticating Agents",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/45",
+      "state": "MERGED",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "See issue #43",
+      "createdAt": "2026-02-26T15:25:19Z",
+      "updatedAt": "2026-02-27T13:43:23Z",
+      "baseRepository": "PieterKas/agent2agent-auth-framework",
+      "baseRefName": "main",
+      "baseRefOid": "3aec8d03bf70feb555ed6d6507ee5197dafe1bbf",
+      "headRepository": "PieterKas/agent2agent-auth-framework",
+      "headRefName": "PieterKas-patch-5",
+      "headRefOid": "0041a36cf69f62e7ab24eaa2697d76f57c166313",
+      "closedAt": "2026-02-27T13:43:23Z",
+      "mergedAt": "2026-02-27T13:43:22Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "a88ee80d0ae665fa352c6d6832a68b1fb351c877"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc7mTYp4",
+          "commit": {
+            "abbreviatedOid": "0041a36"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "This does change the words in that area. And directionally okay, I guess. But doesn't really get to the point I had in mind. Perhaps we go with this and discuss further in a higher bandwidth forum?  ",
+          "createdAt": "2026-02-26T22:18:25Z",
+          "updatedAt": "2026-02-26T22:18:25Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 46,
+      "id": "PR_kwDOQP22qc7GlFla",
+      "title": "Canonical-> Primary",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/46",
+      "state": "MERGED",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "See issue #44",
+      "createdAt": "2026-02-26T15:34:58Z",
+      "updatedAt": "2026-02-27T13:23:05Z",
+      "baseRepository": "PieterKas/agent2agent-auth-framework",
+      "baseRefName": "main",
+      "baseRefOid": "3aec8d03bf70feb555ed6d6507ee5197dafe1bbf",
+      "headRepository": "PieterKas/agent2agent-auth-framework",
+      "headRefName": "PieterKas-patch-6",
+      "headRefOid": "49a9c2a07ab478d8e15996dc7c1eca4cb752971f",
+      "closedAt": "2026-02-27T13:23:05Z",
+      "mergedAt": "2026-02-27T13:23:05Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "53c399dba7d2710f42f822f907f92a3ba31491f8"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc7mR3zW",
+          "commit": {
+            "abbreviatedOid": "49a9c2a"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-02-26T20:43:37Z",
+          "updatedAt": "2026-02-26T20:43:37Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 47,
+      "id": "PR_kwDOQP22qc7G0xi4",
+      "title": "Removing RATS references",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/47",
+      "state": "MERGED",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "See issue #18",
+      "createdAt": "2026-02-27T13:21:44Z",
+      "updatedAt": "2026-02-27T16:45:44Z",
+      "baseRepository": "PieterKas/agent2agent-auth-framework",
+      "baseRefName": "main",
+      "baseRefOid": "3aec8d03bf70feb555ed6d6507ee5197dafe1bbf",
+      "headRepository": "PieterKas/agent2agent-auth-framework",
+      "headRefName": "PieterKas-patch-7",
+      "headRefOid": "22c1e32bff97ad452836b8d7ac55067bf0f177f8",
+      "closedAt": "2026-02-27T16:45:44Z",
+      "mergedAt": "2026-02-27T16:45:44Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "197dc5b255c255d0b74461a4879b69640a5602e5"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc7mjBve",
+          "commit": {
+            "abbreviatedOid": "fcb967d"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-27T16:44:02Z",
+          "updatedAt": "2026-02-27T16:44:12Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\nThere are numerous systems that perform some form of attestation, any of which can contribute to establishing agent identity. For example, SPIFFE implementations can attest workloads using platform and environment specific mechanisms. At a high level, an attesting component gathers workload and execution context signals (such as where the workload is running and relevant platform identity attributes), presents those signals for verification to an issuer, and, as long as verification succeeds, binds the workload to a SPIFFE identifier and issues credentials (such as SVID) for subsequent authentication and authorization.\n```",
+              "createdAt": "2026-02-27T16:44:03Z",
+              "updatedAt": "2026-02-27T16:44:12Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7mjDjM",
+          "commit": {
+            "abbreviatedOid": "22c1e32"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-02-27T16:45:09Z",
+          "updatedAt": "2026-02-27T16:45:09Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 48,
+      "id": "PR_kwDOQP22qc7G1MKC",
+      "title": "Acknowledge Brian's contribution",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/48",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-02-27T13:51:28Z",
+      "updatedAt": "2026-02-27T22:50:49Z",
+      "baseRepository": "PieterKas/agent2agent-auth-framework",
+      "baseRefName": "main",
+      "baseRefOid": "a88ee80d0ae665fa352c6d6832a68b1fb351c877",
+      "headRepository": "PieterKas/agent2agent-auth-framework",
+      "headRefName": "PieterKas-patch-8",
+      "headRefOid": "fa290364ef82ef467dabf013233d5039e7da53a6",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "thank you but as discussed I think/hope this will be overcome by events 1d854fb33e89d853f730045bea7a2d9a3abcb775",
+          "createdAt": "2026-02-27T22:50:49Z",
+          "updatedAt": "2026-02-27T22:50:49Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 49,
+      "id": "PR_kwDOQP22qc7G7NeQ",
+      "title": "Cleaned up references",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/49",
+      "state": "OPEN",
+      "author": "yaroslavros",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Removed unused references",
+      "createdAt": "2026-02-27T21:39:14Z",
+      "updatedAt": "2026-02-27T21:39:19Z",
+      "baseRepository": "PieterKas/agent2agent-auth-framework",
+      "baseRefName": "main",
+      "baseRefOid": "197dc5b255c255d0b74461a4879b69640a5602e5",
+      "headRepository": "yaroslavros/agent2agent-auth-framework",
+      "headRefName": "main",
+      "headRefOid": "31d9901afe810203a0bc30c9112c9483fa866b3f",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
       "comments": [],
       "reviews": []
     }
