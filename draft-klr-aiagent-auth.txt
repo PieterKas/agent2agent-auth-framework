@@ -631,9 +631,8 @@ Table of Contents
    of obtaining an access token.  This redirection-based flow involves
    an interactive authorization process in which the user authenticates
    to the authorization server and explicitly approves the requested
-   access.  The resulting access token reflects the authorization
-   delegated to the Agent by the User and can be used by the Agent to
-   access resources on behalf of the user.
+   access.  The resulting access token reflects the user's consent and
+   can be used by the agent to access resources on behalf of the user.
 
 10.3.2.  Agent Obtains Own Authorization
 
