@@ -882,14 +882,8 @@ Table of Contents
 
    To support detection, investigation, and accountability, deployments
    MUST produce durable audit logs covering authorization decisions and
-   subsequent remediations.  Participants in the system MAY use eventing
-   mechanisms for the audit/observability logs, such as the OpenID
-   Shared Signals Framework [SSF] (e.g. using session presented or
-   session established events).  There is a draft in the OpenID Shared
-   Signals Framework [SSF] introducing "action receipts" that MAY also
-   be used to produce durable audit logs.  Audit records MUST be tamper-
-   evident and retained according to the security policy of the
-   deployment.
+   subsequent remediations.  Audit records MUST be tamper-evident and
+   retained according to the security policy of the deployment.
 
    At a minimum, audit events MUST record:
 
