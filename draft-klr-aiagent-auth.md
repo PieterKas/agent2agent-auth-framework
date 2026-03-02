@@ -12,9 +12,11 @@ v: 3
 # area: AREA
 # workgroup: WG Working Group
 keyword:
- - next generation
- - unicorn
- - sparkling distributed ledger
+ - OAuth
+ - WIMSE
+ - SPIFFE
+ - Secure Signals Framework
+ - AI Agent Authentication and Authorization
 venue:
 #  group: WG
 #  type: Working Group
