@@ -13,10 +13,12 @@
        This document proposes a model for authentication and authorization of AI agent interactions. It leverages existing standards such as the Workload Identity in Multi-System Environments (WIMSE) architecture and OAuth 2.0 family of specifications. Rather than defining new protocols, this document describes how existing and widely deployed standards can be applied or extended to establish agent authentication and authorization. By doing so, it aims to provide a framework within which to use existing standards, identify gaps and guide future standardization efforts for agent authentication and authorization. 
     " name="description">
 <meta content="xml2rfc 3.31.0" name="generator">
-<meta content="next generation" name="keyword">
-<meta content="unicorn" name="keyword">
-<meta content="sparkling distributed ledger" name="keyword">
-<meta content="draft-klr-aiagent-auth-latest" name="ietf.draft">
+<meta content="OAuth" name="keyword">
+<meta content="WIMSE" name="keyword">
+<meta content="SPIFFE" name="keyword">
+<meta content="Secure Signals Framework" name="keyword">
+<meta content="AI Agent Authentication and Authorization" name="keyword">
+<meta content="draft-klrc-aiagent-auth-latest" name="ietf.draft">
 <!-- Generator version information:
   xml2rfc 3.31.0
     Python 3.12.12
@@ -31,7 +33,7 @@
     requests 2.32.5
     wcwidth 0.3.0
 -->
-<link href="draft-klr-aiagent-auth.xml" rel="alternate" type="application/rfc+xml">
+<link href="draft-klrc-aiagent-auth.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
 <style type="text/css">@font-face {
   font-family: 'Lora';
@@ -1064,7 +1066,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dt class="label-workgroup">Workgroup:</dt>
 <dd class="workgroup">Network Working Group</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
-<dd class="internet-draft">draft-klr-aiagent-auth-latest</dd>
+<dd class="internet-draft">draft-klrc-aiagent-auth-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
 <time datetime="2026-03-02" class="published">2 March 2026</time>
@@ -1105,8 +1107,8 @@ svg :is([fill="white"], [fill^="#fff"]) {
       </h2>
 <p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
 <p id="section-note.1-2">
-        The latest revision of this draft can be found at <span><a href="https://PieterKas.github.io/agent2agent-auth-framework/draft-klr-aiagent-auth.html">https://PieterKas.github.io/agent2agent-auth-framework/draft-klr-aiagent-auth.html</a></span>.
-        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-klr-aiagent-auth/">https://datatracker.ietf.org/doc/draft-klr-aiagent-auth/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
+        The latest revision of this draft can be found at <span><a href="https://PieterKas.github.io/agent2agent-auth-framework/draft-klrc-aiagent-auth.html">https://PieterKas.github.io/agent2agent-auth-framework/draft-klrc-aiagent-auth.html</a></span>.
+        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-klrc-aiagent-auth/">https://datatracker.ietf.org/doc/draft-klrc-aiagent-auth/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
 <p id="section-note.1-3">Source for this draft and an issue tracker can be found at
         <span><a href="https://github.com/PieterKas/agent2agent-auth-framework">https://github.com/PieterKas/agent2agent-auth-framework</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
 </section>
@@ -1952,7 +1954,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <dd class="break"></dd>
 <dt id="WIMSE-ARCH">[WIMSE-ARCH]</dt>
       <dd>
-<span class="refAuthor">Salowey, J. A.</span>, <span class="refAuthor">Rosomakho, Y.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Workload Identity in a Multi System Environment (WIMSE) Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-arch-06</span>, <time datetime="2025-09-30" class="refDate">30 September 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-06">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-06</a>&gt;</span>. </dd>
+<span class="refAuthor">Salowey, J. A.</span>, <span class="refAuthor">Rosomakho, Y.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Workload Identity in a Multi System Environment (WIMSE) Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-arch-07</span>, <time datetime="2026-03-02" class="refDate">2 March 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-07">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-07</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="WIMSE-CRED">[WIMSE-CRED]</dt>
       <dd>
