@@ -42,54 +42,12 @@ author:
     email: bcampbell@pingidentity.com
 
 normative:
-  WIMSE_CRED:
-    title: "WIMSE Workload Credentials"
-    target: https://datatracker.ietf.org/doc/draft-ietf-wimse-workload-creds/
   SPIFFE:
     title: "Secure Production Identity Framework for Everyone"
     target: https://spiffe.io/docs/latest/spiffe-about/overview/
   SPIFFE-ID:
     title: SPIFFE-ID
     target: https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md
-  SPIFFE_X509:
-    title: X509-SVID
-    target: https://github.com/spiffe/spiffe/blob/main/standards/X509-SVID.md
-  SPIFFE_JWT:
-    title: JWT-SVID
-    target: https://github.com/spiffe/spiffe/blob/main/standards/JWT-SVID.md
-  SPIFFE_BUNDLE:
-    title: SPIFFE Bundle
-    target: https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE_Trust_Domain_and_Bundle.md#4-spiffe-bundle-format
-  SPIFFE_FEDERATION:
-    title: SPIFFE Federation
-    target: https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE_Federation.md
-  RFC9449:
-    title: OAuth 2.0 Demonstrating Proof of Possession (DPoP)
-    target: https://datatracker.ietf.org/doc/rfc9449
-  RFC9396:
-    title: OAuth 2.0 Rich Authorization Requests
-    target: https://datatracker.ietf.org/doc/rfc9396
-  RFC9126:
-    title: OAuth 2.0 Pushed Authorization Requests
-    target: https://datatracker.ietf.org/doc/rfc9126
-  RFC8725:
-    title: JSON Web Token Best Current Practices
-    target: https://datatracker.ietf.org/doc/rfc8725
-  RFC6750:
-    title: "The OAuth 2.0 Authorization Framework: Bearer Token Usage"
-    target: https://datatracker.ietf.org/doc/rfc6750
-  RFC9701:
-    title: JWT Response for OAuth 2.0 Token Introspection
-    target: https://datatracker.ietf.org/doc/rfc9701
-  RFC8628:
-    title: OAuth 2.0 Device Authorization Grant
-    target: https://www.rfc-editor.org/rfc/rfc8628.html
-  OAuth.mTLS.Auth-RFC8705:
-    title: OAuth 2.0 Mutual-TLS Client Authentication and Certificate-Bound Access Tokens
-    target: https://datatracker.ietf.org/doc/html/rfc8705
-  OAuth.step-up.Auth-RFC9470:
-    title: OAuth 2.0 Step Up Authentication Challenge Protocol
-    target: https://www.rfc-editor.org/rfc/rfc9470.html
   OpenIDConnect.AuthZEN:
     title: Authorization API 1.0
     target: https://openid.net/specs/authorization-api-1_0.html
@@ -110,9 +68,6 @@ normative:
   OpenIDConnect.CIBA:
     title: OpenID Connect Client-Initiated Backchannel Authentication Flow - Core 1.0
     target: https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html
-  OAuth.SPIFFE.Client.Auth:
-    title: OAuth SPIFFE Client Authentication
-    target: https://datatracker.ietf.org/doc/draft-ietf-oauth-spiffe-client-auth
   MCP:
     title: Model Context Protocol
     target: https://modelcontextprotocol.io/specification
@@ -131,6 +86,9 @@ normative:
   AP2:
     title: Agent Payments Protocol (AP2)
     target: https://github.com/google-agentic-commerce/AP2
+  RISC:
+    title: OpenID Risk Incident Sharing and Coordination Profile 1.0
+    target: https://openid.net/specs/openid-risc-1_0-final.html
 
 informative:
 
@@ -196,7 +154,6 @@ This document defines the term Agent Identity Management System (AIMS) as a conc
 An Agent Identity Management System ensures that the right Agent has access to the right resources and tools at the right time for the right reason. An Agent identity management system depends on the following components to achieve its goals:
 
 * **Agent Identifiers:** Unique identifier assigned to every Agent.
-* **Agent "Instance" Identifiers:** Unique identifier assigned to every instance the Agents spawns.
 * **Agent Credentials:** Cryptographic binding between the Agent Identifier and attributes of the Agent.
 * **Agent Attestation:** Mechanisms for determining and assigning the identifier and issue credentials based on measurements of the Agent's environment.
 * **Agent Credential Provisioning:** The mechanism for provisioning credentials to the agent at runtime.
@@ -209,21 +166,21 @@ An Agent Identity Management System ensures that the right Agent has access to t
 The components form a logical stack in which higher layers depend on guarantees provided by lower layers, as illustrated in {{fig-agent-identity-management-system}}.
 
 ~~~aasvg
-+--------------+----------------------------------+--------------+
-|    Policy    |   Monitoring & Remediation       |  Complaince  |
-|              +----------------------------------+              |
-|              |          Authorization           |              |
-|              +----------------------------------+              |
-|              |          Authentication          |              |
-|              +----------------------------------+              |
-|              |          Provisioning            |              |
-|              +----------------------------------+              |
-|              |           Attestation            |              |
-|              +----------------------------------+              |
-|              |           Credentials            |              |
-|              +----------------------------------+              |
-|              |           Identifier             |              |
-+--------------+----------------------------------+--------------+
++--------------+----------------------------------+-----------------+
+|    Policy    |   Observability & Remediation    |    Compliance   |
+|              +----------------------------------+                 |
+|              |          Authorization           |                 |
+|              +----------------------------------+                 |
+|              |          Authentication          |                 |
+|              +----------------------------------+                 |
+|              |          Provisioning            |                 |
+|              +----------------------------------+                 |
+|              |           Attestation            |                 |
+|              +----------------------------------+                 |
+|              |           Credentials            |                 |
+|              +----------------------------------+                 |
+|              |           Identifier             |                 |
++--------------+----------------------------------+-----------------+
 ~~~
 {: #fig-agent-identity-management-system title="Agent Identity Management System"}
 
@@ -385,9 +342,9 @@ As an alternative, entities acting as OAuth clients MAY register their capabilit
 # Agent Observability and Remediation {#agent_monitoring_and_remediation}
 Because agents may perform sensitive actions autonomously or on behalf of users, deployments MUST maintain sufficient observability to reconstruct agent behavior and authorization context after execution. Observability is therefore a security control, not solely an operational feature.
 
-Any participant in the system, including the Agent, Tool, System, LLM or other resources and service MAY subscribe to change notifications using eventing mechanisms such as the OpenID Shared Signals Framework {{SSF}} with either the Continuous Access Evaluation Profile {{CAEP}} or Risk Incident Sharing and Coordination {{RISC}} to receive security and authorization-relevant signals. Upon receipt of a relevant signal (e.g., session revoked, subject disabled, token replay suspected, risk elevated), the recipient SHOULD remediate by attenuating access, such as terminating local sessions, discarding cached tokens, re-acquiring tokens with updated constraints, reducing privileges, or re-running policy evaluation before continuing to allow access. Recipients of such signals MUST ensure that revoked or downgraded authorization is enforced without undue delay. Cached authorization decisions and tokens that are no longer valid MUST NOT continue to be used after a revocation or risk notification is received.
+Any participant in the system, including the Agent, Tool, System, LLM or other resources and service MAY subscribe to change notifications using eventing mechanisms such as the OpenID Shared Signals Framework {{SSF}} with either the Continuous Access Evaluation Profile {{CAEP}} or Risk Incident Sharing and Coordination {{RISC}} to receive security and authorization-relevant signals. Upon receipt of a relevant signal (e.g., session revoked, risk level change, subject disabled, token replay suspected, risk elevated), the recipient SHOULD remediate by attenuating access, such as terminating local sessions, discarding cached tokens, re-acquiring tokens with updated constraints, reducing privileges, or re-running policy evaluation before continuing to allow access. Recipients of such signals MUST ensure that revoked or downgraded authorization is enforced without undue delay. Cached authorization decisions and tokens that are no longer valid MUST NOT continue to be used after a revocation or risk notification is received.
 
-To support detection, investigation, and accountability, deployments MUST produce durable audit logs covering authorization decisions and subsequent remediations. Participants in the system MAY use eventing mechanisms, such as t OpenID Shared Signals Framework {{SSF}} Audit records MUST be tamper-evident and retained according to the security policy of the deployment.
+To support detection, investigation, and accountability, deployments MUST produce durable audit logs covering authorization decisions and subsequent remediations. Participants in the system MAY use eventing mechanisms for the audit/observability logs, such as the OpenID Shared Signals Framework {{SSF}} (e.g. using session presented or session established events). There is a draft in the OpenID Shared Signals Framework {{SSF}} introducing "action receipts" that MAY also be used to produce durable audit logs. Audit records MUST be tamper-evident and retained according to the security policy of the deployment.
 
 At a minimum, audit events MUST record:
 
@@ -399,16 +356,16 @@ At a minimum, audit events MUST record:
 * attestation or risk state influencing the decision
 * remediation or revocation events and their cause
 
-Monitoring systems SHOULD correlate events across Agents, Tools, Services, Resources and LLMs to detect misuse patterns such as replay, confused deputy behavior, privilege escalation, or unexpected action sequences.
+Observability / Monitoring systems SHOULD correlate events across Agents, Tools, Services, Resources and LLMs to detect misuse patterns such as replay, confused deputy behavior, privilege escalation, or unexpected action sequences.
 
 End-to-end audit is enabled when Agents, Users, Systems, LLMs, Tools, services and resources have stable, verifiable identifiers that allow auditors to trace "which entity did what, using which authorization context, and why access changed over time."
 
 Implementations SHOULD provide operators the ability to reconstruct a complete execution chain of an agent task, including delegated authority, intermediate calls, and resulting actions across service boundaries.
 
 # Agent Authentication and Authorization Policy {#agent_auhtentication_and_authorization_policy}
-The configuration and runtime parameters for Agent Identifiers {{agent_identifiers}}, Agent Credentials {{agent_credentials}}, Agent Attestation {{agent_attestation}}, Agent Credential Provisioning {{agent_credential_provisioning}}, Agent Authentication {{agent_authentication}}, Agent Authorization {{agent_authorization}} and Agent Monitoring and Remediation {{agent_monitoring_and_remediation}} collectively constitute the authentication and authorization policy within which the Agent operates.
+The configuration and runtime parameters for Agent Identifiers {{agent_identifiers}}, Agent Credentials {{agent_credentials}}, Agent Attestation {{agent_attestation}}, Agent Credential Provisioning {{agent_credential_provisioning}}, Agent Authentication {{agent_authentication}}, Agent Authorization {{agent_authorization}} and Agent Observability and Remediation {{agent_monitoring_and_remediation}} collectively constitute the authentication and authorization policy within which the Agent operates.
 
-Because these parameters are highly deployment- and risk-model-specific (and often reflect local governance, regulatory, and operational constraints), the policy model and document format are out of scope for this framework and are not recommended as a target for standardization within this specification. Implementations MAY represent policy in any suitable “policy-as-code” or configuration format (e.g., JSON/YAML), provided it is versioned, reviewable, and supports consistent evaluation across the components participating in the end-to-end flow.
+Because these parameters are highly deployment and risk-model-specific (and often reflect local governance, regulatory, and operational constraints), the policy model and document format are out of scope for this framework and are not recommended as a target for standardization within this specification. Implementations MAY represent policy in any suitable “policy-as-code” or configuration format (e.g., JSON/YAML), provided it is versioned, reviewable, and supports consistent evaluation across the components participating in the end-to-end flow.
 
 # Agent Compliance {#agent_compliance}
 Compliance for Agent-based systems SHOULD be assessed by auditing observed behavior and recorded evidence (logs, signals, and authorization decisions) against the deployment’s Agent Authentication and Authorization Policy {{agent_auhtentication_and_authorization_policy}}. Since compliance criteria are specific to individual deployments, organizations, industries and jurisdictions, they are out of scope for this framework though implementers SHOULD ensure strong observability and accountable governance, subject to their specific business needs.
