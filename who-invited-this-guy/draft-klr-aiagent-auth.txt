@@ -858,10 +858,10 @@ Table of Contents
 11.  Agent Monitoring, Observability and Remediation
 
    Because agents may perform sensitive actions autonomously or on
-   behalf of users, deployments MUST maintain sufficient observability
-   to reconstruct agent behavior and authorization context after
-   execution.  Observability is therefore a security control, not solely
-   an operational feature.
+   behalf of users, deployments MUST maintain sufficient monitoring and
+   observability to reconstruct agent behavior and authorization context
+   after execution.  Observability is therefore a security control, not
+   solely an operational feature.
 
    Any participant in the system, including the Agent, Tool, System, LLM
    or other resources and service MAY subscribe to change notifications
