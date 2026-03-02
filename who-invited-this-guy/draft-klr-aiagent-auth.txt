@@ -282,7 +282,8 @@ Table of Contents
    guarantees provided by lower layers, as illustrated in Figure 2.
 
    +--------------+----------------------------------+-----------------+
-   |    Policy    |   Observability & Remediation    |    Compliance   |
+   |    Policy    |     Monitoring, Observability    |    Compliance   |
+   |              |          & Remediation           |                 |
    |              +----------------------------------+                 |
    |              |          Authorization           |                 |
    |              +----------------------------------+                 |
