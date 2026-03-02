@@ -3,7 +3,7 @@ title: "AI Agent Authentication and Authorization"
 abbrev: "AI-Auth"
 category: info
 
-docname: draft-klr-aiagent-auth-latest
+docname: draft-klrc-aiagent-auth-latest
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
 number:
 date:
@@ -21,7 +21,7 @@ venue:
 #  mail: WG@example.com
 #  arch: https://example.com/WG
   github: "PieterKas/agent2agent-auth-framework"
-  latest: "https://PieterKas.github.io/agent2agent-auth-framework/draft-klr-aiagent-auth.html"
+  latest: "https://PieterKas.github.io/agent2agent-auth-framework/draft-klrc-aiagent-auth.html"
 
 author:
  -
