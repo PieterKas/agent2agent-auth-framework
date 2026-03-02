@@ -65,9 +65,6 @@ normative:
   OpenIDConnect.Discovery:
     title: OpenID Connect Discovery 1.0
     target: https://openid.net/specs/openid-connect-discovery-1_0-final.html
-  OpenIDConnect.CIBA:
-    title: OpenID Connect Client-Initiated Backchannel Authentication Flow - Core 1.0
-    target: https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html
   MCP:
     title: Model Context Protocol
     target: https://modelcontextprotocol.io/specification
@@ -304,11 +301,13 @@ When using the Identity Assertion JWT Authorization Grant {{OAUTH-JWT-ASSERTION}
 OAuth Identity and Authorization Chaining Across Domains ({{OAUTH-ID-CHAIN}}) provides a general mechanism for obtaining cross-domain access that can be used whether an identity assertion like a SAML or OpenID Connect token is available or not. The Identity Assertion JWT Authorization Grant {{OAUTH-JWT-ASSERTION}} is optimized for cases where an identity assertion like a SAML or OpenID Connect token is available from an identity provider that is trusted by all the OAuth authorization servers as it removes the need for the user to re-authenticate. This is typically used within enterprise deployments to simplify authorization delegation for multiple software-as-a-service offerings.
 
 ## Human in the Loop
-An OAuth authorization server MAY conclude that the level of access requested by an Agent requires explicit user confirmation. In such cases the authorization server SHOULD either decline the request or obtain additional authorization from the User using the OpenID Client Initiated Backchannel Authentication (CIBA) protocol. This triggers an out-of-band interaction allowing the user to approve or deny the requested operation without exposing credentials to the agent (for example a push notification requesting the user to approve a request through an authenticator application on their mobile device).
+An OAuth authorization server MAY conclude that the level of access requested by an Agent requires explicit user confirmation. In such cases the authorization server SHOULD either decline the request or obtain additional authorization from the User by triggering an out-of-band interaction allowing the user to approve or deny the requested operation without exposing credentials to the agent (for example a push notification requesting the user to approve a request through an authenticator application on their mobile device).
 
-Interactive agent frameworks may also solicit user confirmation directly during task execution (for example tool invocation approval or parameter confirmation). Such interactions do not by themselves constitute authorization and MUST be bound to a verifiable authorization grant issued by the authorization server. The agent SHOULD therefore translate user confirmation into an OAuth authorization event (e.g., step-up authorization via CIBA) before accessing protected resources.
+Interactive agent frameworks may also solicit user confirmation directly during task execution (for example tool invocation approval or parameter confirmation). Such interactions do not by themselves constitute authorization and MUST be bound to a verifiable authorization grant issued by the authorization server. The agent SHOULD therefore translate user confirmation into an OAuth authorization event before accessing protected resources.
 
 This model aligns with user-solicitation patterns such as those described by the Model Context Protocol ({{MCP}}), where an agent pauses execution and requests user confirmation before performing sensitive actions. The final authorization decision remains with the authorization server, and the agent MUST NOT treat local UI confirmation alone as sufficient authorization.
+
+*Note* Additonal specifications may be needed to define how an authorization server can trigger and out-of-band interaction to allow the User to approve or deny a request.
 
 ## Tool-to-Service Access
 Tools expose interfaces to underlying services and resources. Access to the Tools can be controlled by OAuth and augmented by policy, attribute or role based authorization systems (amongst others). If the Tools are implemented as one or more microservices, it should use transaction tokens to reduce risk as described in {{trat-risk-reduction}} to avoid passing access tokens around within the Tool implementation.
