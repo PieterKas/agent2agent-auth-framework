@@ -167,7 +167,8 @@ The components form a logical stack in which higher layers depend on guarantees 
 
 ~~~aasvg
 +--------------+----------------------------------+-----------------+
-|    Policy    |   Observability & Remediation    |    Compliance   |
+|    Policy    |     Monitoring, Observability    |    Compliance   |
+|              |          & Remediation           |                 |
 |              +----------------------------------+                 |
 |              |          Authorization           |                 |
 |              +----------------------------------+                 |
