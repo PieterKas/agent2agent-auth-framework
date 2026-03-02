@@ -65,6 +65,9 @@ normative:
   OpenIDConnect.Discovery:
     title: OpenID Connect Discovery 1.0
     target: https://openid.net/specs/openid-connect-discovery-1_0-final.html
+  OpenIDConnect.CIBA:
+    title: OpenID Connect Client-Initiated Backchannel Authentication Flow - Core 1.0
+    target: https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html
   MCP:
     title: Model Context Protocol
     target: https://modelcontextprotocol.io/specification
@@ -307,7 +310,7 @@ Interactive agent frameworks may also solicit user confirmation directly during 
 
 This model aligns with user-solicitation patterns such as those described by the Model Context Protocol ({{MCP}}), where an agent pauses execution and requests user confirmation before performing sensitive actions. The final authorization decision remains with the authorization server, and the agent MUST NOT treat local UI confirmation alone as sufficient authorization.
 
-*Note* Additonal specifications may be needed to define how an authorization server can trigger and out-of-band interaction to allow the User to approve or deny a request.
+TODO: additional detail on protocols used for addtional human-in-the-loop authorization to be added.
 
 ## Tool-to-Service Access
 Tools expose interfaces to underlying services and resources. Access to the Tools can be controlled by OAuth and augmented by policy, attribute or role based authorization systems (amongst others). If the Tools are implemented as one or more microservices, it should use transaction tokens to reduce risk as described in {{trat-risk-reduction}} to avoid passing access tokens around within the Tool implementation.
