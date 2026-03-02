@@ -386,6 +386,4 @@ This document has no IANA actions.
 --- back
 
 # Acknowledgments
-{:numbered="false"}
-
-TODO acknowledge.
+The authors would like to thank Sean O'Dell for providing valuable input and feedback on this work.
