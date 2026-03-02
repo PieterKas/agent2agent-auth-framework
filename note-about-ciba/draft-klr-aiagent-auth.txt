@@ -739,12 +739,13 @@ Table of Contents
    An OAuth authorization server MAY conclude that the level of access
    requested by an Agent requires explicit user confirmation.  In such
    cases the authorization server SHOULD either decline the request or
-   obtain additional authorization from the User using the OpenID Client
-   Initiated Backchannel Authentication (CIBA) protocol.  This triggers
-   an out-of-band interaction allowing the user to approve or deny the
-   requested operation without exposing credentials to the agent (for
-   example a push notification requesting the user to approve a request
-   through an authenticator application on their mobile device).
+   obtain additional authorization from the User.  An Agent, acting as
+   an OAuth client, may use the OpenID Client Initiated Backchannel
+   Authentication (CIBA) protocol.  This triggers an out-of-band
+   interaction allowing the user to approve or deny the requested
+   operation without exposing credentials to the agent (for example a
+   push notification requesting the user to approve a request through an
+   authenticator application on their mobile device).
 
    Interactive agent frameworks may also solicit user confirmation
    directly during task execution (for example tool invocation approval
