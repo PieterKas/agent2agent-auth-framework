@@ -86,6 +86,9 @@ normative:
   AP2:
     title: Agent Payments Protocol (AP2)
     target: https://github.com/google-agentic-commerce/AP2
+  RISC:
+    title: OpenID Risk Incident Sharing and Coordination Profile 1.0
+    target: https://openid.net/specs/openid-risc-1_0-final.html
 
 informative:
 
@@ -105,7 +108,7 @@ This document aims to help close that gap by providing a comprehensive model dem
 
 By doing so, this document serves two complementary goals:
 
-1. **Consolidation of prior art**: It establishes a baseline by showing how existing standards address the core identity, authentication, authorization, and monitoring needs of agent-based systems. Implementers and standards developers can reference this framework to avoid redundant work and ensure interoperability.
+1. **Consolidation of prior art**: It establishes a baseline by showing how existing standards address the core identity, authentication, authorization, monitoring and observability needs of agent-based systems. Implementers and standards developers can reference this framework to avoid redundant work and ensure interoperability.
 
 2. **Foundation for future work**: As the agent ecosystem matures, having such a framework aids in identifying gaps and clarifies where extensions or profiles of existing standards are needed. This provides a foundation for more focused standardization efforts in areas needing novel work rather than variations of existing approaches.
 
@@ -135,10 +138,10 @@ In this document, Tools, Services, and Resources are treated as a single categor
 {: #fig-ai-agent-workload title="AI Agent as a Workload"}
 
 1. Optional: The User or System (e.g. a batch job or another Agent) provides an initial request or instruction to the AI Agent.
-2. The AI Agent provides the available context to the LLM. Context is implementation- and deployment-specific and may include User or System input, system prompts, Tool descriptions, prior Tool, Service and Resource outputs, and other relevant state.
+2. The AI Agent provides the available context to the LLM. Context is implementation, and deployment, specific and may include User or System input, system prompts, Tool descriptions, prior Tool, Service and Resource outputs, and other relevant state.
 3. The LLM returns output to the AI Agent facilitating selection of Tools, Services or Resources to invoke.
 4. The AI Agent invokes one or more external endpoints of selected Tools, Services or Resources. A Tool endpoint may itself be implemented by another AI agent.
-5. The external endpoint of the Tools, Services or Resources returns a result of the operation to the AI Agent, which may sends the information as additional context to the Large Language Model, repeating steps 2-5 until the exit condition is reached and the task is completed.
+5. The external endpoint of the Tools, Services or Resources returns a result of the operation to the AI Agent, which may send the information as additional context to the Large Language Model, repeating steps 2-5 until the exit condition is reached and the task is completed.
 6. Optional: Once the exit condition is reached in step 5, the AI Agent may return a response to the User or System. The AI Agent may also return intermediate results or request additional input.
 
 As shown in {{fig-ai-agent-workload}}, the AI agent is a workload that needs an identifier and credentials so it can be authenticated by the Tools, Services, Resources, Large Language Model, System and the User (via the underlying operating system or platform, similar to existing applications and services). Once authenticated, these parties determine if the AI Agent is authorized to access the requested Large Language Model, Tools, Services or Resources. If the AI Agent is acting on behalf of a User or System, the User or System needs to delegate authority to the AI Agent, and the User or System context is preserved and used as input to authorization decisions and recorded in audit trails.
@@ -156,28 +159,29 @@ An Agent Identity Management System ensures that the right Agent has access to t
 * **Agent Credential Provisioning:** The mechanism for provisioning credentials to the agent at runtime.
 * **Agent Authentication:** Protocols and mechanisms used by the Agent to authenticate itself to Large Language Models or Tools (resource or server) in the system.
 * **Agent Authorization:** Protocols and systems used to determine if an Agent is allowed to access a Large Language Model or Tool (resource or server).
-* **Agent Monitoring and Remediation:** Protocols and mechanisms to dynamically modify the authorization decisions based on observed behavior and system state.
+* **Agent Observability and Remediation:** Protocols and mechanisms to dynamically modify the authorization decisions based on observed behavior and system state.
 * **Agent Authentication and Authorization Policy:** The configuration and rules for each of the Agent Identity Management System.
 * **Agent Compliance:** Measurement of the state and functioning of the system against the stated policies.
 
 The components form a logical stack in which higher layers depend on guarantees provided by lower layers, as illustrated in {{fig-agent-identity-management-system}}.
 
 ~~~aasvg
-+--------------+----------------------------------+--------------+
-|    Policy    |   Monitoring & Remediation       |  Complaince  |
-|              +----------------------------------+              |
-|              |          Authorization           |              |
-|              +----------------------------------+              |
-|              |          Authentication          |              |
-|              +----------------------------------+              |
-|              |          Provisioning            |              |
-|              +----------------------------------+              |
-|              |           Attestation            |              |
-|              +----------------------------------+              |
-|              |           Credentials            |              |
-|              +----------------------------------+              |
-|              |           Identifier             |              |
-+--------------+----------------------------------+--------------+
++--------------+----------------------------------+-----------------+
+|    Policy    |     Monitoring, Observability    |    Compliance   |
+|              |          & Remediation           |                 |
+|              +----------------------------------+                 |
+|              |          Authorization           |                 |
+|              +----------------------------------+                 |
+|              |          Authentication          |                 |
+|              +----------------------------------+                 |
+|              |          Provisioning            |                 |
+|              +----------------------------------+                 |
+|              |           Attestation            |                 |
+|              +----------------------------------+                 |
+|              |           Credentials            |                 |
+|              +----------------------------------+                 |
+|              |           Identifier             |                 |
++--------------+----------------------------------+-----------------+
 ~~~
 {: #fig-agent-identity-management-system title="Agent Identity Management System"}
 
@@ -215,7 +219,7 @@ There are numerous systems that perform some form of attestation, any of which c
 An agent identity management system may incorporate multiple attestation mechanisms and implementations to collect evidence and supply it to credential provisioning components. The selection of mechanisms depends on deployment constraints (such as the underlying platform and available identity signals) and the desired level of trust assurance.
 
 # Agent Credential Provisioning {#agent_credential_provisioning}
-Agent credential provisioning refers to the runtime issuance, renewal, and rotation of the credentials an agent uses to authenticate and authorize itself to other agents. Agents may be provisioned with one or more credential types as described in {{agent_credentials}}. Unlike static secrets, agent credentials are provisioned dynamically and are intentionally short-lived, eliminating the operational burden of manual expiration management and reducing the impact of credential compromise. Agent credential provisioning must operate autonomously, scale to high-churn environments, and integrate closely with the attestation mechanisms that establish trust in the agent at each issuance or rotation event.
+Agent credential provisioning refers to the runtime issuance, renewal, lifecycle state and rotation of the credentials an agent uses to authenticate and authorize itself to other agents. Agents may be provisioned with one or more credential types as described in {{agent_credentials}}. Unlike static secrets, agent credentials are provisioned dynamically and are intentionally short-lived, eliminating the operational burden of manual expiration management and reducing the impact of credential compromise. Agent credential provisioning must operate autonomously, scale to high-churn environments, and integrate closely with the attestation mechanisms that establish trust in the agent at each issuance or rotation event.
 
 Agent credential provisioning typically includes two phases:
 
@@ -229,7 +233,7 @@ Deployed frameworks such as {{SPIFFE}} provide proven mechanisms for automated, 
 # Agent Authentication {#agent_authentication}
 Agents may authenticate using a variety of mechanisms, depending on the credentials they possess, the protocols supported in the deployment environment, and the risk profile of the application. As described in the WIMSE Architecture {{!WIMSE-ARCH=I-D.ietf-wimse-arch}}, authentication can occur at either the transport layer or the application layer, and many deployments rely on a combination of both.
 
-## Transport layer authentication
+## Transport Layer Authentication
 Transport-layer authentication establishes trust during the establishment of a secure transport channel. The most common mechanism used by agents is mutually-authenticated TLS (mTLS), in which both endpoints present X.509-based credentials and perform a bidirectional certificate exchange as part of the TLS negotiation. When paired with short-lived workload identities, such as those issued by SPIFFE or WIMSE, mTLS provides strong channel binding and cryptographic proof of control over the agent’s private key.
 
 mTLS is particularly well-suited for environments where transport-level protection, peer authentication, and ephemeral workload identity are jointly required. It also simplifies authorization decisions by enabling agents to associate application-layer requests with an authenticated transport identity. One example of this is the use of mTLS in service mesh architectures such as Istio or LinkerD.
@@ -237,7 +241,7 @@ mTLS is particularly well-suited for environments where transport-level protecti
 ### Limitations
 There are scenarios where transport-layer authentication is not desirable or cannot be relied upon. In architectures involving intermediaries, such as proxies, API gateways, service meshes, load balancers, or protocol translators, TLS sessions are often terminated and re-established, breaking the end-to-end continuity of transport-layer identity. Similarly, some deployment models (such as serverless platforms, multi-tenant edge environments, or cross-domain topologies) may obscure or abstract identity presented at the transport layer, making it difficult to bind application-layer actions to a credential presented at the transport layer. In these cases, application-layer authentication provides a more robust and portable mechanism for expressing agent identity and conveying attestation or policy-relevant attributes.
 
-## Application layer authentication
+## Application Layer Authentication
 Application-layer authentication allows agents to authenticate independently of the underlying transport. This enables end-to-end identity preservation even when requests traverse proxies, load balancers, or protocol translation layers.
 
 The WIMSE working group defines WIMSE Proof Tokens and HTTP Message Signatures as authentication mechanisms that may be used by agents.
@@ -245,7 +249,7 @@ The WIMSE working group defines WIMSE Proof Tokens and HTTP Message Signatures a
 ### WIMSE Proof Tokens (WPTs) {#wpt}
 WIMSE Workload Proof Tokens (WPTs, {{!WIMSE-WPT=I-D.ietf-wimse-wpt}}) are a protocol-independent, application-layer mechanism for proving possession of the private key associated with a Workload Identity Token (WIT). WPTs are generated by the agent, using the private key matching the public key in the WIT. A WPT is defined as a signed JSON Web Token (JWT) that binds an agent’s authentication to a specific message context, for example, an HTTP request, thereby providing proof of possession rather than relying on bearer semantics.
 
-WPTs are designed to work alongside WITs {{WIMSE-CRED}} and are typically short-lived to reduce the window for replay attacks.  They carry claims such as audience (aud), expiration (exp), a unique token identifier (jti), and a hash of the associated WIT (wth). A WPT may also include hashes of other related tokens (e.g., a Transaction Token) to bind the authentication contexts to specific transaction or authorizations details.
+WPTs are designed to work alongside WITs {{WIMSE-CRED}} and are typically short-lived to reduce the window for replay attacks. They carry claims such as audience (aud), expiration (exp), a unique token identifier (jti), and a hash of the associated WIT (wth). A WPT may also include hashes of other related tokens (e.g., a Transaction Token) to bind the authentication contexts to specific transaction or authorizations details.
 
 Although the draft currently defines a protocol binding for HTTP (via a Workload-Proof-Token header), the core format is protocol-agnostic, making it applicable to other protocols. Its JWT structure and claims model allow WPTs to be bound to different protocols and transports, including asynchronous or non-HTTP messaging systems such as Kafka and gRPC, or other future protocol bindings. This design enables receiving systems to verify identity, key possession, and message binding at the application layer even in environments where transport-layer identity (e.g., mutual TLS) is insufficient or unavailable.
 
@@ -283,7 +287,7 @@ Agents themselves can act in the role of an OAuth protected resource and be invo
 ### OAuth 2.0 Security Best Practices
 The Best Current Practice for OAuth 2.0 Security as described in {{!OAUTH-BCP=RFC9700}} are applicable when requesting and using access tokens.
 
-## Risk reduction with Transaction Tokens {#trat-risk-reduction}
+## Risk Reduction with Transaction Tokens {#trat-risk-reduction}
 Resources servers, whether they are LLMs, Tools or Agents (in the Agent-to-Agent case) may be composed of multiple microservices that are invoked to complete a request. The access tokens presented to the Agent, LLM or Tools can typically be used with multiple transactions and consequently have broader scope than needed to complete any specific transaction. Passing the access token from one microservice to another within an invoked Agent, LLM or the Tools increases the risk of token theft and replay attacks. For example, an attacker may discover and access token passed between microservices in a log file or crash dump, exfiltrate it, and use it to invoke a new transaction with different parameters (e.g. increase the transaction amount, or invoke an unrelated call as part of executing a lateral move).
 
 To avoid passing access tokens between microservices, the Agent, LLM or Tools can exchange the received access token for a transaction token, as defined in the Transaction Token specification {{OAUTH-TRANS-TOKENS}}. The transaction token allows for identity and authorization information to be passed along the internal call chain of microservices. The transaction token issuer enriches the transaction token with context of the caller that presented the access token (e.g. IP address, etc.), transaction context (transaction amount), identity information and a unique transaction identifier. This results in a downscoped token that is bound to a specific transaction and cannot be used as an access token, with another transaction, or within the same transaction with modified transaction details (e.g. change in transaction amount). Transaction tokens are typically short-lived, further limiting the risk in case they are obtained by an attacker by limiting the time window during which these tokens will be accepted.
@@ -336,10 +340,10 @@ Other actors (e.g., Authorization Servers, registrars, or policy systems) may ne
 
 As an alternative, entities acting as OAuth clients MAY register their capabilities with authorization servers as defined in the OAuth 2.0 Dynamic Client Registration Protocol {{!OAUTH-REGISTRATION=RFC7591}}.
 
-# Agent Monitoring and Remediation {#agent_monitoring_and_remediation}
-Because agents may perform sensitive actions autonomously or on behalf of users, deployments MUST maintain sufficient observability to reconstruct agent behavior and authorization context after execution. Monitoring is therefore a security control, not solely an operational feature.
+# Agent Monitoring, Observability and Remediation {#agent_monitoring_and_remediation}
+Because agents may perform sensitive actions autonomously or on behalf of users, deployments MUST maintain sufficient monitoring and observability to reconstruct agent behavior and authorization context after execution. Observability is therefore a security control, not solely an operational feature.
 
-Any participant in the system, including the Agent, Tool, System, LLM or other resources and service MAY subscribe to change notifications using eventing mechanisms such as the OpenID Shared Signals Framework {{SSF}} with the Continuous Access Evaluation Profile {{CAEP}} to receive security and authorization-relevant signals. Upon receipt of a relevant signal (e.g., session revoked, subject disabled, token replay suspected, risk elevated), the recipient SHOULD remediate by attenuating access, such as terminating local sessions, discarding cached tokens, re-acquiring tokens with updated constraints, reducing privileges, or re-running policy evaluation before continuing to allow access. Recipients of such signals MUST ensure that revoked or downgraded authorization is enforced without undue delay. Cached authorization decisions and tokens that are no longer valid MUST NOT continue to be used after a revocation or risk notification is received.
+Any participant in the system, including the Agent, Tool, System, LLM or other resources and service MAY subscribe to change notifications using eventing mechanisms such as the OpenID Shared Signals Framework {{SSF}} with either the Continuous Access Evaluation Profile {{CAEP}} or Risk Incident Sharing and Coordination {{RISC}} to receive security and authorization-relevant signals. Upon receipt of a relevant signal (e.g., session revoked, risk level change, subject disabled, token replay suspected, risk elevated), the recipient SHOULD remediate by attenuating access, such as terminating local sessions, discarding cached tokens, re-acquiring tokens with updated constraints, reducing privileges, or re-running policy evaluation before continuing to allow access. Recipients of such signals MUST ensure that revoked or downgraded authorization is enforced without undue delay. Cached authorization decisions and tokens that are no longer valid MUST NOT continue to be used after a revocation or risk notification is received.
 
 To support detection, investigation, and accountability, deployments MUST produce durable audit logs covering authorization decisions and subsequent remediations. Audit records MUST be tamper-evident and retained according to the security policy of the deployment.
 
@@ -353,16 +357,16 @@ At a minimum, audit events MUST record:
 * attestation or risk state influencing the decision
 * remediation or revocation events and their cause
 
-Monitoring systems SHOULD correlate events across Agents, Tools, Services, Resources and LLMs to detect misuse patterns such as replay, confused deputy behavior, privilege escalation, or unexpected action sequences.
+Monitoring / Observability systems SHOULD correlate events across Agents, Tools, Services, Resources and LLMs to detect misuse patterns such as replay, confused deputy behavior, privilege escalation, or unexpected action sequences.
 
 End-to-end audit is enabled when Agents, Users, Systems, LLMs, Tools, services and resources have stable, verifiable identifiers that allow auditors to trace "which entity did what, using which authorization context, and why access changed over time."
 
 Implementations SHOULD provide operators the ability to reconstruct a complete execution chain of an agent task, including delegated authority, intermediate calls, and resulting actions across service boundaries.
 
 # Agent Authentication and Authorization Policy {#agent_auhtentication_and_authorization_policy}
-The configuration and runtime parameters for Agent Identifiers {{agent_identifiers}}, Agent Credentials {{agent_credentials}}, Agent Attestation {{agent_attestation}}, Agent Credential Provisioning {{agent_credential_provisioning}}, Agent Authentication {{agent_authentication}}, Agent Authorization {{agent_authorization}} and Agent Monitoring and Remediation {{agent_monitoring_and_remediation}} collectively constitute the authentication and authorization policy within which the Agent operates.
+The configuration and runtime parameters for Agent Identifiers {{agent_identifiers}}, Agent Credentials {{agent_credentials}}, Agent Attestation {{agent_attestation}}, Agent Credential Provisioning {{agent_credential_provisioning}}, Agent Authentication {{agent_authentication}}, Agent Authorization {{agent_authorization}} and Agent Monitoring, Observability and Remediation {{agent_monitoring_and_remediation}} collectively constitute the authentication and authorization policy within which the Agent operates.
 
-Because these parameters are highly deployment- and risk-model-specific (and often reflect local governance, regulatory, and operational constraints), the policy model and document format are out of scope for this framework and are not recommended as a target for standardization within this specification. Implementations MAY represent policy in any suitable “policy-as-code” or configuration format (e.g., JSON/YAML), provided it is versioned, reviewable, and supports consistent evaluation across the components participating in the end-to-end flow.
+Because these parameters are highly deployment and risk-model-specific (and often reflect local governance, regulatory, and operational constraints), the policy model and document format are out of scope for this framework and are not recommended as a target for standardization within this specification. Implementations MAY represent policy in any suitable “policy-as-code” or configuration format (e.g., JSON/YAML), provided it is versioned, reviewable, and supports consistent evaluation across the components participating in the end-to-end flow.
 
 # Agent Compliance {#agent_compliance}
 Compliance for Agent-based systems SHOULD be assessed by auditing observed behavior and recorded evidence (logs, signals, and authorization decisions) against the deployment’s Agent Authentication and Authorization Policy {{agent_auhtentication_and_authorization_policy}}. Since compliance criteria are specific to individual deployments, organizations, industries and jurisdictions, they are out of scope for this framework though implementers SHOULD ensure strong observability and accountable governance, subject to their specific business needs.
