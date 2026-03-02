@@ -106,7 +106,7 @@ Table of Contents
        10.9.1.  Authorization Server Capability Discovery
        10.9.2.  Protected Resource Capability Discovery
        10.9.3.  Client Capability Discovery
-   11. Agent Observability and Remediation
+   11. Agent Monitoring, Observability and Remediation
    12. Agent Authentication and Authorization Policy
    13. Agent Compliance
    14. Security Considerations
@@ -855,7 +855,7 @@ Table of Contents
    their capabilities with authorization servers as defined in the OAuth
    2.0 Dynamic Client Registration Protocol [OAUTH-REGISTRATION].
 
-11.  Agent Observability and Remediation
+11.  Agent Monitoring, Observability and Remediation
 
    Because agents may perform sensitive actions autonomously or on
    behalf of users, deployments MUST maintain sufficient observability

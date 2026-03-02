@@ -1267,7 +1267,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
-            <p id="section-toc.1-1.11.1"><a href="#section-11" class="auto internal xref">11</a>. <a href="#name-agent-observability-and-rem" class="internal xref">Agent Observability and Remediation</a></p>
+            <p id="section-toc.1-1.11.1"><a href="#section-11" class="auto internal xref">11</a>. <a href="#name-agent-monitoring-observabil" class="internal xref">Agent Monitoring, Observability and Remediation</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
             <p id="section-toc.1-1.12.1"><a href="#section-12" class="auto internal xref">12</a>. <a href="#name-agent-authentication-and-au" class="internal xref">Agent Authentication and Authorization Policy</a></p>
@@ -1754,8 +1754,8 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 </div>
 <div id="agent_monitoring_and_remediation">
 <section id="section-11">
-      <h2 id="name-agent-observability-and-rem">
-<a href="#section-11" class="section-number selfRef">11. </a><a href="#name-agent-observability-and-rem" class="section-name selfRef">Agent Observability and Remediation</a>
+      <h2 id="name-agent-monitoring-observabil">
+<a href="#section-11" class="section-number selfRef">11. </a><a href="#name-agent-monitoring-observabil" class="section-name selfRef">Agent Monitoring, Observability and Remediation</a>
       </h2>
 <p id="section-11-1">Because agents may perform sensitive actions autonomously or on behalf of users, deployments <span class="bcp14">MUST</span> maintain sufficient observability to reconstruct agent behavior and authorization context after execution. Observability is therefore a security control, not solely an operational feature.<a href="#section-11-1" class="pilcrow">¶</a></p>
 <p id="section-11-2">Any participant in the system, including the Agent, Tool, System, LLM or other resources and service <span class="bcp14">MAY</span> subscribe to change notifications using eventing mechanisms such as the OpenID Shared Signals Framework <span>[<a href="#SSF" class="cite xref">SSF</a>]</span> with either the Continuous Access Evaluation Profile <span>[<a href="#CAEP" class="cite xref">CAEP</a>]</span> or Risk Incident Sharing and Coordination <span>[<a href="#RISC" class="cite xref">RISC</a>]</span> to receive security and authorization-relevant signals. Upon receipt of a relevant signal (e.g., session revoked, risk level change, subject disabled, token replay suspected, risk elevated), the recipient <span class="bcp14">SHOULD</span> remediate by attenuating access, such as terminating local sessions, discarding cached tokens, re-acquiring tokens with updated constraints, reducing privileges, or re-running policy evaluation before continuing to allow access. Recipients of such signals <span class="bcp14">MUST</span> ensure that revoked or downgraded authorization is enforced without undue delay. Cached authorization decisions and tokens that are no longer valid <span class="bcp14">MUST NOT</span> continue to be used after a revocation or risk notification is received.<a href="#section-11-2" class="pilcrow">¶</a></p>
