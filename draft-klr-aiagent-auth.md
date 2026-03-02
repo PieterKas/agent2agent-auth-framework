@@ -382,4 +382,4 @@ This document has no IANA actions.
 --- back
 
 # Acknowledgments
-The authors would like to thank Sean O'Dell for providing valuable input and feedback for this work.
+The authors would like to thank Sean O'Dell for providing valuable input and feedback on this work.
