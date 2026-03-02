@@ -356,7 +356,7 @@ Table of Contents
    X.509, JWT or WIT it is provisioned with.  In these cases an agent
    MAY exchange their primary credentials through a credential exchange
    mechanisms (e.g., OAuth 2.0 Token Exchange [OAUTH-TOKEN-EXCHANGE],
-   Transaction Tokens [OAUTH-TRANS-TOKENS] or Workload Identity
+   Transaction Tokens [OAUTH-TXN-TOKENS] or Workload Identity
    Federation).  This allows an agent to obtain a credential targeted to
    a specific environment by leveraging the primary credential in its
    possession.
@@ -678,7 +678,7 @@ Table of Contents
    To avoid passing access tokens between microservices, the Agent, LLM
    or Tools can exchange the received access token for a transaction
    token, as defined in the Transaction Token specification
-   [OAUTH-TRANS-TOKENS].  The transaction token allows for identity and
+   [OAUTH-TXN-TOKENS].  The transaction token allows for identity and
    authorization information to be passed along the internal call chain
    of microservices.  The transaction token issuer enriches the
    transaction token with context of the caller that presented the
@@ -739,12 +739,13 @@ Table of Contents
    An OAuth authorization server MAY conclude that the level of access
    requested by an Agent requires explicit user confirmation.  In such
    cases the authorization server SHOULD either decline the request or
-   obtain additional authorization from the User using the OpenID Client
-   Initiated Backchannel Authentication (CIBA) protocol.  This triggers
-   an out-of-band interaction allowing the user to approve or deny the
-   requested operation without exposing credentials to the agent (for
-   example a push notification requesting the user to approve a request
-   through an authenticator application on their mobile device).
+   obtain additional authorization from the User.  An Agent, acting as
+   an OAuth client, may use the OpenID Client Initiated Backchannel
+   Authentication (CIBA) protocol.  This triggers an out-of-band
+   interaction allowing the user to approve or deny the requested
+   operation without exposing credentials to the agent (for example a
+   push notification requesting the user to approve a request through an
+   authenticator application on their mobile device).
 
    Interactive agent frameworks may also solicit user confirmation
    directly during task execution (for example tool invocation approval
@@ -761,6 +762,12 @@ Table of Contents
    sensitive actions.  The final authorization decision remains with the
    authorization server, and the agent MUST NOT treat local UI
    confirmation alone as sufficient authorization.
+
+   *Note:* Additional specification or design work may be needed to
+   define how out-of-band interactions with the User occur at different
+   stages of execution.  CIBA itself only accounts for client
+   initiation, which doesn't map well to cases that envision the need
+   for User confirmation to occur mid-execution.
 
 10.7.  Tool-to-Service Access
 
@@ -1056,7 +1063,7 @@ Table of Contents
               RFC 7662, DOI 10.17487/RFC7662, October 2015,
               <https://www.rfc-editor.org/rfc/rfc7662>.
 
-   [OAUTH-TRANS-TOKENS]
+   [OAUTH-TXN-TOKENS]
               Tulshibagwale, A., Fletcher, G., and P. Kasselman,
               "Transaction Tokens", Work in Progress, Internet-Draft,
               draft-ietf-oauth-transaction-tokens-07, 24 January 2026,
