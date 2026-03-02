@@ -83,9 +83,9 @@ Table of Contents
    7.  Agent Attestation
    8.  Agent Credential Provisioning
    9.  Agent Authentication
-     9.1.  Transport layer authentication
+     9.1.  Transport Layer Authentication
        9.1.1.  Limitations
-     9.2.  Application layer authentication
+     9.2.  Application Layer Authentication
        9.2.1.  WIMSE Proof Tokens (WPTs)
        9.2.2.  HTTP Message Signatures
        9.2.3.  Limitations
@@ -97,7 +97,7 @@ Table of Contents
        10.3.2.  Agent Obtains Own Authorization
        10.3.3.  Agents Accessed by Systems or Other Agents
        10.3.4.  OAuth 2.0 Security Best Practices
-     10.4.  Risk reduction with Transaction Tokens
+     10.4.  Risk Reduction with Transaction Tokens
      10.5.  Cross Domain Access
      10.6.  Human in the Loop
      10.7.  Tool-to-Service Access
@@ -106,7 +106,7 @@ Table of Contents
        10.9.1.  Authorization Server Capability Discovery
        10.9.2.  Protected Resource Capability Discovery
        10.9.3.  Client Capability Discovery
-   11. Agent Monitoring and Remediation
+   11. Agent Monitoring, Observability and Remediation
    12. Agent Authentication and Authorization Policy
    13. Agent Compliance
    14. Security Considerations
@@ -139,9 +139,9 @@ Table of Contents
 
    1.  *Consolidation of prior art*: It establishes a baseline by
        showing how existing standards address the core identity,
-       authentication, authorization, and monitoring needs of agent-
-       based systems.  Implementers and standards developers can
-       reference this framework to avoid redundant work and ensure
+       authentication, authorization, monitoring and observability needs
+       of agent-based systems.  Implementers and standards developers
+       can reference this framework to avoid redundant work and ensure
        interoperability.
 
    2.  *Foundation for future work*: As the agent ecosystem matures,
@@ -195,7 +195,7 @@ Table of Contents
        provides an initial request or instruction to the AI Agent.
 
    2.  The AI Agent provides the available context to the LLM.  Context
-       is implementation- and deployment-specific and may include User
+       is implementation, and deployment, specific and may include User
        or System input, system prompts, Tool descriptions, prior Tool,
        Service and Resource outputs, and other relevant state.
 
@@ -207,7 +207,7 @@ Table of Contents
        implemented by another AI agent.
 
    5.  The external endpoint of the Tools, Services or Resources returns
-       a result of the operation to the AI Agent, which may sends the
+       a result of the operation to the AI Agent, which may send the
        information as additional context to the Large Language Model,
        repeating steps 2-5 until the exit condition is reached and the
        task is completed.
@@ -268,7 +268,7 @@ Table of Contents
       an Agent is allowed to access a Large Language Model or Tool
       (resource or server).
 
-   *  *Agent Monitoring and Remediation:* Protocols and mechanisms to
+   *  *Agent Observability and Remediation:* Protocols and mechanisms to
       dynamically modify the authorization decisions based on observed
       behavior and system state.
 
@@ -281,21 +281,22 @@ Table of Contents
    The components form a logical stack in which higher layers depend on
    guarantees provided by lower layers, as illustrated in Figure 2.
 
-   +--------------+----------------------------------+--------------+
-   |    Policy    |   Monitoring & Remediation       |  Complaince  |
-   |              +----------------------------------+              |
-   |              |          Authorization           |              |
-   |              +----------------------------------+              |
-   |              |          Authentication          |              |
-   |              +----------------------------------+              |
-   |              |          Provisioning            |              |
-   |              +----------------------------------+              |
-   |              |           Attestation            |              |
-   |              +----------------------------------+              |
-   |              |           Credentials            |              |
-   |              +----------------------------------+              |
-   |              |           Identifier             |              |
-   +--------------+----------------------------------+--------------+
+   +--------------+----------------------------------+-----------------+
+   |    Policy    |     Monitoring, Observability    |    Compliance   |
+   |              |          & Remediation           |                 |
+   |              +----------------------------------+                 |
+   |              |          Authorization           |                 |
+   |              +----------------------------------+                 |
+   |              |          Authentication          |                 |
+   |              +----------------------------------+                 |
+   |              |          Provisioning            |                 |
+   |              +----------------------------------+                 |
+   |              |           Attestation            |                 |
+   |              +----------------------------------+                 |
+   |              |           Credentials            |                 |
+   |              +----------------------------------+                 |
+   |              |           Identifier             |                 |
+   +--------------+----------------------------------+-----------------+
 
                  Figure 2: Agent Identity Management System
 
@@ -405,9 +406,9 @@ Table of Contents
 8.  Agent Credential Provisioning
 
    Agent credential provisioning refers to the runtime issuance,
-   renewal, and rotation of the credentials an agent uses to
-   authenticate and authorize itself to other agents.  Agents may be
-   provisioned with one or more credential types as described in
+   renewal, lifecycle state and rotation of the credentials an agent
+   uses to authenticate and authorize itself to other agents.  Agents
+   may be provisioned with one or more credential types as described in
    Section 6.  Unlike static secrets, agent credentials are provisioned
    dynamically and are intentionally short-lived, eliminating the
    operational burden of manual expiration management and reducing the
@@ -451,7 +452,7 @@ Table of Contents
    occur at either the transport layer or the application layer, and
    many deployments rely on a combination of both.
 
-9.1.  Transport layer authentication
+9.1.  Transport Layer Authentication
 
    Transport-layer authentication establishes trust during the
    establishment of a secure transport channel.  The most common
@@ -485,7 +486,7 @@ Table of Contents
    portable mechanism for expressing agent identity and conveying
    attestation or policy-relevant attributes.
 
-9.2.  Application layer authentication
+9.2.  Application Layer Authentication
 
    Application-layer authentication allows agents to authenticate
    independently of the underlying transport.  This enables end-to-end
@@ -658,7 +659,7 @@ Table of Contents
    The Best Current Practice for OAuth 2.0 Security as described in
    [OAUTH-BCP] are applicable when requesting and using access tokens.
 
-10.4.  Risk reduction with Transaction Tokens
+10.4.  Risk Reduction with Transaction Tokens
 
    Resources servers, whether they are LLMs, Tools or Agents (in the
    Agent-to-Agent case) may be composed of multiple microservices that
@@ -856,20 +857,21 @@ Table of Contents
    their capabilities with authorization servers as defined in the OAuth
    2.0 Dynamic Client Registration Protocol [OAUTH-REGISTRATION].
 
-11.  Agent Monitoring and Remediation
+11.  Agent Monitoring, Observability and Remediation
 
    Because agents may perform sensitive actions autonomously or on
-   behalf of users, deployments MUST maintain sufficient observability
-   to reconstruct agent behavior and authorization context after
-   execution.  Monitoring is therefore a security control, not solely an
-   operational feature.
+   behalf of users, deployments MUST maintain sufficient monitoring and
+   observability to reconstruct agent behavior and authorization context
+   after execution.  Observability is therefore a security control, not
+   solely an operational feature.
 
    Any participant in the system, including the Agent, Tool, System, LLM
    or other resources and service MAY subscribe to change notifications
    using eventing mechanisms such as the OpenID Shared Signals Framework
-   [SSF] with the Continuous Access Evaluation Profile [CAEP] to receive
-   security and authorization-relevant signals.  Upon receipt of a
-   relevant signal (e.g., session revoked, subject disabled, token
+   [SSF] with either the Continuous Access Evaluation Profile [CAEP] or
+   Risk Incident Sharing and Coordination [RISC] to receive security and
+   authorization-relevant signals.  Upon receipt of a relevant signal
+   (e.g., session revoked, risk level change, subject disabled, token
    replay suspected, risk elevated), the recipient SHOULD remediate by
    attenuating access, such as terminating local sessions, discarding
    cached tokens, re-acquiring tokens with updated constraints, reducing
@@ -901,10 +903,10 @@ Table of Contents
 
    *  remediation or revocation events and their cause
 
-   Monitoring systems SHOULD correlate events across Agents, Tools,
-   Services, Resources and LLMs to detect misuse patterns such as
-   replay, confused deputy behavior, privilege escalation, or unexpected
-   action sequences.
+   Monitoring / Observability systems SHOULD correlate events across
+   Agents, Tools, Services, Resources and LLMs to detect misuse patterns
+   such as replay, confused deputy behavior, privilege escalation, or
+   unexpected action sequences.
 
    End-to-end audit is enabled when Agents, Users, Systems, LLMs, Tools,
    services and resources have stable, verifiable identifiers that allow
@@ -921,11 +923,12 @@ Table of Contents
    The configuration and runtime parameters for Agent Identifiers
    Section 5, Agent Credentials Section 6, Agent Attestation Section 7,
    Agent Credential Provisioning Section 8, Agent Authentication
-   Section 9, Agent Authorization Section 10 and Agent Monitoring and
-   Remediation Section 11 collectively constitute the authentication and
-   authorization policy within which the Agent operates.
+   Section 9, Agent Authorization Section 10 and Agent Monitoring,
+   Observability and Remediation Section 11 collectively constitute the
+   authentication and authorization policy within which the Agent
+   operates.
 
-   Because these parameters are highly deployment- and risk-model-
+   Because these parameters are highly deployment and risk-model-
    specific (and often reflect local governance, regulatory, and
    operational constraints), the policy model and document format are
    out of scope for this framework and are not recommended as a target
@@ -1084,6 +1087,10 @@ Table of Contents
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+   [RISC]     "OpenID Risk Incident Sharing and Coordination Profile
+              1.0", n.d.,
+              <https://openid.net/specs/openid-risc-1_0-final.html>.
 
    [SPIFFE]   "Secure Production Identity Framework for Everyone", n.d.,
               <https://spiffe.io/docs/latest/spiffe-about/overview/>.
