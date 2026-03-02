@@ -5,12 +5,12 @@
 Network Working Group                                       P. Kasselman
 Internet-Draft                                          Defakto Security
 Intended status: Informational                               J. Lombardo
-Expires: 2 September 2026                                            AWS
+Expires: 3 September 2026                                            AWS
                                                             Y. Rosomakho
                                                                  Zscaler
                                                              B. Campbell
                                                            Ping Identity
-                                                            1 March 2026
+                                                            2 March 2026
 
 
                AI Agent Authentication and Authorization
@@ -56,7 +56,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 September 2026.
+   This Internet-Draft will expire on 3 September 2026.
 
 Copyright Notice
 
@@ -631,8 +631,9 @@ Table of Contents
    of obtaining an access token.  This redirection-based flow involves
    an interactive authorization process in which the user authenticates
    to the authorization server and explicitly approves the requested
-   access.  The resulting access token reflects the user's consent and
-   can be used by the agent to access resources on behalf of the user.
+   access.  The resulting access token reflects the authorization
+   delegated to the Agent by the User and can be used by the Agent to
+   access resources on behalf of the user.
 
 10.3.2.  Agent Obtains Own Authorization
 
@@ -992,9 +993,9 @@ Table of Contents
    [OAUTH-CLIENT-METADATA]
               Parecki, A. and E. Smith, "OAuth Client ID Metadata
               Document", Work in Progress, Internet-Draft, draft-ietf-
-              oauth-client-id-metadata-document-00, 8 October 2025,
+              oauth-client-id-metadata-document-01, 1 March 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              client-id-metadata-document-00>.
+              client-id-metadata-document-01>.
 
    [OAUTH-CLIENTAUTH-JWT]
               Jones, M., Campbell, B., and C. Mortimore, "JSON Web Token
@@ -1115,9 +1116,9 @@ Table of Contents
    [WIMSE-HTTPSIG]
               Salowey, J. A. and Y. Sheffer, "WIMSE Workload-to-Workload
               Authentication with HTTP Signatures", Work in Progress,
-              Internet-Draft, draft-ietf-wimse-http-signature-01, 8
-              January 2026, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-wimse-http-signature-01>.
+              Internet-Draft, draft-ietf-wimse-http-signature-02, 1
+              March 2026, <https://datatracker.ietf.org/doc/html/draft-
+              ietf-wimse-http-signature-02>.
 
    [WIMSE-ID] Rosomakho, Y. and J. A. Salowey, "Workload Identifier",
               Work in Progress, Internet-Draft, draft-ietf-wimse-
