@@ -1136,7 +1136,7 @@ Table of Contents
 Appendix A.  Acknowledgments
 
    The authors would like to thank Sean O'Dell for providing valuable
-   input and feedback for this work.
+   input and feedback on this work.
 
 Authors' Addresses
 
