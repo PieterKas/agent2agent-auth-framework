@@ -760,9 +760,8 @@ Table of Contents
    authorization server, and the agent MUST NOT treat local UI
    confirmation alone as sufficient authorization.
 
-   _Note_ Additonal specifications may be needed to define how an
-   authorization server can trigger and out-of-band interaction to allow
-   the User to approve or deny a request.
+   TODO: additional detail on protocols used for addtional human-in-the-
+   loop authorization to be added.
 
 10.7.  Tool-to-Service Access
 
@@ -1069,6 +1068,12 @@ Table of Contents
               Gazitt, O., Ed., Brossard, D., Ed., and A. Tulshibagwale,
               Ed., "Authorization API 1.0", 2026,
               <https://openid.net/specs/authorization-api-1_0.html>.
+
+   [OpenIDConnect.CIBA]
+              "OpenID Connect Client-Initiated Backchannel
+              Authentication Flow - Core 1.0", n.d.,
+              <https://openid.net/specs/openid-client-initiated-
+              backchannel-authentication-core-1_0.html>.
 
    [OpenIDConnect.Discovery]
               "OpenID Connect Discovery 1.0", n.d.,
