@@ -113,7 +113,7 @@ Table of Contents
    15. Privacy Considerations
    16. IANA Considerations
    17. Normative References
-   Acknowledgments
+   Appendix A.  Acknowledgments
    Authors' Addresses
 
 1.  Introduction
@@ -1140,9 +1140,10 @@ Table of Contents
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
               wpt-00>.
 
-Acknowledgments
+Appendix A.  Acknowledgments
 
-   TODO acknowledge.
+   The authors would like to thank Sean O'Dell for providing valuable
+   input and feedback on this work.
 
 Authors' Addresses
 
