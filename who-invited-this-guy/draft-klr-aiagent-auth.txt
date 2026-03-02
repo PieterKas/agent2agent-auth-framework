@@ -921,9 +921,10 @@ Table of Contents
    The configuration and runtime parameters for Agent Identifiers
    Section 5, Agent Credentials Section 6, Agent Attestation Section 7,
    Agent Credential Provisioning Section 8, Agent Authentication
-   Section 9, Agent Authorization Section 10 and Agent Observability and
-   Remediation Section 11 collectively constitute the authentication and
-   authorization policy within which the Agent operates.
+   Section 9, Agent Authorization Section 10 and Agent Monitoring,
+   Observability and Remediation Section 11 collectively constitute the
+   authentication and authorization policy within which the Agent
+   operates.
 
    Because these parameters are highly deployment and risk-model-
    specific (and often reflect local governance, regulatory, and
