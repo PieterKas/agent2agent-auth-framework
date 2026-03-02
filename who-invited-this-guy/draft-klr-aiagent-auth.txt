@@ -907,7 +907,7 @@ Table of Contents
 
    *  remediation or revocation events and their cause
 
-   Observability / Monitoring systems SHOULD correlate events across
+   Monitoring / Observability systems SHOULD correlate events across
    Agents, Tools, Services, Resources and LLMs to detect misuse patterns
    such as replay, confused deputy behavior, privilege escalation, or
    unexpected action sequences.
