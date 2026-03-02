@@ -356,7 +356,7 @@ Table of Contents
    X.509, JWT or WIT it is provisioned with.  In these cases an agent
    MAY exchange their primary credentials through a credential exchange
    mechanisms (e.g., OAuth 2.0 Token Exchange [OAUTH-TOKEN-EXCHANGE],
-   Transaction Tokens [OAUTH-TRANS-TOKENS] or Workload Identity
+   Transaction Tokens [OAUTH-TXN-TOKENS] or Workload Identity
    Federation).  This allows an agent to obtain a credential targeted to
    a specific environment by leveraging the primary credential in its
    possession.
@@ -678,7 +678,7 @@ Table of Contents
    To avoid passing access tokens between microservices, the Agent, LLM
    or Tools can exchange the received access token for a transaction
    token, as defined in the Transaction Token specification
-   [OAUTH-TRANS-TOKENS].  The transaction token allows for identity and
+   [OAUTH-TXN-TOKENS].  The transaction token allows for identity and
    authorization information to be passed along the internal call chain
    of microservices.  The transaction token issuer enriches the
    transaction token with context of the caller that presented the
@@ -1062,7 +1062,7 @@ Table of Contents
               RFC 7662, DOI 10.17487/RFC7662, October 2015,
               <https://www.rfc-editor.org/rfc/rfc7662>.
 
-   [OAUTH-TRANS-TOKENS]
+   [OAUTH-TXN-TOKENS]
               Tulshibagwale, A., Fletcher, G., and P. Kasselman,
               "Transaction Tokens", Work in Progress, Internet-Draft,
               draft-ietf-oauth-transaction-tokens-07, 24 January 2026,
