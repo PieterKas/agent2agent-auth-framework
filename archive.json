@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-01T02:40:04.484064+00:00",
+  "timestamp": "2026-03-03T02:24:20.394194+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -620,6 +620,46 @@
       "updatedAt": "2026-02-28T00:40:35Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 51,
+      "id": "I_kwDOQP22qc7u6RjZ",
+      "title": "System invoking Agents without using OAuth",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/51",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "There was some original text (removed by Brian's PR)\n\n'If a System invokes an Agent and does not treat the Agent as an OAuth protected resource, the Agent MUST obtain its own OAuth access token as described in {{agent_obtains_own_access_token}}.'\n\nDo we need to have an opinion about this case?",
+      "createdAt": "2026-03-01T20:57:31Z",
+      "updatedAt": "2026-03-01T20:57:31Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 52,
+      "id": "I_kwDOQP22qc7u6USZ",
+      "title": "Use an alternative to consent",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/52",
+      "state": "CLOSED",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "replace sentence referring to consent with something like this:\n\nWhen a User grants authorization to an Agent for access to one or more resources (Tools, LLMs, etc.), the Authorization Code Grant, as described in {{Section 4.1 of OAUTH-FRAMEWORK}}, is the canonical means of obtaining an access token. This redirection-based flow involves an interactive authorization process in which the user authenticates to the authorization server and explicitly approves the requested access. The resulting access token reflects the authorization delegated to the Agent by the User and can be used by the Agent to access resources on behalf of the user.",
+      "createdAt": "2026-03-01T21:03:25Z",
+      "updatedAt": "2026-03-02T12:53:05Z",
+      "closedAt": "2026-03-02T12:53:05Z",
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "#53 ",
+          "createdAt": "2026-03-02T12:53:05Z",
+          "updatedAt": "2026-03-02T12:53:05Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -1840,24 +1880,26 @@
       "id": "PR_kwDOQP22qc7GhRKH",
       "title": "early review",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/42",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "[okay, can't do anymore. No longer a WIP (note that WIP is different that WIT or WPT but who says we have trouble with terminology?).] \r\n\r\nreview is ready for review\r\n\r\npreview at https://pieterkas.github.io/agent2agent-auth-framework/who-invited-this-guy/draft-klr-aiagent-auth.html",
       "createdAt": "2026-02-26T11:52:48Z",
-      "updatedAt": "2026-02-28T03:13:27Z",
+      "updatedAt": "2026-03-01T21:05:53Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
       "baseRefOid": "197dc5b255c255d0b74461a4879b69640a5602e5",
       "headRepository": "PieterKas/agent2agent-auth-framework",
       "headRefName": "who-invited-this-guy",
       "headRefOid": "e7103279dae0f3266447033594d7e7094e851c71",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-03-01T21:05:53Z",
+      "mergedAt": "2026-03-01T21:05:53Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "7e4622d3257debbe2d26759dc5c5edc56bc6d697"
+      },
       "comments": [],
       "reviews": [
         {
@@ -2112,6 +2154,19 @@
           "createdAt": "2026-02-28T03:13:27Z",
           "updatedAt": "2026-02-28T03:13:27Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOQP22qc7m3yQA",
+          "commit": {
+            "abbreviatedOid": "e710327"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "This looks great Brian, thanks for the extensive review and detailed PR. Welcome ot the editors team ;)",
+          "createdAt": "2026-03-01T21:05:40Z",
+          "updatedAt": "2026-03-01T21:05:40Z",
+          "comments": []
         }
       ]
     },
@@ -2266,21 +2321,21 @@
       "id": "PR_kwDOQP22qc7G1MKC",
       "title": "Acknowledge Brian's contribution",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/48",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-02-27T13:51:28Z",
-      "updatedAt": "2026-02-27T22:50:49Z",
+      "updatedAt": "2026-03-01T21:03:38Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
       "baseRefOid": "a88ee80d0ae665fa352c6d6832a68b1fb351c877",
       "headRepository": "PieterKas/agent2agent-auth-framework",
       "headRefName": "PieterKas-patch-8",
       "headRefOid": "fa290364ef82ef467dabf013233d5039e7da53a6",
-      "closedAt": null,
+      "closedAt": "2026-03-01T21:03:38Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
@@ -2300,26 +2355,510 @@
       "id": "PR_kwDOQP22qc7G7NeQ",
       "title": "Cleaned up references",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/49",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Removed unused references",
       "createdAt": "2026-02-27T21:39:14Z",
-      "updatedAt": "2026-02-27T21:39:19Z",
+      "updatedAt": "2026-03-01T20:45:47Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
       "baseRefOid": "197dc5b255c255d0b74461a4879b69640a5602e5",
       "headRepository": "yaroslavros/agent2agent-auth-framework",
       "headRefName": "main",
       "headRefOid": "31d9901afe810203a0bc30c9112c9483fa866b3f",
-      "closedAt": null,
+      "closedAt": "2026-03-01T20:45:47Z",
+      "mergedAt": "2026-03-01T20:45:47Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "96aa943fdcb5740c815be6dd020889267c2bb79f"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc7m3uT4",
+          "commit": {
+            "abbreviatedOid": "31d9901"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-03-01T20:45:34Z",
+          "updatedAt": "2026-03-01T20:45:34Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 53,
+      "id": "PR_kwDOQP22qc7HLn71",
+      "title": "Alternative wording to \"consent\"",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/53",
+      "state": "MERGED",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "See issue #52",
+      "createdAt": "2026-03-01T21:12:22Z",
+      "updatedAt": "2026-03-02T11:36:13Z",
+      "baseRepository": "PieterKas/agent2agent-auth-framework",
+      "baseRefName": "main",
+      "baseRefOid": "06625f1d0d20e0b99e893ff6d7ef676a460ebf55",
+      "headRepository": "PieterKas/agent2agent-auth-framework",
+      "headRefName": "PieterKas-patch-9",
+      "headRefOid": "8aadad07b6edea2b287e43a0233f3d187bef4b99",
+      "closedAt": "2026-03-02T11:36:13Z",
+      "mergedAt": "2026-03-02T11:36:13Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "7406f5c2d47f63e7ad00d686dfc00f375d7c37ac"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc7m36xM",
+          "commit": {
+            "abbreviatedOid": "8aadad0"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-03-01T21:45:29Z",
+          "updatedAt": "2026-03-01T21:45:29Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 54,
+      "id": "PR_kwDOQP22qc7HQV0B",
+      "title": "Sean's contributions and editing (grammar, typo's and SSF)",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/54",
+      "state": "MERGED",
+      "author": "iamseanodentity",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This is pretty solid. Mimic's what we talked about, Pieter. :)\r\n\r\nI did make one change. I think moving to Observability from Monitoring is key here. \r\nMonitoring: Essential for basic health checks, uptime, and infrastructure alerting.\r\nObservability: Necessary for modern, complex, distributed, or microservices architectures where dependencies are hard(er) to map.\r\n\r\nAdded more to the Agent Observability (f.k.a Monitoring) and Remediation section. Leaned more into SSF and added RISC Profile and a Draft that is coming in SSF called \"action receipts\" which can / may be used to build durable audit logs.\r\n\r\n**Question:**\r\nAgent Identifiers and Instance / action identifiers. We do not cover it in here but was wondering if we should call it out? Reason I am asking is that it is a topic in the threat modeling OpenID AIIAM sub group. Agents have identifiers (SPIFFEID or WIMSEID). The instances or sessions that an agent or agents spawn _should_ have those but are not called out here explicitly. Also, a session versus instance matters here as well. This comes back to a \"conversationId\" and \"traceId\" and/or \"correlationID\". This comes back to the E2E notion of traceability. I am all for using `jti` claims for the ephemeral authN tokens (SVID or WIMSE) and even `txn` claims for generic tokens and Tx Tokens, respectively. Just wanted to throw this out and see what we thought. \r\n****",
+      "createdAt": "2026-03-02T07:37:31Z",
+      "updatedAt": "2026-03-02T13:32:18Z",
+      "baseRepository": "PieterKas/agent2agent-auth-framework",
+      "baseRefName": "main",
+      "baseRefOid": "06625f1d0d20e0b99e893ff6d7ef676a460ebf55",
+      "headRepository": "PieterKas/agent2agent-auth-framework",
+      "headRefName": "who-invited-this-guy",
+      "headRefOid": "d0208998170b1e712a2972ccba5c78778fc573e1",
+      "closedAt": "2026-03-02T13:32:17Z",
+      "mergedAt": "2026-03-02T13:32:17Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "35be1a3a8709bc1f7fc005db54273ecaa066422b"
+      },
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "@iamseanodentity - for the Questions, please open issues and we can then track and resolve them there.",
+          "createdAt": "2026-03-02T13:30:03Z",
+          "updatedAt": "2026-03-02T13:30:03Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc7nB5O-",
+          "commit": {
+            "abbreviatedOid": "4844a38"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-03-02T12:55:43Z",
+          "updatedAt": "2026-03-02T12:55:44Z",
+          "comments": [
+            {
+              "originalPosition": 88,
+              "body": "Remove trailing whitespace\n\n```suggestion\n2. **Rotation/Renewal**: The automatic refresh of short-lived credentials before expiration. Continuous rotation ensures that credentials remain valid only for the minimum necessary time and that authorization state reflects current operational conditions.\n```",
+              "createdAt": "2026-03-02T12:55:43Z",
+              "updatedAt": "2026-03-02T12:55:44Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7nB-r6",
+          "commit": {
+            "abbreviatedOid": "4844a38"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-03-02T12:59:31Z",
+          "updatedAt": "2026-03-02T12:59:31Z",
+          "comments": [
+            {
+              "originalPosition": 134,
+              "body": "```suggestion\n# Agent Monitoring, Observability and Remediation {#agent_monitoring_and_remediation}\n```",
+              "createdAt": "2026-03-02T12:59:31Z",
+              "updatedAt": "2026-03-02T12:59:31Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7nB_u-",
+          "commit": {
+            "abbreviatedOid": "4844a38"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-03-02T13:00:11Z",
+          "updatedAt": "2026-03-02T13:00:11Z",
+          "comments": [
+            {
+              "originalPosition": 135,
+              "body": "```suggestion\nBecause agents may perform sensitive actions autonomously or on behalf of users, deployments MUST maintain sufficient monitoring and observability to reconstruct agent behavior and authorization context after execution. Observability is therefore a security control, not solely an operational feature.\n```",
+              "createdAt": "2026-03-02T13:00:11Z",
+              "updatedAt": "2026-03-02T13:00:11Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7nCDcp",
+          "commit": {
+            "abbreviatedOid": "4844a38"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-03-02T13:02:29Z",
+          "updatedAt": "2026-03-02T13:02:30Z",
+          "comments": [
+            {
+              "originalPosition": 150,
+              "body": "```suggestion\nMonitoring / Observability systems SHOULD correlate events across Agents, Tools, Services, Resources and LLMs to detect misuse patterns such as replay, confused deputy behavior, privilege escalation, or unexpected action sequences.\n```",
+              "createdAt": "2026-03-02T13:02:29Z",
+              "updatedAt": "2026-03-02T13:02:30Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7nCIEf",
+          "commit": {
+            "abbreviatedOid": "4844a38"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-03-02T13:05:58Z",
+          "updatedAt": "2026-03-02T13:05:58Z",
+          "comments": [
+            {
+              "originalPosition": 141,
+              "body": "Perhaps open this as an issue, and then we can remove this for now? Being very specific about draft specs in other standards bodies seems a little beyond what we want to communicate here. Also, if we call out SSF as an auditing mechanism, it raises the question about all the other mechanisms. The high order bid here is that there needs to be auditing ;).\n\n```suggestion\nTo support detection, investigation, and accountability, deployments MUST produce durable audit logs covering authorization decisions and subsequent remediations. Audit records MUST be tamper-evident and retained according to the security policy of the deployment.\n```",
+              "createdAt": "2026-03-02T13:05:58Z",
+              "updatedAt": "2026-03-02T13:05:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7nCL09",
+          "commit": {
+            "abbreviatedOid": "4844a38"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-03-02T13:09:01Z",
+          "updatedAt": "2026-03-02T13:09:01Z",
+          "comments": [
+            {
+              "originalPosition": 158,
+              "body": "```suggestion\nThe configuration and runtime parameters for Agent Identifiers {{agent_identifiers}}, Agent Credentials {{agent_credentials}}, Agent Attestation {{agent_attestation}}, Agent Credential Provisioning {{agent_credential_provisioning}}, Agent Authentication {{agent_authentication}}, Agent Authorization {{agent_authorization}} and Agent Monitoring, Observability and Remediation {{agent_monitoring_and_remediation}} collectively constitute the authentication and authorization policy within which the Agent operates.\n```",
+              "createdAt": "2026-03-02T13:09:01Z",
+              "updatedAt": "2026-03-02T13:09:01Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7nCQqT",
+          "commit": {
+            "abbreviatedOid": "4844a38"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-03-02T13:12:53Z",
+          "updatedAt": "2026-03-02T13:12:53Z",
+          "comments": [
+            {
+              "originalPosition": 74,
+              "body": "Let's keep monitoring and add observability. They do different jobs and both should be in any identity management system. It also avoids splitting hairs about definitions of things we may need :)\n\n```suggestion\n+--------------+----------------------------------+-----------------+\n|    Policy    |     Monitoring, Observability    |    Compliance   |\n|              |          & Remediation           |                 |\n|              +----------------------------------+                 |\n|              |          Authorization           |                 |\n|              +----------------------------------+                 |\n|              |          Authentication          |                 |\n|              +----------------------------------+                 |\n|              |          Provisioning            |                 |\n|              +----------------------------------+                 |\n|              |           Attestation            |                 |\n|              +----------------------------------+                 |\n|              |           Credentials            |                 |\n|              +----------------------------------+                 |\n|              |           Identifier             |                 |\n+--------------+----------------------------------+-----------------+\n~~~\n```",
+              "createdAt": "2026-03-02T13:12:53Z",
+              "updatedAt": "2026-03-02T13:16:00Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7nCV6c",
+          "commit": {
+            "abbreviatedOid": "4844a38"
+          },
+          "author": "iamseanodentity",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-03-02T13:17:20Z",
+          "updatedAt": "2026-03-02T13:17:20Z",
+          "comments": [
+            {
+              "originalPosition": 134,
+              "body": "I can go through everywhere and make those changes if you are not already doing it. I think is is like 5-6 sections...purely for consistency. Let me know...shoot me a DM on Signal. ",
+              "createdAt": "2026-03-02T13:17:20Z",
+              "updatedAt": "2026-03-02T13:17:21Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7nCWoV",
+          "commit": {
+            "abbreviatedOid": "4844a38"
+          },
+          "author": "iamseanodentity",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-03-02T13:17:49Z",
+          "updatedAt": "2026-03-02T13:17:49Z",
+          "comments": [
+            {
+              "originalPosition": 135,
+              "body": "or you already did it :)",
+              "createdAt": "2026-03-02T13:17:49Z",
+              "updatedAt": "2026-03-02T13:17:50Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7nCZIz",
+          "commit": {
+            "abbreviatedOid": "4844a38"
+          },
+          "author": "iamseanodentity",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-03-02T13:19:34Z",
+          "updatedAt": "2026-03-02T13:19:34Z",
+          "comments": [
+            {
+              "originalPosition": 141,
+              "body": "I will address this with an issue. It is why actions receipts are being pushed as they are. ",
+              "createdAt": "2026-03-02T13:19:34Z",
+              "updatedAt": "2026-03-02T13:19:34Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7nCap8",
+          "commit": {
+            "abbreviatedOid": "4844a38"
+          },
+          "author": "iamseanodentity",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-03-02T13:20:37Z",
+          "updatedAt": "2026-03-02T13:20:38Z",
+          "comments": [
+            {
+              "originalPosition": 74,
+              "body": "sounds good.",
+              "createdAt": "2026-03-02T13:20:38Z",
+              "updatedAt": "2026-03-02T13:20:38Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7nCdV2",
+          "commit": {
+            "abbreviatedOid": "4844a38"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "CHANGES_REQUESTED",
+          "body": "Looks good overall, thanks for the deep read and proposing changes. A couple of suggestions:\n\n1. Let's keep monitoring along with observability, arguable we need bot and don't want to split hairs at this point\n2. There is some very loose langugage around a future SSF spec - perhaps leave it our for the moment and open an issue to track it (talking about things that might exist is going to invite a lot of requests for other things that might exist, which may not help with the intent of the draft , which is to describe how to use what is already available).\n3. There is a trailing whitespace ",
+          "createdAt": "2026-03-02T13:22:11Z",
+          "updatedAt": "2026-03-02T13:22:11Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOQP22qc7nCqwB",
+          "commit": {
+            "abbreviatedOid": "d020899"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "Looks good, thanks for taking the time to review and create this PR.",
+          "createdAt": "2026-03-02T13:31:14Z",
+          "updatedAt": "2026-03-02T13:31:14Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 55,
+      "id": "PR_kwDOQP22qc7HVN8g",
+      "title": "Add Sean O'Dell in acknowledgement section",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/55",
+      "state": "MERGED",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-03-02T13:25:12Z",
+      "updatedAt": "2026-03-02T13:55:23Z",
+      "baseRepository": "PieterKas/agent2agent-auth-framework",
+      "baseRefName": "main",
+      "baseRefOid": "7406f5c2d47f63e7ad00d686dfc00f375d7c37ac",
+      "headRepository": "PieterKas/agent2agent-auth-framework",
+      "headRefName": "PieterKas-patch-10",
+      "headRefOid": "29256d625c3e72bde76427ac37b36c743b162ce8",
+      "closedAt": "2026-03-02T13:55:23Z",
+      "mergedAt": "2026-03-02T13:55:23Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "8f6b97b199bf914b188c1af5ebff247d463b8116"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc7nC9YH",
+          "commit": {
+            "abbreviatedOid": "29256d6"
+          },
+          "author": "iamseanodentity",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "ty looks great :)",
+          "createdAt": "2026-03-02T13:43:30Z",
+          "updatedAt": "2026-03-02T13:43:30Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 56,
+      "id": "PR_kwDOQP22qc7HXU6H",
+      "title": "Human-in-the-Loop needs ASIBA",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/56",
+      "state": "CLOSED",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "ASIBA: AS Initiated Backchannel Authorization\r\n\r\nTake 1 - @bc-pi - feel free to ignore or use as inspiration.",
+      "createdAt": "2026-03-02T15:38:57Z",
+      "updatedAt": "2026-03-02T16:34:08Z",
+      "baseRepository": "PieterKas/agent2agent-auth-framework",
+      "baseRefName": "main",
+      "baseRefOid": "8f6b97b199bf914b188c1af5ebff247d463b8116",
+      "headRepository": "PieterKas/agent2agent-auth-framework",
+      "headRefName": "PieterKas-patch-11",
+      "headRefOid": "a972dd9dc36a5059af4b30ef4a07a3c0265fedd6",
+      "closedAt": "2026-03-02T16:34:08Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 57,
+      "id": "PR_kwDOQP22qc7HXtom",
+      "title": "Add a note that CIBA isn't the be-all and end-all for HITL",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/57",
+      "state": "MERGED",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "related to but not fully addressing #50\r\n ",
+      "createdAt": "2026-03-02T16:04:17Z",
+      "updatedAt": "2026-03-02T17:27:13Z",
+      "baseRepository": "PieterKas/agent2agent-auth-framework",
+      "baseRefName": "main",
+      "baseRefOid": "8f6b97b199bf914b188c1af5ebff247d463b8116",
+      "headRepository": "PieterKas/agent2agent-auth-framework",
+      "headRefName": "note-about-ciba",
+      "headRefOid": "1aba467e4eebd0e28bf0fda51ba219cbd7a6e2ef",
+      "closedAt": "2026-03-02T17:27:13Z",
+      "mergedAt": "2026-03-02T17:27:13Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "8f7ad9f49dffde1972ea142267427230f5a575ac"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc7nGKfZ",
+          "commit": {
+            "abbreviatedOid": "6de61ed"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-03-02T16:09:51Z",
+          "updatedAt": "2026-03-02T16:09:51Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "```suggestion\nAn OAuth authorization server MAY conclude that the level of access requested by an Agent requires explicit user confirmation. In such cases the authorization server SHOULD either decline the request or obtain additional authorization from the User. An Agent, acting as an OAuth client, may use the OpenID Client Initiated Backchannel Authentication (CIBA) protocol. This triggers an out-of-band interaction allowing the user to approve or deny the requested operation without exposing credentials to the agent (for example a push notification requesting the user to approve a request through an authenticator application on their mobile device).\n```",
+              "createdAt": "2026-03-02T16:09:51Z",
+              "updatedAt": "2026-03-02T16:09:51Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7nGLom",
+          "commit": {
+            "abbreviatedOid": "6de61ed"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "CHANGES_REQUESTED",
+          "body": "One tweak suggested.",
+          "createdAt": "2026-03-02T16:10:46Z",
+          "updatedAt": "2026-03-02T16:10:46Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOQP22qc7nH4gV",
+          "commit": {
+            "abbreviatedOid": "1aba467"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-03-02T17:26:40Z",
+          "updatedAt": "2026-03-02T17:26:40Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
