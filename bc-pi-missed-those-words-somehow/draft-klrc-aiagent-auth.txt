@@ -544,9 +544,9 @@ Table of Contents
    profile mandates signing of some request components (e.g., method,
    request-target, content digest, and the WIT itself) and supports
    optional response signing.  Note that @request-target covers only the
-   request-target string (typically path + query) and does not include
-   the method, scheme, or authority; those are only protected if
-   separately covered (e.g., @method, @scheme, @authority).
+   request-target string (typically path + query) and not the method,
+   scheme, or authority; those are only protected if separately covered
+   (e.g., @method, @scheme, @authority).
 
 9.2.3.  Limitations
 
