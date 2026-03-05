@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-03T02:24:20.394194+00:00",
+  "timestamp": "2026-03-05T02:21:18.387862+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -47,6 +47,11 @@
       "name": "wontfix",
       "description": "This will not be worked on",
       "color": "ffffff"
+    },
+    {
+      "name": "Discuss",
+      "description": null,
+      "color": "aaaaaa"
     }
   ],
   "issues": [
@@ -660,6 +665,24 @@
           "updatedAt": "2026-03-02T12:53:05Z"
         }
       ]
+    },
+    {
+      "number": 58,
+      "id": "I_kwDOQP22qc7vvYC1",
+      "title": "Telling an agent from a non-agent",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/58",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [
+        "Discuss"
+      ],
+      "body": "In a private exchange Christian Posta from Solo.io raise the question on how to distinguish between an AI Agent and a regular Oauth client.\n\nChristian pointed out that he liked the Microsoft model that makes it explicit  through claims, that say \"this is an agent\" or \"this is an agent acting obo\"\n\nMy mental model for this (could be wrong) is that the RS andAS needs to know that certain identifiers are assigned to agents and treat them differently. The claim name is mostly orthogonal to this, even if there was a separate claim name for agents, you would still need to know which agent and how to treat it differently when making authorisation decisions at the AS or RS.\n\nThe AS and RS will both have to know which identifiers are assigned to agents. This is needed, regardless of which claim is used to express the identifier. Sometimes the client_id is associated with an agent, sometimes not. \n\nThe AS can manage this via registration (e.g. could be metadata in CIMD) and aplpy different policies when issuing access tokens (more restricted, narrower scopes, shorter lived). The RS could use the same mechanism (with caching and so forth) and apply additional restrictions. I can also imagine the actual identifiers in either the credential used to authenticate or in the client_id being structured in a specific way (works inside an enterprise or closed eco-system, needs standard to do it more broadly).\n\nThe messy bit is that in an agentic world the AS and the RS needs to make decisions on the workload/client/agent identifier, which they did not have to do in the past, regardless of the claim name used. If using a different claim name is used as a logic switch in validation logic, that can also be achieved by just having a claim that says \"agent=true\" in the token (or the metadata). \n\nIt may be useful to point which mechanisms needs to be in place to tell if a client is and agent, or just a client (goes a little against the AI is just a workload...)",
+      "createdAt": "2026-03-04T14:02:21Z",
+      "updatedAt": "2026-03-04T19:14:54Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
