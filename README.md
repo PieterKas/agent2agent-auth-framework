@@ -4,10 +4,10 @@
 
 This is the working area for the individual Internet-Draft, "Agent-to-Agent Authentication and Authorization".
 
-* [Editor's Copy](https://PieterKas.github.io/agent2agent-auth-framework/#go.draft-klr-aiagent-auth.html)
-* [Datatracker Page](https://datatracker.ietf.org/doc/draft-klr-aiagent-auth)
-* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-klr-aiagent-auth)
-* [Compare Editor's Copy to Individual Draft](https://PieterKas.github.io/agent2agent-auth-framework/#go.draft-klr-aiagent-auth.diff)
+* [Editor's Copies](https://PieterKas.github.io/agent2agent-auth-framework/)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-klrc-aiagent-auth)
+* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-klrc-aiagent-auth)
+* [Compare Editor's Copy to Individual Draft](https://PieterKas.github.io/agent2agent-auth-framework/#go.draft-klrc-aiagent-auth.diff)
 
 
 ## Contributing
