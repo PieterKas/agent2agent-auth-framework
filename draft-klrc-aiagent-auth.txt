@@ -5,12 +5,12 @@
 Network Working Group                                       P. Kasselman
 Internet-Draft                                          Defakto Security
 Intended status: Informational                               J. Lombardo
-Expires: 3 September 2026                                            AWS
+Expires: 7 September 2026                                            AWS
                                                             Y. Rosomakho
                                                                  Zscaler
                                                              B. Campbell
                                                            Ping Identity
-                                                            2 March 2026
+                                                            6 March 2026
 
 
                AI Agent Authentication and Authorization
@@ -56,7 +56,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 September 2026.
+   This Internet-Draft will expire on 7 September 2026.
 
 Copyright Notice
 
@@ -542,8 +542,11 @@ Table of Contents
    when traffic traverses intermediaries such as TLS proxies or load
    balancers that break transport-layer identity continuity.  The
    profile mandates signing of some request components (e.g., method,
-   request-target (which likely cover what you'd expect), content
-   digest, and the WIT itself) and supports optional response signing.
+   request-target, content digest, and the WIT itself) and supports
+   optional response signing.  Note that @request-target covers only the
+   request-target string (typically path + query) and not the method,
+   scheme, or authority; those are only protected if separately covered
+   (e.g., @method, @scheme, @authority).
 
 9.2.3.  Limitations
 
@@ -1030,9 +1033,9 @@ Table of Contents
               Parecki, A., McGuinness, K., and B. Campbell, "Identity
               Assertion JWT Authorization Grant", Work in Progress,
               Internet-Draft, draft-ietf-oauth-identity-assertion-authz-
-              grant-01, 19 October 2025,
+              grant-02, 2 March 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              identity-assertion-authz-grant-01>.
+              identity-assertion-authz-grant-02>.
 
    [OAUTH-REGISTRATION]
               Richer, J., Ed., Jones, M., Bradley, J., Machulak, M., and
@@ -1066,9 +1069,9 @@ Table of Contents
    [OAUTH-TXN-TOKENS]
               Tulshibagwale, A., Fletcher, G., and P. Kasselman,
               "Transaction Tokens", Work in Progress, Internet-Draft,
-              draft-ietf-oauth-transaction-tokens-07, 24 January 2026,
+              draft-ietf-oauth-transaction-tokens-08, 2 March 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              transaction-tokens-07>.
+              transaction-tokens-08>.
 
    [OpenIDConnect.AuthZEN]
               Gazitt, O., Ed., Brossard, D., Ed., and A. Tulshibagwale,
@@ -1136,16 +1139,16 @@ Table of Contents
 
    [WIMSE-ID] Rosomakho, Y. and J. A. Salowey, "Workload Identifier",
               Work in Progress, Internet-Draft, draft-ietf-wimse-
-              identifier-01, 29 December 2025,
+              identifier-02, 2 March 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              identifier-01>.
+              identifier-02>.
 
    [WIMSE-WPT]
               Campbell, B. and A. Schwenkschuster, "WIMSE Workload Proof
               Token", Work in Progress, Internet-Draft, draft-ietf-
-              wimse-wpt-00, 3 November 2025,
+              wimse-wpt-01, 2 March 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              wpt-00>.
+              wpt-01>.
 
 Appendix A.  Acknowledgments
 
