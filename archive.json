@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-05T02:21:18.387862+00:00",
+  "timestamp": "2026-03-08T02:23:18.288651+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -681,6 +681,46 @@
       "body": "In a private exchange Christian Posta from Solo.io raise the question on how to distinguish between an AI Agent and a regular Oauth client.\n\nChristian pointed out that he liked the Microsoft model that makes it explicit  through claims, that say \"this is an agent\" or \"this is an agent acting obo\"\n\nMy mental model for this (could be wrong) is that the RS andAS needs to know that certain identifiers are assigned to agents and treat them differently. The claim name is mostly orthogonal to this, even if there was a separate claim name for agents, you would still need to know which agent and how to treat it differently when making authorisation decisions at the AS or RS.\n\nThe AS and RS will both have to know which identifiers are assigned to agents. This is needed, regardless of which claim is used to express the identifier. Sometimes the client_id is associated with an agent, sometimes not. \n\nThe AS can manage this via registration (e.g. could be metadata in CIMD) and aplpy different policies when issuing access tokens (more restricted, narrower scopes, shorter lived). The RS could use the same mechanism (with caching and so forth) and apply additional restrictions. I can also imagine the actual identifiers in either the credential used to authenticate or in the client_id being structured in a specific way (works inside an enterprise or closed eco-system, needs standard to do it more broadly).\n\nThe messy bit is that in an agentic world the AS and the RS needs to make decisions on the workload/client/agent identifier, which they did not have to do in the past, regardless of the claim name used. If using a different claim name is used as a logic switch in validation logic, that can also be achieved by just having a claim that says \"agent=true\" in the token (or the metadata). \n\nIt may be useful to point which mechanisms needs to be in place to tell if a client is and agent, or just a client (goes a little against the AI is just a workload...)",
       "createdAt": "2026-03-04T14:02:21Z",
       "updatedAt": "2026-03-04T19:14:54Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 61,
+      "id": "I_kwDOQP22qc7wMUUF",
+      "title": "how delegation is expressed",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/61",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Relating to https://datatracker.ietf.org/doc/html/draft-klrc-aiagent-auth-00#section-10.2 I think, I had the question, \"didn't see explicit recommendation to lean on the act claim to carry agent identity, and the sub claim to carry user identity.\u00a0 I think we're aligned that this is a fundamental requirement to express delegation, right?\" \n\nI think the answer is \"no\" but the reasons are somewhat murky (regular old oauth delegation is expressed somewhat implicitly by it being oauth and possibly/probably the client identifier in the access token while token exchange came along later with the act claim). And it might be worthwhile to give a little more explanation in the draft.  ",
+      "createdAt": "2026-03-05T17:58:29Z",
+      "updatedAt": "2026-03-06T20:04:40Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "I got similar questions - also relates to issue #58 ",
+          "createdAt": "2026-03-06T20:04:40Z",
+          "updatedAt": "2026-03-06T20:04:40Z"
+        }
+      ]
+    },
+    {
+      "number": 62,
+      "id": "I_kwDOQP22qc7wj6jY",
+      "title": "Security considerations about LLM Specific threats?",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/62",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "A comment received via LinkedIn:\n\nI'd also flag one area your draft may want to consider: LLM-specific threats within agents. During development and in the runtime product, I discovered that a single LLM cannot reliably self-enforce safety rules. I solved this with a dual-model pattern\n(one LLM generates, a second independently evaluates). The current draft treats agents as opaque workloads _ which is correct at the identity layer _ but implementers will need guidance on the internal security architecture of LLM-based agents,\nparticularly around prompt injection and post-authorization safety.",
+      "createdAt": "2026-03-06T20:06:49Z",
+      "updatedAt": "2026-03-06T20:06:49Z",
       "closedAt": null,
       "comments": []
     }
@@ -2879,6 +2919,151 @@
           "body": "",
           "createdAt": "2026-03-02T17:26:40Z",
           "updatedAt": "2026-03-02T17:26:40Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 59,
+      "id": "PR_kwDOQP22qc7IRrkp",
+      "title": "try n fix up README links",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/59",
+      "state": "MERGED",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-03-05T17:40:18Z",
+      "updatedAt": "2026-03-05T19:05:14Z",
+      "baseRepository": "PieterKas/agent2agent-auth-framework",
+      "baseRefName": "main",
+      "baseRefOid": "ff74012c0a7c133c693ba18f439f6905f966c0a1",
+      "headRepository": "PieterKas/agent2agent-auth-framework",
+      "headRefName": "bc-pi-readme",
+      "headRefOid": "2c7028be1fd0786c770c5ce5b75184d1ea102b47",
+      "closedAt": "2026-03-05T19:05:14Z",
+      "mergedAt": "2026-03-05T19:05:14Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "9809e9d33204b02506a4a7c28115ea9c7c2065f9"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc7oZPLE",
+          "commit": {
+            "abbreviatedOid": "2c7028b"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-03-05T19:00:39Z",
+          "updatedAt": "2026-03-05T19:00:39Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 60,
+      "id": "PR_kwDOQP22qc7IRwmW",
+      "title": "add missing words to parenthetic in HTTP Message Signatures",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/60",
+      "state": "MERGED",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-03-05T17:45:18Z",
+      "updatedAt": "2026-03-06T20:05:10Z",
+      "baseRepository": "PieterKas/agent2agent-auth-framework",
+      "baseRefName": "main",
+      "baseRefOid": "ff74012c0a7c133c693ba18f439f6905f966c0a1",
+      "headRepository": "PieterKas/agent2agent-auth-framework",
+      "headRefName": "bc-pi-missed-those-words-somehow",
+      "headRefOid": "c2ecf9536ecc3c24846e9e7625e891b2ff8a8211",
+      "closedAt": "2026-03-06T20:05:10Z",
+      "mergedAt": "2026-03-06T20:05:10Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "52bfe2448082e52c9f5f147774965457ed624d6e"
+      },
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "FWIW, I added that \"(which likely cover what you'd expect)\" last week and somehow omitted the word \"don't\" which was the whole point of the little call out. Your suggested phrasing is probably better though. ",
+          "createdAt": "2026-03-06T00:58:06Z",
+          "updatedAt": "2026-03-06T00:58:06Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc7oZazL",
+          "commit": {
+            "abbreviatedOid": "63ab078"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-03-05T19:07:57Z",
+          "updatedAt": "2026-03-05T19:07:57Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\nThe WIMSE Workload-to-Workload Authentication with HTTP Signatures specification {{!WIMSE-HTTPSIG=I-D.ietf-wimse-http-signature}} defines an application-layer authentication profile built on the HTTP Message Signatures standard {{!HTTP-SIG=RFC9421}}. It is one of the mechanisms WIMSE defines for authenticating workloads in HTTP-based interactions where transport-layer protections may be insufficient or unavailable. The protocol combines a workload's Workload Identity Token (WIT) (which binds the agent's identity to a public key) with HTTP Message Signatures (using the corresponding private key), thereby providing proof of possession and message integrity for individual HTTP requests and responses. This approach ensures end-to-end authentication and integrity even when traffic traverses intermediaries such as TLS proxies or load balancers that break transport-layer identity continuity. The profile mandates signing of some request components (e.g., method, request-target, content digest, and the WIT itself) and supports optional response signing. Note that @request-target covers only the request-target string (typically path + query) and does not include the method, scheme, or authority; those are only protected if separately covered (e.g., @method, @scheme, @authority).\n```",
+              "createdAt": "2026-03-05T19:07:57Z",
+              "updatedAt": "2026-03-05T19:07:57Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7oZcqc",
+          "commit": {
+            "abbreviatedOid": "63ab078"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "CHANGES_REQUESTED",
+          "body": "Perhaps be a more specific about what is not covered by request-target - I suggested some text, but I am not an HTTP Sig expert, so this may need improvement.",
+          "createdAt": "2026-03-05T19:09:08Z",
+          "updatedAt": "2026-03-05T19:09:08Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOQP22qc7obXI-",
+          "commit": {
+            "abbreviatedOid": "f7950dd"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-03-05T20:33:39Z",
+          "updatedAt": "2026-03-05T20:33:39Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\nThe WIMSE Workload-to-Workload Authentication with HTTP Signatures specification {{!WIMSE-HTTPSIG=I-D.ietf-wimse-http-signature}} defines an application-layer authentication profile built on the HTTP Message Signatures standard {{!HTTP-SIG=RFC9421}}. It is one of the mechanisms WIMSE defines for authenticating workloads in HTTP-based interactions where transport-layer protections may be insufficient or unavailable. The protocol combines a workload's Workload Identity Token (WIT) (which binds the agent's identity to a public key) with HTTP Message Signatures (using the corresponding private key), thereby providing proof of possession and message integrity for individual HTTP requests and responses. This approach ensures end-to-end authentication and integrity even when traffic traverses intermediaries such as TLS proxies or load balancers that break transport-layer identity continuity. The profile mandates signing of some request components (e.g., method, request-target, content digest, and the WIT itself) and supports optional response signing. Note that @request-target covers only the request-target string (typically path + query) and not the method, scheme, or authority; those are only protected if separately covered (e.g., @method, @scheme, @authority).\n```",
+              "createdAt": "2026-03-05T20:33:39Z",
+              "updatedAt": "2026-03-05T20:33:39Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7ooprj",
+          "commit": {
+            "abbreviatedOid": "c2ecf95"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "Looks good. I did not register the original text (or at least, I did not occur to me at the time that more precision might be called for). This looks good, thanks Brian.",
+          "createdAt": "2026-03-06T10:46:14Z",
+          "updatedAt": "2026-03-06T10:46:14Z",
           "comments": []
         }
       ]
