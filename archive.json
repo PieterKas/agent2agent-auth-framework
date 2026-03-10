@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-08T02:23:18.288651+00:00",
+  "timestamp": "2026-03-10T02:10:05.716579+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -638,9 +638,17 @@
       "labels": [],
       "body": "There was some original text (removed by Brian's PR)\n\n'If a System invokes an Agent and does not treat the Agent as an OAuth protected resource, the Agent MUST obtain its own OAuth access token as described in {{agent_obtains_own_access_token}}.'\n\nDo we need to have an opinion about this case?",
       "createdAt": "2026-03-01T20:57:31Z",
-      "updatedAt": "2026-03-01T20:57:31Z",
+      "updatedAt": "2026-03-09T14:35:31Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "identitymonk",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We need to have a section about it. But the more I talk to customer the more, at the exception of VCs/DIDs, the more I get that only OAuth can provide details of delegation information needed. All other mechanisms fail.",
+          "createdAt": "2026-03-09T14:35:31Z",
+          "updatedAt": "2026-03-09T14:35:31Z"
+        }
+      ]
     },
     {
       "number": 52,
@@ -680,9 +688,17 @@
       ],
       "body": "In a private exchange Christian Posta from Solo.io raise the question on how to distinguish between an AI Agent and a regular Oauth client.\n\nChristian pointed out that he liked the Microsoft model that makes it explicit  through claims, that say \"this is an agent\" or \"this is an agent acting obo\"\n\nMy mental model for this (could be wrong) is that the RS andAS needs to know that certain identifiers are assigned to agents and treat them differently. The claim name is mostly orthogonal to this, even if there was a separate claim name for agents, you would still need to know which agent and how to treat it differently when making authorisation decisions at the AS or RS.\n\nThe AS and RS will both have to know which identifiers are assigned to agents. This is needed, regardless of which claim is used to express the identifier. Sometimes the client_id is associated with an agent, sometimes not. \n\nThe AS can manage this via registration (e.g. could be metadata in CIMD) and aplpy different policies when issuing access tokens (more restricted, narrower scopes, shorter lived). The RS could use the same mechanism (with caching and so forth) and apply additional restrictions. I can also imagine the actual identifiers in either the credential used to authenticate or in the client_id being structured in a specific way (works inside an enterprise or closed eco-system, needs standard to do it more broadly).\n\nThe messy bit is that in an agentic world the AS and the RS needs to make decisions on the workload/client/agent identifier, which they did not have to do in the past, regardless of the claim name used. If using a different claim name is used as a logic switch in validation logic, that can also be achieved by just having a claim that says \"agent=true\" in the token (or the metadata). \n\nIt may be useful to point which mechanisms needs to be in place to tell if a client is and agent, or just a client (goes a little against the AI is just a workload...)",
       "createdAt": "2026-03-04T14:02:21Z",
-      "updatedAt": "2026-03-04T19:14:54Z",
+      "updatedAt": "2026-03-09T14:30:08Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "identitymonk",
+          "authorAssociation": "COLLABORATOR",
+          "body": "CIMD is now the norm. If more information needs to be provided about the nature of the client, it should come from there, up to the RS to do the look-up and retrieve the appropriate information.\n\nRisk, from a RS perspective, will be far more than attribute = 1 or 0. There is far more to the question of: \"Are you an agent?\" than just question. Like:\n- Are a sketchy, side of table developed or enterprise grade agent?\n- What are you composed of?\n- Can you provide an attestation of your structure?\n\nAll those questions send back to the notion of \"Workload \u2283 AI Agent\".\n\nWill the next question be \"how do you prove you are a MCP server access me RS\"? We cannot add signals in token about all and everything\n\n",
+          "createdAt": "2026-03-09T14:30:07Z",
+          "updatedAt": "2026-03-09T14:30:07Z"
+        }
+      ]
     },
     {
       "number": 61,
@@ -696,7 +712,7 @@
       "labels": [],
       "body": "Relating to https://datatracker.ietf.org/doc/html/draft-klrc-aiagent-auth-00#section-10.2 I think, I had the question, \"didn't see explicit recommendation to lean on the act claim to carry agent identity, and the sub claim to carry user identity.\u00a0 I think we're aligned that this is a fundamental requirement to express delegation, right?\" \n\nI think the answer is \"no\" but the reasons are somewhat murky (regular old oauth delegation is expressed somewhat implicitly by it being oauth and possibly/probably the client identifier in the access token while token exchange came along later with the act claim). And it might be worthwhile to give a little more explanation in the draft.  ",
       "createdAt": "2026-03-05T17:58:29Z",
-      "updatedAt": "2026-03-06T20:04:40Z",
+      "updatedAt": "2026-03-09T14:22:42Z",
       "closedAt": null,
       "comments": [
         {
@@ -705,6 +721,13 @@
           "body": "I got similar questions - also relates to issue #58 ",
           "createdAt": "2026-03-06T20:04:40Z",
           "updatedAt": "2026-03-06T20:04:40Z"
+        },
+        {
+          "author": "identitymonk",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I like this but I am biased - Author is Amazonian, still it comes from a profiling of a version of transaction token that existed before Transaction Tokens were a draft\n\nsee presentation at https://www.youtube.com/live/GbAE49CewYA",
+          "createdAt": "2026-03-09T14:22:42Z",
+          "updatedAt": "2026-03-09T14:22:42Z"
         }
       ]
     },
@@ -720,9 +743,41 @@
       "labels": [],
       "body": "A comment received via LinkedIn:\n\nI'd also flag one area your draft may want to consider: LLM-specific threats within agents. During development and in the runtime product, I discovered that a single LLM cannot reliably self-enforce safety rules. I solved this with a dual-model pattern\n(one LLM generates, a second independently evaluates). The current draft treats agents as opaque workloads _ which is correct at the identity layer _ but implementers will need guidance on the internal security architecture of LLM-based agents,\nparticularly around prompt injection and post-authorization safety.",
       "createdAt": "2026-03-06T20:06:49Z",
-      "updatedAt": "2026-03-06T20:06:49Z",
+      "updatedAt": "2026-03-09T14:19:13Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "identitymonk",
+          "authorAssociation": "COLLABORATOR",
+          "body": "LLM can never be trusted, at the end of the day we want the only element that can make an action possible to be the final line of defense by alwys limiting in space (scopes, authorization details, transaction-oriented nature) and in time (max lifetime, refresh capability and conditions, as long as dynamic revocation - aka SSF)\n\nI think this should be called out of scope with mention above.",
+          "createdAt": "2026-03-09T14:19:13Z",
+          "updatedAt": "2026-03-09T14:19:13Z"
+        }
+      ]
+    },
+    {
+      "number": 63,
+      "id": "I_kwDOQP22qc7xKAUV",
+      "title": "Should we mention RAR?",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/63",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "In conversation with Paul Carlton from Anthropic, he observed that we are not referencing RAR for expressing finer grained authorisation. We may want to described how RAR would be used in these use cases.\n\nCheers\n\nPieter",
+      "createdAt": "2026-03-09T14:27:29Z",
+      "updatedAt": "2026-03-09T15:13:34Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "In the editors sync we discussed the need for a section on fine-grained authorization, outlining how it can be done outside of OAuth, and what role RAR would play in that (as a mechanism to signal fine grained authz requirements).",
+          "createdAt": "2026-03-09T15:13:34Z",
+          "updatedAt": "2026-03-09T15:13:34Z"
+        }
+      ]
     }
   ],
   "pulls": [
