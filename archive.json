@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-10T02:10:05.716579+00:00",
+  "timestamp": "2026-03-12T02:22:26.627666+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -686,9 +686,9 @@
       "labels": [
         "Discuss"
       ],
-      "body": "In a private exchange Christian Posta from Solo.io raise the question on how to distinguish between an AI Agent and a regular Oauth client.\n\nChristian pointed out that he liked the Microsoft model that makes it explicit  through claims, that say \"this is an agent\" or \"this is an agent acting obo\"\n\nMy mental model for this (could be wrong) is that the RS andAS needs to know that certain identifiers are assigned to agents and treat them differently. The claim name is mostly orthogonal to this, even if there was a separate claim name for agents, you would still need to know which agent and how to treat it differently when making authorisation decisions at the AS or RS.\n\nThe AS and RS will both have to know which identifiers are assigned to agents. This is needed, regardless of which claim is used to express the identifier. Sometimes the client_id is associated with an agent, sometimes not. \n\nThe AS can manage this via registration (e.g. could be metadata in CIMD) and aplpy different policies when issuing access tokens (more restricted, narrower scopes, shorter lived). The RS could use the same mechanism (with caching and so forth) and apply additional restrictions. I can also imagine the actual identifiers in either the credential used to authenticate or in the client_id being structured in a specific way (works inside an enterprise or closed eco-system, needs standard to do it more broadly).\n\nThe messy bit is that in an agentic world the AS and the RS needs to make decisions on the workload/client/agent identifier, which they did not have to do in the past, regardless of the claim name used. If using a different claim name is used as a logic switch in validation logic, that can also be achieved by just having a claim that says \"agent=true\" in the token (or the metadata). \n\nIt may be useful to point which mechanisms needs to be in place to tell if a client is and agent, or just a client (goes a little against the AI is just a workload...)",
+      "body": "How to distinguish between an AI Agent and a regular Oauth client. Some feedback that the Microsoft model makes it explicit  through claims, that say \"this is an agent\" or \"this is an agent acting obo\"\n\nMy mental model for this (could be wrong) is that the RS andAS needs to know that certain identifiers are assigned to agents and treat them differently. The claim name is mostly orthogonal to this, even if there was a separate claim name for agents, you would still need to know which agent and how to treat it differently when making authorisation decisions at the AS or RS.\n\nThe AS and RS will both have to know which identifiers are assigned to agents. This is needed, regardless of which claim is used to express the identifier. Sometimes the client_id is associated with an agent, sometimes not. \n\nThe AS can manage this via registration (e.g. could be metadata in CIMD) and aplpy different policies when issuing access tokens (more restricted, narrower scopes, shorter lived). The RS could use the same mechanism (with caching and so forth) and apply additional restrictions. I can also imagine the actual identifiers in either the credential used to authenticate or in the client_id being structured in a specific way (works inside an enterprise or closed eco-system, needs standard to do it more broadly).\n\nThe messy bit is that in an agentic world the AS and the RS needs to make decisions on the workload/client/agent identifier, which they did not have to do in the past, regardless of the claim name used. If using a different claim name is used as a logic switch in validation logic, that can also be achieved by just having a claim that says \"agent=true\" in the token (or the metadata). \n\nIt may be useful to point which mechanisms needs to be in place to tell if a client is and agent, or just a client (goes a little against the AI is just a workload...)",
       "createdAt": "2026-03-04T14:02:21Z",
-      "updatedAt": "2026-03-09T14:30:08Z",
+      "updatedAt": "2026-03-10T12:41:36Z",
       "closedAt": null,
       "comments": [
         {
@@ -697,6 +697,13 @@
           "body": "CIMD is now the norm. If more information needs to be provided about the nature of the client, it should come from there, up to the RS to do the look-up and retrieve the appropriate information.\n\nRisk, from a RS perspective, will be far more than attribute = 1 or 0. There is far more to the question of: \"Are you an agent?\" than just question. Like:\n- Are a sketchy, side of table developed or enterprise grade agent?\n- What are you composed of?\n- Can you provide an attestation of your structure?\n\nAll those questions send back to the notion of \"Workload \u2283 AI Agent\".\n\nWill the next question be \"how do you prove you are a MCP server access me RS\"? We cannot add signals in token about all and everything\n\n",
           "createdAt": "2026-03-09T14:30:07Z",
           "updatedAt": "2026-03-09T14:30:07Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "The MCP/RS interaction is out of scope for this issue (which is scoped to distinguishing between the agent and non agent clients). For the RS/MCP use case - that feels like a different issue - best to open a new issue for that so we can discuss it separately from this issue.",
+          "createdAt": "2026-03-10T12:41:36Z",
+          "updatedAt": "2026-03-10T12:41:36Z"
         }
       ]
     },
@@ -778,6 +785,38 @@
           "updatedAt": "2026-03-09T15:13:34Z"
         }
       ]
+    },
+    {
+      "number": 64,
+      "id": "I_kwDOQP22qc7xvxH0",
+      "title": "Define trust bootstrap and validation rules for OAuth discovery in dynamic environments",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/64",
+      "state": "OPEN",
+      "author": "maheshkukreja",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Section 10.9 does a good job explaining what can be discovered at runtime: authorization server metadata, protected resource metadata, client metadata. What it doesn't cover is how any of that discovered metadata becomes trustworthy.\n\nFor agents running in multi-tenant or ephemeral environments, this is an attack surface. An agent that discovers an authorization server endpoint and trusts it implicitly is one DNS hijack or metadata substitution away from sending credentials to an attacker-controlled server.\n\nSpecific things I think are missing:\n\n- What trust anchors need to be preconfigured before an agent can safely use runtime discovery? For example, does the agent need to know its expected trust domain and issuer?\n- Validation rules for discovered metadata: does the agent need to verify that what it got back is consistent with what it expected (issuer identity, key material binding, endpoint consistency)?\n- Fail-closed behavior when discovery returns something unexpected or inconsistent: Right now the draft doesn't say what happens if metadata doesn't validate. The safe default would be to reject and fail\n- A clear line between what must be preconfigured vs. what may be discovered. The current text treats everything as discoverable, which is fine for convenience but not for security\n\nThis gap should also get a cross-reference from Security Considerations (\u00a714) as a named threat: discovery poisoning / issuer confusion",
+      "createdAt": "2026-03-11T05:00:35Z",
+      "updatedAt": "2026-03-11T05:00:35Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 65,
+      "id": "I_kwDOQP22qc7x7baN",
+      "title": "Add deployment guidance for intermediaries, gateways, and identity-preserving proxy patterns",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/65",
+      "state": "OPEN",
+      "author": "maheshkukreja",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "\u00a79.1.1 says proxies, API gateways, service meshes, and load balancers break TLS identity by terminating and re-establishing sessions. \u00a79.2 says application-layer authentication preserves identity across those hops.\n\nWhat's missing is the bridge between those two observations. In practice, every production deployment has at least one intermediary: a load balancer, an API gateway, a service mesh sidecar; and practitioners need to know who validates what credential and which identity is authoritative after intermediary processing.\n\nThere are at least three common patterns that need different guidance:\n\n- Pass-through proxy (transparent TCP proxy): TLS identity stays end-to-end, the proxy is invisible to the identity layer. Simple case, but worth calling out so people know when \u00a79.1.1 concerns don't apply\n- Terminating gateway (ALB, Cloudflare, Traefik, etc.): Gateway terminates TLS, possibly validates the agent's Workload proof token / Workload identity token, then re-establishes a connection to the backend\n  - The draft doesn't say if the backend trusts the gateway's transport identity, or if it must independently re-validate the agent's application-layer credential\n- Token-exchange gateway (API gateway acting as OAuth client): Gateway exchanges the incoming access token for a new one scoped to the backend. The original agent identity may or may not survive the exchange. If the `act` claim (RFC 8693) isn't used, the downstream service has no idea who originally initiated the request. The draft should clarify whether identity preservation through token exchange is a must or a should\n- Service mesh sidecar (Istio, Linkerd): mTLS between sidecars gives pod-level identity, but that's the sidecar's identity, not the agent's. The draft doesn't address how agent-level identity (WIMSE / SPIFFE) relates to sidecar identity\n\nI'd suggest either a new subsection under \u00a79 or an appendix that names these patterns and specifies the validation expectations for each. The audit section (\u00a711) should also be extended to say that logs need to capture both the original actor and any intermediary participation - otherwise we can't reconstruct the chain when a gateway was involved.",
+      "createdAt": "2026-03-11T15:21:22Z",
+      "updatedAt": "2026-03-11T15:21:22Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
