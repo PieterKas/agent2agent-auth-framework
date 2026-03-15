@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-12T02:22:26.627666+00:00",
+  "timestamp": "2026-03-15T02:36:15.951546+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -688,7 +688,7 @@
       ],
       "body": "How to distinguish between an AI Agent and a regular Oauth client. Some feedback that the Microsoft model makes it explicit  through claims, that say \"this is an agent\" or \"this is an agent acting obo\"\n\nMy mental model for this (could be wrong) is that the RS andAS needs to know that certain identifiers are assigned to agents and treat them differently. The claim name is mostly orthogonal to this, even if there was a separate claim name for agents, you would still need to know which agent and how to treat it differently when making authorisation decisions at the AS or RS.\n\nThe AS and RS will both have to know which identifiers are assigned to agents. This is needed, regardless of which claim is used to express the identifier. Sometimes the client_id is associated with an agent, sometimes not. \n\nThe AS can manage this via registration (e.g. could be metadata in CIMD) and aplpy different policies when issuing access tokens (more restricted, narrower scopes, shorter lived). The RS could use the same mechanism (with caching and so forth) and apply additional restrictions. I can also imagine the actual identifiers in either the credential used to authenticate or in the client_id being structured in a specific way (works inside an enterprise or closed eco-system, needs standard to do it more broadly).\n\nThe messy bit is that in an agentic world the AS and the RS needs to make decisions on the workload/client/agent identifier, which they did not have to do in the past, regardless of the claim name used. If using a different claim name is used as a logic switch in validation logic, that can also be achieved by just having a claim that says \"agent=true\" in the token (or the metadata). \n\nIt may be useful to point which mechanisms needs to be in place to tell if a client is and agent, or just a client (goes a little against the AI is just a workload...)",
       "createdAt": "2026-03-04T14:02:21Z",
-      "updatedAt": "2026-03-10T12:41:36Z",
+      "updatedAt": "2026-03-12T13:35:08Z",
       "closedAt": null,
       "comments": [
         {
@@ -704,6 +704,13 @@
           "body": "The MCP/RS interaction is out of scope for this issue (which is scoped to distinguishing between the agent and non agent clients). For the RS/MCP use case - that feels like a different issue - best to open a new issue for that so we can discuss it separately from this issue.",
           "createdAt": "2026-03-10T12:41:36Z",
           "updatedAt": "2026-03-10T12:41:36Z"
+        },
+        {
+          "author": "identitymonk",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The call out to MCP/RS was just an example, my recommendation on supporting such metadata (\"I am an agent\") via CIMD remains.",
+          "createdAt": "2026-03-12T13:35:08Z",
+          "updatedAt": "2026-03-12T13:35:08Z"
         }
       ]
     },
@@ -815,6 +822,54 @@
       "body": "\u00a79.1.1 says proxies, API gateways, service meshes, and load balancers break TLS identity by terminating and re-establishing sessions. \u00a79.2 says application-layer authentication preserves identity across those hops.\n\nWhat's missing is the bridge between those two observations. In practice, every production deployment has at least one intermediary: a load balancer, an API gateway, a service mesh sidecar; and practitioners need to know who validates what credential and which identity is authoritative after intermediary processing.\n\nThere are at least three common patterns that need different guidance:\n\n- Pass-through proxy (transparent TCP proxy): TLS identity stays end-to-end, the proxy is invisible to the identity layer. Simple case, but worth calling out so people know when \u00a79.1.1 concerns don't apply\n- Terminating gateway (ALB, Cloudflare, Traefik, etc.): Gateway terminates TLS, possibly validates the agent's Workload proof token / Workload identity token, then re-establishes a connection to the backend\n  - The draft doesn't say if the backend trusts the gateway's transport identity, or if it must independently re-validate the agent's application-layer credential\n- Token-exchange gateway (API gateway acting as OAuth client): Gateway exchanges the incoming access token for a new one scoped to the backend. The original agent identity may or may not survive the exchange. If the `act` claim (RFC 8693) isn't used, the downstream service has no idea who originally initiated the request. The draft should clarify whether identity preservation through token exchange is a must or a should\n- Service mesh sidecar (Istio, Linkerd): mTLS between sidecars gives pod-level identity, but that's the sidecar's identity, not the agent's. The draft doesn't address how agent-level identity (WIMSE / SPIFFE) relates to sidecar identity\n\nI'd suggest either a new subsection under \u00a79 or an appendix that names these patterns and specifies the validation expectations for each. The audit section (\u00a711) should also be extended to say that logs need to capture both the original actor and any intermediary participation - otherwise we can't reconstruct the chain when a gateway was involved.",
       "createdAt": "2026-03-11T15:21:22Z",
       "updatedAt": "2026-03-11T15:21:22Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 66,
+      "id": "I_kwDOQP22qc7yxhki",
+      "title": "Provide clarity on \"instance\" identifier",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/66",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "From George Fletcher\n\nSection 5 \n- there is no mention of instance identifier vs \u201cworkload identifier\u201d nor whether the \u201cworkload identifier\u201d needs to represent the instance or just the general workload \u201cexecutable bits\".\n- there is mention that the workload identifier needs to remain \"stable for the lifetime of the workload identity\u201d however it\u2019s not clear whether that should represent the instance of the workload or the set of executable bits",
+      "createdAt": "2026-03-13T19:44:35Z",
+      "updatedAt": "2026-03-13T19:44:35Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 67,
+      "id": "I_kwDOQP22qc7yximn",
+      "title": "do we need a profile for Transaction Token to Access Token Exchange?",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/67",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "From George Fletcher\n\nSection 10.4\n- given that a transaction token is a bearer token, I\u2019m not sure it can be the sole method of obtaining a new access token via token exchange. I think it can be good evidence in such an exchange. Regardless, I\u2019m not sure the security properties of such an exchange are well understood.",
+      "createdAt": "2026-03-13T19:45:33Z",
+      "updatedAt": "2026-03-13T19:45:33Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 68,
+      "id": "I_kwDOQP22qc7yxkVV",
+      "title": "Clarify agent-to-agent interaction and assertions",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/68",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "From George Fletcher:\n\nSection 10.5\n- Assuming the Agent represents the workload with which the user/human is directly interacting, it makes sense the agent would have the identity assertion. However, in a \u201cturtles all the way down\u201d scenario when the accessed tool is really another agent then that agent will not likely have the identity assertion as passing that along has significant privacy implications.",
+      "createdAt": "2026-03-13T19:47:09Z",
+      "updatedAt": "2026-03-13T19:47:09Z",
       "closedAt": null,
       "comments": []
     }
