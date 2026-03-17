@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-15T02:36:15.951546+00:00",
+  "timestamp": "2026-03-17T02:22:39.774335+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -872,6 +872,37 @@
       "updatedAt": "2026-03-13T19:47:09Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 69,
+      "id": "I_kwDOQP22qc7zMj92",
+      "title": "Multi-party HITL Approval",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/69",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "From Jack Lichwa\n\nRegarding Human-in-the-Loop (HITL), I'm concerned that simple human approval via CIBA may not be sufficiently robust for current needs. For high-impact use cases, such as modifying infrastructure like firewall rules or IAM roles, or financial operations like payments and transfers, generic human approval may not suffice across all Human-in-the-Loop scenarios.\n\nFor these HITL operations, do you envision a more policy-based approach including specific operation windows, mandatory MFA, and multi-party approvals, similar to Privileged Identity Management systems, rather than just an approved claim through CIBA?\n\nI'm interested to know if you see these granular controls as being in scope, or if you feel these requirements are already addressed through a different approach?",
+      "createdAt": "2026-03-16T04:30:06Z",
+      "updatedAt": "2026-03-16T19:08:37Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "Regarding human-in-the-loop, it is important to distinguish between the protocols used to request approval (CIBA) vs the authorization policy. This document does not propose what an authorization policy should. A deployment may choose to have multi-party approval, enforced through an authorization server policy. The authorization server may use CIBA to trigger an approval request from each party that should approve the authorization request. We can add this as an example if it helps implementers think creatively about how to use the existing standards. I do not believe this draft should mandate or prescribe specific policies for specific scenarios. Those are risk based decisions for a specific deployment.",
+          "createdAt": "2026-03-16T04:30:27Z",
+          "updatedAt": "2026-03-16T04:30:27Z"
+        },
+        {
+          "author": "JLichwa80",
+          "authorAssociation": "NONE",
+          "body": "Thank you Pieter. I think I see the point that document covers how SPIFFE, WIMSE is used for authentication/federation and authorization is handled either locally or through OAuth/Authorization server. I see Agents as malicious due to their nondeterministic nature/like human, versus regular code workloads. In communication like Agent to Agent, Agent to tools/services, both using SPIFFE. federation and OAuth does not seem efficient. I believe I'm looking for similarly decentralized and robust authorization component to glue everything together. ",
+          "createdAt": "2026-03-16T19:08:37Z",
+          "updatedAt": "2026-03-16T19:08:37Z"
+        }
+      ]
     }
   ],
   "pulls": [
