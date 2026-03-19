@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-17T02:22:39.774335+00:00",
+  "timestamp": "2026-03-19T02:28:17.548485+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -885,7 +885,7 @@
       "labels": [],
       "body": "From Jack Lichwa\n\nRegarding Human-in-the-Loop (HITL), I'm concerned that simple human approval via CIBA may not be sufficiently robust for current needs. For high-impact use cases, such as modifying infrastructure like firewall rules or IAM roles, or financial operations like payments and transfers, generic human approval may not suffice across all Human-in-the-Loop scenarios.\n\nFor these HITL operations, do you envision a more policy-based approach including specific operation windows, mandatory MFA, and multi-party approvals, similar to Privileged Identity Management systems, rather than just an approved claim through CIBA?\n\nI'm interested to know if you see these granular controls as being in scope, or if you feel these requirements are already addressed through a different approach?",
       "createdAt": "2026-03-16T04:30:06Z",
-      "updatedAt": "2026-03-16T19:08:37Z",
+      "updatedAt": "2026-03-18T01:23:10Z",
       "closedAt": null,
       "comments": [
         {
@@ -901,6 +901,13 @@
           "body": "Thank you Pieter. I think I see the point that document covers how SPIFFE, WIMSE is used for authentication/federation and authorization is handled either locally or through OAuth/Authorization server. I see Agents as malicious due to their nondeterministic nature/like human, versus regular code workloads. In communication like Agent to Agent, Agent to tools/services, both using SPIFFE. federation and OAuth does not seem efficient. I believe I'm looking for similarly decentralized and robust authorization component to glue everything together. ",
           "createdAt": "2026-03-16T19:08:37Z",
           "updatedAt": "2026-03-16T19:08:37Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "@JLichwa80 - the problem is not the one of new standards for authorization, it is about operations and deployment (of existing standards) https://mailarchive.ietf.org/arch/msg/agent2agent/ixrm8pmAx_CCQ8nfvncG7WHAvT4/\n\nI think we get more mileage out of using what is deployed and known to work, and then make small changes to fill standards gaps.",
+          "createdAt": "2026-03-18T01:23:10Z",
+          "updatedAt": "2026-03-18T01:23:10Z"
         }
       ]
     }
