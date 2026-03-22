@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-19T02:28:17.548485+00:00",
+  "timestamp": "2026-03-22T02:28:52.578105+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -688,7 +688,7 @@
       ],
       "body": "How to distinguish between an AI Agent and a regular Oauth client. Some feedback that the Microsoft model makes it explicit  through claims, that say \"this is an agent\" or \"this is an agent acting obo\"\n\nMy mental model for this (could be wrong) is that the RS andAS needs to know that certain identifiers are assigned to agents and treat them differently. The claim name is mostly orthogonal to this, even if there was a separate claim name for agents, you would still need to know which agent and how to treat it differently when making authorisation decisions at the AS or RS.\n\nThe AS and RS will both have to know which identifiers are assigned to agents. This is needed, regardless of which claim is used to express the identifier. Sometimes the client_id is associated with an agent, sometimes not. \n\nThe AS can manage this via registration (e.g. could be metadata in CIMD) and aplpy different policies when issuing access tokens (more restricted, narrower scopes, shorter lived). The RS could use the same mechanism (with caching and so forth) and apply additional restrictions. I can also imagine the actual identifiers in either the credential used to authenticate or in the client_id being structured in a specific way (works inside an enterprise or closed eco-system, needs standard to do it more broadly).\n\nThe messy bit is that in an agentic world the AS and the RS needs to make decisions on the workload/client/agent identifier, which they did not have to do in the past, regardless of the claim name used. If using a different claim name is used as a logic switch in validation logic, that can also be achieved by just having a claim that says \"agent=true\" in the token (or the metadata). \n\nIt may be useful to point which mechanisms needs to be in place to tell if a client is and agent, or just a client (goes a little against the AI is just a workload...)",
       "createdAt": "2026-03-04T14:02:21Z",
-      "updatedAt": "2026-03-12T13:35:08Z",
+      "updatedAt": "2026-03-20T12:19:46Z",
       "closedAt": null,
       "comments": [
         {
@@ -711,6 +711,27 @@
           "body": "The call out to MCP/RS was just an example, my recommendation on supporting such metadata (\"I am an agent\") via CIMD remains.",
           "createdAt": "2026-03-12T13:35:08Z",
           "updatedAt": "2026-03-12T13:35:08Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "https://www.linkedin.com/feed/?msgControlName=view_message_button&msgConversationId=2-ODdhNzQxZmQtYzZhMC00NjkyLWI5YzEtM2M5MzdhMGRmY2Y1XzEwMA%3D%3D&msgOverlay=true&trk=false",
+          "createdAt": "2026-03-19T04:22:07Z",
+          "updatedAt": "2026-03-19T04:22:07Z"
+        },
+        {
+          "author": "kevin-biot",
+          "authorAssociation": "NONE",
+          "body": "Agent workloads require explicit security classification, but they do not acquire legal personhood.\nThis distinction must remain clear in the specification.\n\nAuthorization systems may evaluate workload/client/agent identity for execution risk controls (scope, TTL, step-up, attestation, replay limits), while legal authority remains bound to a human or legal entity principal and expressed through bounded delegation.\n\nThe draft should avoid any framing that implies agents hold independent legal standing.\nAgents execute under delegated authority; they do not originate legal authority.",
+          "createdAt": "2026-03-20T12:14:25Z",
+          "updatedAt": "2026-03-20T12:14:25Z"
+        },
+        {
+          "author": "kevin-biot",
+          "authorAssociation": "NONE",
+          "body": "> The MCP/RS interaction is out of scope for this issue (which is scoped to distinguishing between the agent and non agent clients). For the RS/MCP use case - that feels like a different issue - best to open a new issue for that so we can discuss it separately from this issue.\n\nI agree MCP/RS specifics should be tracked in a separate issue from \u201cagent vs non-agent client classification.\u201d\n\nThat said, I think the draft should include a clear security boundary note:\n\n- Internal tool-orchestration architectures (including MCP-like patterns) are out of scope for this document.\n- However, protocol-level agent authentication/authorization does not, by itself, guarantee safe tool execution.\n- Deployments should enforce a deterministic execution boundary between model output and effectful tool actions.\n- Externally visible state changes should require independent authorization checks at execution time, not only trust in LLM output.\n\nIn other words: this draft can standardize identity/delegation interoperability across components, but it should not be interpreted as solving internal agent-to-tool safety by itself.\n\nContext: we use internal permit/warrant mechanisms in our implementation, but this comment is not proposing those mechanisms as standards. They are our internal solution ;-)\n\nWhat we are contributing here is only the interoperability requirement:\n\n1. There must be an execution-time authorization boundary between model output and effectful tool actions.\n2. Tool invocation authority must be explicit, bounded, and short-lived (intent/action, audience/resource, scope, actor context, time bounds).\n3. Authorization must be re-evaluated at execution time for each effectful step (not implied globally by session auth).\n4. Missing or inconsistent authorization context must fail closed.\n5. The specific internal control object/model is deployment-defined and out of scope.\n\nThis keeps the draft implementation-neutral while still preventing unsafe \u201cLLM output -> direct tool effect\u201d assumptions.\n\n",
+          "createdAt": "2026-03-20T12:17:28Z",
+          "updatedAt": "2026-03-20T12:19:46Z"
         }
       ]
     },
@@ -726,7 +747,7 @@
       "labels": [],
       "body": "Relating to https://datatracker.ietf.org/doc/html/draft-klrc-aiagent-auth-00#section-10.2 I think, I had the question, \"didn't see explicit recommendation to lean on the act claim to carry agent identity, and the sub claim to carry user identity.\u00a0 I think we're aligned that this is a fundamental requirement to express delegation, right?\" \n\nI think the answer is \"no\" but the reasons are somewhat murky (regular old oauth delegation is expressed somewhat implicitly by it being oauth and possibly/probably the client identifier in the access token while token exchange came along later with the act claim). And it might be worthwhile to give a little more explanation in the draft.  ",
       "createdAt": "2026-03-05T17:58:29Z",
-      "updatedAt": "2026-03-09T14:22:42Z",
+      "updatedAt": "2026-03-20T11:58:46Z",
       "closedAt": null,
       "comments": [
         {
@@ -742,6 +763,20 @@
           "body": "I like this but I am biased - Author is Amazonian, still it comes from a profiling of a version of transaction token that existed before Transaction Tokens were a draft\n\nsee presentation at https://www.youtube.com/live/GbAE49CewYA",
           "createdAt": "2026-03-09T14:22:42Z",
           "updatedAt": "2026-03-09T14:22:42Z"
+        },
+        {
+          "author": "kevin-biot",
+          "authorAssociation": "NONE",
+          "body": "I think this issue surfaces a broader interoperability gap: A2A-like patterns can carry identity and invocation context, but delegation for agentic execution needs tighter profiling.\n\nIn agentic systems, OAuth is necessary but not sufficient. Token issuance/exchange is plumbing; safe execution requires precise, turn-bounded delegation semantics.\n\nSuggested clarification text:\n\n1. Keep OAuth semantics explicit:\n- `client_id`: OAuth client that requested the token.\n- `sub`: token subject (resource owner when present; otherwise client principal per profile).\n- `act`: current acting party in delegated flows.\n- `may_act`: authorization context for actor substitution during exchange.\n\n2. Clarify what this does *not* solve by itself:\n- A2A-like invocation context + OAuth exchange alone do not fully define execution-time delegation constraints across multi-step tool/service hops.\n- `act` is identity context, not a container for full execution policy.\n\n3. Add delegation profile guidance for agentic execution:\n- delegation is turn-bounded (not global/session blanket),\n- intent/action scoped,\n- audience/resource scoped,\n- time-bounded (`not_before`, `expires_at`, max lifetime),\n- actor-chain aware,\n- non-amplifying across hops.\n\n4. Add default safety posture:\n- cross-domain bearer forwarding prohibited by default,\n- receiving domain performs local token mint/exchange,\n- missing trust mapping/consent/required step-up => fail closed.\n\n5. Keep implementation freedom:\n- internal agent/LLM security architecture remains out of scope,\n- external authorization invariants at execution boundary are in scope.\n\nThis would keep the draft aligned with existing OAuth standards while making delegation semantics robust for real-world, cross-org, turn-by-turn agent execution.\n",
+          "createdAt": "2026-03-20T11:55:48Z",
+          "updatedAt": "2026-03-20T11:55:48Z"
+        },
+        {
+          "author": "kevin-biot",
+          "authorAssociation": "NONE",
+          "body": "@PieterKas \nAdditional context from Internal experience:\n\nWe are actively building an agent runtime/governance stack and want to align with RFC-grade standards rather than invent parallel mechanisms. Most of the suggestions above come from concrete gaps we hit in current deployments:\n\n- boundary auth is often clear, but downstream delegation semantics are underspecified,\n- turn-by-turn intent constraints are harder than session-level token handling,\n- cross-org hops expose trust-mapping and account-linking realities (no universal OAuth domain),\n- robust systems need deterministic fail-closed behavior and auditable delegation evidence.\n\nWe are not proposing a new auth framework; we are asking for sharper profiling of existing OAuth/WIMSE-style mechanisms for agentic, multi-hop, real-world execution.\n",
+          "createdAt": "2026-03-20T11:58:46Z",
+          "updatedAt": "2026-03-20T11:58:46Z"
         }
       ]
     },
@@ -757,7 +792,7 @@
       "labels": [],
       "body": "A comment received via LinkedIn:\n\nI'd also flag one area your draft may want to consider: LLM-specific threats within agents. During development and in the runtime product, I discovered that a single LLM cannot reliably self-enforce safety rules. I solved this with a dual-model pattern\n(one LLM generates, a second independently evaluates). The current draft treats agents as opaque workloads _ which is correct at the identity layer _ but implementers will need guidance on the internal security architecture of LLM-based agents,\nparticularly around prompt injection and post-authorization safety.",
       "createdAt": "2026-03-06T20:06:49Z",
-      "updatedAt": "2026-03-09T14:19:13Z",
+      "updatedAt": "2026-03-20T11:30:16Z",
       "closedAt": null,
       "comments": [
         {
@@ -766,6 +801,13 @@
           "body": "LLM can never be trusted, at the end of the day we want the only element that can make an action possible to be the final line of defense by alwys limiting in space (scopes, authorization details, transaction-oriented nature) and in time (max lifetime, refresh capability and conditions, as long as dynamic revocation - aka SSF)\n\nI think this should be called out of scope with mention above.",
           "createdAt": "2026-03-09T14:19:13Z",
           "updatedAt": "2026-03-09T14:19:13Z"
+        },
+        {
+          "author": "kevin-biot",
+          "authorAssociation": "NONE",
+          "body": "I would propose  treating internal LLM safety architecture as out of scope for this draft, while strengthening normative external controls.\n\nProposed scope boundary:\n- Out of scope: internal agent implementation patterns (single model, dual model, self-critique, guard-model orchestration, prompt pipelines).\n- In scope: authorization/delegation invariants required before any externally visible action.\n\nSuggested security text:\n1. LLM output MUST NOT be the final authority for execution.\n2. Execution MUST be gated by a deterministic policy/authorization boundary.\n3. Delegation artifacts MUST be bounded (intent, audience, scope, actor, TTL) and non-amplifying.\n4. Missing trust mapping, required consent, or required step-up MUST fail closed.\n5. Cross-domain token forwarding SHOULD be prohibited by default; local exchange/minting SHOULD be used in target domains.\n6. Evidence SHOULD bind request, delegation artifact, policy context, and execution outcome for auditability.\n\nThis keeps interoperability across heterogeneous agents without prescribing internal AI architecture.\n\nforwarded tokens break least-privilege across trust boundaries.\n\nMain reasons:\n\nAudience mismatch\nToken was minted for source domain/API, not target API.\nReusing it cross-domain is authority confusion.\nScope amplification risk\nForwarded token may carry broader scopes than target action needs.\nLocal minting lets target issue minimum scope for that exact call.\nLoss of policy control\nTarget domain cannot enforce its own auth policies cleanly if it just accepts foreign bearer tokens.\nLocal exchange forces target-domain policy, consent, and risk checks.\nPoor revocation/TTL semantics\nSource token lifetime/revocation may not align with target risk model.\nLocal token can be short-lived and bound to action/turn/tool.\nWeak attribution/audit\nForwarding blurs who authorized what at which boundary.\nExchange creates explicit chain: origin delegation -> target token -> target action.",
+          "createdAt": "2026-03-20T11:30:16Z",
+          "updatedAt": "2026-03-20T11:30:16Z"
         }
       ]
     },
@@ -869,9 +911,17 @@
       "labels": [],
       "body": "From George Fletcher:\n\nSection 10.5\n- Assuming the Agent represents the workload with which the user/human is directly interacting, it makes sense the agent would have the identity assertion. However, in a \u201cturtles all the way down\u201d scenario when the accessed tool is really another agent then that agent will not likely have the identity assertion as passing that along has significant privacy implications.",
       "createdAt": "2026-03-13T19:47:09Z",
-      "updatedAt": "2026-03-13T19:47:09Z",
+      "updatedAt": "2026-03-20T11:38:26Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "kevin-biot",
+          "authorAssociation": "NONE",
+          "body": "+1 to this concern. In multi-agent (\u201cturtles all the way down\u201d) chains, forwarding end-user identity assertions by default is a privacy risk.\n\nSuggest clarifying three assertion types:\n\n1) Identity assertion (who) \u2014 optional/minimized, not forwarded by default.\n2) Delegation assertion (what is allowed) \u2014 required hop-by-hop, bounded (intent/aud/scope/ttl/actor-chain), non-amplifying.\n3) Execution assertion (target API credential) \u2014 obtained locally by the receiving agent via exchange/minting.\n\nNormative defaults:\n- Agents SHOULD NOT forward raw end-user identity assertions across hops unless explicitly required and consented.\n- Agents MUST forward bounded delegation context for authorization continuity.\n- Receiving agents MUST enforce local policy and acquire local execution credentials.\n- If required identity/linkage/consent is unavailable, fail closed.\n\nA customer calls to change a flight booking.\nThey authenticate to the booking platform (for example, via app login + OTP or call-center verification).\nThat authentication proves who they are to the booking platform, but it does not become a universal token for every downstream system.\n\nWhen the booking platform needs another agent or backend to perform the change, it sends a signed, bounded delegation artifact: who requested the change (or a pseudonymous subject reference), what change is allowed, which booking it applies to, expiry time, and policy/consent references.\nThe receiving agent validates that artifact, applies its own local policy checks, and then uses its own local service credentials to call the target booking system (for example, Amadeus).\n\nSo execution happens with local credentials, while authority is proven by exchanged delegation evidence.\nIf trust mapping, consent, scope, or validity checks fail at any hop, the action is denied (fail-closed).\n\nThis is the pattern:\nauthenticate at entry, delegate per action, execute locally, audit end-to-end.\n\nClosed-world, single-organization agent systems are the easy case.\nOne identity domain, one policy domain, one credential ecosystem: authentication and authorization are tightly coupled, and token handling is relatively straightforward.\n\nReal-world multi-agent systems are different.\nThere is no universal OAuth domain across all organizations, platforms, and APIs.\nSo cross-org execution cannot rely on blanket token portability. It must rely on delegated authority.\n\nAuthentication is still necessary, but it is only the start.\nWhat matters operationally is precise delegation: explicit, bounded, and context-specific authority for each action.\n\nDelegation must be:\n\nturn-by-turn, not indefinite;\nnarrow in scope, not broad capability grants;\nbound to audience/resource, intent, actor chain, and expiry;\nnon-amplifying across hops;\nfail-closed when any bound is missing or violated.\nIn short: authenticate once, authorize precisely per turn, execute with least privilege.",
+          "createdAt": "2026-03-20T11:38:26Z",
+          "updatedAt": "2026-03-20T11:38:26Z"
+        }
+      ]
     },
     {
       "number": 69,
@@ -885,7 +935,7 @@
       "labels": [],
       "body": "From Jack Lichwa\n\nRegarding Human-in-the-Loop (HITL), I'm concerned that simple human approval via CIBA may not be sufficiently robust for current needs. For high-impact use cases, such as modifying infrastructure like firewall rules or IAM roles, or financial operations like payments and transfers, generic human approval may not suffice across all Human-in-the-Loop scenarios.\n\nFor these HITL operations, do you envision a more policy-based approach including specific operation windows, mandatory MFA, and multi-party approvals, similar to Privileged Identity Management systems, rather than just an approved claim through CIBA?\n\nI'm interested to know if you see these granular controls as being in scope, or if you feel these requirements are already addressed through a different approach?",
       "createdAt": "2026-03-16T04:30:06Z",
-      "updatedAt": "2026-03-18T01:23:10Z",
+      "updatedAt": "2026-03-20T11:49:33Z",
       "closedAt": null,
       "comments": [
         {
@@ -908,8 +958,286 @@
           "body": "@JLichwa80 - the problem is not the one of new standards for authorization, it is about operations and deployment (of existing standards) https://mailarchive.ietf.org/arch/msg/agent2agent/ixrm8pmAx_CCQ8nfvncG7WHAvT4/\n\nI think we get more mileage out of using what is deployed and known to work, and then make small changes to fill standards gaps.",
           "createdAt": "2026-03-18T01:23:10Z",
           "updatedAt": "2026-03-18T01:23:10Z"
+        },
+        {
+          "author": "kevin-biot",
+          "authorAssociation": "NONE",
+          "body": "I agree policy itself should remain deployment-defined, and CIBA is a protocol mechanism, not policy.\n\nBut for high-impact operations, interoperability needs a stronger contract for approval evidence. Otherwise \u201cHITL approved\u201d is too coarse across deployments.\n\nSuggested addition:\n1. Keep policy choices out of scope (no mandated approval model).\n2. Define a portable approval-evidence structure that can represent:\n- operation binding (hash of exact action payload/policy snapshot)\n- approval threshold (e.g., n-of-m)\n- approver role/class and independence constraints (SoD)\n- assurance level / MFA result\n- operation window (nbf/exp/max lifetime)\n- revocation/status at execution time\n3. Define fail-closed behavior when required approvals are missing, expired, revoked, or not independent.\n4. Add a non-normative example: multi-party approval via AS policy using CIBA per approver.\n\nThis keeps the draft pragmatic while making robust HITL patterns interoperable.\n",
+          "createdAt": "2026-03-20T11:49:33Z",
+          "updatedAt": "2026-03-20T11:49:33Z"
         }
       ]
+    },
+    {
+      "number": 70,
+      "id": "I_kwDOQP22qc70rV3k",
+      "title": "Authorization layer for AIMS: scoped delegation chains with formal narrowing properties",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/70",
+      "state": "OPEN",
+      "author": "aeoess",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The AIMS framework does the hard part right \u2014 composing WIMSE, SPIFFE, and OAuth for agent authentication gives you a solid identity foundation.\n\nBut as the blog analysis noted, authorization is still an open problem. Authentication tells you who the agent is. Authorization tells you what the agent can do, and crucially, what it can delegate to sub-agents.\n\nWe've been working on exactly that layer. The Agent Passport System implements scoped delegation chains with four formal properties:\n\n- Scope can only narrow at each delegation transfer (never widen)\n- Spend limits can only decrease\n- Delegation depth increments toward a maximum\n- Revoking a parent cascades to all descendants\n\nThese are the same invariants that IETF DAAP (draft-mishra-oauth-agent-grants-01) arrived at independently from the OAuth side. The convergence suggests these are necessary properties for agent delegation, not design choices specific to any one system.\n\nThe interesting integration question: AIMS handles the identity and authentication layer. APS handles the delegation and authorization layer. They compose naturally \u2014 AIMS-authenticated identity feeds into APS delegation chains. The gateway enforcement boundary could sit behind an AIMS-authenticated endpoint.\n\nSDK is at `npm install agent-passport-system` (866 tests). Paper on the formal invariants is on Zenodo. Happy to discuss the integration surface if there's interest.\n\nhttps://aeoess.com\nhttps://github.com/aeoess/agent-passport-system",
+      "createdAt": "2026-03-20T00:40:09Z",
+      "updatedAt": "2026-03-20T00:40:09Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 71,
+      "id": "I_kwDOQP22qc700kWO",
+      "title": "Clarify EUDI-Based Delegation for Cross-Organization Agent Hops",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/71",
+      "state": "CLOSED",
+      "author": "kevin-biot",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-03-20T11:46:03Z",
+      "updatedAt": "2026-03-21T05:19:59Z",
+      "closedAt": "2026-03-20T20:47:01Z",
+      "comments": [
+        {
+          "author": "kevin-biot",
+          "authorAssociation": "NONE",
+          "body": "Cross-link: related to #72 (EUDI cross-organization delegation + legal-person/company-wallet shape).",
+          "createdAt": "2026-03-20T14:07:44Z",
+          "updatedAt": "2026-03-20T14:07:44Z"
+        }
+      ]
+    },
+    {
+      "number": 72,
+      "id": "I_kwDOQP22qc700lbE",
+      "title": "Add Legal-Person / Company-Wallet Shape to Agent Delegation Model (Future-Proofing EUDI LP)",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/72",
+      "state": "CLOSED",
+      "author": "kevin-biot",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-03-20T11:46:59Z",
+      "updatedAt": "2026-03-21T05:19:28Z",
+      "closedAt": "2026-03-20T20:45:53Z",
+      "comments": [
+        {
+          "author": "kevin-biot",
+          "authorAssociation": "NONE",
+          "body": "Cross-link: related to #71 (EUDI-based delegation baseline for cross-organization hops).",
+          "createdAt": "2026-03-20T14:07:45Z",
+          "updatedAt": "2026-03-20T14:07:45Z"
+        }
+      ]
+    },
+    {
+      "number": 73,
+      "id": "I_kwDOQP22qc7006L4",
+      "title": "Proposed context contribution: Risk profile for A2A-like patterns and how this draft can provide a stronger baseline.",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/73",
+      "state": "CLOSED",
+      "author": "kevin-biot",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-03-20T12:06:06Z",
+      "updatedAt": "2026-03-21T05:19:08Z",
+      "closedAt": "2026-03-20T20:45:22Z",
+      "comments": [
+        {
+          "author": "kevin-biot",
+          "authorAssociation": "NONE",
+          "body": ".....",
+          "createdAt": "2026-03-20T12:07:02Z",
+          "updatedAt": "2026-03-21T05:19:08Z"
+        },
+        {
+          "author": "kevin-biot",
+          "authorAssociation": "NONE",
+          "body": "Cross-link cluster: related to #76 and #80 (A2A-like risk profile, two-layer boundary, and observability/compliance posture).",
+          "createdAt": "2026-03-20T14:07:47Z",
+          "updatedAt": "2026-03-20T14:07:47Z"
+        }
+      ]
+    },
+    {
+      "number": 74,
+      "id": "I_kwDOQP22qc701XiJ",
+      "title": "Semantic Intent Binding Gap in Agentic Flows (Ontology/Semantics as Safety Control)",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/74",
+      "state": "CLOSED",
+      "author": "kevin-biot",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-03-20T12:32:38Z",
+      "updatedAt": "2026-03-21T05:18:33Z",
+      "closedAt": "2026-03-20T20:47:20Z",
+      "comments": [
+        {
+          "author": "kevin-biot",
+          "authorAssociation": "NONE",
+          "body": "Cross-link: related to #79 (semantic intent binding and credential/delegation coupling).",
+          "createdAt": "2026-03-20T14:07:49Z",
+          "updatedAt": "2026-03-20T14:07:49Z"
+        }
+      ]
+    },
+    {
+      "number": 75,
+      "id": "I_kwDOQP22qc701fYx",
+      "title": "Suggestion   Add interoperable evidence profile for auth/delegation decisions",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/75",
+      "state": "CLOSED",
+      "author": "kevin-biot",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-03-20T12:39:55Z",
+      "updatedAt": "2026-03-21T05:18:20Z",
+      "closedAt": "2026-03-20T20:45:09Z",
+      "comments": []
+    },
+    {
+      "number": 76,
+      "id": "I_kwDOQP22qc702Fbp",
+      "title": "two-layer boundary explicit?",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/76",
+      "state": "CLOSED",
+      "author": "kevin-biot",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-03-20T13:13:13Z",
+      "updatedAt": "2026-03-21T05:18:05Z",
+      "closedAt": "2026-03-20T20:44:37Z",
+      "comments": [
+        {
+          "author": "kevin-biot",
+          "authorAssociation": "NONE",
+          "body": "Cross-link cluster: related to #73 and #80 (A2A-like risk profile and monitoring/compliance linkage).",
+          "createdAt": "2026-03-20T14:07:48Z",
+          "updatedAt": "2026-03-20T14:07:48Z"
+        }
+      ]
+    },
+    {
+      "number": 77,
+      "id": "I_kwDOQP22qc702QKJ",
+      "title": "RFC diagram :  it is not a normative agent architecture.",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/77",
+      "state": "CLOSED",
+      "author": "kevin-biot",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-03-20T13:21:29Z",
+      "updatedAt": "2026-03-21T05:17:49Z",
+      "closedAt": "2026-03-20T20:46:23Z",
+      "comments": [
+        {
+          "author": "kevin-biot",
+          "authorAssociation": "NONE",
+          "body": "Cross-link: related to #78 (diagram and architecture-neutral boundary clarifications).",
+          "createdAt": "2026-03-20T14:07:52Z",
+          "updatedAt": "2026-03-20T14:07:52Z"
+        }
+      ]
+    },
+    {
+      "number": 78,
+      "id": "I_kwDOQP22qc702d9A",
+      "title": "load-bearing section diagram in RFC",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/78",
+      "state": "CLOSED",
+      "author": "kevin-biot",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-03-20T13:32:43Z",
+      "updatedAt": "2026-03-21T05:16:39Z",
+      "closedAt": "2026-03-20T20:44:20Z",
+      "comments": [
+        {
+          "author": "kevin-biot",
+          "authorAssociation": "NONE",
+          "body": "Cross-link: related to #77 (figure should remain non-normative for internal agent architecture).",
+          "createdAt": "2026-03-20T14:07:53Z",
+          "updatedAt": "2026-03-20T14:07:53Z"
+        }
+      ]
+    },
+    {
+      "number": 79,
+      "id": "I_kwDOQP22qc702mwt",
+      "title": "Agent Credentials {#agent_credentials}",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/79",
+      "state": "CLOSED",
+      "author": "kevin-biot",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-03-20T13:39:31Z",
+      "updatedAt": "2026-03-21T05:17:28Z",
+      "closedAt": "2026-03-20T20:46:10Z",
+      "comments": [
+        {
+          "author": "kevin-biot",
+          "authorAssociation": "NONE",
+          "body": "Cross-link: related to #74 (semantic intent binding gap in multi-hop delegation).",
+          "createdAt": "2026-03-20T14:07:51Z",
+          "updatedAt": "2026-03-20T14:07:51Z"
+        }
+      ]
+    },
+    {
+      "number": 80,
+      "id": "I_kwDOQP22qc7021BU",
+      "title": "Monitoring/Observability and compliance",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/80",
+      "state": "CLOSED",
+      "author": "kevin-biot",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-03-20T13:51:55Z",
+      "updatedAt": "2026-03-21T05:17:13Z",
+      "closedAt": "2026-03-20T20:43:45Z",
+      "comments": [
+        {
+          "author": "kevin-biot",
+          "authorAssociation": "NONE",
+          "body": "#71\u2013#80 are a coherent set: delegation fidelity, evidence portability, semantic binding, and architecture-neutral boundaries.\n\nThese are intended as one hardening package rather than isolated asks. I\u2019ll wait for feedback before proposing consolidated PR text.\n\nCross-link cluster: related to #73 and #76.",
+          "createdAt": "2026-03-20T14:07:43Z",
+          "updatedAt": "2026-03-20T14:07:43Z"
+        }
+      ]
+    },
+    {
+      "number": 81,
+      "id": "I_kwDOQP22qc71I_o6",
+      "title": "Prior Art: Scope-Based AI Agent Authorization with Power-of-Attorney Credentials (GAuth, patent filed)",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/81",
+      "state": "OPEN",
+      "author": "GoetzGW",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Thank you for publishing this draft. The composable approach of AIMS \u2014 combining WIMSE, SPIFFE, OAuth 2.0, and AuthZEN into a coherent agent identity and authorization framework \u2014 is a well-structured contribution to this space.\n\nI'd like to bring to the authors' attention a body of prior work that addresses several of the same architectural challenges, particularly around agent delegation, scope-based authorization, and principal-agent chains: GAuth (Gimel Auth), developed by the Gimel Foundation.\n\nGAuth's patent application and Github publication predates this draft and covers concepts that overlap with key aspects of the AIMS framework.\n\nWhere the overlap exists:\n\n1. Principal-Agent Delegation\n\nAIMS describes identity chaining via draft-ietf-oauth-identity-chaining for user\u2192agent and agent\u2192tool delegation. GAuth formalizes this as Power-of-Attorney (PoA) Credentials \u2014 a distinct credential type that explicitly models the legal concept of delegated authority. A PoA Credential defines:\n\nWho delegates (principal)\nTo whom (agent)\nWhat the agent may do (scope: allowed operations, resource boundaries, time constraints, etc.)\nThe right to sub-delegate (with mandatory scope narrowing at each level)\nThis was documented in GiFo-RFC 0110, 0111, and 0115 prior to the submission of this draft.\n\n2. Authorization Policy\n\nThe AIMS draft (Section on Authorization) references AuthZEN for policy decisions but notes that the authorization policy layer is \"not yet specified in -00 revision.\" GAuth has a fully specified authorization engine that evaluates every agent action against the PoA scope before execution \u2014 not as a post-hoc policy query, but as a real-time pre-action gate. This includes:\n\nDeterministic scope enforcement (allowed file paths, operation types, dependency limits)\nHierarchical delegation chain validation\nInstant revocation with immediate effect on all active sessions\n\n3. Agent-to-Agent Delegation Chains\n\nBoth AIMS and GAuth support multi-hop delegation (principal \u2192 agent \u2192 sub-agent \u2192 tool). GAuth requires that each delegation level must narrow the scope \u2014 a sub-agent can never have more authority than its delegating agent. The full chain is cryptographically verifiable and auditable.\n\nWhere Gimel Auth goes further Beyond the identity and token layer that AIMS focuses on, GAuth additionally provides (not limited to):\n\nArchitecture Governance \u2014 rule-based enforcement of architectural principles (e.g., microservice patterns, MCP protocol compliance, data model approval gates)\nRegulatory Compliance Monitoring \u2014 LLM-based stochastic compliance scoring against regulatory frameworks (GDPR, NIS2, DORA, EU AI Act), with configurable confidence thresholds\nLethal Trifecta Detection \u2014 automatic identification of AI components that simultaneously accumulate autonomous decision-making, critical data access, and execution rights\nPlan-Build-Run Lifecycle \u2014 formal phase gates requiring architectural approval before an agent may proceed from planning to implementation\nThese layers operate on top of the delegation and authorization mechanism, which is where the conceptual overlap with AIMS exists.\n\nRequest\nGiven the temporal priority of GAuth's patent filings, open-source licensing and publishing relative to this draft, we believe it would be appropriate for the authors to:\n\nReview GAuth's published specifications (GiFo-RFC 0110, 0111, 0115) as related work\nConsider acknowledging prior art in the delegation and scope-based authorization space\n\nWe are currently not requesting changes to the technical approach of the draft. We are requesting awareness of prior work that is relevant to the concepts being proposed.\n\nYou find the details under Gimel Foundation on GitHub. Happy to discuss further.",
+      "createdAt": "2026-03-21T14:57:54Z",
+      "updatedAt": "2026-03-21T14:57:54Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
