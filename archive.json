@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-22T02:28:52.578105+00:00",
+  "timestamp": "2026-03-24T02:21:50.639187+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -935,7 +935,7 @@
       "labels": [],
       "body": "From Jack Lichwa\n\nRegarding Human-in-the-Loop (HITL), I'm concerned that simple human approval via CIBA may not be sufficiently robust for current needs. For high-impact use cases, such as modifying infrastructure like firewall rules or IAM roles, or financial operations like payments and transfers, generic human approval may not suffice across all Human-in-the-Loop scenarios.\n\nFor these HITL operations, do you envision a more policy-based approach including specific operation windows, mandatory MFA, and multi-party approvals, similar to Privileged Identity Management systems, rather than just an approved claim through CIBA?\n\nI'm interested to know if you see these granular controls as being in scope, or if you feel these requirements are already addressed through a different approach?",
       "createdAt": "2026-03-16T04:30:06Z",
-      "updatedAt": "2026-03-20T11:49:33Z",
+      "updatedAt": "2026-03-23T20:10:02Z",
       "closedAt": null,
       "comments": [
         {
@@ -965,6 +965,13 @@
           "body": "I agree policy itself should remain deployment-defined, and CIBA is a protocol mechanism, not policy.\n\nBut for high-impact operations, interoperability needs a stronger contract for approval evidence. Otherwise \u201cHITL approved\u201d is too coarse across deployments.\n\nSuggested addition:\n1. Keep policy choices out of scope (no mandated approval model).\n2. Define a portable approval-evidence structure that can represent:\n- operation binding (hash of exact action payload/policy snapshot)\n- approval threshold (e.g., n-of-m)\n- approver role/class and independence constraints (SoD)\n- assurance level / MFA result\n- operation window (nbf/exp/max lifetime)\n- revocation/status at execution time\n3. Define fail-closed behavior when required approvals are missing, expired, revoked, or not independent.\n4. Add a non-normative example: multi-party approval via AS policy using CIBA per approver.\n\nThis keeps the draft pragmatic while making robust HITL patterns interoperable.\n",
           "createdAt": "2026-03-20T11:49:33Z",
           "updatedAt": "2026-03-20T11:49:33Z"
+        },
+        {
+          "author": "JLichwa80",
+          "authorAssociation": "NONE",
+          "body": "Thank you @PieterKas, I think what got me confused : \"An Agent, acting as\n   an OAuth client, may use the OpenID Client Initiated Backchannel\n   Authentication (CIBA) protocol.  This triggers an out-of-band\n   interaction allowing the user to approve or deny the requested\n   operation without exposing credentials to the agent (for example a\n   push notification requesting the user to approve a request through an\n   authenticator application on their mobile device).\"  - like the Agent have understanding about Authz policy, that it needs to call user for approval. Considering Agent is malicious by default and entire authorization workflow should be delegated to AS, do you mean that Agent does pre-authz? Maybe it is just me that I'm reading that wrong - but I hope you understand my concerns.\n",
+          "createdAt": "2026-03-23T20:10:02Z",
+          "updatedAt": "2026-03-23T20:10:02Z"
         }
       ]
     },
@@ -1236,6 +1243,110 @@
       "body": "Thank you for publishing this draft. The composable approach of AIMS \u2014 combining WIMSE, SPIFFE, OAuth 2.0, and AuthZEN into a coherent agent identity and authorization framework \u2014 is a well-structured contribution to this space.\n\nI'd like to bring to the authors' attention a body of prior work that addresses several of the same architectural challenges, particularly around agent delegation, scope-based authorization, and principal-agent chains: GAuth (Gimel Auth), developed by the Gimel Foundation.\n\nGAuth's patent application and Github publication predates this draft and covers concepts that overlap with key aspects of the AIMS framework.\n\nWhere the overlap exists:\n\n1. Principal-Agent Delegation\n\nAIMS describes identity chaining via draft-ietf-oauth-identity-chaining for user\u2192agent and agent\u2192tool delegation. GAuth formalizes this as Power-of-Attorney (PoA) Credentials \u2014 a distinct credential type that explicitly models the legal concept of delegated authority. A PoA Credential defines:\n\nWho delegates (principal)\nTo whom (agent)\nWhat the agent may do (scope: allowed operations, resource boundaries, time constraints, etc.)\nThe right to sub-delegate (with mandatory scope narrowing at each level)\nThis was documented in GiFo-RFC 0110, 0111, and 0115 prior to the submission of this draft.\n\n2. Authorization Policy\n\nThe AIMS draft (Section on Authorization) references AuthZEN for policy decisions but notes that the authorization policy layer is \"not yet specified in -00 revision.\" GAuth has a fully specified authorization engine that evaluates every agent action against the PoA scope before execution \u2014 not as a post-hoc policy query, but as a real-time pre-action gate. This includes:\n\nDeterministic scope enforcement (allowed file paths, operation types, dependency limits)\nHierarchical delegation chain validation\nInstant revocation with immediate effect on all active sessions\n\n3. Agent-to-Agent Delegation Chains\n\nBoth AIMS and GAuth support multi-hop delegation (principal \u2192 agent \u2192 sub-agent \u2192 tool). GAuth requires that each delegation level must narrow the scope \u2014 a sub-agent can never have more authority than its delegating agent. The full chain is cryptographically verifiable and auditable.\n\nWhere Gimel Auth goes further Beyond the identity and token layer that AIMS focuses on, GAuth additionally provides (not limited to):\n\nArchitecture Governance \u2014 rule-based enforcement of architectural principles (e.g., microservice patterns, MCP protocol compliance, data model approval gates)\nRegulatory Compliance Monitoring \u2014 LLM-based stochastic compliance scoring against regulatory frameworks (GDPR, NIS2, DORA, EU AI Act), with configurable confidence thresholds\nLethal Trifecta Detection \u2014 automatic identification of AI components that simultaneously accumulate autonomous decision-making, critical data access, and execution rights\nPlan-Build-Run Lifecycle \u2014 formal phase gates requiring architectural approval before an agent may proceed from planning to implementation\nThese layers operate on top of the delegation and authorization mechanism, which is where the conceptual overlap with AIMS exists.\n\nRequest\nGiven the temporal priority of GAuth's patent filings, open-source licensing and publishing relative to this draft, we believe it would be appropriate for the authors to:\n\nReview GAuth's published specifications (GiFo-RFC 0110, 0111, 0115) as related work\nConsider acknowledging prior art in the delegation and scope-based authorization space\n\nWe are currently not requesting changes to the technical approach of the draft. We are requesting awareness of prior work that is relevant to the concepts being proposed.\n\nYou find the details under Gimel Foundation on GitHub. Happy to discuss further.",
       "createdAt": "2026-03-21T14:57:54Z",
       "updatedAt": "2026-03-21T14:57:54Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 82,
+      "id": "I_kwDOQP22qc71Yahc",
+      "title": "Security Considerations: AIMS layer trust dependencies and failure modes",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/82",
+      "state": "OPEN",
+      "author": "nik-kale",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The AIMS stack in Figure 2 has implicit trust dependencies that I think should be called out in Security Considerations.\n\nBasically if attestation gets compromised, everything above it inherits that - provisioning, authn, authz, all of it. Few things:\n\n- Compromised SPIRE agent (or equivalent) means all creds it provisions are suspect. IMO this is a high-value target worth naming explicitly.\n- No guidance on what happens when you can't determine attestation status. Fail open or closed? I'd argue closed but either way the draft should take a position.\n- The monitoring layer (Section 11) should ideally catch inconsistencies across AIMS layers, like an agent with valid creds behaving in ways that don't match its attestation claims. Not sure how prescriptive we want to be here tho.\n\nMore broadly, might be worth walking through failure modes at each layer and how they cascade upward through the stack.",
+      "createdAt": "2026-03-22T18:57:56Z",
+      "updatedAt": "2026-03-22T18:57:56Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 83,
+      "id": "I_kwDOQP22qc71ZDzD",
+      "title": "Security Considerations: enumerate agent-specific threat actors",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/83",
+      "state": "OPEN",
+      "author": "nik-kale",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The draft doesn't enumerate threat actors right now. Based on the architecture, consider a few obvious ones:\n\n**Compromised orchestrator** - an agent that spawns/coordinates other agents. If this gets compromised the blast radius is way bigger than a single agent. The draft implicitly distinguishes agent roles but doesn't tier them by risk, which I think it should.\n\n**Malicious tool endpoint** - Section 10.7 covers Tool-to-Service access but tbh it assumes Tools are honest. A compromised Tool could exfiltrate agent tokens or inject bad responses.\n\n**Confused deputy across agent chains** - TxTokens (Section 10.4) handle the microservice case nicely, but agent-to-agent across trust boundaries is a different problem. Think Agent A tricking Agent B into accessing something A can't touch directly.",
+      "createdAt": "2026-03-22T20:07:40Z",
+      "updatedAt": "2026-03-22T20:07:40Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 84,
+      "id": "I_kwDOQP22qc71Zsjv",
+      "title": "Security Considerations: cross-domain trust bootstrapping",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/84",
+      "state": "OPEN",
+      "author": "nik-kale",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Continuing my review of the draft:\n\nSection 10.5 assumes AS's can evaluate each other's tokens but skips over how that trust actually gets established.\n\nIn practice this means out-of-band trust anchor exchange, federation metadata, or mTLS with pre-configured CAs. Implementers are going to hit this almost immediately so it should at least be named as a prerequisite.\n\nAlso, token replay risk at the cross-domain exchange point. Freshness requirements and audience binding should probably be spelled out.",
+      "createdAt": "2026-03-22T21:27:27Z",
+      "updatedAt": "2026-03-22T21:27:27Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 85,
+      "id": "I_kwDOQP22qc71ajLh",
+      "title": "Zero Knowledge Encryption",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/85",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "From the WIMSE mailing list.\n\nDear WIMSE working group,\n\ndraft-klrc-aiagent-auth [1] describes OAuth Authorization Code Grant for\nuser delegation and CIBA for human-in-the-loop.\n\nBoth assume the agent can receive callbacks or has a registered push\nchannel. However, a significant class of agents, like CLI tools, Docker\ncontainers, cron jobs, Telegram bots, cannot receive callbacks.\nAnd many that technically could, shouldn't. An agent that only makes\noutbound requests has no reason to accept inbound traffic. Every callback\nendpoint is an open port, an ingress rule, and an attack surface that\ndoesn't need to exist.\n\nAdditionally, many external services still use API keys rather than OAuth.\n\nThis came up while building agents that need to access mailboxes,\nthird-party APIs, and other services on the behalf of users. I have running\ncode [2] that addresses this gap using a Device-Flow-inspired UX with\nzero-knowledge encryption.\n\n\nIs this the right group for this discussion, or would oauth or another WG be\na better fit?\n",
+      "createdAt": "2026-03-22T23:29:31Z",
+      "updatedAt": "2026-03-23T20:02:08Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "the [2] from above is https://github.com/LinkAuth/LinkAuth \n\nand there's been some more on the thread in WIMSE https://mailarchive.ietf.org/arch/msg/wimse/JX5O4NDiQsiW-6eFEjP4Zv53uCg/ \n\nI think that's all I'm able to contribute here",
+          "createdAt": "2026-03-23T20:02:08Z",
+          "updatedAt": "2026-03-23T20:02:08Z"
+        }
+      ]
+    },
+    {
+      "number": 86,
+      "id": "I_kwDOQP22qc71xf1p",
+      "title": "Security Considerations: multi-hop delegation chain integrity",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/86",
+      "state": "OPEN",
+      "author": "nik-kale",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Reviewing the draft further, so this feels like the biggest gap in the security model right now. Section 10.4 handles single-service microservice chains via TxTokens. Section 10.3.3 covers agents accessed by other agents. But the full A-> B -> C delegation chain across domains isn't formally addressed.\n\nIMHO the security section should cover:\n\n**Scope narrowing** - at each delegation step, effective scope can only decrease or stay the same. Never increase. Well-established in capability security lit (Macaroons, Biscuit, consistent with RFC 8693 delegation semantics).\n\n**Scope derivation** - when A delegates to B, B's effective scope = A's delegatable scope intersected with B's own authorized scope intersected with the explicit delegation grant. Prevents privilege amplification through delegation.\n\n**Accountability chain** - each delegation step produces a verifiable record. Delegator, delegatee, timestamp, scope, crypto binding. You need this for forensics and honestly for any compliance story.\n\n**Depth limits** - unbounded chains get messy fast from an audit perspective. Configurable max depth makes sense. Sensitive ops should probably be restricted to direct invocation only.\n\nThese principles are grounded in capability security literature and consistent with RFC 8693 Token Exchange delegation semantics. They translate pretty naturally to TxToken chains in this framework.",
+      "createdAt": "2026-03-23T20:04:39Z",
+      "updatedAt": "2026-03-23T20:04:39Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 87,
+      "id": "I_kwDOQP22qc71zWbZ",
+      "title": "Agent attestation should cover model identity, not just workload environment",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/87",
+      "state": "OPEN",
+      "author": "nik-kale",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Section 7 covers workload attestation well but there's an AI-specific angle missing - which model is loaded, what version, what use cases it's approved for.\n\nThis is different from traditional workload env attestation (where is it running, what platform, what TEE). For AI agents specifically, the model itself is a security-relevant property. A swapped or unapproved model running under valid workload creds is a real threat.\n\nShould the attestation section address model identity as a first-class attestation property alongside environment attestation? Feels like a genuinely new requirement that's specific to agent systems.",
+      "createdAt": "2026-03-23T21:40:21Z",
+      "updatedAt": "2026-03-23T21:40:21Z",
       "closedAt": null,
       "comments": []
     }
