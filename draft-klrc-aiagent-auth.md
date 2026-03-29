@@ -46,7 +46,6 @@ author:
     fullname: Nick Steele
     organization: Open AI
     email: steele@openai.com
-
 normative:
   SPIFFE:
     title: "Secure Production Identity Framework for Everyone"
