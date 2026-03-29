@@ -42,6 +42,10 @@ author:
     fullname: Brian Campbell
     organization: Ping Identity
     email: bcampbell@pingidentity.com
+ -
+    fullname: Nick Steele
+    organization: Open AI
+    email: steele@openai.com
 
 normative:
   SPIFFE:
