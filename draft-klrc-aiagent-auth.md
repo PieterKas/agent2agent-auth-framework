@@ -46,6 +46,7 @@ author:
     fullname: Nick Steele
     organization: Open AI
     email: steele@openai.com
+
 normative:
   SPIFFE:
     title: "Secure Production Identity Framework for Everyone"
@@ -390,7 +391,16 @@ TODO Privacy but there's also {{privacy-considerations}}...
 
 This document has no IANA actions.
 
---- back
-
 # Acknowledgments
 The authors would like to thank Sean O'Dell for providing valuable input and feedback on this work.
+
+--- back
+
+# Document History
+   \[\[ To be removed from the final specification ]]
+
+  - latest
+
+   * Add Nick Steel from OpenAI as co-author.
+
+  -00
