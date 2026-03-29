@@ -401,6 +401,6 @@ The authors would like to thank Sean O'Dell for providing valuable input and fee
 
   - latest
 
-   * Add Nick Steel from OpenAI as co-author.
+   * Add Nick Steele from OpenAI as co-author.
 
   -00
