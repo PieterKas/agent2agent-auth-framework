@@ -127,18 +127,18 @@ An Agent is a workload that iteratively interacts with a Large Language Model (L
 
 In this document, Tools, Services, and Resources are treated as a single category of external endpoints that an agent invokes or interacts with to complete a task. Communication within or between Tools, Services, and Resources is out of scope.
 
-~~~aasvg
+~~~ ascii-art
                 +----------------+
                 | Large Language |
                 |   Model (LLM)  |
                 +----------------+
-                      ▲   |
+                      ^   |
                      (2) (3)
-                      |   ▼
+                      |   V
 +--------+       +------------+       +-----------+
-|  User  |──(1)─►|  AI Agent  |──(4)─►|   Tools   |
+|  User  |--(1)->|  AI Agent  |--(4)->|   Tools   |
 |   or   |       | (workload) |       | Services  |
-| System |◄─(6)──|            |◄─(5)──| Resources |
+| System |<-(6)--|            |<-(5)--| Resources |
 +--------+       +------------+       +-----------+
 ~~~
 {: #fig-ai-agent-workload title="AI Agent as a Workload"}
@@ -171,7 +171,7 @@ An Agent Identity Management System ensures that the right Agent has access to t
 
 The components form a logical stack in which higher layers depend on guarantees provided by lower layers, as illustrated in {{fig-agent-identity-management-system}}.
 
-~~~aasvg
+~~~ ascii-art
 +--------------+----------------------------------+-----------------+
 |    Policy    |     Monitoring, Observability    |    Compliance   |
 |              |          & Remediation           |                 |
