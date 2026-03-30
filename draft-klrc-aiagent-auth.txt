@@ -184,8 +184,10 @@ Table of Contents
                    |   Model (LLM)  |
                    +----------------+
                          ^   |
+                         |   |
                         (2) (3)
-                         |   V
+                         |   |
+                         |   v
    +--------+       +------------+       +-----------+
    |  User  |--(1)->|  AI Agent  |--(4)->|   Tools   |
    |   or   |       | (workload) |       | Services  |

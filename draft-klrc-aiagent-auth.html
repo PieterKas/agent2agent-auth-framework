@@ -1345,21 +1345,66 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <p id="section-3-2">In this document, Tools, Services, and Resources are treated as a single category of external endpoints that an agent invokes or interacts with to complete a task. Communication within or between Tools, Services, and Resources is out of scope.<a href="#section-3-2" class="pilcrow">¶</a></p>
 <span id="name-ai-agent-as-a-workload"></span><div id="fig-ai-agent-workload">
 <figure id="figure-1">
-        <div class="alignLeft art-ascii-art art-text artwork" id="section-3-3.1">
-<pre>
-                +----------------+
-                | Large Language |
-                |   Model (LLM)  |
-                +----------------+
-                      ^   |
-                     (2) (3)
-                      |   V
-+--------+       +------------+       +-----------+
-|  User  |--(1)-&gt;|  AI Agent  |--(4)-&gt;|   Tools   |
-|   or   |       | (workload) |       | Services  |
-| System |&lt;-(6)--|            |&lt;-(5)--| Resources |
-+--------+       +------------+       +-----------+
-</pre>
+        <div id="section-3-3.1">
+          <div class="alignLeft art-svg artwork" id="section-3-3.1.1">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="256" width="416" viewBox="0 0 416 256" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
+              <path d="M 8,176 L 8,240" fill="none" stroke="black"></path>
+              <path d="M 80,176 L 80,240" fill="none" stroke="black"></path>
+              <path d="M 136,32 L 136,80" fill="none" stroke="black"></path>
+              <path d="M 144,176 L 144,240" fill="none" stroke="black"></path>
+              <path d="M 184,88 L 184,112" fill="none" stroke="black"></path>
+              <path d="M 184,144 L 184,168" fill="none" stroke="black"></path>
+              <path d="M 216,88 L 216,112" fill="none" stroke="black"></path>
+              <path d="M 216,144 L 216,168" fill="none" stroke="black"></path>
+              <path d="M 248,176 L 248,240" fill="none" stroke="black"></path>
+              <path d="M 272,32 L 272,80" fill="none" stroke="black"></path>
+              <path d="M 312,176 L 312,240" fill="none" stroke="black"></path>
+              <path d="M 408,176 L 408,240" fill="none" stroke="black"></path>
+              <path d="M 136,32 L 272,32" fill="none" stroke="black"></path>
+              <path d="M 136,80 L 272,80" fill="none" stroke="black"></path>
+              <path d="M 8,176 L 80,176" fill="none" stroke="black"></path>
+              <path d="M 144,176 L 248,176" fill="none" stroke="black"></path>
+              <path d="M 312,176 L 408,176" fill="none" stroke="black"></path>
+              <path d="M 88,192 L 104,192" fill="none" stroke="black"></path>
+              <path d="M 120,192 L 136,192" fill="none" stroke="black"></path>
+              <path d="M 256,192 L 272,192" fill="none" stroke="black"></path>
+              <path d="M 288,192 L 304,192" fill="none" stroke="black"></path>
+              <path d="M 88,224 L 104,224" fill="none" stroke="black"></path>
+              <path d="M 120,224 L 136,224" fill="none" stroke="black"></path>
+              <path d="M 256,224 L 272,224" fill="none" stroke="black"></path>
+              <path d="M 288,224 L 304,224" fill="none" stroke="black"></path>
+              <path d="M 8,240 L 80,240" fill="none" stroke="black"></path>
+              <path d="M 144,240 L 248,240" fill="none" stroke="black"></path>
+              <path d="M 312,240 L 408,240" fill="none" stroke="black"></path>
+              <polygon class="arrowhead" points="312,192 300,186.4 300,197.6" fill="black" transform="rotate(0,304,192)"></polygon>
+              <polygon class="arrowhead" points="264,224 252,218.4 252,229.6" fill="black" transform="rotate(180,256,224)"></polygon>
+              <polygon class="arrowhead" points="224,168 212,162.4 212,173.6" fill="black" transform="rotate(90,216,168)"></polygon>
+              <polygon class="arrowhead" points="192,88 180,82.4 180,93.6" fill="black" transform="rotate(270,184,88)"></polygon>
+              <polygon class="arrowhead" points="144,192 132,186.4 132,197.6" fill="black" transform="rotate(0,136,192)"></polygon>
+              <polygon class="arrowhead" points="96,224 84,218.4 84,229.6" fill="black" transform="rotate(180,88,224)"></polygon>
+              <g class="text">
+                <text x="168" y="52">Large</text>
+                <text x="228" y="52">Language</text>
+                <text x="184" y="68">Model</text>
+                <text x="232" y="68">(LLM)</text>
+                <text x="184" y="132">(2)</text>
+                <text x="216" y="132">(3)</text>
+                <text x="44" y="196">User</text>
+                <text x="112" y="196">1</text>
+                <text x="172" y="196">AI</text>
+                <text x="208" y="196">Agent</text>
+                <text x="280" y="196">4</text>
+                <text x="360" y="196">Tools</text>
+                <text x="44" y="212">or</text>
+                <text x="196" y="212">(workload)</text>
+                <text x="356" y="212">Services</text>
+                <text x="44" y="228">System</text>
+                <text x="112" y="228">6</text>
+                <text x="280" y="228">5</text>
+                <text x="360" y="228">Resources</text>
+              </g>
+            </svg><a href="#section-3-3.1.1" class="pilcrow">¶</a>
+</div>
 </div>
 <figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
 <a href="#name-ai-agent-as-a-workload" class="selfRef">AI Agent as a Workload</a>
@@ -1428,25 +1473,37 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <p id="section-4-4">The components form a logical stack in which higher layers depend on guarantees provided by lower layers, as illustrated in <a href="#fig-agent-identity-management-system" class="auto internal xref">Figure 2</a>.<a href="#section-4-4" class="pilcrow">¶</a></p>
 <span id="name-agent-identity-management-sy"></span><div id="fig-agent-identity-management-system">
 <figure id="figure-2">
-        <div class="alignLeft art-ascii-art art-text artwork" id="section-4-5.1">
-<pre>
-+--------------+----------------------------------+-----------------+
-|    Policy    |     Monitoring, Observability    |    Compliance   |
-|              |          &amp; Remediation           |                 |
-|              +----------------------------------+                 |
-|              |          Authorization           |                 |
-|              +----------------------------------+                 |
-|              |          Authentication          |                 |
-|              +----------------------------------+                 |
-|              |          Provisioning            |                 |
-|              +----------------------------------+                 |
-|              |           Attestation            |                 |
-|              +----------------------------------+                 |
-|              |           Credentials            |                 |
-|              +----------------------------------+                 |
-|              |           Identifier             |                 |
-+--------------+----------------------------------+-----------------+
-</pre>
+        <div id="section-4-5.1">
+          <div class="alignLeft art-svg artwork" id="section-4-5.1.1">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="288" width="560" viewBox="0 0 560 288" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
+              <path d="M 8,32 L 8,272" fill="none" stroke="black"></path>
+              <path d="M 128,32 L 128,272" fill="none" stroke="black"></path>
+              <path d="M 408,32 L 408,272" fill="none" stroke="black"></path>
+              <path d="M 552,32 L 552,272" fill="none" stroke="black"></path>
+              <path d="M 8,32 L 552,32" fill="none" stroke="black"></path>
+              <path d="M 128,80 L 408,80" fill="none" stroke="black"></path>
+              <path d="M 128,112 L 408,112" fill="none" stroke="black"></path>
+              <path d="M 128,144 L 408,144" fill="none" stroke="black"></path>
+              <path d="M 128,176 L 408,176" fill="none" stroke="black"></path>
+              <path d="M 128,208 L 408,208" fill="none" stroke="black"></path>
+              <path d="M 128,240 L 408,240" fill="none" stroke="black"></path>
+              <path d="M 8,272 L 552,272" fill="none" stroke="black"></path>
+              <g class="text">
+                <text x="68" y="52">Policy</text>
+                <text x="216" y="52">Monitoring,</text>
+                <text x="320" y="52">Observability</text>
+                <text x="484" y="52">Compliance</text>
+                <text x="216" y="68">&amp;</text>
+                <text x="272" y="68">Remediation</text>
+                <text x="264" y="100">Authorization</text>
+                <text x="268" y="132">Authentication</text>
+                <text x="260" y="164">Provisioning</text>
+                <text x="264" y="196">Attestation</text>
+                <text x="264" y="228">Credentials</text>
+                <text x="260" y="260">Identifier</text>
+              </g>
+            </svg><a href="#section-4-5.1.1" class="pilcrow">¶</a>
+</div>
 </div>
 <figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
 <a href="#name-agent-identity-management-sy" class="selfRef">Agent Identity Management System</a>
