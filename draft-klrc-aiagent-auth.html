@@ -9,10 +9,11 @@
 <meta content="Jean-François Lombardo" name="author">
 <meta content="Yaroslav Rosomakho" name="author">
 <meta content="Brian Campbell" name="author">
+<meta content="Nick Steele" name="author">
 <meta content="
        This document proposes a model for authentication and authorization of AI agent interactions. It leverages existing standards such as the Workload Identity in Multi-System Environments (WIMSE) architecture and OAuth 2.0 family of specifications. Rather than defining new protocols, this document describes how existing and widely deployed standards can be applied or extended to establish agent authentication and authorization. By doing so, it aims to provide a framework within which to use existing standards, identify gaps and guide future standardization efforts for agent authentication and authorization. 
     " name="description">
-<meta content="xml2rfc 3.31.0" name="generator">
+<meta content="xml2rfc 3.32.0" name="generator">
 <meta content="OAuth" name="keyword">
 <meta content="WIMSE" name="keyword">
 <meta content="SPIFFE" name="keyword">
@@ -20,18 +21,18 @@
 <meta content="AI Agent Authentication and Authorization" name="keyword">
 <meta content="draft-klrc-aiagent-auth-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.31.0
+  xml2rfc 3.32.0
     Python 3.12.12
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.2.1
     Jinja2 3.1.6
     lxml 6.0.2
-    platformdirs 4.5.1
+    platformdirs 4.9.4
     pycountry 24.6.1
     PyYAML 6.0.3
     requests 2.32.5
-    wcwidth 0.3.0
+    wcwidth 0.6.0
 -->
 <link href="draft-klrc-aiagent-auth.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1056,7 +1057,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Kasselman, et al.</td>
-<td class="center">Expires 7 September 2026</td>
+<td class="center">Expires 1 October 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1069,12 +1070,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-klrc-aiagent-auth-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-03-06" class="published">6 March 2026</time>
+<time datetime="2026-03-30" class="published">30 March 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-09-07">7 September 2026</time></dd>
+<dd class="expires"><time datetime="2026-10-01">1 October 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1092,6 +1093,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <div class="author">
       <div class="author-name">B. Campbell</div>
 <div class="org">Ping Identity</div>
+</div>
+<div class="author">
+      <div class="author-name">N. Steele</div>
+<div class="org">Open AI</div>
 </div>
 </dd>
 </dl>
@@ -1131,7 +1136,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 7 September 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 1 October 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1287,13 +1292,16 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.16.1"><a href="#section-16" class="auto internal xref">16</a>. <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.17">
-            <p id="section-toc.1-1.17.1"><a href="#section-17" class="auto internal xref">17</a>. <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+            <p id="section-toc.1-1.17.1"><a href="#section-17" class="auto internal xref">17</a>. <a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.18">
-            <p id="section-toc.1-1.18.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+            <p id="section-toc.1-1.18.1"><a href="#section-18" class="auto internal xref">18</a>. <a href="#name-normative-references" class="internal xref">Normative References</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.19">
-            <p id="section-toc.1-1.19.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
+            <p id="section-toc.1-1.19.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-document-history" class="internal xref">Document History</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.20">
+            <p id="section-toc.1-1.20.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
 </li>
         </ul>
 </nav>
@@ -1337,52 +1345,21 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <p id="section-3-2">In this document, Tools, Services, and Resources are treated as a single category of external endpoints that an agent invokes or interacts with to complete a task. Communication within or between Tools, Services, and Resources is out of scope.<a href="#section-3-2" class="pilcrow">¶</a></p>
 <span id="name-ai-agent-as-a-workload"></span><div id="fig-ai-agent-workload">
 <figure id="figure-1">
-        <div id="section-3-3.1">
-          <div class="alignLeft art-svg artwork" id="section-3-3.1.1">
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="224" width="416" viewBox="0 0 416 224" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
-              <path d="M 8,144 L 8,208" fill="none" stroke="black"></path>
-              <path d="M 80,144 L 80,208" fill="none" stroke="black"></path>
-              <path d="M 136,32 L 136,80" fill="none" stroke="black"></path>
-              <path d="M 144,144 L 144,208" fill="none" stroke="black"></path>
-              <path d="M 248,144 L 248,208" fill="none" stroke="black"></path>
-              <path d="M 272,32 L 272,80" fill="none" stroke="black"></path>
-              <path d="M 312,144 L 312,208" fill="none" stroke="black"></path>
-              <path d="M 408,144 L 408,208" fill="none" stroke="black"></path>
-              <path d="M 136,32 L 272,32" fill="none" stroke="black"></path>
-              <path d="M 136,80 L 272,80" fill="none" stroke="black"></path>
-              <path d="M 8,144 L 80,144" fill="none" stroke="black"></path>
-              <path d="M 144,144 L 248,144" fill="none" stroke="black"></path>
-              <path d="M 312,144 L 408,144" fill="none" stroke="black"></path>
-              <path d="M 8,208 L 80,208" fill="none" stroke="black"></path>
-              <path d="M 144,208 L 248,208" fill="none" stroke="black"></path>
-              <path d="M 312,208 L 408,208" fill="none" stroke="black"></path>
-              <g class="text">
-                <text x="168" y="52">Large</text>
-                <text x="228" y="52">Language</text>
-                <text x="184" y="68">Model</text>
-                <text x="232" y="68">(LLM)</text>
-                <text x="184" y="100">▲</text>
-                <text x="216" y="100">|</text>
-                <text x="184" y="116">(2)</text>
-                <text x="216" y="116">(3)</text>
-                <text x="184" y="132">|</text>
-                <text x="216" y="132">▼</text>
-                <text x="44" y="164">User</text>
-                <text x="112" y="164">──(1)─►</text>
-                <text x="172" y="164">AI</text>
-                <text x="208" y="164">Agent</text>
-                <text x="280" y="164">──(4)─►</text>
-                <text x="360" y="164">Tools</text>
-                <text x="44" y="180">or</text>
-                <text x="196" y="180">(workload)</text>
-                <text x="356" y="180">Services</text>
-                <text x="44" y="196">System</text>
-                <text x="112" y="196">◄─(6)──</text>
-                <text x="280" y="196">◄─(5)──</text>
-                <text x="360" y="196">Resources</text>
-              </g>
-            </svg><a href="#section-3-3.1.1" class="pilcrow">¶</a>
-</div>
+        <div class="alignLeft art-ascii-art art-text artwork" id="section-3-3.1">
+<pre>
+                +----------------+
+                | Large Language |
+                |   Model (LLM)  |
+                +----------------+
+                      ^   |
+                     (2) (3)
+                      |   V
++--------+       +------------+       +-----------+
+|  User  |--(1)-&gt;|  AI Agent  |--(4)-&gt;|   Tools   |
+|   or   |       | (workload) |       | Services  |
+| System |&lt;-(6)--|            |&lt;-(5)--| Resources |
++--------+       +------------+       +-----------+
+</pre>
 </div>
 <figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
 <a href="#name-ai-agent-as-a-workload" class="selfRef">AI Agent as a Workload</a>
@@ -1451,37 +1428,25 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <p id="section-4-4">The components form a logical stack in which higher layers depend on guarantees provided by lower layers, as illustrated in <a href="#fig-agent-identity-management-system" class="auto internal xref">Figure 2</a>.<a href="#section-4-4" class="pilcrow">¶</a></p>
 <span id="name-agent-identity-management-sy"></span><div id="fig-agent-identity-management-system">
 <figure id="figure-2">
-        <div id="section-4-5.1">
-          <div class="alignLeft art-svg artwork" id="section-4-5.1.1">
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="288" width="560" viewBox="0 0 560 288" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
-              <path d="M 8,32 L 8,272" fill="none" stroke="black"></path>
-              <path d="M 128,32 L 128,272" fill="none" stroke="black"></path>
-              <path d="M 408,32 L 408,272" fill="none" stroke="black"></path>
-              <path d="M 552,32 L 552,272" fill="none" stroke="black"></path>
-              <path d="M 8,32 L 552,32" fill="none" stroke="black"></path>
-              <path d="M 128,80 L 408,80" fill="none" stroke="black"></path>
-              <path d="M 128,112 L 408,112" fill="none" stroke="black"></path>
-              <path d="M 128,144 L 408,144" fill="none" stroke="black"></path>
-              <path d="M 128,176 L 408,176" fill="none" stroke="black"></path>
-              <path d="M 128,208 L 408,208" fill="none" stroke="black"></path>
-              <path d="M 128,240 L 408,240" fill="none" stroke="black"></path>
-              <path d="M 8,272 L 552,272" fill="none" stroke="black"></path>
-              <g class="text">
-                <text x="68" y="52">Policy</text>
-                <text x="216" y="52">Monitoring,</text>
-                <text x="320" y="52">Observability</text>
-                <text x="484" y="52">Compliance</text>
-                <text x="216" y="68">&amp;</text>
-                <text x="272" y="68">Remediation</text>
-                <text x="264" y="100">Authorization</text>
-                <text x="268" y="132">Authentication</text>
-                <text x="260" y="164">Provisioning</text>
-                <text x="264" y="196">Attestation</text>
-                <text x="264" y="228">Credentials</text>
-                <text x="260" y="260">Identifier</text>
-              </g>
-            </svg><a href="#section-4-5.1.1" class="pilcrow">¶</a>
-</div>
+        <div class="alignLeft art-ascii-art art-text artwork" id="section-4-5.1">
+<pre>
++--------------+----------------------------------+-----------------+
+|    Policy    |     Monitoring, Observability    |    Compliance   |
+|              |          &amp; Remediation           |                 |
+|              +----------------------------------+                 |
+|              |          Authorization           |                 |
+|              +----------------------------------+                 |
+|              |          Authentication          |                 |
+|              +----------------------------------+                 |
+|              |          Provisioning            |                 |
+|              +----------------------------------+                 |
+|              |           Attestation            |                 |
+|              +----------------------------------+                 |
+|              |           Credentials            |                 |
+|              +----------------------------------+                 |
+|              |           Identifier             |                 |
++--------------+----------------------------------+-----------------+
+</pre>
 </div>
 <figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
 <a href="#name-agent-identity-management-sy" class="selfRef">Agent Identity Management System</a>
@@ -1834,10 +1799,18 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <p id="section-16-1">This document has no IANA actions.<a href="#section-16-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="sec-normative-references">
+<div id="acknowledgments">
 <section id="section-17">
+      <h2 id="name-acknowledgments">
+<a href="#section-17" class="section-number selfRef">17. </a><a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
+      </h2>
+<p id="section-17-1">The authors would like to thank Sean O'Dell for providing valuable input and feedback on this work.<a href="#section-17-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="sec-normative-references">
+<section id="section-18">
       <h2 id="name-normative-references">
-<a href="#section-17" class="section-number selfRef">17. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+<a href="#section-18" class="section-number selfRef">18. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
       </h2>
 <dl class="references">
 <dt id="A2A">[A2A]</dt>
@@ -1975,12 +1948,21 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 </dl>
 </section>
 </div>
-<div id="acknowledgments">
+<div id="document-history">
 <section id="appendix-A">
-      <h2 id="name-acknowledgments">
-<a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
+      <h2 id="name-document-history">
+<a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-document-history" class="section-name selfRef">Document History</a>
       </h2>
-<p id="appendix-A-1">The authors would like to thank Sean O'Dell for providing valuable input and feedback on this work.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<p id="appendix-A-1">[[ To be removed from the final specification ]]<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A-2.1">
+          <p id="appendix-A-2.1.1">latest<a href="#appendix-A-2.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-2.2">
+          <p id="appendix-A-2.2.1">Add Nick Steele from OpenAI as co-author.<a href="#appendix-A-2.2.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="appendix-A-3">-00<a href="#appendix-A-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authors-addresses">
@@ -2018,6 +2000,14 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <div class="email">
 <span>Email:</span>
 <a href="mailto:bcampbell@pingidentity.com" class="email">bcampbell@pingidentity.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Nick Steele</span></div>
+<div dir="auto" class="left"><span class="org">Open AI</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:steele@openai.com" class="email">steele@openai.com</a>
 </div>
 </address>
 </section>

@@ -5,12 +5,14 @@
 Network Working Group                                       P. Kasselman
 Internet-Draft                                          Defakto Security
 Intended status: Informational                               J. Lombardo
-Expires: 7 September 2026                                            AWS
+Expires: 1 October 2026                                              AWS
                                                             Y. Rosomakho
                                                                  Zscaler
                                                              B. Campbell
                                                            Ping Identity
-                                                            6 March 2026
+                                                               N. Steele
+                                                                 Open AI
+                                                           30 March 2026
 
 
                AI Agent Authentication and Authorization
@@ -56,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 September 2026.
+   This Internet-Draft will expire on 1 October 2026.
 
 Copyright Notice
 
@@ -112,8 +114,9 @@ Table of Contents
    14. Security Considerations
    15. Privacy Considerations
    16. IANA Considerations
-   17. Normative References
-   Appendix A.  Acknowledgments
+   17. Acknowledgments
+   18. Normative References
+   Appendix A.  Document History
    Authors' Addresses
 
 1.  Introduction
@@ -180,13 +183,13 @@ Table of Contents
                    | Large Language |
                    |   Model (LLM)  |
                    +----------------+
-                         ▲   |
+                         ^   |
                         (2) (3)
-                         |   ▼
+                         |   V
    +--------+       +------------+       +-----------+
-   |  User  |──(1)─►|  AI Agent  |──(4)─►|   Tools   |
+   |  User  |--(1)->|  AI Agent  |--(4)->|   Tools   |
    |   or   |       | (workload) |       | Services  |
-   | System |◄─(6)──|            |◄─(5)──| Resources |
+   | System |<-(6)--|            |<-(5)--| Resources |
    +--------+       +------------+       +-----------+
 
                       Figure 1: AI Agent as a Workload
@@ -971,7 +974,12 @@ Table of Contents
 
    This document has no IANA actions.
 
-17.  Normative References
+17.  Acknowledgments
+
+   The authors would like to thank Sean O'Dell for providing valuable
+   input and feedback on this work.
+
+18.  Normative References
 
    [A2A]      "Agent2Agent (A2A) Protocol", n.d.,
               <https://github.com/a2aproject/A2A>.
@@ -1150,10 +1158,15 @@ Table of Contents
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
               wpt-01>.
 
-Appendix A.  Acknowledgments
+Appendix A.  Document History
 
-   The authors would like to thank Sean O'Dell for providing valuable
-   input and feedback on this work.
+   [[ To be removed from the final specification ]]
+
+   *  latest
+
+   *  Add Nick Steele from OpenAI as co-author.
+
+   -00
 
 Authors' Addresses
 
@@ -1175,3 +1188,8 @@ Authors' Addresses
    Brian Campbell
    Ping Identity
    Email: bcampbell@pingidentity.com
+
+
+   Nick Steele
+   Open AI
+   Email: steele@openai.com
