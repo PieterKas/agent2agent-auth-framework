@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-26T02:33:30.702661+00:00",
+  "timestamp": "2026-03-31T02:34:44.154931+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -1427,6 +1427,24 @@
       "body": "Section 10.9.3 references Client ID Metadata Documents for client capability discovery. This is the same spec that draft-diaconu-agents-authz-info-sharing builds on, extending it with a vc+jwt claim to carry richer authz info - compliance attestations, trust signals, capability profiles.\n\nThere's a fairly natural integration point here where client-id metadata carries richer claims alongside standard OAuth metadata. Might be worth a forward reference or acknowledgment that parallel work is happening in this space.",
       "createdAt": "2026-03-25T21:12:29Z",
       "updatedAt": "2026-03-25T21:12:29Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 94,
+      "id": "I_kwDOQP22qc74og7J",
+      "title": "Add guidance on Task to Authorisation Mapping",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/94",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "PieterKas"
+      ],
+      "labels": [],
+      "body": "Following on from several conversations during IETF 125 and RSAC 2026, a number of readers of the spec wanted to know about \"intent\". fter some back and forth, my observation was that by \"intent\" they really meant \"task\" - as in \"what task was given to the agent\" or \"what task was the agent trying to complete\". \n\nIntent is a legal construct in my mind (much like consent). Completing a task is not about intent, but rather whether the agent has sufficient authorization/permissions to complete the task. We may want to add a section introducing the concept of a task, the concept of mapping tasks to permissions/access/authoriztion, and then declare the details as out of scope for this draft (but perhaps leave the door open for a future draft to dig into it - there are many ways in which this may be done). I am also unsure if this needs to be interoperable.",
+      "createdAt": "2026-03-30T14:45:04Z",
+      "updatedAt": "2026-03-30T14:45:09Z",
       "closedAt": null,
       "comments": []
     }
@@ -3773,6 +3791,84 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 93,
+      "id": "PR_kwDOQP22qc7OYXIA",
+      "title": "Add Nick Steele as Author",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/93",
+      "state": "MERGED",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Adding Nick Steel from OpenAI as co-author and switch to ASCII art to resolve SVG toolchain issues.",
+      "createdAt": "2026-03-29T13:30:22Z",
+      "updatedAt": "2026-03-30T14:38:50Z",
+      "baseRepository": "PieterKas/agent2agent-auth-framework",
+      "baseRefName": "main",
+      "baseRefOid": "52bfe2448082e52c9f5f147774965457ed624d6e",
+      "headRepository": "PieterKas/agent2agent-auth-framework",
+      "headRefName": "PieterKas-patch-12",
+      "headRefOid": "688cad2c0b918a639ded234d47308d60766c55de",
+      "closedAt": "2026-03-30T14:38:50Z",
+      "mergedAt": "2026-03-30T14:38:50Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "5e1df2e0bdc3be57415b066d4464e009b538a975"
+      },
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "@nicksteele-oai - please review and approve.",
+          "createdAt": "2026-03-29T13:31:00Z",
+          "updatedAt": "2026-03-29T13:31:00Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc7wQxEL",
+          "commit": {
+            "abbreviatedOid": "688cad2"
+          },
+          "author": "nicksteele-oai",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "lgtm",
+          "createdAt": "2026-03-30T14:14:18Z",
+          "updatedAt": "2026-03-30T14:14:18Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 95,
+      "id": "PR_kwDOQP22qc7OrWS4",
+      "title": "Fixed diagrams",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/95",
+      "state": "MERGED",
+      "author": "yaroslavros",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-03-30T16:27:18Z",
+      "updatedAt": "2026-03-30T17:58:33Z",
+      "baseRepository": "PieterKas/agent2agent-auth-framework",
+      "baseRefName": "main",
+      "baseRefOid": "5e1df2e0bdc3be57415b066d4464e009b538a975",
+      "headRepository": "yaroslavros/agent2agent-auth-framework",
+      "headRefName": "main",
+      "headRefOid": "be7e3933fc561efa1ca141f7d4e11b30941168ff",
+      "closedAt": "2026-03-30T17:58:32Z",
+      "mergedAt": "2026-03-30T17:58:32Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "dff614d04dbc0a0064770d00578a8afe24a22c41"
+      },
+      "comments": [],
+      "reviews": []
     }
   ]
 }
