@@ -5,14 +5,14 @@
 Network Working Group                                       P. Kasselman
 Internet-Draft                                          Defakto Security
 Intended status: Informational                               J. Lombardo
-Expires: 1 October 2026                                              AWS
+Expires: 9 October 2026                                              AWS
                                                             Y. Rosomakho
                                                                  Zscaler
                                                              B. Campbell
                                                            Ping Identity
                                                                N. Steele
-                                                                 Open AI
-                                                           30 March 2026
+                                                                  OpenAI
+                                                            7 April 2026
 
 
                AI Agent Authentication and Authorization
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 1 October 2026.
+   This Internet-Draft will expire on 9 October 2026.
 
 Copyright Notice
 
@@ -1143,9 +1143,9 @@ Table of Contents
    [WIMSE-HTTPSIG]
               Salowey, J. A. and Y. Sheffer, "WIMSE Workload-to-Workload
               Authentication with HTTP Signatures", Work in Progress,
-              Internet-Draft, draft-ietf-wimse-http-signature-02, 1
-              March 2026, <https://datatracker.ietf.org/doc/html/draft-
-              ietf-wimse-http-signature-02>.
+              Internet-Draft, draft-ietf-wimse-http-signature-03, 7
+              April 2026, <https://datatracker.ietf.org/doc/html/draft-
+              ietf-wimse-http-signature-03>.
 
    [WIMSE-ID] Rosomakho, Y. and J. A. Salowey, "Workload Identifier",
               Work in Progress, Internet-Draft, draft-ietf-wimse-
@@ -1193,5 +1193,5 @@ Authors' Addresses
 
 
    Nick Steele
-   Open AI
+   OpenAI
    Email: steele@openai.com
