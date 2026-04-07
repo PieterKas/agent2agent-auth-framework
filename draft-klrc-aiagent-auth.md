@@ -44,7 +44,7 @@ author:
     email: bcampbell@pingidentity.com
  -
     fullname: Nick Steele
-    organization: Open AI
+    organization: OpenAI
     email: steele@openai.com
 
 normative:
