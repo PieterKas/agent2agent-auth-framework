@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-07T02:35:59.713012+00:00",
+  "timestamp": "2026-04-09T02:31:55.993091+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -688,7 +688,7 @@
       ],
       "body": "How to distinguish between an AI Agent and a regular Oauth client. Some feedback that the Microsoft model makes it explicit  through claims, that say \"this is an agent\" or \"this is an agent acting obo\"\n\nMy mental model for this (could be wrong) is that the RS andAS needs to know that certain identifiers are assigned to agents and treat them differently. The claim name is mostly orthogonal to this, even if there was a separate claim name for agents, you would still need to know which agent and how to treat it differently when making authorisation decisions at the AS or RS.\n\nThe AS and RS will both have to know which identifiers are assigned to agents. This is needed, regardless of which claim is used to express the identifier. Sometimes the client_id is associated with an agent, sometimes not. \n\nThe AS can manage this via registration (e.g. could be metadata in CIMD) and aplpy different policies when issuing access tokens (more restricted, narrower scopes, shorter lived). The RS could use the same mechanism (with caching and so forth) and apply additional restrictions. I can also imagine the actual identifiers in either the credential used to authenticate or in the client_id being structured in a specific way (works inside an enterprise or closed eco-system, needs standard to do it more broadly).\n\nThe messy bit is that in an agentic world the AS and the RS needs to make decisions on the workload/client/agent identifier, which they did not have to do in the past, regardless of the claim name used. If using a different claim name is used as a logic switch in validation logic, that can also be achieved by just having a claim that says \"agent=true\" in the token (or the metadata). \n\nIt may be useful to point which mechanisms needs to be in place to tell if a client is and agent, or just a client (goes a little against the AI is just a workload...)",
       "createdAt": "2026-03-04T14:02:21Z",
-      "updatedAt": "2026-03-20T12:19:46Z",
+      "updatedAt": "2026-04-07T10:20:15Z",
       "closedAt": null,
       "comments": [
         {
@@ -732,6 +732,13 @@
           "body": "> The MCP/RS interaction is out of scope for this issue (which is scoped to distinguishing between the agent and non agent clients). For the RS/MCP use case - that feels like a different issue - best to open a new issue for that so we can discuss it separately from this issue.\n\nI agree MCP/RS specifics should be tracked in a separate issue from \u201cagent vs non-agent client classification.\u201d\n\nThat said, I think the draft should include a clear security boundary note:\n\n- Internal tool-orchestration architectures (including MCP-like patterns) are out of scope for this document.\n- However, protocol-level agent authentication/authorization does not, by itself, guarantee safe tool execution.\n- Deployments should enforce a deterministic execution boundary between model output and effectful tool actions.\n- Externally visible state changes should require independent authorization checks at execution time, not only trust in LLM output.\n\nIn other words: this draft can standardize identity/delegation interoperability across components, but it should not be interpreted as solving internal agent-to-tool safety by itself.\n\nContext: we use internal permit/warrant mechanisms in our implementation, but this comment is not proposing those mechanisms as standards. They are our internal solution ;-)\n\nWhat we are contributing here is only the interoperability requirement:\n\n1. There must be an execution-time authorization boundary between model output and effectful tool actions.\n2. Tool invocation authority must be explicit, bounded, and short-lived (intent/action, audience/resource, scope, actor context, time bounds).\n3. Authorization must be re-evaluated at execution time for each effectful step (not implied globally by session auth).\n4. Missing or inconsistent authorization context must fail closed.\n5. The specific internal control object/model is deployment-defined and out of scope.\n\nThis keeps the draft implementation-neutral while still preventing unsafe \u201cLLM output -> direct tool effect\u201d assumptions.\n\n",
           "createdAt": "2026-03-20T12:17:28Z",
           "updatedAt": "2026-03-20T12:19:46Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "One idea is to use the act claims as described here: https://notes.karlmcguinness.com/notes/standardize-act-across-assertion-grants-and-jwt-access-tokens/",
+          "createdAt": "2026-04-07T10:20:15Z",
+          "updatedAt": "2026-04-07T10:20:15Z"
         }
       ]
     },
@@ -747,7 +754,7 @@
       "labels": [],
       "body": "Relating to https://datatracker.ietf.org/doc/html/draft-klrc-aiagent-auth-00#section-10.2 I think, I had the question, \"didn't see explicit recommendation to lean on the act claim to carry agent identity, and the sub claim to carry user identity.\u00a0 I think we're aligned that this is a fundamental requirement to express delegation, right?\" \n\nI think the answer is \"no\" but the reasons are somewhat murky (regular old oauth delegation is expressed somewhat implicitly by it being oauth and possibly/probably the client identifier in the access token while token exchange came along later with the act claim). And it might be worthwhile to give a little more explanation in the draft.  ",
       "createdAt": "2026-03-05T17:58:29Z",
-      "updatedAt": "2026-03-20T11:58:46Z",
+      "updatedAt": "2026-04-07T10:22:21Z",
       "closedAt": null,
       "comments": [
         {
@@ -777,6 +784,13 @@
           "body": "@PieterKas \nAdditional context from Internal experience:\n\nWe are actively building an agent runtime/governance stack and want to align with RFC-grade standards rather than invent parallel mechanisms. Most of the suggestions above come from concrete gaps we hit in current deployments:\n\n- boundary auth is often clear, but downstream delegation semantics are underspecified,\n- turn-by-turn intent constraints are harder than session-level token handling,\n- cross-org hops expose trust-mapping and account-linking realities (no universal OAuth domain),\n- robust systems need deterministic fail-closed behavior and auditable delegation evidence.\n\nWe are not proposing a new auth framework; we are asking for sharper profiling of existing OAuth/WIMSE-style mechanisms for agentic, multi-hop, real-world execution.\n",
           "createdAt": "2026-03-20T11:58:46Z",
           "updatedAt": "2026-03-20T11:58:46Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "Stapling this blog post to the issue as input to the discussion: https://notes.karlmcguinness.com/notes/standardize-act-across-assertion-grants-and-jwt-access-tokens/",
+          "createdAt": "2026-04-07T10:22:21Z",
+          "updatedAt": "2026-04-07T10:22:21Z"
         }
       ]
     },
@@ -1580,6 +1594,44 @@
           "body": "In an effort to respect and protect the time of the individual real humans working on this draft, we are not considering unchecked AI commentary, issues, or PRs at this time.",
           "createdAt": "2026-04-06T15:34:59Z",
           "updatedAt": "2026-04-06T15:34:59Z"
+        }
+      ]
+    },
+    {
+      "number": 101,
+      "id": "I_kwDOQP22qc77iyWW",
+      "title": "Referencing the Agent Harness as an element of the agent identity",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/101",
+      "state": "OPEN",
+      "author": "nicksteele-oai",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Over the past couple months we've started to refer to the LLM interface as the agent harness, which I think was originally being referred to as the agent, agent client, or some other fairly synonymous term. I'm quite partial to this term, and like the way that LangChain recently discussed the term in [their blog](https://blog.langchain.com/the-anatomy-of-an-agent-harness/). Would it be worth explicitly referring to an agent harness as a component of the workload identity?",
+      "createdAt": "2026-04-07T19:46:49Z",
+      "updatedAt": "2026-04-08T17:05:58Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The first couple paragraphs under \"Can Someone Please Define a \"Harness\"?\" suggest to me that the term is being used (there anyway) to mean something quite a bit broader in scope than what this draft envisions (or I do anyway) as an agent. ",
+          "createdAt": "2026-04-07T20:04:59Z",
+          "updatedAt": "2026-04-07T20:04:59Z"
+        },
+        {
+          "author": "nicksteele-oai",
+          "authorAssociation": "COLLABORATOR",
+          "body": "That's fair, their definition has a pretty wide set of components and most definitions of the harness have been hand-waving that the harness should include all the additional _stuff_ that might be available to a model, which might include the AI agent as it's defined but is broader than what's in scope for sure. ",
+          "createdAt": "2026-04-07T20:37:20Z",
+          "updatedAt": "2026-04-07T20:37:20Z"
+        },
+        {
+          "author": "fallrisk-ai",
+          "authorAssociation": "NONE",
+          "body": "Joining this thread because the boundary @nicksteele-oai is highlighting and @bc-pi is scoping matters, and I think the draft's own conceptual model may resolve more of it than the exchange above suggests.\n\nSection 3 of draft-01 is precise: the AI Agent is a workload that \"iteratively interacts with a Large Language Model (LLM) and a set of Tools, Services and Resources.\" Figure 1 places the LLM external to the Agent workload, as a resource the agent calls and authenticates against. That framing is narrower than LangChain's \"Agent = Model + Harness,\" and I think @bc-pi is right to protect it because conflating the two would require substantial rewriting of scope.\n\nBut the draft's own framing produces a cleaner version of the question anyway. In \u00a73's model, the agent workload is identified, attested, and authenticated per \u00a7\u00a75\u20139. The LLM is authenticated as a resource. But neither the agent's workload identity nor the LLM endpoint's resource identity establishes which model is actually performing the computation behind that endpoint \u2014 whether the model has been substituted, modified, or otherwise changed without the endpoint's credential changing.\n\u00a77 already contemplates attestation mechanisms like \"software integrity measurements\" and \"supply-chain provenance\" for the agent workload. The same class of mechanism applies to the LLM resource the agent is calling, but the draft doesn't currently address it.\n\n\u00a714 (Security Considerations) is still TODO. This gives room to note the boundary without touching \u00a73 or the agent/workload terminology. One possible addition:\n\n> Authentication of the agent workload, and authentication of the LLM endpoint as a resource, do not, by themselves, establish the identity or continuity of the model operating behind that endpoint. An LLM endpoint's credential can remain valid while the model serving it has been substituted, modified, or otherwise changed. Deployments with high-assurance requirements may need attestation mechanisms addressing model identity as distinct from workload- or endpoint-level identity.\n\nThis avoids the \"model is the agent\" / \"harness is the agent\" ontology question entirely. It leaves \u00a73 as-is, extends \u00a77's logic to cover the LLM-as-resource case, and fills an empty section without structural disruption.\n\nWe've explored this empirically, including measured model substitution under valid workload credentials and structural detection of post-deployment model modification in published open-weights checkpoints, and I'm happy to point to that material if it would be useful.",
+          "createdAt": "2026-04-08T17:05:57Z",
+          "updatedAt": "2026-04-08T17:05:57Z"
         }
       ]
     }
@@ -3939,7 +3991,7 @@
       "labels": [],
       "body": "Adding Nick Steel from OpenAI as co-author and switch to ASCII art to resolve SVG toolchain issues.",
       "createdAt": "2026-03-29T13:30:22Z",
-      "updatedAt": "2026-03-30T14:38:50Z",
+      "updatedAt": "2026-04-07T21:32:46Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
       "baseRefOid": "52bfe2448082e52c9f5f147774965457ed624d6e",
@@ -3959,6 +4011,13 @@
           "body": "@nicksteele-oai - please review and approve.",
           "createdAt": "2026-03-29T13:31:00Z",
           "updatedAt": "2026-03-29T13:31:00Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "welcome @nicksteele-oai ! ",
+          "createdAt": "2026-04-07T21:32:46Z",
+          "updatedAt": "2026-04-07T21:32:46Z"
         }
       ],
       "reviews": [
@@ -4001,6 +4060,34 @@
       "mergedBy": "PieterKas",
       "mergeCommit": {
         "oid": "dff614d04dbc0a0064770d00578a8afe24a22c41"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 102,
+      "id": "PR_kwDOQP22qc7QnOUi",
+      "title": "Update Nick Steele company name",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/102",
+      "state": "MERGED",
+      "author": "nicksteele-oai",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "I guess I _spaced out_.",
+      "createdAt": "2026-04-07T20:23:51Z",
+      "updatedAt": "2026-04-07T20:28:36Z",
+      "baseRepository": "PieterKas/agent2agent-auth-framework",
+      "baseRefName": "main",
+      "baseRefOid": "dff614d04dbc0a0064770d00578a8afe24a22c41",
+      "headRepository": "PieterKas/agent2agent-auth-framework",
+      "headRefName": "update-oai-name",
+      "headRefOid": "18572c6559e2e774ada1d1eea56523a1996f94cf",
+      "closedAt": "2026-04-07T20:28:36Z",
+      "mergedAt": "2026-04-07T20:28:36Z",
+      "mergedBy": "nicksteele-oai",
+      "mergeCommit": {
+        "oid": "f12a448263e0f3bb30e75a87b2bf11a39b3e0771"
       },
       "comments": [],
       "reviews": []
