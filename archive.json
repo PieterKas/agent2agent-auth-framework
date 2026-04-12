@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-09T02:31:55.993091+00:00",
+  "timestamp": "2026-04-12T02:47:13.683804+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -1609,7 +1609,7 @@
       "labels": [],
       "body": "Over the past couple months we've started to refer to the LLM interface as the agent harness, which I think was originally being referred to as the agent, agent client, or some other fairly synonymous term. I'm quite partial to this term, and like the way that LangChain recently discussed the term in [their blog](https://blog.langchain.com/the-anatomy-of-an-agent-harness/). Would it be worth explicitly referring to an agent harness as a component of the workload identity?",
       "createdAt": "2026-04-07T19:46:49Z",
-      "updatedAt": "2026-04-08T17:05:58Z",
+      "updatedAt": "2026-04-09T16:24:46Z",
       "closedAt": null,
       "comments": [
         {
