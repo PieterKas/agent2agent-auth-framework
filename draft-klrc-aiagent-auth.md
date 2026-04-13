@@ -46,6 +46,10 @@ author:
     fullname: Nick Steele
     organization: OpenAI
     email: steele@openai.com
+ -
+    fullname: Aaron Parecki
+    organization: Okta
+    email: aaron@parecki.com
 
 normative:
   SPIFFE:
