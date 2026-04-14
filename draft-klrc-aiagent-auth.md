@@ -405,7 +405,7 @@ The authors would like to thank Sean O'Dell for providing valuable input and fee
 # Document History
    \[\[ To be removed from the final specification ]]
 
-  -latest
+  -02
 
    * Add Aaron Parecki from Okta as co-author.
 
