@@ -5,14 +5,16 @@
 Network Working Group                                       P. Kasselman
 Internet-Draft                                          Defakto Security
 Intended status: Informational                               J. Lombardo
-Expires: 9 October 2026                                              AWS
+Expires: 16 October 2026                                             AWS
                                                             Y. Rosomakho
                                                                  Zscaler
                                                              B. Campbell
                                                            Ping Identity
                                                                N. Steele
                                                                   OpenAI
-                                                            7 April 2026
+                                                              A. Parecki
+                                                                    Okta
+                                                           14 April 2026
 
 
                AI Agent Authentication and Authorization
@@ -58,7 +60,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 9 October 2026.
+   This Internet-Draft will expire on 16 October 2026.
 
 Copyright Notice
 
@@ -1195,3 +1197,8 @@ Authors' Addresses
    Nick Steele
    OpenAI
    Email: steele@openai.com
+
+
+   Aaron Parecki
+   Okta
+   Email: aaron@parecki.com
