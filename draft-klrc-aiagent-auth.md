@@ -405,10 +405,10 @@ The authors would like to thank Sean O'Dell for providing valuable input and fee
 # Document History
    \[\[ To be removed from the final specification ]]
 
-  - latest
+  -latest
    * Add Aaron Parecki from Okta as co-author.
 
-  -00
+  -01
 
    * Add Nick Steele from OpenAI as co-author.
 
