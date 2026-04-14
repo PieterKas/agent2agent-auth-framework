@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-12T02:47:13.683804+00:00",
+  "timestamp": "2026-04-14T02:44:35.096503+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -1420,13 +1420,23 @@
       "state": "OPEN",
       "author": "nik-kale",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "identitymonk"
+      ],
       "labels": [],
       "body": "For multi-agent delegation chains, which human actually gets consulted when human-in-the-loop is triggered?\n\nOriginating user? Agent admin? Resource owner? Not obvious and the answer likely depends on the scenario. Could flag this as an open question that deployments need to address.",
       "createdAt": "2026-03-25T17:25:24Z",
-      "updatedAt": "2026-03-25T17:25:24Z",
+      "updatedAt": "2026-04-13T14:04:12Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "identitymonk",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Will look into this.\n\nThis is mostly a continuous authorization decision. The AS has to decide who to reach out: it can be:\n- the subject\n- the resource owner - if different from the subject - this would include an admin\n- a quorum of people",
+          "createdAt": "2026-04-13T14:04:12Z",
+          "updatedAt": "2026-04-13T14:04:12Z"
+        }
+      ]
     },
     {
       "number": 92,
@@ -4091,6 +4101,61 @@
       },
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 103,
+      "id": "PR_kwDOQP22qc7R-wId",
+      "title": "Add Aaron Parecki as co-author",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/103",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "aaronpk"
+      ],
+      "labels": [],
+      "body": "Added Aaron as co-author",
+      "createdAt": "2026-04-13T12:46:32Z",
+      "updatedAt": "2026-04-13T14:52:18Z",
+      "baseRepository": "PieterKas/agent2agent-auth-framework",
+      "baseRefName": "main",
+      "baseRefOid": "f12a448263e0f3bb30e75a87b2bf11a39b3e0771",
+      "headRepository": "PieterKas/agent2agent-auth-framework",
+      "headRefName": "PieterKas-patch-13",
+      "headRefOid": "17cf079ceef797c06dfac737c53095dd8122e3f4",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc70WsdR",
+          "commit": {
+            "abbreviatedOid": "17cf079"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-04-13T14:51:44Z",
+          "updatedAt": "2026-04-13T14:51:44Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOQP22qc70WtZp",
+          "commit": {
+            "abbreviatedOid": "17cf079"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-04-13T14:52:18Z",
+          "updatedAt": "2026-04-13T14:52:18Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
