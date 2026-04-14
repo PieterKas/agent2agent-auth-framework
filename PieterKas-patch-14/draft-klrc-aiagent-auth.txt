@@ -1166,7 +1166,7 @@ Appendix A.  Document History
 
    [[ To be removed from the final specification ]]
 
-   -latest
+   -02
 
    *  Add Aaron Parecki from Okta as co-author.
 
