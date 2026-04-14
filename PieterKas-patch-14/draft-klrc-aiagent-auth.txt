@@ -1166,11 +1166,9 @@ Appendix A.  Document History
 
    [[ To be removed from the final specification ]]
 
-   *  latest
+   -latest * Add Aaron Parecki from Okta as co-author.
 
-   *  Add Aaron Parecki from Okta as co-author.
-
-   -00
+   -01
 
    *  Add Nick Steele from OpenAI as co-author.
 
