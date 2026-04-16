@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-14T02:44:35.096503+00:00",
+  "timestamp": "2026-04-16T02:49:31.598729+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -4107,7 +4107,7 @@
       "id": "PR_kwDOQP22qc7R-wId",
       "title": "Add Aaron Parecki as co-author",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/103",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "PieterKas",
       "authorAssociation": "OWNER",
       "assignees": [
@@ -4116,17 +4116,19 @@
       "labels": [],
       "body": "Added Aaron as co-author",
       "createdAt": "2026-04-13T12:46:32Z",
-      "updatedAt": "2026-04-13T14:52:18Z",
+      "updatedAt": "2026-04-14T11:29:02Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
       "baseRefOid": "f12a448263e0f3bb30e75a87b2bf11a39b3e0771",
       "headRepository": "PieterKas/agent2agent-auth-framework",
       "headRefName": "PieterKas-patch-13",
       "headRefOid": "17cf079ceef797c06dfac737c53095dd8122e3f4",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-04-14T11:29:02Z",
+      "mergedAt": "2026-04-14T11:29:02Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "f049ad9600170d788c628a60c3f2b675b2588630"
+      },
       "comments": [],
       "reviews": [
         {
@@ -4154,6 +4156,156 @@
           "createdAt": "2026-04-13T14:52:18Z",
           "updatedAt": "2026-04-13T14:52:18Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 104,
+      "id": "PR_kwDOQP22qc7SSf5J",
+      "title": "Update document history",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/104",
+      "state": "MERGED",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Add author additions as document history for -latest.",
+      "createdAt": "2026-04-14T11:33:33Z",
+      "updatedAt": "2026-04-14T19:39:33Z",
+      "baseRepository": "PieterKas/agent2agent-auth-framework",
+      "baseRefName": "main",
+      "baseRefOid": "f049ad9600170d788c628a60c3f2b675b2588630",
+      "headRepository": "PieterKas/agent2agent-auth-framework",
+      "headRefName": "PieterKas-patch-14",
+      "headRefOid": "b8fd4a8da8aa73b1bad70e7c94586daa6b1f57e0",
+      "closedAt": "2026-04-14T19:26:38Z",
+      "mergedAt": "2026-04-14T19:26:38Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "cba5256f5c7f60592afaa8133bf37651e8fe8b84"
+      },
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "same link https://pieterkas.github.io/agent2agent-auth-framework/PieterKas-patch-14/draft-klrc-aiagent-auth.html#name-document-history different wrong \r\n\r\n<img width=\"416\" height=\"230\" alt=\"Screenshot 2026-04-14 at 6 28 36\u202fAM\" src=\"https://github.com/user-attachments/assets/58b0e3be-7b11-4353-b530-c27ef0ad494f\" />\r\n",
+          "createdAt": "2026-04-14T12:29:56Z",
+          "updatedAt": "2026-04-14T12:29:56Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc70uG5A",
+          "commit": {
+            "abbreviatedOid": "dac683b"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-14T12:07:57Z",
+          "updatedAt": "2026-04-14T12:07:57Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "https://pieterkas.github.io/agent2agent-auth-framework/PieterKas-patch-14/draft-klrc-aiagent-auth.html#name-document-history there's a lot wrong there\n\n<img width=\"421\" height=\"262\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/d59dd39c-cdb0-4c83-a318-f620465b1cd9\" />",
+              "createdAt": "2026-04-14T12:07:57Z",
+              "updatedAt": "2026-04-14T12:09:02Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc701fwc",
+          "commit": {
+            "abbreviatedOid": "207b80c"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-14T16:40:38Z",
+          "updatedAt": "2026-04-14T16:40:38Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "<img width=\"271\" height=\"76\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/30e74f24-b706-41c1-bbb1-5158a38962c5\" />",
+              "createdAt": "2026-04-14T16:40:38Z",
+              "updatedAt": "2026-04-14T16:40:38Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc704UMl",
+          "commit": {
+            "abbreviatedOid": "207b80c"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-14T18:55:53Z",
+          "updatedAt": "2026-04-14T18:55:53Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "Because -latest is magical? Oh wait, no... its not. Happy to switch to numbers.",
+              "createdAt": "2026-04-14T18:55:53Z",
+              "updatedAt": "2026-04-14T18:56:10Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc704-fD",
+          "commit": {
+            "abbreviatedOid": "207b80c"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-14T19:25:45Z",
+          "updatedAt": "2026-04-14T19:25:45Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "To be fair, it is a little magical in the docname so there's some logic to the mysticism. But only some. Which isn't enough. ",
+              "createdAt": "2026-04-14T19:25:45Z",
+              "updatedAt": "2026-04-14T19:25:45Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc704-yF",
+          "commit": {
+            "abbreviatedOid": "b8fd4a8"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-04-14T19:26:01Z",
+          "updatedAt": "2026-04-14T19:26:01Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOQP22qc705Ou4",
+          "commit": {
+            "abbreviatedOid": "207b80c"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-14T19:39:33Z",
+          "updatedAt": "2026-04-14T19:39:33Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "If only magical thinking worked...",
+              "createdAt": "2026-04-14T19:39:33Z",
+              "updatedAt": "2026-04-14T19:39:33Z"
+            }
+          ]
         }
       ]
     }
