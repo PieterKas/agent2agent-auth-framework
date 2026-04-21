@@ -408,6 +408,7 @@ The authors would like to thank Sean O'Dell for providing valuable input and fee
   -02
 
    * Add Aaron Parecki from Okta as co-author.
+   * Add reference to phishing resistent credentials (e.g. FIDO passkeys/authenticators)
 
   -01
 
