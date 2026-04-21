@@ -1174,7 +1174,8 @@ Appendix A.  Document History
    *  Add Aaron Parecki from Okta as co-author.
 
    *  Add reference to phishing resistent credentials (e.g. FIDO
-      passkeys/authenticators)
+      passkeys/authenticators) - see https://github.com/PieterKas/
+      agent2agent-auth-framework/issues/106
 
    -01
 
