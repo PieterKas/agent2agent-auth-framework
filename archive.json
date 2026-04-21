@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-16T02:49:31.598729+00:00",
+  "timestamp": "2026-04-21T02:46:06.514152+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -1644,6 +1644,40 @@
           "updatedAt": "2026-04-08T17:05:57Z"
         }
       ]
+    },
+    {
+      "number": 106,
+      "id": "I_kwDOQP22qc8AAAABABddqQ",
+      "title": "Contextualize FIDO to AIMS",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/106",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Follow-up from discussion amongst authors",
+      "createdAt": "2026-04-20T14:39:38Z",
+      "updatedAt": "2026-04-20T14:39:38Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 107,
+      "id": "I_kwDOQP22qc8AAAABABe8GQ",
+      "title": "Clarify Tasks and Intent in the context of AIMS",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/107",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "PieterKas"
+      ],
+      "labels": [],
+      "body": "Follow-on from conversation with authors",
+      "createdAt": "2026-04-20T14:43:32Z",
+      "updatedAt": "2026-04-20T14:43:32Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -4308,6 +4342,32 @@
           ]
         }
       ]
+    },
+    {
+      "number": 105,
+      "id": "PR_kwDOQP22qc7T55R4",
+      "title": "Update abstract to emphasize best practices for AI agents",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/105",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Small tweak based on discussions amongst authors.",
+      "createdAt": "2026-04-20T10:08:48Z",
+      "updatedAt": "2026-04-20T10:08:48Z",
+      "baseRepository": "PieterKas/agent2agent-auth-framework",
+      "baseRefName": "main",
+      "baseRefOid": "cba5256f5c7f60592afaa8133bf37651e8fe8b84",
+      "headRepository": "PieterKas/agent2agent-auth-framework",
+      "headRefName": "PieterKas-patch-15",
+      "headRefOid": "7cd0a37045fbcaafef7e993754a5bc356ff6262d",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
