@@ -1173,6 +1173,9 @@ Appendix A.  Document History
 
    *  Add Aaron Parecki from Okta as co-author.
 
+   *  Add reference to phishing resistent credentials (e.g. FIDO
+      passkeys/authenticators)
+
    -01
 
    *  Add Nick Steele from OpenAI as co-author.
