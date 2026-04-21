@@ -409,7 +409,7 @@ This document has no IANA actions.
 The authors would like to thank:
 
 * Sean O'Dell for providing valuable input and feedback on this work.
-* Karl McGuinnes for sharing his thoughts and his blog posts on mission shaping as a pre-cursor to authroization {{}}
+* Karl McGuinnes for sharing his thoughts and his blog posts on mission shaping as a pre-cursor to authroization {{MissionShaping}}
 
 --- back
 
