@@ -5,7 +5,7 @@
 Network Working Group                                       P. Kasselman
 Internet-Draft                                          Defakto Security
 Intended status: Informational                               J. Lombardo
-Expires: 23 October 2026                                             AWS
+Expires: 24 October 2026                                             AWS
                                                             Y. Rosomakho
                                                                  Zscaler
                                                              B. Campbell
@@ -14,7 +14,7 @@ Expires: 23 October 2026                                             AWS
                                                                   OpenAI
                                                               A. Parecki
                                                                     Okta
-                                                           21 April 2026
+                                                           22 April 2026
 
 
                AI Agent Authentication and Authorization
@@ -60,7 +60,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 October 2026.
+   This Internet-Draft will expire on 24 October 2026.
 
 Copyright Notice
 
@@ -1003,8 +1003,8 @@ Table of Contents
    *  Sean O'Dell for providing valuable input and feedback on this
       work.
 
-   *  Karl McGuinnes for sharing his thoughts and his blog posts on
-      mission shaping as a pre-cursor to authroization [MissionShaping]
+   *  Karl McGuinness for his blog posts on mission shaping as a pre-
+      cursor to authroization [MissionShaping]
 
 18.  References
 
