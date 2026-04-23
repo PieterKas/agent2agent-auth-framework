@@ -101,7 +101,12 @@ normative:
     target: https://openid.net/specs/openid-risc-1_0-final.html
 
 informative:
-
+  MissionShaping:
+    title: "The Mission Shaping Problem"
+    target: https://notes.karlmcguinness.com/notes/the-mission-shaping-problem/
+    author:
+    - name: Karl McGuinness
+    date: 2026
 ...
 
 --- abstract
@@ -274,6 +279,9 @@ Unlike transport-layer authentication, application-layer authentication does not
 # Agent Authorization {#agent_authorization}
 Agents act on behalf of a user, a system, or on their own behalf as shown in {{fig-ai-agent-workload}} and need to obtain authorization when interacting with protected resources.
 
+## Agent Mission
+An Agent receives a Mission from a User, a System, or another Agent. The Mission is the task or objective the Agent will pursue. It is typically expressed in natural language and may require decomposition as it is mapped from a broad objective into specific resource requirements and corresponding access requests. The translation of a mission into authorization requirements is expected to occur as a planning step before the Agent requests authorization. The process through which the mission is translated into authorization requriements is out of scope of this specification. Once the required resources and their associated authorization requirements are determined, the Agent SHOULD use the mechanisms described in this section to obtain access.
+
 ## Leverage OAuth 2.0 as a Delegation Authorization Framework
 The widely deployed OAuth 2.0 Authorization Framework {{!OAUTH-FRAMEWORK=RFC6749}} is a mechanism for delegated authorization that enables an Agent to obtain limited access to a protected resource (e.g., a service or API), intermediated by an Authorization Server, often with the explicit approval of the authenticated User. An Agent uses OAuth 2.0-based mechanisms to obtain authorization from a User, a System, or on its own behalf. OAuth 2.0 defines a wide range of authorization grant flows that supports these scenarios. In these Oauth 2.0 flows, an Agent acts as an OAuth 2.0 Client to an OAuth 2.0 Authorization Server, which receives the request, evaluate the authorization policy and returns an access token, which the Agent presents to the Resource Server (i.e. the protected resources such as the LLM or Tools in {{fig-ai-agent-workload}}, which can evaluate its authorization policy and complete the request.
 
@@ -398,7 +406,10 @@ TODO Privacy but there's also {{privacy-considerations}}...
 This document has no IANA actions.
 
 # Acknowledgments
-The authors would like to thank Sean O'Dell for providing valuable input and feedback on this work.
+The authors would like to thank:
+
+* Sean O'Dell for providing valuable input and feedback on this work.
+* Karl McGuinness for his blog posts on mission shaping as a pre-cursor to authroization {{MissionShaping}}
 
 --- back
 
@@ -408,6 +419,8 @@ The authors would like to thank Sean O'Dell for providing valuable input and fee
   -02
 
    * Add Aaron Parecki from Okta as co-author.
+
+   * Add section on Agent Mission (see issue https://github.com/PieterKas/agent2agent-auth-framework/issues/107)
 
   -01
 
