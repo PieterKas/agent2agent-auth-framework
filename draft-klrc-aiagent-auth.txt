@@ -5,7 +5,7 @@
 Network Working Group                                       P. Kasselman
 Internet-Draft                                          Defakto Security
 Intended status: Informational                               J. Lombardo
-Expires: 16 October 2026                                             AWS
+Expires: 25 October 2026                                             AWS
                                                             Y. Rosomakho
                                                                  Zscaler
                                                              B. Campbell
@@ -14,7 +14,7 @@ Expires: 16 October 2026                                             AWS
                                                                   OpenAI
                                                               A. Parecki
                                                                     Okta
-                                                           14 April 2026
+                                                           23 April 2026
 
 
                AI Agent Authentication and Authorization
@@ -22,11 +22,11 @@ Expires: 16 October 2026                                             AWS
 
 Abstract
 
-   This document proposes a model for authentication and authorization
-   of AI agent interactions.  It leverages existing standards such as
-   the Workload Identity in Multi-System Environments (WIMSE)
-   architecture and OAuth 2.0 family of specifications.  Rather than
-   defining new protocols, this document describes how existing and
+   This document proposes best practices for authentication and
+   authorization of AI agent interactions.  It leverages existing
+   standards such as the Workload Identity in Multi-System Environments
+   (WIMSE) architecture and OAuth 2.0 family of specifications.  Rather
+   than defining new protocols, this document describes how existing and
    widely deployed standards can be applied or extended to establish
    agent authentication and authorization.  By doing so, it aims to
    provide a framework within which to use existing standards, identify
@@ -60,7 +60,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 16 October 2026.
+   This Internet-Draft will expire on 25 October 2026.
 
 Copyright Notice
 
@@ -1045,9 +1045,9 @@ Table of Contents
               Parecki, A., McGuinness, K., and B. Campbell, "Identity
               Assertion JWT Authorization Grant", Work in Progress,
               Internet-Draft, draft-ietf-oauth-identity-assertion-authz-
-              grant-02, 2 March 2026,
+              grant-03, 22 April 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              identity-assertion-authz-grant-02>.
+              identity-assertion-authz-grant-03>.
 
    [OAUTH-REGISTRATION]
               Richer, J., Ed., Jones, M., Bradley, J., Machulak, M., and
