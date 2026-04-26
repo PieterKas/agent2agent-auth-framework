@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-23T02:47:44.300564+00:00",
+  "timestamp": "2026-04-26T02:53:52.162491+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -4348,26 +4348,42 @@
       "id": "PR_kwDOQP22qc7T55R4",
       "title": "Update abstract to emphasize best practices for AI agents",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/105",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "PieterKas",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "Small tweak based on discussions amongst authors.",
       "createdAt": "2026-04-20T10:08:48Z",
-      "updatedAt": "2026-04-20T10:08:48Z",
+      "updatedAt": "2026-04-23T18:27:39Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
       "baseRefOid": "cba5256f5c7f60592afaa8133bf37651e8fe8b84",
       "headRepository": "PieterKas/agent2agent-auth-framework",
       "headRefName": "PieterKas-patch-15",
       "headRefOid": "7cd0a37045fbcaafef7e993754a5bc356ff6262d",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-04-23T18:27:39Z",
+      "mergedAt": "2026-04-23T18:27:39Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "5bd36e4fe7535cd2d46f1ae68c78a885e405f57e"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc74Lb4J",
+          "commit": {
+            "abbreviatedOid": "7cd0a37"
+          },
+          "author": "nicksteele-oai",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-04-23T15:27:42Z",
+          "updatedAt": "2026-04-23T15:27:42Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 108,
@@ -4381,7 +4397,7 @@
       "labels": [],
       "body": "Refer to FIDO passkeys/authenticators as an example of phishing-resistant credentials (see issue #106 )",
       "createdAt": "2026-04-21T13:55:25Z",
-      "updatedAt": "2026-04-21T13:58:54Z",
+      "updatedAt": "2026-04-23T18:27:08Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
       "baseRefOid": "cba5256f5c7f60592afaa8133bf37651e8fe8b84",
@@ -4393,7 +4409,48 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc74LZhy",
+          "commit": {
+            "abbreviatedOid": "786d941"
+          },
+          "author": "nicksteele-oai",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-23T15:26:29Z",
+          "updatedAt": "2026-04-23T15:26:29Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "> and hardware-bound FIDO authenticators\n\nPasskeys in (ideally) all configurations, hardware-bound or otherwise, are phishing resistant. I'd concat this to just say \n\n```suggestion\nWhen a User delegates authorization to an Agent, the Agent SHOULD obtain an access token using the Authorization Code Grant as described in {{Section 4.1 of OAUTH-FRAMEWORK}}. This redirection-based flow involves an interactive authorization process in which the user authenticates to the authorization server and explicitly approves the requested access. Users SHOULD authenticate using phishing-resistant authentication mechanisms such as a passkey. The resulting access token reflects the authorization delegated to the Agent by the User and can be used by the Agent to access resources on behalf of the user. The use of OAuth negates the need for the Agent to have access to a User's credentials when accessing a resource on the User's behalf.\n```\n\nand potentially call out the hardware-binding benefits in security considerations.",
+              "createdAt": "2026-04-23T15:26:29Z",
+              "updatedAt": "2026-04-23T15:26:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc74PvF8",
+          "commit": {
+            "abbreviatedOid": "786d941"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-23T18:27:07Z",
+          "updatedAt": "2026-04-23T18:27:08Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "@nicksteele-oai Do you want to add a reference to FIDO here to help readers contextualise where FIDO fits into the overall scheme of things (at least as it stands today)?",
+              "createdAt": "2026-04-23T18:27:07Z",
+              "updatedAt": "2026-04-23T18:27:08Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 109,
