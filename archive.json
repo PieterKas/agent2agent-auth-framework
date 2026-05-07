@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-26T02:53:52.162491+00:00",
+  "timestamp": "2026-05-07T03:23:20.530831+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -1676,6 +1676,24 @@
       "body": "Follow-on from conversation with authors. See issue #94 \n",
       "createdAt": "2026-04-20T14:43:32Z",
       "updatedAt": "2026-04-21T14:00:17Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 110,
+      "id": "I_kwDOQP22qc8AAAABBVuR1g",
+      "title": "Mention FAPI in the security considerations section",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/110",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "PieterKas"
+      ],
+      "labels": [],
+      "body": "Help connect the dots for financial services companies.",
+      "createdAt": "2026-05-05T14:30:55Z",
+      "updatedAt": "2026-05-05T14:31:06Z",
       "closedAt": null,
       "comments": []
     }
