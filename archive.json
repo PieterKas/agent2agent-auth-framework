@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-12T03:28:30.616648+00:00",
+  "timestamp": "2026-05-14T03:35:42.927214+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -1256,7 +1256,7 @@
       "labels": [],
       "body": "Thank you for publishing this draft. The composable approach of AIMS \u2014 combining WIMSE, SPIFFE, OAuth 2.0, and AuthZEN into a coherent agent identity and authorization framework \u2014 is a well-structured contribution to this space.\n\nI'd like to bring to the authors' attention a body of prior work that addresses several of the same architectural challenges, particularly around agent delegation, scope-based authorization, and principal-agent chains: GAuth (Gimel Auth), developed by the Gimel Foundation.\n\nGAuth's patent application and Github publication predates this draft and covers concepts that overlap with key aspects of the AIMS framework.\n\nWhere the overlap exists:\n\n1. Principal-Agent Delegation\n\nAIMS describes identity chaining via draft-ietf-oauth-identity-chaining for user\u2192agent and agent\u2192tool delegation. GAuth formalizes this as Power-of-Attorney (PoA) Credentials \u2014 a distinct credential type that explicitly models the legal concept of delegated authority. A PoA Credential defines:\n\nWho delegates (principal)\nTo whom (agent)\nWhat the agent may do (scope: allowed operations, resource boundaries, time constraints, etc.)\nThe right to sub-delegate (with mandatory scope narrowing at each level)\nThis was documented in GiFo-RFC 0110, 0111, and 0115 prior to the submission of this draft.\n\n2. Authorization Policy\n\nThe AIMS draft (Section on Authorization) references AuthZEN for policy decisions but notes that the authorization policy layer is \"not yet specified in -00 revision.\" GAuth has a fully specified authorization engine that evaluates every agent action against the PoA scope before execution \u2014 not as a post-hoc policy query, but as a real-time pre-action gate. This includes:\n\nDeterministic scope enforcement (allowed file paths, operation types, dependency limits)\nHierarchical delegation chain validation\nInstant revocation with immediate effect on all active sessions\n\n3. Agent-to-Agent Delegation Chains\n\nBoth AIMS and GAuth support multi-hop delegation (principal \u2192 agent \u2192 sub-agent \u2192 tool). GAuth requires that each delegation level must narrow the scope \u2014 a sub-agent can never have more authority than its delegating agent. The full chain is cryptographically verifiable and auditable.\n\nWhere Gimel Auth goes further Beyond the identity and token layer that AIMS focuses on, GAuth additionally provides (not limited to):\n\nArchitecture Governance \u2014 rule-based enforcement of architectural principles (e.g., microservice patterns, MCP protocol compliance, data model approval gates)\nRegulatory Compliance Monitoring \u2014 LLM-based stochastic compliance scoring against regulatory frameworks (GDPR, NIS2, DORA, EU AI Act), with configurable confidence thresholds\nLethal Trifecta Detection \u2014 automatic identification of AI components that simultaneously accumulate autonomous decision-making, critical data access, and execution rights\nPlan-Build-Run Lifecycle \u2014 formal phase gates requiring architectural approval before an agent may proceed from planning to implementation\nThese layers operate on top of the delegation and authorization mechanism, which is where the conceptual overlap with AIMS exists.\n\nRequest\nGiven the temporal priority of GAuth's patent filings, open-source licensing and publishing relative to this draft, we believe it would be appropriate for the authors to:\n\nReview GAuth's published specifications (GiFo-RFC 0110, 0111, 0115) as related work\nConsider acknowledging prior art in the delegation and scope-based authorization space\n\nWe are currently not requesting changes to the technical approach of the draft. We are requesting awareness of prior work that is relevant to the concepts being proposed.\n\nYou find the details under Gimel Foundation on GitHub. Happy to discuss further.",
       "createdAt": "2026-03-21T14:57:54Z",
-      "updatedAt": "2026-05-11T17:30:28Z",
+      "updatedAt": "2026-05-13T10:55:11Z",
       "closedAt": "2026-05-08T16:11:27Z",
       "comments": [
         {
@@ -1286,6 +1286,13 @@
           "body": "@JayDaley \u2013 flagging prior art is fair behaviour, we were doing this in good faith.\n\nFor the avoidance of doubt, Gimel Foundation does not grant any IP rights to IETF at this point. Our IP rights are constrained, limited and subject to Exclusions, based on Gimel Foundation licensing, Legal Terms, with patents pending. Gimel Foundation\u2019s GitHub page (https://github.com/Gimel-Foundation) is providing the canonical licensing and legal terms. \n\nGimel Foundation would be open to discuss questions and licensing under the Gimel framework that works for both sides.",
           "createdAt": "2026-05-11T17:24:10Z",
           "updatedAt": "2026-05-11T17:30:28Z"
+        },
+        {
+          "author": "JayDaley",
+          "authorAssociation": "NONE",
+          "body": "@GoetzGW  There is no concept of granting patent rights/licensing to the IETF.  When someone contributes to the IETF, that does not include patent rights.  Similarly the IETF does not hold any patents and therefore there is no concept of the IETF licensing its standards.\n\nIf you are indeed acting in good faith then please respect our processes and use our IPR Disclosure form.  This is the way professional SDOs work - through mature and developed processes, not random issues in a GitHub repository.\n\nThe purpose of an IPR disclosure is for you to officially put on the record your intellectual property claim and the potential relevance to IETF work.  In doing that you can commit to licensing (for third party implementers not the IETF) but you are not required to.  Please at least read the relevant IPR Disclosure [form](https://datatracker.ietf.org/ipr/new-specific/) to understand what it involves.",
+          "createdAt": "2026-05-13T10:55:11Z",
+          "updatedAt": "2026-05-13T10:55:11Z"
         }
       ]
     },
@@ -1723,6 +1730,24 @@
       "body": "Help connect the dots for financial services companies.",
       "createdAt": "2026-05-05T14:30:55Z",
       "updatedAt": "2026-05-05T14:31:06Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 111,
+      "id": "I_kwDOQP22qc8AAAABCAARkg",
+      "title": "Add reference to OAuth SPIFFE authentication",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/111",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "PieterKas"
+      ],
+      "labels": [],
+      "body": "Addd referenc. to the new draft defining how to use SPIFFE for authentication with OAuth in the authorization section.\n\nhttps://datatracker.ietf.org/doc/draft-ietf-oauth-spiffe-client-auth/",
+      "createdAt": "2026-05-12T12:42:25Z",
+      "updatedAt": "2026-05-12T12:42:25Z",
       "closedAt": null,
       "comments": []
     }
@@ -4444,7 +4469,7 @@
       "labels": [],
       "body": "Refer to FIDO passkeys/authenticators as an example of phishing-resistant credentials (see issue #106 )",
       "createdAt": "2026-04-21T13:55:25Z",
-      "updatedAt": "2026-04-23T18:27:08Z",
+      "updatedAt": "2026-05-12T12:39:43Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
       "baseRefOid": "cba5256f5c7f60592afaa8133bf37651e8fe8b84",
@@ -4496,6 +4521,26 @@
               "updatedAt": "2026-04-23T18:27:08Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc7-pk31",
+          "commit": {
+            "abbreviatedOid": "786d941"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-12T12:39:43Z",
+          "updatedAt": "2026-05-12T12:39:43Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "@nicksteele-oai gentle ping on question of referencing FIDO (I want to merge this PR so we get an updated version published).",
+              "createdAt": "2026-05-12T12:39:43Z",
+              "updatedAt": "2026-05-12T12:39:43Z"
+            }
+          ]
         }
       ]
     },
@@ -4511,7 +4556,7 @@
       "labels": [],
       "body": "Added a new section on Agent Mission and updated acknowledgments (see issu #107)",
       "createdAt": "2026-04-21T18:38:31Z",
-      "updatedAt": "2026-04-22T11:50:07Z",
+      "updatedAt": "2026-05-12T12:42:41Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
       "baseRefOid": "cba5256f5c7f60592afaa8133bf37651e8fe8b84",
