@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-14T03:35:42.927214+00:00",
+  "timestamp": "2026-05-21T03:55:01.441965+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -1750,6 +1750,30 @@
       "updatedAt": "2026-05-12T12:42:25Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 112,
+      "id": "I_kwDOQP22qc8AAAABCrrKOQ",
+      "title": "[deleted]",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/112",
+      "state": "CLOSED",
+      "author": "Marsssssssssssdsss",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-05-19T06:31:55Z",
+      "updatedAt": "2026-05-19T12:01:11Z",
+      "closedAt": "2026-05-19T06:40:17Z",
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "the fuck?",
+          "createdAt": "2026-05-19T12:01:11Z",
+          "updatedAt": "2026-05-19T12:01:11Z"
+        }
+      ]
     }
   ],
   "pulls": [
