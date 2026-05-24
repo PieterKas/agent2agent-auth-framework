@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-21T03:55:01.441965+00:00",
+  "timestamp": "2026-05-24T03:47:27.046217+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -949,7 +949,7 @@
       "labels": [],
       "body": "From Jack Lichwa\n\nRegarding Human-in-the-Loop (HITL), I'm concerned that simple human approval via CIBA may not be sufficiently robust for current needs. For high-impact use cases, such as modifying infrastructure like firewall rules or IAM roles, or financial operations like payments and transfers, generic human approval may not suffice across all Human-in-the-Loop scenarios.\n\nFor these HITL operations, do you envision a more policy-based approach including specific operation windows, mandatory MFA, and multi-party approvals, similar to Privileged Identity Management systems, rather than just an approved claim through CIBA?\n\nI'm interested to know if you see these granular controls as being in scope, or if you feel these requirements are already addressed through a different approach?",
       "createdAt": "2026-03-16T04:30:06Z",
-      "updatedAt": "2026-03-23T20:10:02Z",
+      "updatedAt": "2026-05-23T13:27:17Z",
       "closedAt": null,
       "comments": [
         {
@@ -986,6 +986,13 @@
           "body": "Thank you @PieterKas, I think what got me confused : \"An Agent, acting as\n   an OAuth client, may use the OpenID Client Initiated Backchannel\n   Authentication (CIBA) protocol.  This triggers an out-of-band\n   interaction allowing the user to approve or deny the requested\n   operation without exposing credentials to the agent (for example a\n   push notification requesting the user to approve a request through an\n   authenticator application on their mobile device).\"  - like the Agent have understanding about Authz policy, that it needs to call user for approval. Considering Agent is malicious by default and entire authorization workflow should be delegated to AS, do you mean that Agent does pre-authz? Maybe it is just me that I'm reading that wrong - but I hope you understand my concerns.\n",
           "createdAt": "2026-03-23T20:10:02Z",
           "updatedAt": "2026-03-23T20:10:02Z"
+        },
+        {
+          "author": "Mayur021",
+          "authorAssociation": "NONE",
+          "body": "This is the crux. @PieterKas is right that the approval policy (n-of-m, MFA, windows, SoD) is deployment-specific and shouldn't be mandated, and  @kevin-biot's portable approval-evidence structure is the right way to make the representation interoperable.\n\n  The piece still missing from both is the trigger: which actions require approval at all. That part can be made portable without prescribing policy, because it's a property of the action, not a deployment choice. Key it to reversibility: read-only, reversible, external-reversible, irreversible. External-reversible and irreversible actions (firewall change, IAM role, payment, transfer, i.e. exactly @JLichwa80's examples) require approval evidence; read-only and reversible proceed. Reversibility is intrinsic, so it travels across deployments the same way the evidence structure does, and it could be a field in that structure next to the operation-binding hash, so the resource server can fail-closed when an irreversible action arrives without sufficient evidence.\n\n  Net: the deployment owns the policy, while the draft makes the trigger and the evidence portable. I opened #114 on the same point against \u00a710.6;\n  happy to consolidate it here if that's cleaner.",
+          "createdAt": "2026-05-23T13:27:17Z",
+          "updatedAt": "2026-05-23T13:27:17Z"
         }
       ]
     },
@@ -1774,6 +1781,38 @@
           "updatedAt": "2026-05-19T12:01:11Z"
         }
       ]
+    },
+    {
+      "number": 113,
+      "id": "I_kwDOQP22qc8AAAABDJC3Hg",
+      "title": "Cross Domain Access: carry the agent's own identity in the cross-domain authorization grant",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/113",
+      "state": "OPEN",
+      "author": "pcarleton",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "\nThe \"Cross Domain Access\" section describes the cross-domain exchange purely in\nterms of the user's identity assertion. The agent appears only as the\nauthenticated OAuth client performing the exchange; its own identity (which\n\"Agent Identifiers\" / \"Agent Credentials\" go to some trouble to establish) is\nnot carried into the issued authorization grant or the downstream access token.\nThat loses attribution at the resource server in the other domain, where it\nmatters for audit logs and per-agent policy.\n\n## Why this matters\n\nThe deployment I keep running into with Model Context Protocol servers: a\nuser has one or more assistant-style agents that act on their behalf against\nthe SaaS systems the user already signs into. Each agent is a distinct workload\nwith its own identifier and credential. The agents often run when the user\nisn't there (scheduled jobs, long background tasks).\n\nBecause no profile yet defines how the agent's identity is carried into the\ngrant, platforms hold a per-user refresh token for each downstream service and\nshare it across every agent on the platform. The downstream audit log\nattributes everything to the user. You can't scope one agent more narrowly than\nanother, and you can't revoke one agent without revoking the user's entire\ngrant to the platform.\n\n## What I'd like the section to say\n\nThe enterprise IdP (acting as the authorization server for the token exchange)\nis already the policy point for which users can reach which federated apps. The\nsame exchange can carry the agent: the resulting JWT authorization grant\nidentifies the user as the subject and the agent as the actor (`act`, RFC 8693\n\u00a74.1), the IdP applies policy to the (user, agent, audience) tuple, and the\nresource authorization server carries the actor through into the access token\nit issues. Requests outside what the user delegated to that agent are where the\nHuman in the Loop section's CIBA guidance applies. Per-invocation narrowing is\nalready expressible with `scope` / `authorization_details` on the exchange\nrequest.\n\nThis isn't specific to ID-JAG \u2014 the same gap exists if the agent uses Identity\nChaining, and the same RFC 8693 actor machinery is the answer in both cases.\nIt's also the cross-domain version of what #61 is asking for in the\nsingle-domain case (`act` for the agent, `sub` for the user); whatever that\nissue concludes should apply here too.\n\nID-JAG's current editor's draft already has the extension point: it defines\noptional `actor_token` / `actor_token_type` parameters on the token exchange\nrequest but states \"This specification does not define normative processing\nrequirements for `actor_token` or whether an `act` claim is included in the\nissued ID-JAG. Future profiles or extensions MAY define how `actor_token` is\nvalidated, how it influences policy evaluation, and whether it results in an\n`act` claim in the issued ID-JAG.\" Related discussion in\n[oauth-identity-assertion-authz-grant#73](https://github.com/oauth-wg/oauth-identity-assertion-authz-grant/issues/73)\nand draft-mcguinness-oauth-actor-profile.\n\n## The underspecified part, and where to put it\n\nThe user delegates while they're present, but the agent runs at 3am, at which\npoint their SSO session has expired. Something has to bridge that gap,\nand today it's a bunch of refresh tokens. The options I can see for\nwhat replaces them:\n\n1. An IdP-side delegation record. The agent authenticates as itself and asks\n   for a grant for subject U; the IdP checks its records. The agent never\n   holds anything that confers the user's authority outside a single\n   short-lived audience-restricted grant, and revocation is deleting a row.\n   The costs: RFC 8693 requires a `subject_token` \u2014 an actual security token\n   for the party you're acting for, not just their identifier \u2014 which the agent\n   doesn't have under this option. We need a way to just pass a subject identifier.\n2. A per-(user, agent) refresh token for the IdP, sender-constrained to the\n   agent's key. Works with the `refresh_token` subject token type ID-JAG\n   already allows, but each agent now holds a long-lived artifact carrying the\n   user's authority, which is the kind of artifact I'm trying to get rid of.\n3. An explicit delegation assertion presented as the subject token: a signed\n   statement that U authorized A for given scopes until T (`may_act`\n   territory, RFC 8693 \u00a74.4). The most auditable option, but would need more\n   specification.\n\nI lean towards (1), but I'd rather get agreement on where this gets specified\nthan on which option wins. It could be a subsection here (this document already\nstitches the relevant specs together and identifies gaps), the ID-JAG actor profile\nwork, or a separate companion profile. Open to feedback on which.\n\n## Asks\n\n1. Is \"agent acting on behalf of a user, as a distinct identifiable actor,\n   possibly while the user is offline\" in scope for the Cross Domain Access\n   section?\n2. Where should the actor processing rules and the standing-delegation\n   representation live \u2014 here, the ID-JAG actor profile, or a companion draft?\n3. Whichever way that lands, I'm happy to write the text: the small delta here\n   (carry the agent as the actor in the cross-domain grant and preserve it\n   into the issued access token), and/or contribute to the profile that\n   defines the mechanics.\n",
+      "createdAt": "2026-05-22T21:48:06Z",
+      "updatedAt": "2026-05-22T21:48:06Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 114,
+      "id": "I_kwDOQP22qc8AAAABDLap5A",
+      "title": "draft-klrc-aiagent-auth-01 \u2014 a deterministic trigger (reversibility) for the \u00a710.6 confirmation step",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/114",
+      "state": "OPEN",
+      "author": "Mayur021",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Thanks for `draft-klrc-aiagent-auth-01` \u2014 leaning on WIMSE/OAuth rather than inventing new protocols is the right call.\n\n  **Suggestion on \u00a710.6 (human-in-the-loop via CIBA).** The draft gives a clean *mechanism* for out-of-band user approval, but it doesn't specify\n  *when* that approval should be mandatory \u2014 it's left to the deployment. That leaves the most consequential decision (which agent actions may run\n  unattended) undefined, and in practice it collapses to \"confirm everything\" (approval fatigue) or \"confirm nothing.\"\n\n  A deterministic trigger would help: classify the action by its **reversibility** \u2014\n\n  - **read-only** \u2014 no state change\n  - **reversible** \u2014 the system can undo it directly\n  - **external-reversible** \u2014 recoverable only via a separate process\n  - **irreversible** \u2014 cannot be undone (e.g., funds transfer, external publication, unrecoverable delete)\n\n  Require the \u00a710.6 CIBA step-up for **external-reversible and irreversible** actions, and let read-only/reversible actions proceed under the\n  agent's existing authorization. Reversibility is an intrinsic property of the action, so it stays consistent across deployments far better than an\n   impact/sensitivity estimate.\n\n  This also composes with the transaction-tokens-for-agents work: a per-action token could carry the reversibility class as a claim, so the resource\n   server \u2014 not just the agent \u2014 can enforce the gate. For multi-step delegations, the safe default is to gate at the **least-reversible action\n  reachable** in the chain.\n\n  Happy to contribute text if it's useful.\n\u2014 Mayur Agnihotri, StraightArc Technologies",
+      "createdAt": "2026-05-23T13:14:12Z",
+      "updatedAt": "2026-05-23T13:14:12Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
