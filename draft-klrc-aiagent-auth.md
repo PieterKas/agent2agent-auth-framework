@@ -297,7 +297,7 @@ OAuth 2.0 defines a number authorization grant flows in support of different aut
 When a User delegates authorization to an Agent, the Agent SHOULD obtain an access token using the Authorization Code Grant as described in {{Section 4.1 of OAUTH-FRAMEWORK}}. This redirection-based flow involves an interactive authorization process in which the user authenticates to the authorization server and explicitly approves the requested access. Users SHOULD authenticate using phishing-resistant authentication mechanisms such as a passkey. The Agent, acting as an OAuth client, authenticates itself using the credentials described in {{agent_credentials}} with a compatible OAuth client authentication mechanism, and not with the use of static, long-lived client secrets. Compatible OAuth client authentication mechanisms are defined in {{!OAUTH-CLIENTAUTH-JWT=RFC7523}}, {{!OAUTH-CLIENTAUTH-MTLS=RFC8705}} and {{!OAUTH-SPIFFE=I-D.ietf-oauth-spiffe-client-auth}}. The resulting access token reflects the authorization delegated to the Agent by the User and can be used by the Agent to access resources on behalf of the user. The use of OAuth negates the need for the Agent to have access to a User's credentials when accessing a resource on the User's behalf.
 
 ### Agent Obtains Own Authorization {#agent_obtains_own_access_token}
-Agents obtaining access tokens on their own behalf can use the Client Credentials Grant as described in {{Section 4.4 of OAUTH-FRAMEWORK}} or the JWT Authorization Grant as described in {{Section 2.1 of OAUTH-CLIENTAUTH-JWT}}. When using the Client Credentials Grant, the Agent authenticates itself using the credentials described in {{agent_credentials}} with a compatible OAuth client authentication mechanism, and not with the use of static, long-lived client secrets. When using the JWT Authorization Grant, the Agent will be identified in the subject of the JWT assertion.
+Agents obtaining access tokens on their own behalf can use the Client Credentials Grant as described in {{Section 4.4 of OAUTH-FRAMEWORK}} or the JWT Authorization Grant as described in {{Section 2.1 of OAUTH-CLIENTAUTH-JWT}}. When using the Client Credentials Grant, the Agent authenticates itself using the credentials described in {{agent_credentials}} with a compatible OAuth client authentication mechanism, and not with the use of static, long-lived client secrets. Compatible OAuth client authentication mechanisms are defined in {{OAUTH-CLIENTAUTH-JWT}}, {{OAUTH-CLIENTAUTH-MTLS}} and {{OAUTH-SPIFFE}}. When using the JWT Authorization Grant, the Agent will be identified in the subject of the JWT assertion.
 
 ### Agents Accessed by Systems or Other Agents
 Agents themselves can act in the role of an OAuth protected resource and be invoked by a System (e.g. a batch job or another Agent). The System obtains an access token using an appropriate mechanism and then invokes the Agent presenting the access token.
@@ -419,7 +419,7 @@ The authors would like to thank:
    * Add Aaron Parecki from Okta as co-author.
    * Add reference to phishing resistent credentials (e.g. FIDO passkeys/authenticators) - see https://github.com/PieterKas/agent2agent-auth-framework/issues/106
    * Fold attestation section into provosioning section. Change terminology to posture management.
-
+   * Clarify Oauth authentication mechanisms when an Agent acts as and OAuth client.
    * Add section on Agent Mission (see issue https://github.com/PieterKas/agent2agent-auth-framework/issues/107)
 
   -01
