@@ -1677,7 +1677,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
           <h4 id="name-agent-obtains-own-authoriza">
 <a href="#section-9.4.2" class="section-number selfRef">9.4.2. </a><a href="#name-agent-obtains-own-authoriza" class="section-name selfRef">Agent Obtains Own Authorization</a>
           </h4>
-<p id="section-9.4.2-1">Agents obtaining access tokens on their own behalf can use the Client Credentials Grant as described in <span><a href="https://rfc-editor.org/rfc/rfc6749#section-4.4" class="relref">Section 4.4</a> of [<a href="#OAUTH-FRAMEWORK" class="cite xref">OAUTH-FRAMEWORK</a>]</span> or the JWT Authorization Grant as described in <span><a href="https://rfc-editor.org/rfc/rfc7523#section-2.1" class="relref">Section 2.1</a> of [<a href="#OAUTH-CLIENTAUTH-JWT" class="cite xref">OAUTH-CLIENTAUTH-JWT</a>]</span>. When using the Client Credentials Grant, the Agent authenticates itself using the credentials described in <a href="#agent_credentials" class="auto internal xref">Section 6</a> with a compatible OAuth client authentication mechanism, and not with the use of static, long-lived client secrets. When using the JWT Authorization Grant, the Agent will be identified in the subject of the JWT assertion.<a href="#section-9.4.2-1" class="pilcrow">¶</a></p>
+<p id="section-9.4.2-1">Agents obtaining access tokens on their own behalf can use the Client Credentials Grant as described in <span><a href="https://rfc-editor.org/rfc/rfc6749#section-4.4" class="relref">Section 4.4</a> of [<a href="#OAUTH-FRAMEWORK" class="cite xref">OAUTH-FRAMEWORK</a>]</span> or the JWT Authorization Grant as described in <span><a href="https://rfc-editor.org/rfc/rfc7523#section-2.1" class="relref">Section 2.1</a> of [<a href="#OAUTH-CLIENTAUTH-JWT" class="cite xref">OAUTH-CLIENTAUTH-JWT</a>]</span>. When using the Client Credentials Grant, the Agent authenticates itself using the credentials described in <a href="#agent_credentials" class="auto internal xref">Section 6</a> with a compatible OAuth client authentication mechanism, and not with the use of static, long-lived client secrets. Compatible OAuth client authentication mechanisms are defined in <span>[<a href="#OAUTH-CLIENTAUTH-JWT" class="cite xref">OAUTH-CLIENTAUTH-JWT</a>]</span>, <span>[<a href="#OAUTH-CLIENTAUTH-MTLS" class="cite xref">OAUTH-CLIENTAUTH-MTLS</a>]</span> and <span>[<a href="#OAUTH-SPIFFE" class="cite xref">OAUTH-SPIFFE</a>]</span>. When using the JWT Authorization Grant, the Agent will be identified in the subject of the JWT assertion.<a href="#section-9.4.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="agents-accessed-by-systems-or-other-agents">
@@ -2067,7 +2067,10 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
           <p id="appendix-A-3.3.1">Fold attestation section into provosioning section. Change terminology to posture management.<a href="#appendix-A-3.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-3.4">
-          <p id="appendix-A-3.4.1">Add section on Agent Mission (see issue https://github.com/PieterKas/agent2agent-auth-framework/issues/107)<a href="#appendix-A-3.4.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-3.4.1">Clarify Oauth authentication mechanisms when an Agent acts as and OAuth client.<a href="#appendix-A-3.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-3.5">
+          <p id="appendix-A-3.5.1">Add section on Agent Mission (see issue https://github.com/PieterKas/agent2agent-auth-framework/issues/107)<a href="#appendix-A-3.5.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="appendix-A-4">-01<a href="#appendix-A-4" class="pilcrow">¶</a></p>

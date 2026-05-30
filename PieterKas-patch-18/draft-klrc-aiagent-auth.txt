@@ -676,9 +676,11 @@ Table of Contents
    [OAUTH-CLIENTAUTH-JWT].  When using the Client Credentials Grant, the
    Agent authenticates itself using the credentials described in
    Section 6 with a compatible OAuth client authentication mechanism,
-   and not with the use of static, long-lived client secrets.  When
-   using the JWT Authorization Grant, the Agent will be identified in
-   the subject of the JWT assertion.
+   and not with the use of static, long-lived client secrets.
+   Compatible OAuth client authentication mechanisms are defined in
+   [OAUTH-CLIENTAUTH-JWT], [OAUTH-CLIENTAUTH-MTLS] and [OAUTH-SPIFFE].
+   When using the JWT Authorization Grant, the Agent will be identified
+   in the subject of the JWT assertion.
 
 9.4.3.  Agents Accessed by Systems or Other Agents
 
@@ -1227,6 +1229,9 @@ Appendix A.  Document History
 
    *  Fold attestation section into provosioning section.  Change
       terminology to posture management.
+
+   *  Clarify Oauth authentication mechanisms when an Agent acts as and
+      OAuth client.
 
    *  Add section on Agent Mission (see issue
       https://github.com/PieterKas/agent2agent-auth-framework/
