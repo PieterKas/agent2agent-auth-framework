@@ -1177,6 +1177,9 @@ Appendix A.  Document History
       passkeys/authenticators) - see https://github.com/PieterKas/
       agent2agent-auth-framework/issues/106
 
+   *  Fold attestation section into provosioning section.  Change
+      terminology to posture management.
+
    -01
 
    *  Add Nick Steele from OpenAI as co-author.
