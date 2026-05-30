@@ -660,7 +660,9 @@ Table of Contents
    Agent, acting as an OAuth client, authenticates itself using the
    credentials described in Section 6 with a compatible OAuth client
    authentication mechanism, and not with the use of static, long-lived
-   client secrets.  The resulting access token reflects the
+   client secrets.  Compatible OAuth client authentication mechanisms
+   are defined in [OAUTH-CLIENTAUTH-JWT], [OAUTH-CLIENTAUTH-MTLS] and
+   [OAUTH-SPIFFE].  The resulting access token reflects the
    authorization delegated to the Agent by the User and can be used by
    the Agent to access resources on behalf of the user.  The use of
    OAuth negates the need for the Agent to have access to a User's
@@ -1055,6 +1057,13 @@ Table of Contents
               Authorization Grants", RFC 7523, DOI 10.17487/RFC7523, May
               2015, <https://www.rfc-editor.org/rfc/rfc7523>.
 
+   [OAUTH-CLIENTAUTH-MTLS]
+              Campbell, B., Bradley, J., Sakimura, N., and T.
+              Lodderstedt, "OAuth 2.0 Mutual-TLS Client Authentication
+              and Certificate-Bound Access Tokens", RFC 8705,
+              DOI 10.17487/RFC8705, February 2020,
+              <https://www.rfc-editor.org/rfc/rfc8705>.
+
    [OAUTH-FRAMEWORK]
               Hardt, D., Ed., "The OAuth 2.0 Authorization Framework",
               RFC 6749, DOI 10.17487/RFC6749, October 2012,
@@ -1093,6 +1102,14 @@ Table of Contents
               Authorization Server Metadata", RFC 8414,
               DOI 10.17487/RFC8414, June 2018,
               <https://www.rfc-editor.org/rfc/rfc8414>.
+
+   [OAUTH-SPIFFE]
+              Schwenkschuster, A., Kasselman, P., Rose, S., and S.
+              Thorgersen, "OAuth SPIFFE Client Authentication", Work in
+              Progress, Internet-Draft, draft-ietf-oauth-spiffe-client-
+              auth-01, 2 March 2026,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
+              spiffe-client-auth-01>.
 
    [OAUTH-TOKEN-EXCHANGE]
               Jones, M., Nadalin, A., Campbell, B., Ed., Bradley, J.,
