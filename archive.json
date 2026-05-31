@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-26T03:42:50.271898+00:00",
+  "timestamp": "2026-05-31T04:01:10.319548+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -1693,15 +1693,15 @@
       "id": "I_kwDOQP22qc8AAAABABddqQ",
       "title": "Contextualize FIDO to AIMS",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/106",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "Follow-up from discussion amongst authors",
       "createdAt": "2026-04-20T14:39:38Z",
-      "updatedAt": "2026-04-20T14:39:38Z",
-      "closedAt": null,
+      "updatedAt": "2026-05-30T06:51:03Z",
+      "closedAt": "2026-05-30T06:51:03Z",
       "comments": []
     },
     {
@@ -1709,7 +1709,7 @@
       "id": "I_kwDOQP22qc8AAAABABe8GQ",
       "title": "Clarify Tasks and Intent in the context of AIMS",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/107",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "OWNER",
       "assignees": [
@@ -1718,8 +1718,8 @@
       "labels": [],
       "body": "Follow-on from conversation with authors. See issue #94 \n",
       "createdAt": "2026-04-20T14:43:32Z",
-      "updatedAt": "2026-04-21T14:00:17Z",
-      "closedAt": null,
+      "updatedAt": "2026-05-30T06:51:19Z",
+      "closedAt": "2026-05-30T06:51:19Z",
       "comments": []
     },
     {
@@ -4533,24 +4533,26 @@
       "id": "PR_kwDOQP22qc7UUmaL",
       "title": "Recommend the use of phishing resistent user authentication",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/108",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "PieterKas",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "Refer to FIDO passkeys/authenticators as an example of phishing-resistant credentials (see issue #106 )",
       "createdAt": "2026-04-21T13:55:25Z",
-      "updatedAt": "2026-05-12T12:39:43Z",
+      "updatedAt": "2026-05-30T06:50:49Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
       "baseRefOid": "cba5256f5c7f60592afaa8133bf37651e8fe8b84",
       "headRepository": "PieterKas/agent2agent-auth-framework",
       "headRefName": "PieterKas-patch-16",
-      "headRefOid": "786d941f733dd00d09c438522e64e4220c2ee9c0",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "bdce323d80316e2ea5762d8a1195a19d364cc5ca",
+      "closedAt": "2026-05-30T06:50:49Z",
+      "mergedAt": "2026-05-30T06:50:49Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "079b2af22d4f487999fc113ec539725b760d0744"
+      },
       "comments": [],
       "reviews": [
         {
@@ -4620,26 +4622,130 @@
       "id": "PR_kwDOQP22qc7UZnhM",
       "title": "Introduce concept of Agent Mission",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/109",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "PieterKas",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "Added a new section on Agent Mission and updated acknowledgments (see issu #107)",
       "createdAt": "2026-04-21T18:38:31Z",
-      "updatedAt": "2026-05-12T12:42:41Z",
+      "updatedAt": "2026-05-30T06:50:29Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
       "baseRefOid": "cba5256f5c7f60592afaa8133bf37651e8fe8b84",
       "headRepository": "PieterKas/agent2agent-auth-framework",
       "headRefName": "PieterKas-patch-17",
       "headRefOid": "c4fb39192b088cbdb2c0ebf42e15d20c8dd6f56f",
+      "closedAt": "2026-05-30T06:50:29Z",
+      "mergedAt": "2026-05-30T06:50:29Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "d9587c2b5515951c193ff83585b5de56b2089d73"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 115,
+      "id": "PR_kwDOQP22qc7gs8Tw",
+      "title": "Replaced attestation with posture assessment",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/115",
+      "state": "MERGED",
+      "author": "yaroslavros",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-05-29T15:24:54Z",
+      "updatedAt": "2026-05-30T06:46:14Z",
+      "baseRepository": "PieterKas/agent2agent-auth-framework",
+      "baseRefName": "main",
+      "baseRefOid": "5bd36e4fe7535cd2d46f1ae68c78a885e405f57e",
+      "headRepository": "yaroslavros/agent2agent-auth-framework",
+      "headRefName": "main",
+      "headRefOid": "567142299f684d855d9fade1faca5602578a5c90",
+      "closedAt": "2026-05-30T06:46:14Z",
+      "mergedAt": "2026-05-30T06:46:14Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "c5d3e5463f98edbce00bd6c27419b1170e2dea14"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc8AAAABBbsgvQ",
+          "commit": {
+            "abbreviatedOid": "5671422"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-05-29T16:13:12Z",
+          "updatedAt": "2026-05-29T16:13:12Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOQP22qc8AAAABBfQP4w",
+          "commit": {
+            "abbreviatedOid": "5671422"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-05-30T06:46:00Z",
+          "updatedAt": "2026-05-30T06:46:00Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 116,
+      "id": "PR_kwDOQP22qc7g6Wr3",
+      "title": "Refine Agent authorization and OAuth 2.0 access token details",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/116",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Clarified the process for Agent authorization and OAuth 2.0 access token usage. Enhanced descriptions of authorization flows and security best practices.",
+      "createdAt": "2026-05-30T07:38:13Z",
+      "updatedAt": "2026-05-30T08:24:08Z",
+      "baseRepository": "PieterKas/agent2agent-auth-framework",
+      "baseRefName": "main",
+      "baseRefOid": "079b2af22d4f487999fc113ec539725b760d0744",
+      "headRepository": "PieterKas/agent2agent-auth-framework",
+      "headRefName": "PieterKas-patch-18",
+      "headRefOid": "76f2dd035ae2e27f83529ddba5fba2e660a4a995",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc8AAAABBfb26w",
+          "commit": {
+            "abbreviatedOid": "00805f0"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-30T08:16:39Z",
+          "updatedAt": "2026-05-30T08:16:39Z",
+          "comments": [
+            {
+              "originalPosition": 9,
+              "body": "```suggestion\nAgents obtaining access tokens on their own behalf can use the Client Credentials Grant as described in {{Section 4.4 of OAUTH-FRAMEWORK}} or the JWT Authorization Grant as described in {{Section 2.1 of OAUTH-CLIENTAUTH-JWT}}. When using the Client Credentials Grant, the Agent authenticates itself using the credentials described in {{agent_credentials}} with a compatible OAuth client authentication mechanism, and not with the use of static, long-lived client secrets. When using the JWT Authorization Grant, the Agent will be identified in the subject of the JWT assertion.\n```",
+              "createdAt": "2026-05-30T08:16:39Z",
+              "updatedAt": "2026-05-30T08:16:39Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
