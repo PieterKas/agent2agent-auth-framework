@@ -419,6 +419,7 @@ The authors would like to thank:
    * Add Aaron Parecki from Okta as co-author.
    * Add reference to phishing resistent credentials (e.g. FIDO passkeys/authenticators) - see https://github.com/PieterKas/agent2agent-auth-framework/issues/106
    * Fold attestation section into provosioning section. Change terminology to posture management.
+   * Update Security Considetations section
 
    * Add section on Agent Mission (see issue https://github.com/PieterKas/agent2agent-auth-framework/issues/107)
 
