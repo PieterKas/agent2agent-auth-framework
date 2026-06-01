@@ -1000,9 +1000,11 @@ Table of Contents
 14.  Privacy Considerations
 
    This document composes existing specifications to enable
-   authentication and authorization between AI agents.  In addition to
-   the the privacy considerations in Section 9.9, the privacy
-   cosniderations in each referenced specification apply in full.
+   authentication and authorization between AI agents.
+
+   In addition to the the privacy considerations in Section 9.9, the
+   privacy considerations in each referenced specification apply in
+   full.
 
 15.  IANA Considerations
 
