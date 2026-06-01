@@ -393,8 +393,6 @@ Compliance for Agent-based systems SHOULD be assessed by auditing observed behav
 
 # Security Considerations
 
-TODO Security
-
 # Privacy Considerations
 
 TODO Privacy but there's also {{privacy-considerations}}...
