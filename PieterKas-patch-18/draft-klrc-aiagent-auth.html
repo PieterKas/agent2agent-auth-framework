@@ -1846,7 +1846,8 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
       <h2 id="name-security-considerations">
 <a href="#section-13" class="section-number selfRef">13. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-13-1">TODO Security<a href="#section-13-1" class="pilcrow">¶</a></p>
+<p id="section-13-1">This document composes existing specifications to enable authentication and authorization between AI agents. The security considerations of each referenced specification apply in full.<a href="#section-13-1" class="pilcrow">¶</a></p>
+<p id="section-13-2">In addition to the guidance included in existing specifications, additional security best practices and profiles have been developed for the Oauth protocol famility. The OAuth 2.0 Security Best Current Practice <span>[<a href="#OAUTH-BCP" class="cite xref">OAUTH-BCP</a>]</span> which captures current guidance on threats and mitigations that have emerged since the original OAuth 2.0 specifications were published. The FAPI 2.0 Security Profile  <span>[<a href="#OpenIDConnect.FAPI" class="cite xref">OpenIDConnect.FAPI</a>]</span> defines a high-assurance profile of OAuth 2.0 suitable for high security applications.<a href="#section-13-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="privacy-considerations">
@@ -1854,7 +1855,8 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
       <h2 id="name-privacy-considerations-2">
 <a href="#section-14" class="section-number selfRef">14. </a><a href="#name-privacy-considerations-2" class="section-name selfRef">Privacy Considerations</a>
       </h2>
-<p id="section-14-1">TODO Privacy but there's also <a href="#privacy" class="auto internal xref">Section 9.9</a>...<a href="#section-14-1" class="pilcrow">¶</a></p>
+<p id="section-14-1">This document composes existing specifications to enable authentication and authorization between AI agents.<a href="#section-14-1" class="pilcrow">¶</a></p>
+<p id="section-14-2">In addition to the the privacy considerations in <a href="#privacy" class="auto internal xref">Section 9.9</a>, the privacy considerations in each referenced specification apply in full.<a href="#section-14-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
@@ -1988,6 +1990,10 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
         <dd>
 <span class="refTitle">"OpenID Connect Discovery 1.0"</span>, <span>n.d.</span>, <span>&lt;<a href="https://openid.net/specs/openid-connect-discovery-1_0-final.html">https://openid.net/specs/openid-connect-discovery-1_0-final.html</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="OpenIDConnect.FAPI">[OpenIDConnect.FAPI]</dt>
+        <dd>
+<span class="refTitle">"FAPI 2.0 Security Profile"</span>, <span>n.d.</span>, <span>&lt;<a href="https://openid.net/specs/fapi-security-profile-2_0-final.html">https://openid.net/specs/fapi-security-profile-2_0-final.html</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
@@ -2071,7 +2077,10 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
           <p id="appendix-A-3.4.1">Clarify Oauth authentication mechanisms when an Agent acts as and OAuth client.<a href="#appendix-A-3.4.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-3.5">
-          <p id="appendix-A-3.5.1">Add section on Agent Mission (see issue https://github.com/PieterKas/agent2agent-auth-framework/issues/107)<a href="#appendix-A-3.5.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-3.5.1">Update Security Considerations section<a href="#appendix-A-3.5.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-3.6">
+          <p id="appendix-A-3.6.1">Add section on Agent Mission (see issue https://github.com/PieterKas/agent2agent-auth-framework/issues/107)<a href="#appendix-A-3.6.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="appendix-A-4">-01<a href="#appendix-A-4" class="pilcrow">¶</a></p>
