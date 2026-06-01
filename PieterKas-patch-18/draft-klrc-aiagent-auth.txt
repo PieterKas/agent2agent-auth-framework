@@ -653,10 +653,10 @@ Table of Contents
    When a User delegates authorization to an Agent, the Agent SHOULD
    obtain an access token using the Authorization Code Grant as
    described in Section 4.1 of [OAUTH-FRAMEWORK].  This redirection-
-   based flow involves an interactive authorization process, typicallly
+   based flow involves an interactive authorization process, typically
    in a web browser, in which the user authenticates to the
    authorization server and explicitly approves the requested access.
-   Users SHOULD authenticate using phishing-resistant authentication
+   Users SHOULD be authenticated using phishing-resistant authentication
    mechanisms such as a passkey.  Once the user has approved the
    request, the authorization server returns an authorization code to
    the Agent via the redirect.
