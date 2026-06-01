@@ -396,7 +396,7 @@ Compliance for Agent-based systems SHOULD be assessed by auditing observed behav
 
 # Security Considerations
 
-This document does not introduce new security mechanisms; it composes existing specifications to enable authentication and authorization between AI agents. The security considerations of each referenced specification apply in full. 
+This document does not introduce new security mechanisms. It composes existing specifications to enable authentication and authorization between AI agents. The security considerations of each referenced specification apply in full.
 
 In addition to the guidance included in existing specifications, additional security best practices and profiles have been developed for the Oauth protocol famility. The OAuth 2.0 Security Best Current Practice {{OAUTH-BCP}} which captures current guidance on threats and mitigations that have emerged since the original OAuth 2.0 specifications were published. The FAPI 2.0 Security Profile  defines a high-assurance profile of OAuth 2.0 suitable for high security applications {{}}.
 
