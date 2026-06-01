@@ -662,20 +662,20 @@ Table of Contents
    the Agent via the redirect.
 
    The Agent, acting as an OAuth client, then makes a token request to
-   the authorization server to redeem this code for an access token.
-   When making this token request, the Agent authenticates itself
-   directly to the authorization server using the credentials described
-   in Section 6 with a compatible OAuth client authentication mechanism,
-   and not with the use of static, long-lived client secrets.
-   Compatible OAuth client authentication mechanisms are defined in
-   [OAUTH-CLIENTAUTH-JWT], [OAUTH-CLIENTAUTH-MTLS] and [OAUTH-SPIFFE].
-   The OAuth client authentication step is distinct from, and occurs
-   after, the user authentication and approval described above.  The
-   resulting access token reflects the authorization delegated to the
-   Agent by the User and can be used by the Agent to access resources on
-   behalf of the user.  The use of OAuth negates the need for the Agent
-   to have access to a User's credentials when accessing a resource on
-   the User's behalf.
+   the authorization server to redeem the authorization code for an
+   access token.  When making this token request, the Agent
+   authenticates itself directly to the authorization server using the
+   credentials described in Section 6 with a compatible OAuth client
+   authentication mechanism, and not with the use of static, long-lived
+   client secrets.  Compatible OAuth client authentication mechanisms
+   are defined in [OAUTH-CLIENTAUTH-JWT], [OAUTH-CLIENTAUTH-MTLS] and
+   [OAUTH-SPIFFE].  The OAuth client authentication step is distinct
+   from, and occurs after, the user authentication and approval
+   described above.  The resulting access token reflects the
+   authorization delegated to the Agent by the User and can be used by
+   the Agent to access resources on behalf of the user.  The use of
+   OAuth negates the need for the Agent to have access to a User's
+   credentials when accessing a resource on the User's behalf.
 
 9.4.2.  Agent Obtains Own Authorization
 
