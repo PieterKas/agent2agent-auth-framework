@@ -5,7 +5,7 @@
 Network Working Group                                       P. Kasselman
 Internet-Draft                                          Defakto Security
 Intended status: Informational                               J. Lombardo
-Expires: 1 December 2026                                             AWS
+Expires: 3 December 2026                                             AWS
                                                             Y. Rosomakho
                                                                  Zscaler
                                                              B. Campbell
@@ -14,7 +14,7 @@ Expires: 1 December 2026                                             AWS
                                                                   OpenAI
                                                               A. Parecki
                                                                     Okta
-                                                             30 May 2026
+                                                             1 June 2026
 
 
                AI Agent Authentication and Authorization
@@ -60,7 +60,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 1 December 2026.
+   This Internet-Draft will expire on 3 December 2026.
 
 Copyright Notice
 
@@ -105,7 +105,7 @@ Table of Contents
      9.6.  Cross Domain Access
      9.7.  Human in the Loop
      9.8.  Tool-to-Service Access
-     9.9.  Privacy Considerations {privacy-considerations}
+     9.9.  Privacy Considerations
      9.10. OAuth 2.0 Discovery in Dynamic Environments
        9.10.1.  Authorization Server Capability Discovery
        9.10.2.  Protected Resource Capability Discovery
@@ -820,7 +820,7 @@ Table of Contents
    received from the Agent to Services or Resources.  It increases the
    risk of credential theft and lateral attacks.
 
-9.9.  Privacy Considerations {privacy-considerations}
+9.9.  Privacy Considerations
 
    Authorization tokens may contain user identifiers, agent identifiers,
    audience restrictions, transaction details, and contextual
@@ -984,11 +984,27 @@ Table of Contents
 
 13.  Security Considerations
 
-   TODO Security
+   This document composes existing specifications to enable
+   authentication and authorization between AI agents.  The security
+   considerations of each referenced specification apply in full.
+
+   In addition to the guidance included in existing specifications,
+   additional security best practices and profiles have been developed
+   for the Oauth protocol famility.  The OAuth 2.0 Security Best Current
+   Practice [OAUTH-BCP] which captures current guidance on threats and
+   mitigations that have emerged since the original OAuth 2.0
+   specifications were published.  The FAPI 2.0 Security Profile
+   [OpenIDConnect.FAPI] defines a high-assurance profile of OAuth 2.0
+   suitable for high security applications.
 
 14.  Privacy Considerations
 
-   TODO Privacy but there's also Section 14...
+   This document composes existing specifications to enable
+   authentication and authorization between AI agents.
+
+   In addition to the the privacy considerations in Section 9.9, the
+   privacy considerations in each referenced specification apply in
+   full.
 
 15.  IANA Considerations
 
@@ -1124,6 +1140,11 @@ Table of Contents
               <https://openid.net/specs/openid-connect-discovery-
               1_0-final.html>.
 
+   [OpenIDConnect.FAPI]
+              "FAPI 2.0 Security Profile", n.d.,
+              <https://openid.net/specs/fapi-security-profile-
+              2_0-final.html>.
+
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
@@ -1206,6 +1227,8 @@ Appendix A.  Document History
 
    *  Fold attestation section into provosioning section.  Change
       terminology to posture management.
+
+   *  Update Security Considetations section
 
    *  Add section on Agent Mission (see issue
       https://github.com/PieterKas/agent2agent-auth-framework/
