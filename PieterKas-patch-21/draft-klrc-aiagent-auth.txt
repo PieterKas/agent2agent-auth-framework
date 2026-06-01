@@ -994,9 +994,9 @@ Table of Contents
    for the Oauth protocol famility.  The OAuth 2.0 Security Best Current
    Practice [OAUTH-BCP] which captures current guidance on threats and
    mitigations that have emerged since the original OAuth 2.0
-   specifications were published.  The FAPI 2.0 Security Profile defines
-   a high-assurance profile of OAuth 2.0 suitable for high security
-   applications.
+   specifications were published.  The FAPI 2.0 Security Profile
+   [OpenIDConnect.FAPI] defines a high-assurance profile of OAuth 2.0
+   suitable for high security applications.
 
 14.  Privacy Considerations
 
@@ -1135,6 +1135,11 @@ Table of Contents
               "OpenID Connect Discovery 1.0", n.d.,
               <https://openid.net/specs/openid-connect-discovery-
               1_0-final.html>.
+
+   [OpenIDConnect.FAPI]
+              "FAPI 2.0 Security Profile", n.d.,
+              <https://openid.net/specs/fapi-security-profile-
+              2_0-final.html>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
