@@ -75,6 +75,9 @@ normative:
   OpenIDConnect.Discovery:
     title: OpenID Connect Discovery 1.0
     target: https://openid.net/specs/openid-connect-discovery-1_0-final.html
+  FAPI.2_0:
+    title: FAPI 2.0 Security Profile
+    target: https://openid.net/specs/fapi-security-profile-2_0-final.html
   OpenIDConnect.CIBA:
     title: OpenID Connect Client-Initiated Backchannel Authentication Flow - Core 1.0
     target: https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html
@@ -393,7 +396,9 @@ Compliance for Agent-based systems SHOULD be assessed by auditing observed behav
 
 # Security Considerations
 
-TODO Security
+This document does not introduce new security mechanisms; it composes existing specifications to enable authentication and authorization between AI agents. The security considerations of each referenced specification apply in full. 
+
+In addition to the guidance included in existing specifications, additional security best practices and profiles have been developed for the Oauth protocol famility. The OAuth 2.0 Security Best Current Practice {{OAUTH-BCP}} which captures current guidance on threats and mitigations that have emerged since the original OAuth 2.0 specifications were published. The FAPI 2.0 Security Profile  defines a high-assurance profile of OAuth 2.0 suitable for high security applications {{}}.
 
 # Privacy Considerations
 
@@ -421,6 +426,7 @@ The authors would like to thank:
    * Fold attestation section into provosioning section. Change terminology to posture management.
 
    * Add section on Agent Mission (see issue https://github.com/PieterKas/agent2agent-auth-framework/issues/107)
+   * Update security considerations section to point to all the other documentss security considerations.
 
   -01
 
