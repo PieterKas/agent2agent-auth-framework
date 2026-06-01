@@ -400,10 +400,11 @@ This document composes existing specifications to enable authentication and auth
 
 In addition to the guidance included in existing specifications, additional security best practices and profiles have been developed for the Oauth protocol famility. The OAuth 2.0 Security Best Current Practice {{OAUTH-BCP}} which captures current guidance on threats and mitigations that have emerged since the original OAuth 2.0 specifications were published. The FAPI 2.0 Security Profile  {{OpenIDConnect.FAPI}} defines a high-assurance profile of OAuth 2.0 suitable for high security applications.
 
-
 # Privacy Considerations
 
-This document composes existing specifications to enable authentication and authorization between AI agents. In addition to the the privacy considerations in {{privacy}}, the privacy cosniderations in each referenced specification apply in full.
+This document composes existing specifications to enable authentication and authorization between AI agents.
+
+In addition to the the privacy considerations in {{privacy}}, the privacy considerations in each referenced specification apply in full.
 
 # IANA Considerations
 
