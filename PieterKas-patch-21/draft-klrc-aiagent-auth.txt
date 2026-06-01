@@ -984,10 +984,9 @@ Table of Contents
 
 13.  Security Considerations
 
-   This document does not introduce new security mechanisms.  It
-   composes existing specifications to enable authentication and
-   authorization between AI agents.  The security considerations of each
-   referenced specification apply in full.
+   This document composes existing specifications to enable
+   authentication and authorization between AI agents.  The security
+   considerations of each referenced specification apply in full.
 
    In addition to the guidance included in existing specifications,
    additional security best practices and profiles have been developed
@@ -1000,7 +999,10 @@ Table of Contents
 
 14.  Privacy Considerations
 
-   TODO Privacy but there's also Section 9.9...
+   This document composes existing specifications to enable
+   authentication and authorization between AI agents.  In addition to
+   the the privacy considerations in Section 9.9, the privacy
+   cosniderations in each referenced specification apply in full.
 
 15.  IANA Considerations
 
