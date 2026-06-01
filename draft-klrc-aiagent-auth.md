@@ -296,14 +296,16 @@ A resource server in receipt of tokens opaque to it are able to obtain authoriza
 ## Obtaining an OAuth 2.0 Access Token
 OAuth 2.0 defines a number authorization grant flows in support of different authorization scenarios. The appropriate flow depends on the specific authorization scenario and the nature of User involvement. The following subsections describe the most relevant flows for Agent authorization.
 
-### User Delegates Authorization
-When a User delegates authorization to an Agent, the Agent SHOULD obtain an access token using the Authorization Code Grant as described in {{Section 4.1 of OAUTH-FRAMEWORK}}. This redirection-based flow involves an interactive authorization process in which the user authenticates to the authorization server and explicitly approves the requested access. Users SHOULD authenticate using phishing-resistant authentication mechanisms such as a passkey. The resulting access token reflects the authorization delegated to the Agent by the User and can be used by the Agent to access resources on behalf of the user. The use of OAuth negates the need for the Agent to have access to a User's credentials when accessing a resource on the User's behalf.
+### User Delegates Authorization {#user_delegates_authorization}
+When a User delegates authorization to an Agent, the Agent SHOULD obtain an access token using the Authorization Code Grant as described in {{Section 4.1 of OAUTH-FRAMEWORK}}. This redirection-based flow involves an interactive authorization process, typically in a web browser, in which the user authenticates to the authorization server and explicitly approves the requested access. Users SHOULD be authenticated using phishing-resistant authentication mechanisms such as a passkey. Once the user has approved the request, the authorization server returns an authorization code to the Agent via the redirect.
+
+The Agent, acting as an OAuth client, then makes a token request to the authorization server to redeem the authorization code for an access token. When making this token request, the Agent authenticates itself directly to the authorization server using the credentials described in {{agent_credentials}} with a compatible OAuth client authentication mechanism, and not with the use of static, long-lived client secrets. Compatible OAuth client authentication mechanisms are defined in {{!OAUTH-CLIENTAUTH-JWT=RFC7523}}, {{!OAUTH-CLIENTAUTH-MTLS=RFC8705}} and {{!OAUTH-SPIFFE=I-D.ietf-oauth-spiffe-client-auth}}. The OAuth client authentication step is distinct from, and occurs after, the user authentication and approval described above. The resulting access token reflects the authorization delegated to the Agent by the User and can be used by the Agent to access resources on behalf of the user. The use of OAuth negates the need for the Agent to have access to a User's credentials when accessing a resource on the User's behalf.
 
 ### Agent Obtains Own Authorization {#agent_obtains_own_access_token}
-Agents obtaining access tokens on their own behalf can use the Client Credentials Grant as described in {{Section 4.4 of OAUTH-FRAMEWORK}} or the JWT Authorization Grant as described in {{Section 2.1 of !OAUTH-CLIENTAUTH-JWT=RFC7523}}. When using the Client Credentials Grant, the Agent authenticates itself using one of the mechanisms described in {{agent_authentication}} and not with the use of static, long-lived client secrets. When using the JWT Authorization Grant, the Agent will be identified in the subject of the JWT assertion.
+Agents obtaining access tokens on their own behalf can use the Client Credentials Grant as described in {{Section 4.4 of OAUTH-FRAMEWORK}} or the JWT Authorization Grant as described in {{Section 2.1 of OAUTH-CLIENTAUTH-JWT}}. When using the Client Credentials Grant, the Agent authenticates itself using the credentials described in {{agent_credentials}} with a compatible OAuth client authentication mechanism listed in previous section, and not with the use of static, long-lived client secrets. When using the JWT Authorization Grant, the Agent will be identified in the subject of the JWT assertion.
 
 ### Agents Accessed by Systems or Other Agents
-Agents themselves can act in the role of an OAuth protected resource and be invoked by a System (e.g. a batch job) or another Agent. The System obtains an access token using an appropriate mechanism and then invokes the Agent presenting the access token.
+Agents themselves can act in the role of an OAuth protected resource and be invoked by a System (e.g. a batch job or another Agent). The System obtains an access token using an appropriate mechanism and then invokes the Agent presenting the access token.
 
 ### OAuth 2.0 Security Best Practices
 The Best Current Practice for OAuth 2.0 Security as described in {{!OAUTH-BCP=RFC9700}} are applicable when requesting and using access tokens.
@@ -426,8 +428,8 @@ The authors would like to thank:
    * Add Aaron Parecki from Okta as co-author.
    * Add reference to phishing resistent credentials (e.g. FIDO passkeys/authenticators) - see https://github.com/PieterKas/agent2agent-auth-framework/issues/106
    * Fold attestation section into provosioning section. Change terminology to posture management.
-   * Update Security Considetations section
-
+   * Clarify Oauth authentication mechanisms when an Agent acts as and OAuth client.
+   * Update Security Considerations section
    * Add section on Agent Mission (see issue https://github.com/PieterKas/agent2agent-auth-framework/issues/107)
 
   -01
