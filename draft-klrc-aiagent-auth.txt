@@ -653,15 +653,29 @@ Table of Contents
    When a User delegates authorization to an Agent, the Agent SHOULD
    obtain an access token using the Authorization Code Grant as
    described in Section 4.1 of [OAUTH-FRAMEWORK].  This redirection-
-   based flow involves an interactive authorization process in which the
-   user authenticates to the authorization server and explicitly
-   approves the requested access.  Users SHOULD authenticate using
-   phishing-resistant authentication mechanisms such as a passkey.  The
-   resulting access token reflects the authorization delegated to the
-   Agent by the User and can be used by the Agent to access resources on
-   behalf of the user.  The use of OAuth negates the need for the Agent
-   to have access to a User's credentials when accessing a resource on
-   the User's behalf.
+   based flow involves an interactive authorization process, typically
+   in a web browser, in which the user authenticates to the
+   authorization server and explicitly approves the requested access.
+   Users SHOULD be authenticated using phishing-resistant authentication
+   mechanisms such as a passkey.  Once the user has approved the
+   request, the authorization server returns an authorization code to
+   the Agent via the redirect.
+
+   The Agent, acting as an OAuth client, then makes a token request to
+   the authorization server to redeem the authorization code for an
+   access token.  When making this token request, the Agent
+   authenticates itself directly to the authorization server using the
+   credentials described in Section 6 with a compatible OAuth client
+   authentication mechanism, and not with the use of static, long-lived
+   client secrets.  Compatible OAuth client authentication mechanisms
+   are defined in [OAUTH-CLIENTAUTH-JWT], [OAUTH-CLIENTAUTH-MTLS] and
+   [OAUTH-SPIFFE].  The OAuth client authentication step is distinct
+   from, and occurs after, the user authentication and approval
+   described above.  The resulting access token reflects the
+   authorization delegated to the Agent by the User and can be used by
+   the Agent to access resources on behalf of the user.  The use of
+   OAuth negates the need for the Agent to have access to a User's
+   credentials when accessing a resource on the User's behalf.
 
 9.4.2.  Agent Obtains Own Authorization
 
@@ -669,15 +683,16 @@ Table of Contents
    Credentials Grant as described in Section 4.4 of [OAUTH-FRAMEWORK] or
    the JWT Authorization Grant as described in Section 2.1 of
    [OAUTH-CLIENTAUTH-JWT].  When using the Client Credentials Grant, the
-   Agent authenticates itself using one of the mechanisms described in
-   Section 8 and not with the use of static, long-lived client secrets.
-   When using the JWT Authorization Grant, the Agent will be identified
-   in the subject of the JWT assertion.
+   Agent authenticates itself using the credentials described in
+   Section 6 with a compatible OAuth client authentication mechanism
+   listed in previous section, and not with the use of static, long-
+   lived client secrets.  When using the JWT Authorization Grant, the
+   Agent will be identified in the subject of the JWT assertion.
 
 9.4.3.  Agents Accessed by Systems or Other Agents
 
    Agents themselves can act in the role of an OAuth protected resource
-   and be invoked by a System (e.g. a batch job) or another Agent.  The
+   and be invoked by a System (e.g. a batch job or another Agent).  The
    System obtains an access token using an appropriate mechanism and
    then invokes the Agent presenting the access token.
 
@@ -1067,6 +1082,13 @@ Table of Contents
               Authorization Grants", RFC 7523, DOI 10.17487/RFC7523, May
               2015, <https://www.rfc-editor.org/rfc/rfc7523>.
 
+   [OAUTH-CLIENTAUTH-MTLS]
+              Campbell, B., Bradley, J., Sakimura, N., and T.
+              Lodderstedt, "OAuth 2.0 Mutual-TLS Client Authentication
+              and Certificate-Bound Access Tokens", RFC 8705,
+              DOI 10.17487/RFC8705, February 2020,
+              <https://www.rfc-editor.org/rfc/rfc8705>.
+
    [OAUTH-FRAMEWORK]
               Hardt, D., Ed., "The OAuth 2.0 Authorization Framework",
               RFC 6749, DOI 10.17487/RFC6749, October 2012,
@@ -1105,6 +1127,14 @@ Table of Contents
               Authorization Server Metadata", RFC 8414,
               DOI 10.17487/RFC8414, June 2018,
               <https://www.rfc-editor.org/rfc/rfc8414>.
+
+   [OAUTH-SPIFFE]
+              Schwenkschuster, A., Kasselman, P., Rose, S., and S.
+              Thorgersen, "OAuth SPIFFE Client Authentication", Work in
+              Progress, Internet-Draft, draft-ietf-oauth-spiffe-client-
+              auth-01, 2 March 2026,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
+              spiffe-client-auth-01>.
 
    [OAUTH-TOKEN-EXCHANGE]
               Jones, M., Nadalin, A., Campbell, B., Ed., Bradley, J.,
@@ -1228,7 +1258,10 @@ Appendix A.  Document History
    *  Fold attestation section into provosioning section.  Change
       terminology to posture management.
 
-   *  Update Security Considetations section
+   *  Clarify Oauth authentication mechanisms when an Agent acts as and
+      OAuth client.
+
+   *  Update Security Considerations section
 
    *  Add section on Agent Mission (see issue
       https://github.com/PieterKas/agent2agent-auth-framework/
