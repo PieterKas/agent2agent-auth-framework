@@ -676,9 +676,9 @@ Table of Contents
    [OAUTH-CLIENTAUTH-JWT].  When using the Client Credentials Grant, the
    Agent authenticates itself using the credentials described in
    Section 6 with a compatible OAuth client authentication mechanism
-   listed in Section 9.4.1, and not with the use of static, long-lived
-   client secrets.  When using the JWT Authorization Grant, the Agent
-   will be identified in the subject of the JWT assertion.
+   listed in previous section, and not with the use of static, long-
+   lived client secrets.  When using the JWT Authorization Grant, the
+   Agent will be identified in the subject of the JWT assertion.
 
 9.4.3.  Agents Accessed by Systems or Other Agents
 
