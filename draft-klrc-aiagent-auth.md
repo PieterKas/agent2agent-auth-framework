@@ -339,7 +339,7 @@ Access from the Tools to the resources and services MAY be controlled through a 
 
 **Note:** It is an anti-pattern for Tools to forward access tokens it received from the Agent to Services or Resources. It increases the risk of credential theft and lateral attacks.
 
-## Privacy Considerations {privacy-considerations}
+## Privacy Considerations {#privacy}
 Authorization tokens may contain user identifiers, agent identifiers, audience restrictions, transaction details, and contextual attributes. Deployments SHOULD minimize disclosure of personally identifiable or sensitive information in tokens and prefer audience-restricted and short-lived tokens. Where possible, opaque tokens with introspection SHOULD be preferred when claim minimization is required.
 
 Agents SHOULD request only the minimum scopes and authorization details necessary to complete a task. Resource servers SHOULD avoid logging full tokens and instead log token identifiers or hashes. When authorization context is propagated across services, derived or down-scoped tokens (such as transaction tokens) SHOULD be used to reduce correlation and replay risk.
@@ -399,7 +399,7 @@ TODO Security
 
 # Privacy Considerations
 
-TODO Privacy but there's also {{privacy-considerations}}...
+TODO Privacy but there's also {{privacy}}...
 
 # IANA Considerations
 
