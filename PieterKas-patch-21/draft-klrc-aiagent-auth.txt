@@ -105,7 +105,7 @@ Table of Contents
      9.6.  Cross Domain Access
      9.7.  Human in the Loop
      9.8.  Tool-to-Service Access
-     9.9.  Privacy Considerations {privacy-considerations}
+     9.9.  Privacy Considerations
      9.10. OAuth 2.0 Discovery in Dynamic Environments
        9.10.1.  Authorization Server Capability Discovery
        9.10.2.  Protected Resource Capability Discovery
@@ -820,7 +820,7 @@ Table of Contents
    received from the Agent to Services or Resources.  It increases the
    risk of credential theft and lateral attacks.
 
-9.9.  Privacy Considerations {privacy-considerations}
+9.9.  Privacy Considerations
 
    Authorization tokens may contain user identifiers, agent identifiers,
    audience restrictions, transaction details, and contextual
@@ -1000,7 +1000,7 @@ Table of Contents
 
 14.  Privacy Considerations
 
-   TODO Privacy but there's also Section 14...
+   TODO Privacy but there's also Section 9.9...
 
 15.  IANA Considerations
 

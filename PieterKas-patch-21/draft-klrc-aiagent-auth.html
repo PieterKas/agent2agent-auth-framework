@@ -1258,7 +1258,7 @@ svg {
                 <p id="section-toc.1-1.9.2.8.1"><a href="#section-9.8" class="auto internal xref">9.8</a>.  <a href="#name-tool-to-service-access" class="internal xref">Tool-to-Service Access</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.9">
-                <p id="section-toc.1-1.9.2.9.1"><a href="#section-9.9" class="auto internal xref">9.9</a>.  <a href="#name-privacy-considerations-priv" class="internal xref">Privacy Considerations {privacy-considerations}</a></p>
+                <p id="section-toc.1-1.9.2.9.1"><a href="#section-9.9" class="auto internal xref">9.9</a>.  <a href="#name-privacy-considerations" class="internal xref">Privacy Considerations</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.10">
                 <p id="section-toc.1-1.9.2.10.1"><a href="#section-9.10" class="auto internal xref">9.10</a>. <a href="#name-oauth-20-discovery-in-dynam" class="internal xref">OAuth 2.0 Discovery in Dynamic Environments</a></p>
@@ -1289,7 +1289,7 @@ svg {
             <p id="section-toc.1-1.13.1"><a href="#section-13" class="auto internal xref">13</a>. <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14">
-            <p id="section-toc.1-1.14.1"><a href="#section-14" class="auto internal xref">14</a>. <a href="#name-privacy-considerations" class="internal xref">Privacy Considerations</a></p>
+            <p id="section-toc.1-1.14.1"><a href="#section-14" class="auto internal xref">14</a>. <a href="#name-privacy-considerations-2" class="internal xref">Privacy Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.15">
             <p id="section-toc.1-1.15.1"><a href="#section-15" class="auto internal xref">15</a>. <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
@@ -1740,10 +1740,10 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <p id="section-9.8-3"><strong>Note:</strong> It is an anti-pattern for Tools to forward access tokens it received from the Agent to Services or Resources. It increases the risk of credential theft and lateral attacks.<a href="#section-9.8-3" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="privacy-considerations-privacy-considerations">
+<div id="privacy">
 <section id="section-9.9">
-        <h3 id="name-privacy-considerations-priv">
-<a href="#section-9.9" class="section-number selfRef">9.9. </a><a href="#name-privacy-considerations-priv" class="section-name selfRef">Privacy Considerations {privacy-considerations}</a>
+        <h3 id="name-privacy-considerations">
+<a href="#section-9.9" class="section-number selfRef">9.9. </a><a href="#name-privacy-considerations" class="section-name selfRef">Privacy Considerations</a>
         </h3>
 <p id="section-9.9-1">Authorization tokens may contain user identifiers, agent identifiers, audience restrictions, transaction details, and contextual attributes. Deployments <span class="bcp14">SHOULD</span> minimize disclosure of personally identifiable or sensitive information in tokens and prefer audience-restricted and short-lived tokens. Where possible, opaque tokens with introspection <span class="bcp14">SHOULD</span> be preferred when claim minimization is required.<a href="#section-9.9-1" class="pilcrow">¶</a></p>
 <p id="section-9.9-2">Agents <span class="bcp14">SHOULD</span> request only the minimum scopes and authorization details necessary to complete a task. Resource servers <span class="bcp14">SHOULD</span> avoid logging full tokens and instead log token identifiers or hashes. When authorization context is propagated across services, derived or down-scoped tokens (such as transaction tokens) <span class="bcp14">SHOULD</span> be used to reduce correlation and replay risk.<a href="#section-9.9-2" class="pilcrow">¶</a></p>
@@ -1851,10 +1851,10 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 </div>
 <div id="privacy-considerations">
 <section id="section-14">
-      <h2 id="name-privacy-considerations">
-<a href="#section-14" class="section-number selfRef">14. </a><a href="#name-privacy-considerations" class="section-name selfRef">Privacy Considerations</a>
+      <h2 id="name-privacy-considerations-2">
+<a href="#section-14" class="section-number selfRef">14. </a><a href="#name-privacy-considerations-2" class="section-name selfRef">Privacy Considerations</a>
       </h2>
-<p id="section-14-1">TODO Privacy but there's also <a href="#privacy-considerations" class="auto internal xref">Section 14</a>...<a href="#section-14-1" class="pilcrow">¶</a></p>
+<p id="section-14-1">TODO Privacy but there's also <a href="#privacy" class="auto internal xref">Section 9.9</a>...<a href="#section-14-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
