@@ -78,6 +78,9 @@ normative:
   OpenIDConnect.CIBA:
     title: OpenID Connect Client-Initiated Backchannel Authentication Flow - Core 1.0
     target: https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html
+  OpenIDConnect.FAPI:
+    title: FAPI 2.0 Security Profile
+    target: https://openid.net/specs/fapi-security-profile-2_0-final.html
   MCP:
     title: Model Context Protocol
     target: https://modelcontextprotocol.io/specification
@@ -337,7 +340,7 @@ Access from the Tools to the resources and services MAY be controlled through a 
 
 **Note:** It is an anti-pattern for Tools to forward access tokens it received from the Agent to Services or Resources. It increases the risk of credential theft and lateral attacks.
 
-## Privacy Considerations {#privacy-considerations}
+## Privacy Considerations {#privacy}
 Authorization tokens may contain user identifiers, agent identifiers, audience restrictions, transaction details, and contextual attributes. Deployments SHOULD minimize disclosure of personally identifiable or sensitive information in tokens and prefer audience-restricted and short-lived tokens. Where possible, opaque tokens with introspection SHOULD be preferred when claim minimization is required.
 
 Agents SHOULD request only the minimum scopes and authorization details necessary to complete a task. Resource servers SHOULD avoid logging full tokens and instead log token identifiers or hashes. When authorization context is propagated across services, derived or down-scoped tokens (such as transaction tokens) SHOULD be used to reduce correlation and replay risk.
@@ -393,11 +396,15 @@ Compliance for Agent-based systems SHOULD be assessed by auditing observed behav
 
 # Security Considerations
 
-TODO Security
+This document composes existing specifications to enable authentication and authorization between AI agents. The security considerations of each referenced specification apply in full.
+
+In addition to the guidance included in existing specifications, additional security best practices and profiles have been developed for the Oauth protocol famility. The OAuth 2.0 Security Best Current Practice {{OAUTH-BCP}} which captures current guidance on threats and mitigations that have emerged since the original OAuth 2.0 specifications were published. The FAPI 2.0 Security Profile  {{OpenIDConnect.FAPI}} defines a high-assurance profile of OAuth 2.0 suitable for high security applications.
 
 # Privacy Considerations
 
-TODO Privacy but there's also {{privacy-considerations}}...
+This document composes existing specifications to enable authentication and authorization between AI agents.
+
+In addition to the the privacy considerations in {{privacy}}, the privacy considerations in each referenced specification apply in full.
 
 # IANA Considerations
 
@@ -419,6 +426,7 @@ The authors would like to thank:
    * Add Aaron Parecki from Okta as co-author.
    * Add reference to phishing resistent credentials (e.g. FIDO passkeys/authenticators) - see https://github.com/PieterKas/agent2agent-auth-framework/issues/106
    * Fold attestation section into provosioning section. Change terminology to posture management.
+   * Update Security Considetations section
 
    * Add section on Agent Mission (see issue https://github.com/PieterKas/agent2agent-auth-framework/issues/107)
 
