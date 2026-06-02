@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-31T04:01:10.319548+00:00",
+  "timestamp": "2026-06-02T04:08:47.149363+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -1363,7 +1363,7 @@
       "labels": [],
       "body": "From the WIMSE mailing list.\n\nDear WIMSE working group,\n\ndraft-klrc-aiagent-auth [1] describes OAuth Authorization Code Grant for\nuser delegation and CIBA for human-in-the-loop.\n\nBoth assume the agent can receive callbacks or has a registered push\nchannel. However, a significant class of agents, like CLI tools, Docker\ncontainers, cron jobs, Telegram bots, cannot receive callbacks.\nAnd many that technically could, shouldn't. An agent that only makes\noutbound requests has no reason to accept inbound traffic. Every callback\nendpoint is an open port, an ingress rule, and an attack surface that\ndoesn't need to exist.\n\nAdditionally, many external services still use API keys rather than OAuth.\n\nThis came up while building agents that need to access mailboxes,\nthird-party APIs, and other services on the behalf of users. I have running\ncode [2] that addresses this gap using a Device-Flow-inspired UX with\nzero-knowledge encryption.\n\n\nIs this the right group for this discussion, or would oauth or another WG be\na better fit?\n",
       "createdAt": "2026-03-22T23:29:31Z",
-      "updatedAt": "2026-03-23T20:02:08Z",
+      "updatedAt": "2026-05-31T15:00:33Z",
       "closedAt": null,
       "comments": [
         {
@@ -1372,6 +1372,13 @@
           "body": "the [2] from above is https://github.com/LinkAuth/LinkAuth \n\nand there's been some more on the thread in WIMSE https://mailarchive.ietf.org/arch/msg/wimse/JX5O4NDiQsiW-6eFEjP4Zv53uCg/ \n\nI think that's all I'm able to contribute here",
           "createdAt": "2026-03-23T20:02:08Z",
           "updatedAt": "2026-03-23T20:02:08Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I am not expressing an opinion about this issue, but the issue's **title** needs clarification. As far as I can tell, the OP uses the term \"zero knowledge\" (e.g. [here](https://github.com/LinkAuth/LinkAuth/blob/main/concept.md)) for totally conventional public-key encryption. ",
+          "createdAt": "2026-05-31T15:00:33Z",
+          "updatedAt": "2026-05-31T15:00:33Z"
         }
       ]
     },
@@ -1727,7 +1734,7 @@
       "id": "I_kwDOQP22qc8AAAABBVuR1g",
       "title": "Mention FAPI in the security considerations section",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/110",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "OWNER",
       "assignees": [
@@ -1736,8 +1743,8 @@
       "labels": [],
       "body": "Help connect the dots for financial services companies.",
       "createdAt": "2026-05-05T14:30:55Z",
-      "updatedAt": "2026-05-05T14:31:06Z",
-      "closedAt": null,
+      "updatedAt": "2026-06-01T19:18:45Z",
+      "closedAt": "2026-06-01T19:18:45Z",
       "comments": []
     },
     {
@@ -1745,7 +1752,7 @@
       "id": "I_kwDOQP22qc8AAAABCAARkg",
       "title": "Add reference to OAuth SPIFFE authentication",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/111",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "OWNER",
       "assignees": [
@@ -1754,8 +1761,8 @@
       "labels": [],
       "body": "Addd referenc. to the new draft defining how to use SPIFFE for authentication with OAuth in the authorization section.\n\nhttps://datatracker.ietf.org/doc/draft-ietf-oauth-spiffe-client-auth/",
       "createdAt": "2026-05-12T12:42:25Z",
-      "updatedAt": "2026-05-12T12:42:25Z",
-      "closedAt": null,
+      "updatedAt": "2026-06-01T19:18:36Z",
+      "closedAt": "2026-06-01T19:18:36Z",
       "comments": []
     },
     {
@@ -1794,7 +1801,7 @@
       "labels": [],
       "body": "\nThe \"Cross Domain Access\" section describes the cross-domain exchange purely in\nterms of the user's identity assertion. The agent appears only as the\nauthenticated OAuth client performing the exchange; its own identity (which\n\"Agent Identifiers\" / \"Agent Credentials\" go to some trouble to establish) is\nnot carried into the issued authorization grant or the downstream access token.\nThat loses attribution at the resource server in the other domain, where it\nmatters for audit logs and per-agent policy.\n\n## Why this matters\n\nThe deployment I keep running into with Model Context Protocol servers: a\nuser has one or more assistant-style agents that act on their behalf against\nthe SaaS systems the user already signs into. Each agent is a distinct workload\nwith its own identifier and credential. The agents often run when the user\nisn't there (scheduled jobs, long background tasks).\n\nBecause no profile yet defines how the agent's identity is carried into the\ngrant, platforms hold a per-user refresh token for each downstream service and\nshare it across every agent on the platform. The downstream audit log\nattributes everything to the user. You can't scope one agent more narrowly than\nanother, and you can't revoke one agent without revoking the user's entire\ngrant to the platform.\n\n## What I'd like the section to say\n\nThe enterprise IdP (acting as the authorization server for the token exchange)\nis already the policy point for which users can reach which federated apps. The\nsame exchange can carry the agent: the resulting JWT authorization grant\nidentifies the user as the subject and the agent as the actor (`act`, RFC 8693\n\u00a74.1), the IdP applies policy to the (user, agent, audience) tuple, and the\nresource authorization server carries the actor through into the access token\nit issues. Requests outside what the user delegated to that agent are where the\nHuman in the Loop section's CIBA guidance applies. Per-invocation narrowing is\nalready expressible with `scope` / `authorization_details` on the exchange\nrequest.\n\nThis isn't specific to ID-JAG \u2014 the same gap exists if the agent uses Identity\nChaining, and the same RFC 8693 actor machinery is the answer in both cases.\nIt's also the cross-domain version of what #61 is asking for in the\nsingle-domain case (`act` for the agent, `sub` for the user); whatever that\nissue concludes should apply here too.\n\nID-JAG's current editor's draft already has the extension point: it defines\noptional `actor_token` / `actor_token_type` parameters on the token exchange\nrequest but states \"This specification does not define normative processing\nrequirements for `actor_token` or whether an `act` claim is included in the\nissued ID-JAG. Future profiles or extensions MAY define how `actor_token` is\nvalidated, how it influences policy evaluation, and whether it results in an\n`act` claim in the issued ID-JAG.\" Related discussion in\n[oauth-identity-assertion-authz-grant#73](https://github.com/oauth-wg/oauth-identity-assertion-authz-grant/issues/73)\nand draft-mcguinness-oauth-actor-profile.\n\n## The underspecified part, and where to put it\n\nThe user delegates while they're present, but the agent runs at 3am, at which\npoint their SSO session has expired. Something has to bridge that gap,\nand today it's a bunch of refresh tokens. The options I can see for\nwhat replaces them:\n\n1. An IdP-side delegation record. The agent authenticates as itself and asks\n   for a grant for subject U; the IdP checks its records. The agent never\n   holds anything that confers the user's authority outside a single\n   short-lived audience-restricted grant, and revocation is deleting a row.\n   The costs: RFC 8693 requires a `subject_token` \u2014 an actual security token\n   for the party you're acting for, not just their identifier \u2014 which the agent\n   doesn't have under this option. We need a way to just pass a subject identifier.\n2. A per-(user, agent) refresh token for the IdP, sender-constrained to the\n   agent's key. Works with the `refresh_token` subject token type ID-JAG\n   already allows, but each agent now holds a long-lived artifact carrying the\n   user's authority, which is the kind of artifact I'm trying to get rid of.\n3. An explicit delegation assertion presented as the subject token: a signed\n   statement that U authorized A for given scopes until T (`may_act`\n   territory, RFC 8693 \u00a74.4). The most auditable option, but would need more\n   specification.\n\nI lean towards (1), but I'd rather get agreement on where this gets specified\nthan on which option wins. It could be a subsection here (this document already\nstitches the relevant specs together and identifies gaps), the ID-JAG actor profile\nwork, or a separate companion profile. Open to feedback on which.\n\n## Asks\n\n1. Is \"agent acting on behalf of a user, as a distinct identifiable actor,\n   possibly while the user is offline\" in scope for the Cross Domain Access\n   section?\n2. Where should the actor processing rules and the standing-delegation\n   representation live \u2014 here, the ID-JAG actor profile, or a companion draft?\n3. Whichever way that lands, I'm happy to write the text: the small delta here\n   (carry the agent as the actor in the cross-domain grant and preserve it\n   into the issued access token), and/or contribute to the profile that\n   defines the mechanics.\n",
       "createdAt": "2026-05-22T21:48:06Z",
-      "updatedAt": "2026-05-25T13:40:19Z",
+      "updatedAt": "2026-06-01T20:53:43Z",
       "closedAt": null,
       "comments": [
         {
@@ -1803,6 +1810,13 @@
           "body": "Thanks for highlighting this, Paul. I feel like this is an important scenario that needs more careful consideration.\n\nI would summarise this as the user delegating to the agent, but the agent doesn't hold a refresh token. When it requests authorisation from the authorisation server, the authorisation server remembers the delegation the user granted, as well as any time constraints that were applied to it.\n\nFor option 1, an option might be to just define the subject token as a subject identifier, or alternatively have the agent issue a self-signed token with the user identifier in it. It's up to the IDP to decide whether it trusts the agent, and it can figure that out based on the signature and the identifier of the agent (where the agent is actually the issuer of this token). It has to apply policy, and it can determine whether it's still appropriate.\n\nIt's worth discussing whether this is better or worse than giving a refresh token to the agent. Those two feel kind of equivalent in outcomes, but the risks associated with the refresh token may be greater, especially if that refresh token isn't narrowly scoped. Maybe that is the alternative is to continue the practise of handing out refresh tokens, but have the refresh token very narrowly scoped. Alternatively, we can define this mechanism where the self-signed subject token with the user ID, effectively becomes a way for the IDP to reference and manage a narrowly scoped refresh token on behalf of the agent, which may have better security properties. Either way, it feels like a kind of \"refresh token\" scenariio, with the open question whether the refresh token should be managed by the Agent or the IdP.\n\nSomething that I would think about is the implications of keeping state, and whether an IDP would prefer keeping state about who delegated what to whom versus managing that state through a refresh token that is narrwly scoped (the good news is that refresh tokens are already supposed to be sender constrained).",
           "createdAt": "2026-05-25T13:40:19Z",
           "updatedAt": "2026-05-25T13:40:19Z"
+        },
+        {
+          "author": "pcarleton",
+          "authorAssociation": "NONE",
+          "body": "One other angle worth pinning down here is: Why have the IdP involved at all?\n\nIf what we're after at the end of the day is an access token for a resource server with a user's identity as the `sub`:\n\n<img width=\"500\"  alt=\"Image\" src=\"https://github.com/user-attachments/assets/71243b52-d451-447e-a3e5-7101e88bc31b\" />\n\nThen we could arrange it so we get it directly from the Authorization Server, exchanging a Workload Identity Token (WIT) for the access token, providing the appropriate credentials and claims (ignoring for a minute what specifically to put in `subject_token`,)\n\n<img width=\"2106\" height=\"844\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/1d73344d-7c93-4d2b-a406-558c8b6fdeb0\" />\n\nWhat I'm suggesting by using ID-JAG is adding complexity here and another party to consult, so we should only do it if it provides a lot of value:\n\n<img width=\"2066\" height=\"1357\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/6f2f7aa9-b60e-4259-be76-01c48b6df0d3\" />\n\nThe deployments where the extra hops make sense are ones where some of the following are true:\n* The users are using an IdP for SSO into the resource, independent of the agent.  This means that the trust relationship between IdP and Resource is already established, and ID-JAG could already be in use to reduce authz friction, or if it's not, adding it would be a relatively small delta.\n* The layer of indirection between workload / agent and resource is a useful abstraction. e.g. the service issuing workload identities might be related to a k8s cluster, but the IdP issuing ID-JAGs might be geared specifically for human access.\n* The authorization servers are better setup to receive ID-JAG's to map IdP users to resource users (e.g. the resource is signed in via SAML so the user identifier is not readily available to the workload provider).\n\nThere are scenarios where it would make sense to go direct from WIT to access token, but I think that there are a lot where workload identity and human identity are handled by different systems and using ID-JAG to bridge them is a useful construct.\n\nI think keeping that whole system setup in mind might help shape the solutions here.",
+          "createdAt": "2026-06-01T20:53:43Z",
+          "updatedAt": "2026-06-01T20:53:43Z"
         }
       ]
     },
@@ -4705,25 +4719,35 @@
       "id": "PR_kwDOQP22qc7g6Wr3",
       "title": "Refine Agent authorization and OAuth 2.0 access token details",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/116",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "PieterKas",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
-      "body": "Clarified the process for Agent authorization and OAuth 2.0 access token usage. Enhanced descriptions of authorization flows and security best practices.",
+      "body": "Clarified the process for Agent authorization and OAuth 2.0 access token usage. Enhanced descriptions of authorization flows and security best practices. (relates to #111)",
       "createdAt": "2026-05-30T07:38:13Z",
-      "updatedAt": "2026-05-30T08:24:08Z",
+      "updatedAt": "2026-06-01T19:17:48Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
-      "baseRefOid": "079b2af22d4f487999fc113ec539725b760d0744",
+      "baseRefOid": "215997815d8942fc00853ee2d4bd4613d8874ab5",
       "headRepository": "PieterKas/agent2agent-auth-framework",
       "headRefName": "PieterKas-patch-18",
-      "headRefOid": "76f2dd035ae2e27f83529ddba5fba2e660a4a995",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
+      "headRefOid": "c1e67c2aed7b4415935980ffb3d1f97607955582",
+      "closedAt": "2026-06-01T19:17:47Z",
+      "mergedAt": "2026-06-01T19:17:47Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "97740988f68486ec76d954e6543d0b1c7fe78dee"
+      },
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "> thanks for the updates, I've got just one suggested change\r\n\r\n@bc-pi - changes accepted - please approve an I will merge.",
+          "createdAt": "2026-06-01T19:03:59Z",
+          "updatedAt": "2026-06-01T19:03:59Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOQP22qc8AAAABBfb26w",
@@ -4744,6 +4768,175 @@
               "updatedAt": "2026-05-30T08:16:39Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc8AAAABBngSFw",
+          "commit": {
+            "abbreviatedOid": "9fe1b67"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "thanks for the updates, I've got just one suggested change  ",
+          "createdAt": "2026-06-01T17:59:15Z",
+          "updatedAt": "2026-06-01T18:01:20Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "typo and also you can't really put the burden of a big SHOULD on the end users \n```suggestion\nWhen a User delegates authorization to an Agent, the Agent SHOULD obtain an access token using the Authorization Code Grant as described in {{Section 4.1 of OAUTH-FRAMEWORK}}. This redirection-based flow involves an interactive authorization process, typically in a web browser, in which the user authenticates to the authorization server and explicitly approves the requested access. Users SHOULD be authenticated using phishing-resistant authentication mechanisms such as a passkey. Once the user has approved the request, the authorization server returns an authorization code to the Agent via the redirect.\n```",
+              "createdAt": "2026-06-01T17:59:15Z",
+              "updatedAt": "2026-06-01T18:01:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc8AAAABBn6zWA",
+          "commit": {
+            "abbreviatedOid": "b07bfdd"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-06-01T19:10:21Z",
+          "updatedAt": "2026-06-01T19:10:21Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 117,
+      "id": "PR_kwDOQP22qc7hG87G",
+      "title": "Fix header formatting",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/117",
+      "state": "MERGED",
+      "author": "yaronf",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Updated section header formatting - minor typo",
+      "createdAt": "2026-05-31T15:12:03Z",
+      "updatedAt": "2026-06-01T11:36:26Z",
+      "baseRepository": "PieterKas/agent2agent-auth-framework",
+      "baseRefName": "main",
+      "baseRefOid": "079b2af22d4f487999fc113ec539725b760d0744",
+      "headRepository": "yaronf/agent2agent-auth-framework",
+      "headRefName": "patch-1",
+      "headRefOid": "af95f3c6cbd4d9a95c401fd05234dc3bb0cd012c",
+      "closedAt": "2026-06-01T11:36:26Z",
+      "mergedAt": "2026-06-01T11:36:26Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "0dc7c37a27f8a6ada612c93c1b9e7f70fcc9a445"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc8AAAABBhoNQA",
+          "commit": {
+            "abbreviatedOid": "af95f3c"
+          },
+          "author": "nicksteele-oai",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-05-31T18:00:51Z",
+          "updatedAt": "2026-05-31T18:00:51Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 118,
+      "id": "PR_kwDOQP22qc7hWVIo",
+      "title": "Enhance security considerations and references",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/118",
+      "state": "CLOSED",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Updated security considerations and added references to FAPI 2.0 Security Profile and OAuth 2.0 Security Best Current Practice.",
+      "createdAt": "2026-06-01T11:55:15Z",
+      "updatedAt": "2026-06-01T12:55:18Z",
+      "baseRepository": "PieterKas/agent2agent-auth-framework",
+      "baseRefName": "main",
+      "baseRefOid": "0dc7c37a27f8a6ada612c93c1b9e7f70fcc9a445",
+      "headRepository": "PieterKas/agent2agent-auth-framework",
+      "headRefName": "PieterKas-patch-19",
+      "headRefOid": "8173b0286bec661ed1ca825fc5baa44d64910e6e",
+      "closedAt": "2026-06-01T12:55:18Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 119,
+      "id": "PR_kwDOQP22qc7hXnl6",
+      "title": "Clean up TODO notes in security considerations",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/119",
+      "state": "CLOSED",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Removed TODO notes for Security and Privacy considerations.",
+      "createdAt": "2026-06-01T12:56:10Z",
+      "updatedAt": "2026-06-01T12:58:23Z",
+      "baseRepository": "PieterKas/agent2agent-auth-framework",
+      "baseRefName": "main",
+      "baseRefOid": "0dc7c37a27f8a6ada612c93c1b9e7f70fcc9a445",
+      "headRepository": "PieterKas/agent2agent-auth-framework",
+      "headRefName": "PieterKas-patch-20",
+      "headRefOid": "d80d8a00979b3cf39aed960c7a30efac011fed92",
+      "closedAt": "2026-06-01T12:58:23Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 120,
+      "id": "PR_kwDOQP22qc7hXsy8",
+      "title": "Revise Security and Privacy Considerations section",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/120",
+      "state": "MERGED",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Updated the Security Considerations section for clarity (related to #110 )",
+      "createdAt": "2026-06-01T12:59:47Z",
+      "updatedAt": "2026-06-01T19:04:35Z",
+      "baseRepository": "PieterKas/agent2agent-auth-framework",
+      "baseRefName": "main",
+      "baseRefOid": "0dc7c37a27f8a6ada612c93c1b9e7f70fcc9a445",
+      "headRepository": "PieterKas/agent2agent-auth-framework",
+      "headRefName": "PieterKas-patch-21",
+      "headRefOid": "99e3cda009acf4f07662d579393dfcf2a09427c4",
+      "closedAt": "2026-06-01T19:04:35Z",
+      "mergedAt": "2026-06-01T19:04:35Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "215997815d8942fc00853ee2d4bd4613d8874ab5"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc8AAAABBni8ow",
+          "commit": {
+            "abbreviatedOid": "99e3cda"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "danke",
+          "createdAt": "2026-06-01T18:06:39Z",
+          "updatedAt": "2026-06-01T18:06:39Z",
+          "comments": []
         }
       ]
     }
