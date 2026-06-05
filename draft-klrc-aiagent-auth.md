@@ -425,6 +425,10 @@ The authors would like to thank:
 # Document History
    \[\[ To be removed from the final specification ]]
 
+  -03
+
+   * Clarify that LLMs should not have access to Agent credentials: https://github.com/PieterKas/agent2agent-auth-framework/issues/127
+
   -02
 
    * Add Aaron Parecki from Okta as co-author.
