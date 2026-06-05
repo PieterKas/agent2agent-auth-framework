@@ -431,6 +431,7 @@ The authors would like to thank:
    * Clarify Oauth authentication mechanisms when an Agent acts as and OAuth client.
    * Update Security Considerations section
    * Add section on Agent Mission (see issue https://github.com/PieterKas/agent2agent-auth-framework/issues/107)
+   * Include reference to CIBA (see https://github.com/PieterKas/agent2agent-auth-framework/issues/131)
 
   -01
 
