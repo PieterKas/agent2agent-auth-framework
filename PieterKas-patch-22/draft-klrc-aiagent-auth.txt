@@ -1267,6 +1267,9 @@ Appendix A.  Document History
       https://github.com/PieterKas/agent2agent-auth-framework/
       issues/107)
 
+   *  Include reference to CIBA (see https://github.com/PieterKas/
+      agent2agent-auth-framework/issues/131)
+
    -01
 
    *  Add Nick Steele from OpenAI as co-author.
