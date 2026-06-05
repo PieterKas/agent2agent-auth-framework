@@ -423,6 +423,10 @@ The authors would like to thank:
 # Document History
    \[\[ To be removed from the final specification ]]
 
+  -03
+
+   * Include reference to CIBA (see https://github.com/PieterKas/agent2agent-auth-framework/issues/131)
+
   -02
 
    * Add Aaron Parecki from Okta as co-author.
@@ -431,7 +435,6 @@ The authors would like to thank:
    * Clarify Oauth authentication mechanisms when an Agent acts as and OAuth client.
    * Update Security Considerations section
    * Add section on Agent Mission (see issue https://github.com/PieterKas/agent2agent-auth-framework/issues/107)
-   * Include reference to CIBA (see https://github.com/PieterKas/agent2agent-auth-framework/issues/131)
 
   -01
 
