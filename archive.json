@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-04T04:12:37.881033+00:00",
+  "timestamp": "2026-06-07T04:06:40.354676+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -1856,6 +1856,467 @@
       "updatedAt": "2026-05-23T13:14:12Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 121,
+      "id": "I_kwDOQP22qc8AAAABEXnQvg",
+      "title": "[MAJOR-1] WIMSE/OAuth interaction is underspecified",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/121",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "_Source: email from Yaron Sheffer to the WIMSE mailing list, [Review of draft-klrc-aiagent-auth (editor's copy)](https://mailarchive.ietf.org/arch/msg/wimse/3baCsNZnK4XS5nH-iHWuaPJlbK0/). Quoted verbatim below._\n\nThe draft uses WIMSE and OAuth 2.0 throughout but never clearly defines how they relate to one another, or when each is required. Several questions go unanswered:\n\n- Are there cases where WIMSE identity alone is sufficient for access control, without an OAuth access token?\n- Are there cases where OAuth alone is sufficient, without a WIMSE workload credential?\n- When both are used together, how do the tokens relate? For example, should the WIMSE WIT and the OAuth access token carry the same `sub` claim?\n\nFor the first question specifically: in plain workload-to-workload authentication, the callee sees a verified workload identity and makes an authorization decision locally \u2014 one round trip, no additional infrastructure. The draft is implicitly arguing that agents need OAuth on top because authorization is dynamic and fine-grained, delegation chains must be carried and verified, and authorization decisions may need to cross trust domain boundaries. Those are valid arguments, but the draft never states them explicitly, and never tells implementers when they can skip the OAuth layer.\n\nSuggested resolution: Add a section (or major appendix) that explicitly defines a tiered model \u2014 WIMSE-only as a valid baseline for same-domain, non-delegated calls, with OAuth layered on top only when delegation context needs to be conveyed. Complement this with a set of detailed use cases including sequence diagrams showing exactly which tokens flow where and what claims they carry.",
+      "createdAt": "2026-06-04T11:06:04Z",
+      "updatedAt": "2026-06-05T15:49:19Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "cc @yaronf",
+          "createdAt": "2026-06-04T15:03:30Z",
+          "updatedAt": "2026-06-04T15:03:30Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "From @rsharath\n\nThis tiered framing matches what we converged on in implementation (Highflame [ZeroID, an open-source AAIMS](https://github.com/highflame-ai/zeroid)), so it may be useful as a datapoint for the use cases suggested here. WIMSE identity alone is sufficient for same-trust-domain, non-delegated calls: the callee verifies the workload identity and makes the authorization decision locally, one round trip, no OAuth layer. We find that OAuth is worth layering on only when delegation context must be conveyed, or when the authorization decision crosses a trust-domain boundary. \n\nOne note, on the claim-relationship question: in our implementation the issued credential's `sub` is the workload's SPIFFE/WIMSE URI, and the delegation chain is carried in *separate* OAuth claims (delegation lineage plus a mission correlation identifier) rather than by overloading `sub`. If it would help, we can contribute the sequence diagrams requested in the issue, showing exactly which tokens flow where and what claims they carry in the WIMSE-only vs. WIMSE+OAuth tiers.",
+          "createdAt": "2026-06-05T08:22:09Z",
+          "updatedAt": "2026-06-05T08:22:09Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "> One note, on the claim-relationship question: in our implementation the issued credential's sub is the workload's SPIFFE/WIMSE URI, and the delegation chain is carried in separate OAuth claims (delegation lineage plus a mission correlation identifier) rather than by overloading sub. If it would help, we can contribute the sequence diagrams requested in the issue, showing exactly which tokens flow where and what claims they carry in the WIMSE-only vs. WIMSE+OAuth tiers.\n\nThe above is interesting and it would be itneresting to see a bit more - I can see a need for on-behalf-of/delegation semantics for multi-hop workload-too-workload interactions when OAuth is not involved...",
+          "createdAt": "2026-06-05T15:49:19Z",
+          "updatedAt": "2026-06-05T15:49:19Z"
+        }
+      ]
+    },
+    {
+      "number": 122,
+      "id": "I_kwDOQP22qc8AAAABEXo1eA",
+      "title": "[MAJOR-2] Applicability to third-party/composed agent environments is not addressed",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/122",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "_Source: email from Yaron Sheffer to the WIMSE mailing list, [Review of draft-klrc-aiagent-auth (editor's copy)](https://mailarchive.ietf.org/arch/msg/wimse/3baCsNZnK4XS5nH-iHWuaPJlbK0/). Quoted verbatim below._\n\nThe workload identity model is a good fit for traditional enterprise environments where workloads are home-grown, managed, and attested by the organization that deploys them. It is much less of a fit for environments where agents are purchased or rented from third-party vendors and composed into a system (the \"agent marketplace\" vision). In those cases the deploying organization may have limited ability to attest the agent, provision WIMSE credentials into it, or control its identity lifecycle.\n\nThe draft should acknowledge this limitation and discuss what, if anything, the framework offers in that scenario.\n",
+      "createdAt": "2026-06-04T11:10:05Z",
+      "updatedAt": "2026-06-04T15:03:32Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "cc @yaronf",
+          "createdAt": "2026-06-04T15:03:32Z",
+          "updatedAt": "2026-06-04T15:03:32Z"
+        }
+      ]
+    },
+    {
+      "number": 123,
+      "id": "I_kwDOQP22qc8AAAABEXpfUQ",
+      "title": "[MAJOR-3] Document status and use of normative language",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/123",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "_Source: email from Yaron Sheffer to the WIMSE mailing list, [Review of draft-klrc-aiagent-auth (editor's copy)](https://mailarchive.ietf.org/arch/msg/wimse/3baCsNZnK4XS5nH-iHWuaPJlbK0/). Quoted verbatim below._\n\nThe document uses RFC 2119 language extensively, which is unusual for an Informational document and potentially confusing, since Informational documents are not standards-track. Moreover, many of the normative statements restate requirements already defined in the referenced specifications, making them redundant. This points to a deeper question the authors should address explicitly: what is the intended status of this document? If it is meant to seed new standardization work and describe best current practice, BCP status would be more appropriate. If it is meant to be a normative standard showing in detail how all the pieces of a complicated architecture fit together, Standards Track would be warranted. The current Informational framing fits neither goal well.\n",
+      "createdAt": "2026-06-04T11:11:47Z",
+      "updatedAt": "2026-06-04T15:03:35Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "cc @yaronf",
+          "createdAt": "2026-06-04T15:03:35Z",
+          "updatedAt": "2026-06-04T15:03:35Z"
+        }
+      ]
+    },
+    {
+      "number": 124,
+      "id": "I_kwDOQP22qc8AAAABEXp0nQ",
+      "title": "[TECH-1] Authorization policy left out of scope without adequate justification",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/124",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "_Source: email from Yaron Sheffer to the WIMSE mailing list, [Review of draft-klrc-aiagent-auth (editor's copy)](https://mailarchive.ietf.org/arch/msg/wimse/3baCsNZnK4XS5nH-iHWuaPJlbK0/). Quoted verbatim below._\n\nSection 11 excludes authorization policy from scope on the grounds that it is \"deployment and risk-model-specific.\" This mirrors a long-standing position of the OAuth community. However, the complexity of multi-agent systems \u2014 spanning organizations, trust domains, and dynamic delegation chains \u2014 means that even smaller deployments will need automated policy management. The main determinant of whether standardization is needed is not whether policies are deployment-specific, but whether interoperability requires a common policy language or exchange format, particularly for cross-domain scenarios.\n\nThe draft should either scope in policy interoperability for cross-domain cases, or explain why it has concluded that no standard is needed there.\n",
+      "createdAt": "2026-06-04T11:12:42Z",
+      "updatedAt": "2026-06-04T15:03:37Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "cc @yaronf",
+          "createdAt": "2026-06-04T15:03:37Z",
+          "updatedAt": "2026-06-04T15:03:37Z"
+        }
+      ]
+    },
+    {
+      "number": 125,
+      "id": "I_kwDOQP22qc8AAAABEXqDsA",
+      "title": "[TECH-2] Deprovisioning is absent",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/125",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "_Source: email from Yaron Sheffer to the WIMSE mailing list, [Review of draft-klrc-aiagent-auth (editor's copy)](https://mailarchive.ietf.org/arch/msg/wimse/3baCsNZnK4XS5nH-iHWuaPJlbK0/). Quoted verbatim below._\n\nThe document discusses credential provisioning and rotation (Section 7) but says nothing about deprovisioning. Section 7 should add a third phase \u2014 credential deprovisioning \u2014 even if it simply means stopping rotation when the agent is terminated. Beyond that, the identifier lifecycle is a distinct concern: when an agent is retired, its identifier needs to remain referenceable for forensic and audit purposes. The document should discuss how long an agent identifier should be retained, and in what registry, after the agent is gone.\n",
+      "createdAt": "2026-06-04T11:13:19Z",
+      "updatedAt": "2026-06-05T15:51:59Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "cc @yaronf",
+          "createdAt": "2026-06-04T15:03:39Z",
+          "updatedAt": "2026-06-04T15:03:39Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "From @rsharath\n\n\nFrom implementation experience, two parts have been worth separating:  \n1. Revoking an agent's credential also needs to terminate the credentials it exchanged downstream (the token-exchange chain). Otherwise a \"revoked\" agent's delegated sub-agents keep operating. ZeroID implements this as a cascade over the delegation chain. \n2. Agent identifier lifecycle is distinct from the credential lifecycle. When an agent is retired, its identifier needs to remain referenceable for forensic and audit correlation. The draft should give guidance on the retention window and the registry that holds it, distinct from the credential lifecycle, which ends at revocation.\n\nWe would be glad to contribute a third \"Deprovisioning\" phase for Section 7 (alongside Initial Provisioning and Rotation/Renewal) plus identifier-retention guidance.\n",
+          "createdAt": "2026-06-05T08:24:10Z",
+          "updatedAt": "2026-06-05T08:24:10Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "Identifiers persist, credentials expire.\n\nIn terms of terminating exchanged credentials, I imagine that is the sort of thing that can be facilitated by SSF - as long as the credential isssuer knows which tokens were issued, it can signal status change.\n",
+          "createdAt": "2026-06-05T15:51:59Z",
+          "updatedAt": "2026-06-05T15:51:59Z"
+        }
+      ]
+    },
+    {
+      "number": 126,
+      "id": "I_kwDOQP22qc8AAAABEXqfsA",
+      "title": "[TECH-3] Token exchange circularity in Section 9.5",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/126",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "_Source: email from Yaron Sheffer to the WIMSE mailing list, [Review of draft-klrc-aiagent-auth (editor's copy)](https://mailarchive.ietf.org/arch/msg/wimse/3baCsNZnK4XS5nH-iHWuaPJlbK0/). Quoted verbatim below._\n\nSection 9.5 describes exchanging access tokens for transaction tokens and then using transaction tokens to obtain access tokens (for downstream calls). This is architecturally circular and raises unresolved questions about how authorization scope is preserved or narrowed across this chain. Transaction tokens (draft-ietf-oauth-transaction-tokens) do not carry a standard `scope` claim, so it is unclear how scope semantics are maintained when re-obtaining an access token from a transaction token. This should be resolved or at least explicitly flagged as an open issue.\n",
+      "createdAt": "2026-06-04T11:14:21Z",
+      "updatedAt": "2026-06-05T23:22:40Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "cc @yaronf",
+          "createdAt": "2026-06-04T15:03:41Z",
+          "updatedAt": "2026-06-04T15:03:41Z"
+        },
+        {
+          "author": "Mayur021",
+          "authorAssociation": "NONE",
+          "body": "Yaron's circularity flag is sharper if separated from scope preservation. Section 9.5 chains access token to transaction token to access token.\n  The exchange is circular as a token-format pattern; the question is whether scope continuity is also lost or only the format identifier changes.\n\n  The chain-level audit schema work surfaced jointly with Mallikarjunarao Sunke during CSA NHI v1.0 peer review attempts to bind continuity across format transitions. Two of the six properties carry directly here:\n\n  1. Chain id linking composed steps. A stable identifier issued at chain start that survives every token type change downstream. The token-exchange replaces the carrier; the chain id remains. Verification reconstructs the chain by joining on chain id, not on token identity.\n\n  2. Declared worst-case action class at chain start. The chain's scope floor, bound at the chain-id issuance moment, propagates across exchanges as an immutable claim. Any token re-obtained downstream inherits the worst-case class. OWASP AISVS C9.2.7 (proposed for v1.01, merged in C09 research chapter) names this as the worst-case action class chain rule for composed multi-step sequences.\n\n  Both fields are token-format-agnostic, so they survive the circular exchange pattern Yaron identifies. The token format changes; the chain-level commitments do not.\n\n  This composes with @rsharath's RFC 9396 RAR proposal on #131. RAR carries per-transaction authorization_details: what is being authorized at this hop. Chain id plus worst-case class carry cross-exchange continuity: what the chain as a whole is committed to. Together they answer both \"what is approved at this exchange\" and \"what scope semantics are preserved across the chain.\"\n\n  Suggested resolution for Section 9.5: explicitly bind a chain-level identifier and a worst-case action class declaration at chain start,\n  propagated as immutable claims through the token-exchange chain. The circularity in token format becomes acceptable when continuity is carried at the chain layer rather than per-token.\n\n  This pairs with the framing on Issue #114 (filed 2026-05-23) on the trigger side: chain id + worst-case class answer \"what scope is preserved\" across token exchange; reversibility-graded action class answers \"when does the human-in-the-loop fire\" within the chain.\n\n  Happy to contribute cross-walk language for Section 9.5 alongside the issue resolution.",
+          "createdAt": "2026-06-05T23:22:39Z",
+          "updatedAt": "2026-06-05T23:22:39Z"
+        }
+      ]
+    },
+    {
+      "number": 127,
+      "id": "I_kwDOQP22qc8AAAABEXqz6A",
+      "title": "[TECH-4] LLM must not have access to agent credentials",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/127",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "_Source: email from Yaron Sheffer to the WIMSE mailing list, [Review of draft-klrc-aiagent-auth (editor's copy)](https://mailarchive.ietf.org/arch/msg/wimse/3baCsNZnK4XS5nH-iHWuaPJlbK0/). Quoted verbatim below._\n\nSection 7 (Credential Provisioning, which now encompasses attestation/posture assessment) should state explicitly that the LLM inference component of an agent MUST NOT have access to the agent's cryptographic credentials. The LLM is the most vulnerable part of the agent to prompt injection attacks; a compromised prompt could cause the LLM to exfiltrate credentials or use them for unauthorized actions. Credential access must be strictly separated from the data flow that passes through the LLM. This is a security property that the architecture should mandate, not leave to implementers.\n",
+      "createdAt": "2026-06-04T11:15:08Z",
+      "updatedAt": "2026-06-06T13:33:09Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "Also see: https://mailarchive.ietf.org/arch/msg/wimse/_xou9ZYuB5f4YuCBh2-vYuH0mSU/",
+          "createdAt": "2026-06-04T11:34:15Z",
+          "updatedAt": "2026-06-04T11:34:15Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "cc @yaronf",
+          "createdAt": "2026-06-04T15:03:43Z",
+          "updatedAt": "2026-06-04T15:03:43Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "Since we draw the agent and the LLM as separate entities, it is kind of implied, but I think this is important enough to make explicit.",
+          "createdAt": "2026-06-05T17:30:19Z",
+          "updatedAt": "2026-06-05T17:30:19Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I think this is a cross-cutting concern, in that the architectural implications are not only \"don't let the LLM touch the creds\" and extend to service/tool APIs where you might need an application vs. infrastructure API, where the app layer is related to the LLM context and the credentials only live in the underlying infra layer. ",
+          "createdAt": "2026-06-06T13:33:09Z",
+          "updatedAt": "2026-06-06T13:33:09Z"
+        }
+      ]
+    },
+    {
+      "number": 128,
+      "id": "I_kwDOQP22qc8AAAABEXrLXA",
+      "title": "[TECH-5] Live posture assessment not mentioned",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/128",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "_Source: email from Yaron Sheffer to the WIMSE mailing list, [Review of draft-klrc-aiagent-auth (editor's copy)](https://mailarchive.ietf.org/arch/msg/wimse/3baCsNZnK4XS5nH-iHWuaPJlbK0/). Quoted verbatim below._\n\nSection 7 discusses posture assessment only in the context of credential issuance and rotation. The document should also mention the possibility of continuous or live posture assessment, bound to individual workload-to-workload messages \u2014 for example, including a fresh attestation assertion in a WPT or HTTP Message Signature. This is particularly relevant in high-risk or cross-domain scenarios.\n",
+      "createdAt": "2026-06-04T11:16:10Z",
+      "updatedAt": "2026-06-04T15:03:46Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "cc @yaronf",
+          "createdAt": "2026-06-04T15:03:46Z",
+          "updatedAt": "2026-06-04T15:03:46Z"
+        }
+      ]
+    },
+    {
+      "number": 129,
+      "id": "I_kwDOQP22qc8AAAABEXr83A",
+      "title": "[TECH-6] Streaming interactions not addressed",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/129",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "_Source: email from Yaron Sheffer to the WIMSE mailing list, [Review of draft-klrc-aiagent-auth (editor's copy)](https://mailarchive.ietf.org/arch/msg/wimse/3baCsNZnK4XS5nH-iHWuaPJlbK0/). Quoted verbatim below._\n\nSection 3 and Figure 1 depict agents that exchange discrete messages. Many real agent interactions involve streaming \u2014 text token streams, audio, and video are common. The document should clarify whether streaming interactions are in scope and, if so, how the authentication and authorization model applies to a long-lived streaming session.\n",
+      "createdAt": "2026-06-04T11:18:31Z",
+      "updatedAt": "2026-06-04T15:03:48Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "cc @yaronf",
+          "createdAt": "2026-06-04T15:03:48Z",
+          "updatedAt": "2026-06-04T15:03:48Z"
+        }
+      ]
+    },
+    {
+      "number": 130,
+      "id": "I_kwDOQP22qc8AAAABEXsMfQ",
+      "title": "[TECH-7] User consent not mentioned",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/130",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "_Source: email from Yaron Sheffer to the WIMSE mailing list, [Review of draft-klrc-aiagent-auth (editor's copy)](https://mailarchive.ietf.org/arch/msg/wimse/3baCsNZnK4XS5nH-iHWuaPJlbK0/). Quoted verbatim below._\n\nUser consent \u2014 distinct from user delegation via OAuth \u2014 is not discussed. Whether or not it is in scope for this framework, it deserves at least a brief mention, including a pointer to relevant work (e.g., MCP's user confirmation model, or emerging consent frameworks).\n",
+      "createdAt": "2026-06-04T11:19:15Z",
+      "updatedAt": "2026-06-04T15:03:51Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "cc @yaronf",
+          "createdAt": "2026-06-04T15:03:50Z",
+          "updatedAt": "2026-06-04T15:03:50Z"
+        }
+      ]
+    },
+    {
+      "number": 131,
+      "id": "I_kwDOQP22qc8AAAABEXsWWg",
+      "title": "[TECH-8] CIBA not cited from text; human-in-the-loop model too narrow (Section 9.7)",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/131",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "_Source: email from Yaron Sheffer to the WIMSE mailing list, [Review of draft-klrc-aiagent-auth (editor's copy)](https://mailarchive.ietf.org/arch/msg/wimse/3baCsNZnK4XS5nH-iHWuaPJlbK0/). Quoted verbatim below._\n\nSection 9.7 mentions CIBA by name but does not include an inline citation to [OpenIDConnect.CIBA], even though that reference exists in the references list. Please add the citation.\n\nAdditionally, the CIBA-based model may be too constrained. CIBA assumes a push notification to a separate device, but the main agent flow may already be running on a mobile device. More importantly, the threat model here is different from typical 2FA: the primary concern is not an external attacker but the agent itself acting outside its authorized scope. Explicit user consent mechanisms should be discussed in light of that threat.\n",
+      "createdAt": "2026-06-04T11:19:43Z",
+      "updatedAt": "2026-06-05T23:03:27Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "cc @yaronf",
+          "createdAt": "2026-06-04T15:03:52Z",
+          "updatedAt": "2026-06-04T15:03:52Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "From @rsharath\n\nI agree the primary concern is the agent acting outside its authorized scope, not an external attacker, and that the current CIBA framing is too narrow for that. From implementation experience, we bind the Section 9.7 human-in-the-loop step to a CIBA backchannel that carries an RFC 9396 Rich Authorization Request (`authorization_details`), so the human approves *the specific transaction*, the tool and its parameters, rather than a coarse scope. This lines up directly with the Section 9.7 requirement - \"MUST be bound to a verifiable authorization grant issued by the authorization server.\u201d \n\nConcretely, we propose (1) add the inline CIBA citation Yaron notes; (2) cite RFC 9396 (RAR) alongside CIBA as the mechanism for transaction-scoped approval; (3) note that the \"agent acting outside its scope\" threat to the rationale, since it changes what the consent is protecting against. ",
+          "createdAt": "2026-06-05T08:25:51Z",
+          "updatedAt": "2026-06-05T08:25:51Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "@yaroslavros and @bc-pi - see above for human-in-the-loop discussion",
+          "createdAt": "2026-06-05T16:31:57Z",
+          "updatedAt": "2026-06-05T16:31:57Z"
+        },
+        {
+          "author": "Mayur021",
+          "authorAssociation": "NONE",
+          "body": "The \"agent acting outside its authorized scope\" framing surfaces the same gap from a different angle than Issue #114 on this repo (filed 2026-05-23), which proposes reversibility-graded action classes as the deterministic trigger for the \u00a710.6 CIBA step-up.\n\n  Concretely, the four-class action ladder (read-only, reversible, external-reversible, irreversible) plus the worst-case action class chain rule for composed multi-step sequences gives a structured answer to \"when does the human-in-the-loop fire\" that does not depend on 2FA semantics. CIBA becomes the transport for the approval; the trigger is the action class the chain can reach, not the device topology.\n\n  This pairs cleanly with @rsharath's RFC 9396 RAR suggestion above. RAR carries the transaction-scoped authorization_details (tool plus parameters); the four-class taxonomy plus chain rule decides whether the call needs an approval at all and what evidence threshold the approval requires. The two compose: the action class taxonomy says when, RAR says what is being approved.\n\n  Cross-walks worth noting if useful for Section 9.7 revision:\n\n  OWASP AISVS C9.2.6 + C9.2.7 (proposed for v1.01, merged in C09 research chapter) names the verification-side primitive: manifest-declared action class at deployment, evaluated by a deterministic gate, with the chain's worst-case action class governing composed sequences.\n\n  CSA NHI v1.0 peer review surfaced a six-property chain-level audit schema, proposed jointly with Mallikarjunarao Sunke (chain id, declared worst-case action class at chain start, gate decision and justification, per-step API record, originating principal, immutability of the originating principal). The originating principal immutability is what makes \"the agent acting outside its scope\" attributable across composed steps instead of stopping at one credential.\n\n  Happy to contribute cross-walk language to Section 9.7 alongside the CIBA citation fix and RAR addition.",
+          "createdAt": "2026-06-05T23:03:27Z",
+          "updatedAt": "2026-06-05T23:03:27Z"
+        }
+      ]
+    },
+    {
+      "number": 132,
+      "id": "I_kwDOQP22qc8AAAABEXsh6Q",
+      "title": "[TECH-9] MCP reference in Section 9.7 is too vague",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/132",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "_Source: email from Yaron Sheffer to the WIMSE mailing list, [Review of draft-klrc-aiagent-auth (editor's copy)](https://mailarchive.ietf.org/arch/msg/wimse/3baCsNZnK4XS5nH-iHWuaPJlbK0/). Quoted verbatim below._\n\nThe reference to MCP's user-solicitation pattern should point to a specific section or feature of the MCP specification rather than the top-level spec URL.\n",
+      "createdAt": "2026-06-04T11:20:15Z",
+      "updatedAt": "2026-06-04T15:03:53Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "cc @yaronf",
+          "createdAt": "2026-06-04T15:03:53Z",
+          "updatedAt": "2026-06-04T15:03:53Z"
+        }
+      ]
+    },
+    {
+      "number": 133,
+      "id": "I_kwDOQP22qc8AAAABEXsvWQ",
+      "title": "[EDIT-1] Section 3, last paragraph: add OpenID Connect",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/133",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "_Source: email from Yaron Sheffer to the WIMSE mailing list, [Review of draft-klrc-aiagent-auth (editor's copy)](https://mailarchive.ietf.org/arch/msg/wimse/3baCsNZnK4XS5nH-iHWuaPJlbK0/). Quoted verbatim below._\n\nThe list of standards the document builds on (SPIFFE, WIMSE, OAuth, SSF) should include OpenID Connect, which is used extensively in Section 9.\n",
+      "createdAt": "2026-06-04T11:20:53Z",
+      "updatedAt": "2026-06-04T15:03:54Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "cc @yaronf",
+          "createdAt": "2026-06-04T15:03:54Z",
+          "updatedAt": "2026-06-04T15:03:54Z"
+        }
+      ]
+    },
+    {
+      "number": 134,
+      "id": "I_kwDOQP22qc8AAAABEXtDIw",
+      "title": "[EDIT-2] Figure 2: Observability belongs in the vertical, not a layer",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/134",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "_Source: email from Yaron Sheffer to the WIMSE mailing list, [Review of draft-klrc-aiagent-auth (editor's copy)](https://mailarchive.ietf.org/arch/msg/wimse/3baCsNZnK4XS5nH-iHWuaPJlbK0/). Quoted verbatim below._\n\nIn Figure 2, \"Monitoring, Observability & Remediation\" is shown as a horizontal layer. It is better characterized as a cross-cutting vertical, as it applies across all other layers, similar to how Policy and Compliance are depicted.\n",
+      "createdAt": "2026-06-04T11:21:49Z",
+      "updatedAt": "2026-06-04T15:03:56Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "cc @yaronf",
+          "createdAt": "2026-06-04T15:03:56Z",
+          "updatedAt": "2026-06-04T15:03:56Z"
+        }
+      ]
+    },
+    {
+      "number": 135,
+      "id": "I_kwDOQP22qc8AAAABEXtWJQ",
+      "title": "[EDIT-3] Section 4: AIMS is defined but never used",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/135",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "_Source: email from Yaron Sheffer to the WIMSE mailing list, [Review of draft-klrc-aiagent-auth (editor's copy)](https://mailarchive.ietf.org/arch/msg/wimse/3baCsNZnK4XS5nH-iHWuaPJlbK0/). Quoted verbatim below._\n\nSection 4 defines the term \"Agent Identity Management System (AIMS)\" but the acronym does not appear again in the document (except once). Either use it consistently throughout, or drop it. Additionally, the word \"system\" implies a single centralized entity; \"framework\" or \"model\" would be more accurate given the explicitly distributed nature of the components described.\n",
+      "createdAt": "2026-06-04T11:22:44Z",
+      "updatedAt": "2026-06-04T15:03:57Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "cc @yaronf",
+          "createdAt": "2026-06-04T15:03:57Z",
+          "updatedAt": "2026-06-04T15:03:57Z"
+        }
+      ]
+    },
+    {
+      "number": 136,
+      "id": "I_kwDOQP22qc8AAAABEXtuaw",
+      "title": "[EDIT-4] Section 6: SPIFFE credential paragraph is imprecise",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/136",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "_Source: email from Yaron Sheffer to the WIMSE mailing list, [Review of draft-klrc-aiagent-auth (editor's copy)](https://mailarchive.ietf.org/arch/msg/wimse/3baCsNZnK4XS5nH-iHWuaPJlbK0/). Quoted verbatim below._\n\nThe paragraph conflates SPIFFE credential types. SPIFFE WIT-SVID is a WIMSE credential. Other SPIFFE credential formats (X.509-SVID, JWT-SVID) are not WIMSE credentials. The text should be more precise about which formats are which.\n",
+      "createdAt": "2026-06-04T11:23:53Z",
+      "updatedAt": "2026-06-04T15:03:58Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "cc @yaronf",
+          "createdAt": "2026-06-04T15:03:58Z",
+          "updatedAt": "2026-06-04T15:03:58Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -4958,6 +5419,79 @@
           "createdAt": "2026-06-01T18:06:39Z",
           "updatedAt": "2026-06-01T18:06:39Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 137,
+      "id": "PR_kwDOQP22qc7jMU23",
+      "title": "Add reference to CIBA protocol in user confirmation section",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/137",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Clarify the use of CIBA protocol for user confirmation in OAuth authorization. See isssue #131 ",
+      "createdAt": "2026-06-05T17:18:58Z",
+      "updatedAt": "2026-06-05T17:45:10Z",
+      "baseRepository": "PieterKas/agent2agent-auth-framework",
+      "baseRefName": "main",
+      "baseRefOid": "97740988f68486ec76d954e6543d0b1c7fe78dee",
+      "headRepository": "PieterKas/agent2agent-auth-framework",
+      "headRefName": "PieterKas-patch-22",
+      "headRefOid": "9976abc6f030586663cb0884e2f474d827b9e68b",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 138,
+      "id": "PR_kwDOQP22qc7jMxtM",
+      "title": "Restrict Large Language Model access to agent credentials",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/138",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Added a requirement to prevent Large Language Model access to agent credentials to enhance security. See issue #127",
+      "createdAt": "2026-06-05T17:40:48Z",
+      "updatedAt": "2026-06-06T13:35:28Z",
+      "baseRepository": "PieterKas/agent2agent-auth-framework",
+      "baseRefName": "main",
+      "baseRefOid": "97740988f68486ec76d954e6543d0b1c7fe78dee",
+      "headRepository": "PieterKas/agent2agent-auth-framework",
+      "headRefName": "PieterKas-patch-23",
+      "headRefOid": "f41dec2e6c6c9e8daf61eec4b068fb82c8bc14ff",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc8AAAABCM9Sfg",
+          "commit": {
+            "abbreviatedOid": "f41dec2"
+          },
+          "author": "yaronf",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-06T13:35:28Z",
+          "updatedAt": "2026-06-06T13:35:28Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "I suggest to add: or to credentials that may be needed to access tools and services, including one-time and bearer tokens.\n\n[See also my comment on #127].",
+              "createdAt": "2026-06-06T13:35:28Z",
+              "updatedAt": "2026-06-06T13:35:28Z"
+            }
+          ]
         }
       ]
     }
