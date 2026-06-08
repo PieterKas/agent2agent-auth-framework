@@ -5,7 +5,7 @@
 Network Working Group                                       P. Kasselman
 Internet-Draft                                          Defakto Security
 Intended status: Informational                               J. Lombardo
-Expires: 7 December 2026                                             AWS
+Expires: 10 December 2026                                            AWS
                                                             Y. Rosomakho
                                                                  Zscaler
                                                              B. Campbell
@@ -14,7 +14,7 @@ Expires: 7 December 2026                                             AWS
                                                                   OpenAI
                                                               A. Parecki
                                                                     Okta
-                                                             5 June 2026
+                                                             8 June 2026
 
 
                AI Agent Authentication and Authorization
@@ -60,7 +60,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 December 2026.
+   This Internet-Draft will expire on 10 December 2026.
 
 Copyright Notice
 
@@ -450,7 +450,8 @@ Table of Contents
    keys.
 
    The Large Language Model MUST NOT have access to an agent's
-   credentials.  This prevents the Large Language Model from using,
+   credentials or to credentials that may be needed to access tools and
+   services.  This prevents the Large Language Model from using,
    exposing, or being manipulated via prompt injection into disclosing
    the credentials.
 
