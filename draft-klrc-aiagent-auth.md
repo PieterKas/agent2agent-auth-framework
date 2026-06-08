@@ -248,7 +248,7 @@ The use of short-lived credentials provides a significant improvement in the ris
 
 Deployed frameworks such as {{SPIFFE}} provide proven mechanisms for automated, short-lived credential provisioning at runtime. In addition to issuing short-lived credentials, {{SPIFFE}} also provisions ephemeral cryptographic key material bound to each credential, further reducing the risks associated with compromising long-lived keys.
 
-The Large Language Model MUST NOT have access to an agent's credentials. This prevents the Large Language Model from using, exposing, or being manipulated via prompt injection into disclosing the credentials.
+The Large Language Model MUST NOT have access to an agent's credentials or to credentials that may be needed to access tools and services. This prevents the Large Language Model from using, exposing, or being manipulated via prompt injection into disclosing the credentials.
 
 # Agent Authentication {#agent_authentication}
 Agents may authenticate using a variety of mechanisms, depending on the credentials they possess, the protocols supported in the deployment environment, and the risk profile of the application. As described in the WIMSE Architecture {{!WIMSE-ARCH=I-D.ietf-wimse-arch}}, authentication can occur at either the transport layer or the application layer, and many deployments rely on a combination of both.
