@@ -416,7 +416,7 @@ This document has no IANA actions.
 The authors would like to thank:
 
 * Sean O'Dell for providing valuable input and feedback on this work.
-* Karl McGuinness for his blog posts on mission shaping as a pre-cursor to authroization {{MissionShaping}}
+* Karl McGuinness for his blog posts on mission shaping as a pre-cursor to authorization {{MissionShaping}}
 
 --- back
 
