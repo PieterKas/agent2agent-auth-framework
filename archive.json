@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-07T04:06:40.354676+00:00",
+  "timestamp": "2026-06-09T03:39:57.906284+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -1869,7 +1869,7 @@
       "labels": [],
       "body": "_Source: email from Yaron Sheffer to the WIMSE mailing list, [Review of draft-klrc-aiagent-auth (editor's copy)](https://mailarchive.ietf.org/arch/msg/wimse/3baCsNZnK4XS5nH-iHWuaPJlbK0/). Quoted verbatim below._\n\nThe draft uses WIMSE and OAuth 2.0 throughout but never clearly defines how they relate to one another, or when each is required. Several questions go unanswered:\n\n- Are there cases where WIMSE identity alone is sufficient for access control, without an OAuth access token?\n- Are there cases where OAuth alone is sufficient, without a WIMSE workload credential?\n- When both are used together, how do the tokens relate? For example, should the WIMSE WIT and the OAuth access token carry the same `sub` claim?\n\nFor the first question specifically: in plain workload-to-workload authentication, the callee sees a verified workload identity and makes an authorization decision locally \u2014 one round trip, no additional infrastructure. The draft is implicitly arguing that agents need OAuth on top because authorization is dynamic and fine-grained, delegation chains must be carried and verified, and authorization decisions may need to cross trust domain boundaries. Those are valid arguments, but the draft never states them explicitly, and never tells implementers when they can skip the OAuth layer.\n\nSuggested resolution: Add a section (or major appendix) that explicitly defines a tiered model \u2014 WIMSE-only as a valid baseline for same-domain, non-delegated calls, with OAuth layered on top only when delegation context needs to be conveyed. Complement this with a set of detailed use cases including sequence diagrams showing exactly which tokens flow where and what claims they carry.",
       "createdAt": "2026-06-04T11:06:04Z",
-      "updatedAt": "2026-06-05T15:49:19Z",
+      "updatedAt": "2026-06-08T13:34:21Z",
       "closedAt": null,
       "comments": [
         {
@@ -1892,6 +1892,20 @@
           "body": "> One note, on the claim-relationship question: in our implementation the issued credential's sub is the workload's SPIFFE/WIMSE URI, and the delegation chain is carried in separate OAuth claims (delegation lineage plus a mission correlation identifier) rather than by overloading sub. If it would help, we can contribute the sequence diagrams requested in the issue, showing exactly which tokens flow where and what claims they carry in the WIMSE-only vs. WIMSE+OAuth tiers.\n\nThe above is interesting and it would be itneresting to see a bit more - I can see a need for on-behalf-of/delegation semantics for multi-hop workload-too-workload interactions when OAuth is not involved...",
           "createdAt": "2026-06-05T15:49:19Z",
           "updatedAt": "2026-06-05T15:49:19Z"
+        },
+        {
+          "author": "identitymonk",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@PieterKas is it time to bring back the microscopic-level blurb?\n\nI know, I can be tiring with that.",
+          "createdAt": "2026-06-08T13:11:22Z",
+          "updatedAt": "2026-06-08T13:11:22Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "The link between these eco-systems are perhaps best embodied by https://datatracker.ietf.org/doc/draft-schwenkschuster-oauth-spiffe-client-auth/ (with WIMSE being a superset of SPIFFE). I think that s referenced in the latest draft (a new addition last week).\n\nI don't think we want to add tons of details beyond that for now. We also need to keep in mind that some of these things become deployment specific quite quickly (e.g. when treating AuthN=AuthZ, that is a risk decision which may be acceptable to some deplyments, it is also a bigger question than AI Agents).\n\nThe one interesting question from Yaron's comment for me is do we need to say more about non-OAuth authorization. ",
+          "createdAt": "2026-06-08T13:34:21Z",
+          "updatedAt": "2026-06-08T13:34:21Z"
         }
       ]
     },
@@ -2017,7 +2031,7 @@
       "labels": [],
       "body": "_Source: email from Yaron Sheffer to the WIMSE mailing list, [Review of draft-klrc-aiagent-auth (editor's copy)](https://mailarchive.ietf.org/arch/msg/wimse/3baCsNZnK4XS5nH-iHWuaPJlbK0/). Quoted verbatim below._\n\nSection 9.5 describes exchanging access tokens for transaction tokens and then using transaction tokens to obtain access tokens (for downstream calls). This is architecturally circular and raises unresolved questions about how authorization scope is preserved or narrowed across this chain. Transaction tokens (draft-ietf-oauth-transaction-tokens) do not carry a standard `scope` claim, so it is unclear how scope semantics are maintained when re-obtaining an access token from a transaction token. This should be resolved or at least explicitly flagged as an open issue.\n",
       "createdAt": "2026-06-04T11:14:21Z",
-      "updatedAt": "2026-06-05T23:22:40Z",
+      "updatedAt": "2026-06-08T13:54:52Z",
       "closedAt": null,
       "comments": [
         {
@@ -2033,6 +2047,34 @@
           "body": "Yaron's circularity flag is sharper if separated from scope preservation. Section 9.5 chains access token to transaction token to access token.\n  The exchange is circular as a token-format pattern; the question is whether scope continuity is also lost or only the format identifier changes.\n\n  The chain-level audit schema work surfaced jointly with Mallikarjunarao Sunke during CSA NHI v1.0 peer review attempts to bind continuity across format transitions. Two of the six properties carry directly here:\n\n  1. Chain id linking composed steps. A stable identifier issued at chain start that survives every token type change downstream. The token-exchange replaces the carrier; the chain id remains. Verification reconstructs the chain by joining on chain id, not on token identity.\n\n  2. Declared worst-case action class at chain start. The chain's scope floor, bound at the chain-id issuance moment, propagates across exchanges as an immutable claim. Any token re-obtained downstream inherits the worst-case class. OWASP AISVS C9.2.7 (proposed for v1.01, merged in C09 research chapter) names this as the worst-case action class chain rule for composed multi-step sequences.\n\n  Both fields are token-format-agnostic, so they survive the circular exchange pattern Yaron identifies. The token format changes; the chain-level commitments do not.\n\n  This composes with @rsharath's RFC 9396 RAR proposal on #131. RAR carries per-transaction authorization_details: what is being authorized at this hop. Chain id plus worst-case class carry cross-exchange continuity: what the chain as a whole is committed to. Together they answer both \"what is approved at this exchange\" and \"what scope semantics are preserved across the chain.\"\n\n  Suggested resolution for Section 9.5: explicitly bind a chain-level identifier and a worst-case action class declaration at chain start,\n  propagated as immutable claims through the token-exchange chain. The circularity in token format becomes acceptable when continuity is carried at the chain layer rather than per-token.\n\n  This pairs with the framing on Issue #114 (filed 2026-05-23) on the trigger side: chain id + worst-case class answer \"what scope is preserved\" across token exchange; reversibility-graded action class answers \"when does the human-in-the-loop fire\" within the chain.\n\n  Happy to contribute cross-walk language for Section 9.5 alongside the issue resolution.",
           "createdAt": "2026-06-05T23:22:39Z",
           "updatedAt": "2026-06-05T23:22:39Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": ">This is architecturally circular and raises unresolved questions about how authorization scope is preserved or narrowed across this chain.\n\n@yaronf - I don't believe there is a circularity here. Perhaps wording can be added to provide more clarity, but the pattern we seek to describe is that an Access Token is exchanged for a Transaction Token, which is used to communicate authorization context within a trust domain. At some point the workload(s) may need to interact with another service that requires and access token (e.g. in a different domain, or a legacy system that only knows about access tokens, not transaction tokens). At this point the workload needs to obtain the necessary access token, and can do so by presenting the transaction token it has to obtain a new access token (which may be for another trust domain - hence the new draft https://datatracker.ietf.org/doc/draft-fletcher-transaction-token-chaining-profile/\n\n>Transaction tokens (draft-ietf-oauth-transaction-tokens) do not carry a standard scope claim, so it is unclear how scope semantics are maintained when re-obtaining an access token from a transaction token. This should be resolved or at least explicitly flagged as an open issue.\n\nTransaction tokens do carry a Scope claim (see https://www.ietf.org/archive/id/draft-ietf-oauth-transaction-tokens-08.html#name-scope-claim). In addition, a transaction token may contain any additional information that is useful to complete the trasnaction and make authorization deisions - including those claims becomes a matter of implementation. \n\n",
+          "createdAt": "2026-06-08T11:15:09Z",
+          "updatedAt": "2026-06-08T11:15:09Z"
+        },
+        {
+          "author": "identitymonk",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We should raise this to the Transaction Token Draft.\n\n[1] The spirit of the draft clearly intends Txn-Tokens as terminal authorization artifacts within a trust domain, not as credentials that can be presented to an Authorization Server to obtain new access tokens. While the draft doesn't contain an explicit normative statement like \"A Txn-Token MUST NOT be used as a subject_token to obtain an Access Token.\", the limitation is implicit by design.\n\nhttps://datatracker.ietf.org/doc/draft-fletcher-transaction-token-chaining-profile/ does not violate [1] as it focuses on cross domain and establishes that a TxnT can be exchanged for a ID-JAG which can in turn be exchanged for an Access Token.\n\nOverall, we should precise in AIMS that the AS has the ultimate authority as part of its access control logic to decide what can be done or not, whatever the explicitness or implicitness of  the valid possibility of an \"exchange\".",
+          "createdAt": "2026-06-08T13:09:52Z",
+          "updatedAt": "2026-06-08T13:09:52Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "The inside/outside trust domain is a good delineation. In a greenfield deployment that is a very good way to. \n\nHow do you think about brownfield environments where there are a great many legacy systems with their own, existing, interfaces that may rely on any number of credential formats (including access tokens)? Perhaps the more narrow way to view this is that if you need an access token, you always treat it as \"other domain\" and just follow the ID chaining draft.",
+          "createdAt": "2026-06-08T13:41:58Z",
+          "updatedAt": "2026-06-08T13:41:58Z"
+        },
+        {
+          "author": "identitymonk",
+          "authorAssociation": "COLLABORATOR",
+          "body": "My views will be more stringent. If `brownfield environments where there are a great many legacy systems ` then there is a very low chance for TxnT, ID-JAG, and chaining support. Therefore fall back to Access Token exchange through Token Exchange.\n\nWe could recognize brownfield, but the idea was to provide the map of \"what it should be\" not necessarily \"how to allow to interoperate with your non modern architecture\". I fear doing the latter will open the \"and what about inter operating with  static credentials brownfields?\" as a follow-up.",
+          "createdAt": "2026-06-08T13:54:52Z",
+          "updatedAt": "2026-06-08T13:54:52Z"
         }
       ]
     },
@@ -2165,7 +2207,7 @@
       "labels": [],
       "body": "_Source: email from Yaron Sheffer to the WIMSE mailing list, [Review of draft-klrc-aiagent-auth (editor's copy)](https://mailarchive.ietf.org/arch/msg/wimse/3baCsNZnK4XS5nH-iHWuaPJlbK0/). Quoted verbatim below._\n\nSection 9.7 mentions CIBA by name but does not include an inline citation to [OpenIDConnect.CIBA], even though that reference exists in the references list. Please add the citation.\n\nAdditionally, the CIBA-based model may be too constrained. CIBA assumes a push notification to a separate device, but the main agent flow may already be running on a mobile device. More importantly, the threat model here is different from typical 2FA: the primary concern is not an external attacker but the agent itself acting outside its authorized scope. Explicit user consent mechanisms should be discussed in light of that threat.\n",
       "createdAt": "2026-06-04T11:19:43Z",
-      "updatedAt": "2026-06-05T23:03:27Z",
+      "updatedAt": "2026-06-08T14:35:07Z",
       "closedAt": null,
       "comments": [
         {
@@ -2195,6 +2237,20 @@
           "body": "The \"agent acting outside its authorized scope\" framing surfaces the same gap from a different angle than Issue #114 on this repo (filed 2026-05-23), which proposes reversibility-graded action classes as the deterministic trigger for the \u00a710.6 CIBA step-up.\n\n  Concretely, the four-class action ladder (read-only, reversible, external-reversible, irreversible) plus the worst-case action class chain rule for composed multi-step sequences gives a structured answer to \"when does the human-in-the-loop fire\" that does not depend on 2FA semantics. CIBA becomes the transport for the approval; the trigger is the action class the chain can reach, not the device topology.\n\n  This pairs cleanly with @rsharath's RFC 9396 RAR suggestion above. RAR carries the transaction-scoped authorization_details (tool plus parameters); the four-class taxonomy plus chain rule decides whether the call needs an approval at all and what evidence threshold the approval requires. The two compose: the action class taxonomy says when, RAR says what is being approved.\n\n  Cross-walks worth noting if useful for Section 9.7 revision:\n\n  OWASP AISVS C9.2.6 + C9.2.7 (proposed for v1.01, merged in C09 research chapter) names the verification-side primitive: manifest-declared action class at deployment, evaluated by a deterministic gate, with the chain's worst-case action class governing composed sequences.\n\n  CSA NHI v1.0 peer review surfaced a six-property chain-level audit schema, proposed jointly with Mallikarjunarao Sunke (chain id, declared worst-case action class at chain start, gate decision and justification, per-step API record, originating principal, immutability of the originating principal). The originating principal immutability is what makes \"the agent acting outside its scope\" attributable across composed steps instead of stopping at one credential.\n\n  Happy to contribute cross-walk language to Section 9.7 alongside the CIBA citation fix and RAR addition.",
           "createdAt": "2026-06-05T23:03:27Z",
           "updatedAt": "2026-06-05T23:03:27Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "This document purposefully does not introduce new human-in-the-loop protocols. It only references specifications currently available. For any suggestions outside the use of existing protocols, new drafts and new work will be needed beyond this draft.",
+          "createdAt": "2026-06-08T10:59:48Z",
+          "updatedAt": "2026-06-08T10:59:48Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Similarly to my comment elsewhere: if this is an area where existing standards (e.g. CIBA) do not adequately address the need, let's point it out to motivate folks to come up with solutions.",
+          "createdAt": "2026-06-08T14:35:07Z",
+          "updatedAt": "2026-06-08T14:35:07Z"
         }
       ]
     },
@@ -2306,7 +2362,7 @@
       "labels": [],
       "body": "_Source: email from Yaron Sheffer to the WIMSE mailing list, [Review of draft-klrc-aiagent-auth (editor's copy)](https://mailarchive.ietf.org/arch/msg/wimse/3baCsNZnK4XS5nH-iHWuaPJlbK0/). Quoted verbatim below._\n\nThe paragraph conflates SPIFFE credential types. SPIFFE WIT-SVID is a WIMSE credential. Other SPIFFE credential formats (X.509-SVID, JWT-SVID) are not WIMSE credentials. The text should be more precise about which formats are which.\n",
       "createdAt": "2026-06-04T11:23:53Z",
-      "updatedAt": "2026-06-04T15:03:58Z",
+      "updatedAt": "2026-06-08T13:57:31Z",
       "closedAt": null,
       "comments": [
         {
@@ -2315,8 +2371,55 @@
           "body": "cc @yaronf",
           "createdAt": "2026-06-04T15:03:58Z",
           "updatedAt": "2026-06-04T15:03:58Z"
+        },
+        {
+          "author": "identitymonk",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Actually, it's more nuanced. Based on [draft-ietf-wimse-workload-creds-01](https://datatracker.ietf.org/doc/draft-ietf-wimse-workload-creds/), the WIMSE Workload Identity Certificate (WIC) is explicitly described as fully compatible with X509-SVID.",
+          "createdAt": "2026-06-08T13:57:31Z",
+          "updatedAt": "2026-06-08T13:57:31Z"
         }
       ]
+    },
+    {
+      "number": 139,
+      "id": "I_kwDOQP22qc8AAAABEqSzYw",
+      "title": "Empirical evidence for Section 1 problem statement \u2014 MCP access control fails 48.5\u201368.5% under adversarial conditions",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/139",
+      "state": "OPEN",
+      "author": "rohith88",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": " Hi \u2014 sharing empirical research that directly supports the motivation for this framework.\n\nThe gap your draft addresses quantified:\n\nOur paper \"[title]\" (arXiv:2605.18414, May 2026) benchmarks prompt-based access control in MCP-based agentic deployments across adversarial scenarios. Key finding: prompt-based access control fails in 48.5\u201368.5% of adversarial test cases, meaning agents invoke unauthorized tools despite explicit restrictions in their system prompt.\n\nThis directly quantifies the risk described in your Section 1 problem statement \u2014 that implementations \"develop solutions in isolation\" without proper identity and authorization infrastructure. The failure rate is the empirical baseline for what the status quo looks like without a framework like AIMS.\n\nSpecific relevance:\n- Your Authorization layer (Section X, OAuth 2.0 delegation) addresses exactly the enforcement gap we measured\n- Our findings support the urgency of moving beyond prompt-based policy to cryptographic authorization\n- The 48.5\u201368.5% failure range could serve as a concrete benchmark for evaluating whether implementations conforming to this framework   reduce unauthorized tool invocation\n\nHappy to share the full paper or specific benchmark methodology if useful for the references section or security considerations.\n\n\u2014 Rohith Uppala | arXiv: https://arxiv.org/abs/2605.18414",
+      "createdAt": "2026-06-07T15:10:49Z",
+      "updatedAt": "2026-06-08T12:44:10Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "identitymonk",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Hi Rohit,\n\nThanks for the interest and proposition to contribute. We would like to see peer reviews of this before considering integration of your work in the Framework to ensure good quality references for the readers.\n\nPlease keep us posted on how you progress on this.\n\nJeff",
+          "createdAt": "2026-06-08T12:44:10Z",
+          "updatedAt": "2026-06-08T12:44:10Z"
+        }
+      ]
+    },
+    {
+      "number": 140,
+      "id": "I_kwDOQP22qc8AAAABEugwzg",
+      "title": "Use Trust Domain as defined in the WISME Architecture",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/140",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "See https://mailarchive.ietf.org/arch/msg/wimse/bJvimHVwmLiKFec8vAZ7jhw5gNQ/\n\nAdd clarification to point to WIMSE architecture draft for trust domain definition/description.",
+      "createdAt": "2026-06-08T10:42:51Z",
+      "updatedAt": "2026-06-08T10:42:51Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -5460,18 +5563,33 @@
       "labels": [],
       "body": "Added a requirement to prevent Large Language Model access to agent credentials to enhance security. See issue #127",
       "createdAt": "2026-06-05T17:40:48Z",
-      "updatedAt": "2026-06-06T13:35:28Z",
+      "updatedAt": "2026-06-08T14:08:39Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
       "baseRefOid": "97740988f68486ec76d954e6543d0b1c7fe78dee",
       "headRepository": "PieterKas/agent2agent-auth-framework",
       "headRefName": "PieterKas-patch-23",
-      "headRefOid": "f41dec2e6c6c9e8daf61eec4b068fb82c8bc14ff",
+      "headRefOid": "624b71a4cc26b61cf67de188f15bac5a8e6e5386",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "I am OK with adding a sentence to the the main document for now in the current section, but I think there may need to be a different draft in the future that specifically talk about LLM security considerations (including things like hallucinations, datasets it was trained on etc). If we try and do everything in this one doc, the scope may become impractical. I can see a spec as a narrow as \"Credential Management in Agentic Systems\" where we can define specific behaviours (as opposed to this draft which is all about pointing to existing drafts).",
+          "createdAt": "2026-06-08T10:32:57Z",
+          "updatedAt": "2026-06-08T10:35:28Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> I am OK with adding a sentence to the the main document for now in the current section, but I think there may need to be a different draft in the future that specifically talk about LLM security considerations (including things like hallucinations, datasets it was trained on etc). If we try and do everything in this one doc, the scope may become impractical. I can see a spec as a narrow as \"Credential Management in Agentic Systems\" where we can define specific behaviours (as opposed to this draft which is all about pointing to existing drafts).\r\n\r\nIsn't this draft about identifying areas that are ripe for standardization? Well, we've just found one. Let's point it out and move forward.",
+          "createdAt": "2026-06-08T14:08:39Z",
+          "updatedAt": "2026-06-08T14:08:39Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOQP22qc8AAAABCM9Sfg",
@@ -5490,6 +5608,66 @@
               "body": "I suggest to add: or to credentials that may be needed to access tools and services, including one-time and bearer tokens.\n\n[See also my comment on #127].",
               "createdAt": "2026-06-06T13:35:28Z",
               "updatedAt": "2026-06-06T13:35:28Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc8AAAABCSVxxQ",
+          "commit": {
+            "abbreviatedOid": "f41dec2"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-08T10:04:48Z",
+          "updatedAt": "2026-06-08T10:04:48Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "I agree with the need to prevent LLMs having access to any credentials for agents or tools. From a doc ument perspective, the section was originally scoped to the credentials of the Agent (as opposed to taking into account all credentials provisioned throughout the system and used by tools etc). I wonder if this becomes more of a Security Consideration topic than something we discuss under Agent Credentials?",
+              "createdAt": "2026-06-08T10:04:48Z",
+              "updatedAt": "2026-06-08T10:04:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc8AAAABCSdZ4g",
+          "commit": {
+            "abbreviatedOid": "f41dec2"
+          },
+          "author": "yaronf",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-08T10:22:12Z",
+          "updatedAt": "2026-06-08T10:22:13Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "Understood. In fact I think your comment indicates the need for a new section to discuss the architectural implications of credential management in agentic apps. And IMHO this needs to be in the main document (because it has a bearing on the architecture) rather than the security considerations.",
+              "createdAt": "2026-06-08T10:22:12Z",
+              "updatedAt": "2026-06-08T10:22:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc8AAAABCSk6MA",
+          "commit": {
+            "abbreviatedOid": "f41dec2"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-08T10:36:42Z",
+          "updatedAt": "2026-06-08T10:36:43Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "```suggestion\nThe Large Language Model MUST NOT have access to an agent's credentials or to credentials that may be needed to access tools and services. This prevents the Large Language Model from using, exposing, or being manipulated via prompt injection into disclosing the credentials.\n```",
+              "createdAt": "2026-06-08T10:36:43Z",
+              "updatedAt": "2026-06-08T10:36:43Z"
             }
           ]
         }
