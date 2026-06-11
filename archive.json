@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-09T03:39:57.906284+00:00",
+  "timestamp": "2026-06-11T04:07:49.215387+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -2031,7 +2031,7 @@
       "labels": [],
       "body": "_Source: email from Yaron Sheffer to the WIMSE mailing list, [Review of draft-klrc-aiagent-auth (editor's copy)](https://mailarchive.ietf.org/arch/msg/wimse/3baCsNZnK4XS5nH-iHWuaPJlbK0/). Quoted verbatim below._\n\nSection 9.5 describes exchanging access tokens for transaction tokens and then using transaction tokens to obtain access tokens (for downstream calls). This is architecturally circular and raises unresolved questions about how authorization scope is preserved or narrowed across this chain. Transaction tokens (draft-ietf-oauth-transaction-tokens) do not carry a standard `scope` claim, so it is unclear how scope semantics are maintained when re-obtaining an access token from a transaction token. This should be resolved or at least explicitly flagged as an open issue.\n",
       "createdAt": "2026-06-04T11:14:21Z",
-      "updatedAt": "2026-06-08T13:54:52Z",
+      "updatedAt": "2026-06-09T17:34:18Z",
       "closedAt": null,
       "comments": [
         {
@@ -2075,6 +2075,20 @@
           "body": "My views will be more stringent. If `brownfield environments where there are a great many legacy systems ` then there is a very low chance for TxnT, ID-JAG, and chaining support. Therefore fall back to Access Token exchange through Token Exchange.\n\nWe could recognize brownfield, but the idea was to provide the map of \"what it should be\" not necessarily \"how to allow to interoperate with your non modern architecture\". I fear doing the latter will open the \"and what about inter operating with  static credentials brownfields?\" as a follow-up.",
           "createdAt": "2026-06-08T13:54:52Z",
           "updatedAt": "2026-06-08T13:54:52Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "Pieters law of Agentic Utiltiy: The value of an Agentic system increases exposnentially with the number of systems it connects to. Most of those systems are in brownfiled environments.\n\nThe goal is to provide guidance that works for both \"greenfield\" and \"brownfield\". The biggest need is in brownfield, since that is where the most interesting data lives.\n\nWe want new systems to use the standards we have. We want existing systems to use the standards we have. Those may have to be different standards.",
+          "createdAt": "2026-06-09T12:00:33Z",
+          "updatedAt": "2026-06-09T12:00:33Z"
+        },
+        {
+          "author": "Mayur021",
+          "authorAssociation": "NONE",
+          "body": "Pieter's law lands. The brownfield need is where the real authorization-decision pain lives. One reframe that may help bridge the views above: separate the carrier (token format) from the declaration (chain-level commitments + action class).\n\n  Greenfield carries the declaration as a token claim (TxnT, ID-JAG, Access Token chain). Brownfield carries it as a sidecar the gate reads, the legacy app never sees. Chain id + worst-case action class survive either path.\n\n  The 6-property chain audit schema (joint with Mallikarjunarao Sunke during CSA NHI peer review, under IAM WG review for v1.0) is carrier-agnostic for this reason. Properties bind at chain start and propagate independent of which token type carries them downstream. Different carriers, same chain-level commitments.\n\n  This means Section 9.5's resolution can stay format-flexible without losing scope continuity, and the brownfield/greenfield split becomes a carrier choice rather than a different-standards split.",
+          "createdAt": "2026-06-09T17:34:18Z",
+          "updatedAt": "2026-06-09T17:34:18Z"
         }
       ]
     },
@@ -2362,7 +2376,7 @@
       "labels": [],
       "body": "_Source: email from Yaron Sheffer to the WIMSE mailing list, [Review of draft-klrc-aiagent-auth (editor's copy)](https://mailarchive.ietf.org/arch/msg/wimse/3baCsNZnK4XS5nH-iHWuaPJlbK0/). Quoted verbatim below._\n\nThe paragraph conflates SPIFFE credential types. SPIFFE WIT-SVID is a WIMSE credential. Other SPIFFE credential formats (X.509-SVID, JWT-SVID) are not WIMSE credentials. The text should be more precise about which formats are which.\n",
       "createdAt": "2026-06-04T11:23:53Z",
-      "updatedAt": "2026-06-08T13:57:31Z",
+      "updatedAt": "2026-06-09T12:02:17Z",
       "closedAt": null,
       "comments": [
         {
@@ -2378,6 +2392,13 @@
           "body": "Actually, it's more nuanced. Based on [draft-ietf-wimse-workload-creds-01](https://datatracker.ietf.org/doc/draft-ietf-wimse-workload-creds/), the WIMSE Workload Identity Certificate (WIC) is explicitly described as fully compatible with X509-SVID.",
           "createdAt": "2026-06-08T13:57:31Z",
           "updatedAt": "2026-06-08T13:57:31Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "@identitymonk - do you want to take a look and propose a PR to clarify?",
+          "createdAt": "2026-06-09T12:02:17Z",
+          "updatedAt": "2026-06-09T12:02:17Z"
         }
       ]
     },
@@ -5672,6 +5693,32 @@
           ]
         }
       ]
+    },
+    {
+      "number": 141,
+      "id": "PR_kwDOQP22qc7kXCf6",
+      "title": "Fix typo in acknowledgment section",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/141",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-06-09T11:57:44Z",
+      "updatedAt": "2026-06-09T11:57:44Z",
+      "baseRepository": "PieterKas/agent2agent-auth-framework",
+      "baseRefName": "main",
+      "baseRefOid": "97740988f68486ec76d954e6543d0b1c7fe78dee",
+      "headRepository": "PieterKas/agent2agent-auth-framework",
+      "headRefName": "bc-pi-patch-authorization-was-authroization",
+      "headRefOid": "587ba4f14871f25cba71ff2694dddf7e428017e9",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
