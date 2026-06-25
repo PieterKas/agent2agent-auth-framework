@@ -1,7 +1,7 @@
 ---
 title: "AI Agent Authentication and Authorization"
 abbrev: "AI-Auth"
-category: info
+category: bcp
 
 docname: draft-klrc-aiagent-auth-latest
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
@@ -129,6 +129,10 @@ By doing so, this document serves two complementary goals:
 1. **Consolidation of prior art**: It establishes a baseline by showing how existing standards address the core identity, authentication, authorization, monitoring and observability needs of agent-based systems. Implementers and standards developers can reference this framework to avoid redundant work and ensure interoperability.
 
 2. **Foundation for future work**: As the agent ecosystem matures, having such a framework aids in identifying gaps and clarifies where extensions or profiles of existing standards are needed. This provides a foundation for more focused standardization efforts in areas needing novel work rather than variations of existing approaches.
+
+# Document Status
+
+This document profiles existing standards and emerging specifications from the IETF, CNCF, and OpenID Foundation, as well as third-party protocols and mechanisms, for the AI agent use case. It defines best current practices for combining these and identifies new requirements specific to agent authentication and authorization.
 
 # Conventions and Definitions
 
@@ -297,7 +301,8 @@ A resource server in receipt of tokens opaque to it are able to obtain authoriza
 OAuth 2.0 defines a number authorization grant flows in support of different authorization scenarios. The appropriate flow depends on the specific authorization scenario and the nature of User involvement. The following subsections describe the most relevant flows for Agent authorization.
 
 ### User Delegates Authorization {#user_delegates_authorization}
-When a User delegates authorization to an Agent, the Agent SHOULD obtain an access token using the Authorization Code Grant as described in {{Section 4.1 of OAUTH-FRAMEWORK}}. This redirection-based flow involves an interactive authorization process, typically in a web browser, in which the user authenticates to the authorization server and explicitly approves the requested access. Users SHOULD be authenticated using phishing-resistant authentication mechanisms such as a passkey. Once the user has approved the request, the authorization server returns an authorization code to the Agent via the redirect.
+
+When a User delegates authorization to an Agent, the Authorization Code Grant as described in Section 4.1 of {{OAUTH-FRAMEWORK}} is the appropriate mechanism. This redirection-based flow involves an interactive authorization process, typically in a web browser, in which the user authenticates to the authorization server and explicitly approves the requested access. Users SHOULD be authenticated using phishing-resistant authentication mechanisms such as a passkey. Once the user has approved the request, the authorization server returns an authorization code to the Agent via the redirect.
 
 The Agent, acting as an OAuth client, then makes a token request to the authorization server to redeem the authorization code for an access token. When making this token request, the Agent authenticates itself directly to the authorization server using the credentials described in {{agent_credentials}} with a compatible OAuth client authentication mechanism, and not with the use of static, long-lived client secrets. Compatible OAuth client authentication mechanisms are defined in {{!OAUTH-CLIENTAUTH-JWT=RFC7523}}, {{!OAUTH-CLIENTAUTH-MTLS=RFC8705}} and {{!OAUTH-SPIFFE=I-D.ietf-oauth-spiffe-client-auth}}. The OAuth client authentication step is distinct from, and occurs after, the user authentication and approval described above. The resulting access token reflects the authorization delegated to the Agent by the User and can be used by the Agent to access resources on behalf of the user. The use of OAuth negates the need for the Agent to have access to a User's credentials when accessing a resource on the User's behalf.
 
@@ -318,9 +323,8 @@ To avoid passing access tokens between microservices, the Agent, LLM or Tools ca
 A transaction token MAY be used to obtain an access token to call another service (e.g. another Agent, Tool or LLM) by using OAuth 2.0 Token Exchange as defined in {{OAUTH-TOKEN-EXCHANGE}}.
 
 ## Cross Domain Access
-Agents often require access to resources that are protected by different OAuth 2.0 authorization servers. When the components in {{fig-ai-agent-workload}} are protected by different logical authorization servers, an Agent SHOULD use OAuth Identity and Authorization Chaining Across Domains as defined in ({{!OAUTH-ID-CHAIN=I-D.ietf-oauth-identity-chaining}}), or a derived specification such as the Identity Assertion JWT Authorization Grant {{!OAUTH-JWT-ASSERTION=I-D.ietf-oauth-identity-assertion-authz-grant}}, to obtain an access token from the relevant authorization servers.
 
-When using OAuth Identity and Authorization Chaining Across Domains ({{OAUTH-ID-CHAIN}}), an Agent SHOULD use the access token or transaction token it received to obtain a JWT authorization grant as described in {{Section 2.3 of OAUTH-ID-CHAIN}} and then use the JWT authorization grant it receives to obtain an access token for the resource it is trying to access as defined in {{Section 2.4 of OAUTH-ID-CHAIN}}.
+Agents often require access to resources that are protected by different OAuth 2.0 authorization servers. When the components in Figure 1 are protected by different logical authorization servers, an Agent SHOULD use OAuth Identity and Authorization Chaining Across Domains as defined in {{!OAUTH-ID-CHAIN=I-D.ietf-oauth-identity-chaining}}, or a derived specification such as the Identity Assertion JWT Authorization Grant {{!OAUTH-JWT-ASSERTION=I-D.ietf-oauth-identity-assertion-authz-grant}}, to obtain an access token from the relevant authorization servers. The agent first exchanges its current access token or transaction token for a JWT authorization grant (Section 2.3 of {{OAUTH-ID-CHAIN}}) and then presents that grant to obtain an access token for the target resource (Section 2.4 of {{OAUTH-ID-CHAIN}}).
 
 When using the Identity Assertion JWT Authorization Grant {{OAUTH-JWT-ASSERTION}}, the identity assertion (e.g. the OpenID Connect ID Token or SAML assertion) for the target end-user is used to obtain a JWT assertion as described in {{Section 4.3 of OAUTH-JWT-ASSERTION}}, which is then used to obtain an access token as described in {{Section 4.4 of OAUTH-JWT-ASSERTION}}.
 
@@ -345,7 +349,7 @@ Access from the Tools to the resources and services MAY be controlled through a 
 ## Privacy Considerations {#privacy}
 Authorization tokens may contain user identifiers, agent identifiers, audience restrictions, transaction details, and contextual attributes. Deployments SHOULD minimize disclosure of personally identifiable or sensitive information in tokens and prefer audience-restricted and short-lived tokens. Where possible, opaque tokens with introspection SHOULD be preferred when claim minimization is required.
 
-Agents SHOULD request only the minimum scopes and authorization details necessary to complete a task. Resource servers SHOULD avoid logging full tokens and instead log token identifiers or hashes. When authorization context is propagated across services, derived or down-scoped tokens (such as transaction tokens) SHOULD be used to reduce correlation and replay risk.
+Agents SHOULD request only the minimum scopes and authorization details necessary to complete a task. As recommended in {{OAUTH-BCP}}, resource servers avoid logging full tokens and instead log token identifiers or hashes. When authorization context is propagated across services, derived or down-scoped tokens (such as transaction tokens) SHOULD be used to reduce correlation and replay risk.
 
 Implementations MUST ensure that user identity information delegated to agents is not exposed to unrelated services and that cross-domain authorization exchanges only disclose information required for the target authorization decision.
 
