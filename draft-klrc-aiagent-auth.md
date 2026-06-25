@@ -209,14 +209,14 @@ The Workload Identity in Multi-System Environments (WIMSE) identifier as defined
 
 A WIMSE identifier is a URI that uniquely identifies a workload within a trust domain. Authorization decisions, delegation semantics, and audit records rely on this identifier remaining stable for the lifetime of the workload identity.
 
-The Secure Production Identity Framework for Everyone ({{SPIFFE}}) identifier is a widely deployed and operationally mature implementation of the WIMSE identifier model. A SPIFFE identifier ({{SPIFFE-ID}}) is a URI in the form of `spiffe://<trust-domain>/<path>` that uniquely identifies a workload within a trust domain.
+The Secure Production Identity Framework for Everyone ({{SPIFFE}}) identifier is a widely deployed and operationally mature implementation compliant with the WIMSE identifier model {{WIMSE-ID}}. A SPIFFE identifier ({{SPIFFE-ID}}) is a URI in the form of `spiffe://<trust-domain>/<path>` that uniquely identifies a workload within a trust domain.
 
 An agent participating in this framework MUST be assigned exactly one WIMSE identifier, which MAY be a SPIFFE ID.
 
 # Agent Credentials {#agent_credentials}
 Agents MUST possess credentials that provide a cryptographic binding to the agent identifier. These credentials are considered primary credentials that are provisioned at runtime. An identifier alone is insufficient unless it can be verified to be controlled by the communicating agent through a cryptographic binding.
 
-WIMSE credentials ({{!WIMSE-CRED=I-D.ietf-wimse-workload-creds}}) are defined as a profile of X.509 certificates and Workload Identity Tokens (WITs), while SPIFFE defines SPIFFE Verified ID (SVID) profiles of JSON Web Token (JWT-SVID), X.509 certificates (X.509-SVID) and WIMSE Workload Identity Tokens (WIT-SVID). SPIFFE SVID credentials are compatible with WIMSE defined credentials. The choice of an appropriate format depends on the trust model and integration requirements.
+WIMSE defines two credential formats in {{!WIMSE-CRED=I-D.ietf-wimse-workload-creds}}: the Workload Identity Token (WIT), a proof-of-possession-bound JWT used at the application level, and the Workload Identity Certificate (WIC), an X.509 certificate used at the transport level. SPIFFE defines three SVID credential profiles: X.509-SVID, JWT-SVID, and WIT-SVID. While the X.509-SVID profile is fully compatible with WIMSE WIC, and the WIT-SVID is a profile of the WIMSE WIT, the JWT-SVID, by contrast, is a bearer token with a fundamentally different security model and not a WIMSE credential. The choice of an appropriate credential format depends on the trust model and integration requirements of the deployment.
 
 Agent credentials SHOULD be short-lived to minimize the risk of credential theft, MUST include an explicit expiration time after which it is no longer accepted, and MAY carry additional attributes relevant to the agent (for example trust domain, attestation evidence, or workload metadata).
 
