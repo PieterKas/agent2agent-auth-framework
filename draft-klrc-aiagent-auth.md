@@ -1,7 +1,7 @@
 ---
 title: "AI Agent Authentication and Authorization"
 abbrev: "AI-Auth"
-category: bcp
+category: info
 
 docname: draft-klrc-aiagent-auth-latest
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
