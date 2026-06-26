@@ -219,7 +219,7 @@ The Workload Identity in Multi-System Environments (WIMSE) identifier as defined
 
 A WIMSE identifier is a URI that uniquely identifies a workload within a trust domain. Authorization decisions, delegation semantics, and audit records rely on this identifier remaining stable for the lifetime of the workload identity.
 
-The Secure Production Identity Framework for Everyone ({{SPIFFE}}) identifier is a widely deployed and operationally mature implementation compliant with the WIMSE identifier model {{WIMSE-ID}}. A SPIFFE identifier ({{SPIFFE-ID}}) is a URI in the form of `spiffe://<trust-domain>/<path>` that uniquely identifies a workload within a trust domain.
+The Secure Production Identity Framework for Everyone ({{SPIFFE}}) identifier is a widely deployed and operationally mature instance of the WIMSE identifier model {{WIMSE-ID}}. A SPIFFE identifier ({{SPIFFE-ID}}) is a URI in the form of `spiffe://<trust-domain>/<path>` that uniquely identifies a workload within a trust domain.
 
 An agent participating in this framework MUST be assigned exactly one WIMSE identifier, which MAY be a SPIFFE ID.
 
