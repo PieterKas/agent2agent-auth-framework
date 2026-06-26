@@ -102,7 +102,17 @@ normative:
   RISC:
     title: OpenID Risk Incident Sharing and Coordination Profile 1.0
     target: https://openid.net/specs/openid-risc-1_0-final.html
+  SPIFFE-X509-SVID:
+    title: "The X.509 SPIFFE Verifiable Identity Document"
+    target: https://github.com/spiffe/spiffe/blob/main/standards/X509-SVID.md
 
+  SPIFFE-JWT-SVID:
+    title: "The JWT SPIFFE Verifiable Identity Document"
+    target: https://github.com/spiffe/spiffe/blob/main/standards/JWT-SVID.md
+
+  SPIFFE-WIT-SVID:
+    title: "The WIT SPIFFE Verifiable Identity Document"
+    target: https://github.com/spiffe/spiffe/blob/draft-wit-svid/standards/WIT-SVID.md
 informative:
   MissionShaping:
     title: "The Mission Shaping Problem"
