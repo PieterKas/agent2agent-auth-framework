@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-11T04:07:49.215387+00:00",
+  "timestamp": "2026-06-28T03:59:22.999584+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -5719,6 +5719,222 @@
       "mergeCommit": null,
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 142,
+      "id": "PR_kwDOQP22qc7qq9V_",
+      "title": "changes for issue 136 / [EDIT-4] Section 6: SPIFFE vs WIMSE credential",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/142",
+      "state": "OPEN",
+      "author": "identitymonk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "See #136 ",
+      "createdAt": "2026-06-25T17:28:06Z",
+      "updatedAt": "2026-06-26T22:01:53Z",
+      "baseRepository": "PieterKas/agent2agent-auth-framework",
+      "baseRefName": "main",
+      "baseRefOid": "97740988f68486ec76d954e6543d0b1c7fe78dee",
+      "headRepository": "identitymonk/agent2agent-auth-framework",
+      "headRefName": "EDIT-4",
+      "headRefOid": "5ceee8b4176e43c2cd232bbc718c9210f8b7d922",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "identitymonk",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Accepted the changes",
+          "createdAt": "2026-06-26T22:01:53Z",
+          "updatedAt": "2026-06-26T22:01:53Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc8AAAABEPJySw",
+          "commit": {
+            "abbreviatedOid": "db7e5dc"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-26T12:05:15Z",
+          "updatedAt": "2026-06-26T12:05:15Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\nThe Secure Production Identity Framework for Everyone ({{SPIFFE}}) identifier is a widely deployed and operationally mature instance of the WIMSE identifier model {{WIMSE-ID}}. A SPIFFE identifier ({{SPIFFE-ID}}) is a URI in the form of `spiffe://<trust-domain>/<path>` that uniquely identifies a workload within a trust domain.\n```",
+              "createdAt": "2026-06-26T12:05:15Z",
+              "updatedAt": "2026-06-26T12:05:15Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc8AAAABEPhKQQ",
+          "commit": {
+            "abbreviatedOid": "db7e5dc"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-26T13:09:02Z",
+          "updatedAt": "2026-06-26T13:09:02Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "```suggestion\nWIMSE defines two credential formats in {{!WIMSE-CRED=I-D.ietf-wimse-workload-creds}}: the Workload Identity Token (WIT) and the transport-layer X.509 Workload Identity Certificate (WIC), both of which bind a cryptographic key to a workload identifier for use in authentication. SPIFFE defines three credential formats: the X.509-SVID {{SPIFFE-X509-SVID}} WIT-SVID {{SPIFFE-WIT-SVID}}, and JWT-SVID {{SPIFFE-JWT-SVID}}. X.509-SVID is compatible with WIC, while WIT-SVID profiles WIT. JWT-SVIDs are short-lived bearer credentials used for JWT-based authentication. The choice of credential format depends on the deployment\u2019s trust model and integration requirements.\n```",
+              "createdAt": "2026-06-26T13:09:02Z",
+              "updatedAt": "2026-06-26T13:09:02Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc8AAAABEPimbg",
+          "commit": {
+            "abbreviatedOid": "db7e5dc"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-26T13:12:36Z",
+          "updatedAt": "2026-06-26T13:12:36Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "```suggestion\n  SPIFFE-X509-SVID:\n    title: \"The X.509 SPIFFE Verifiable Identity Document\"\n    target: https://github.com/spiffe/spiffe/blob/main/standards/X509-SVID.md\n\n  SPIFFE-JWT-SVID:\n    title: \"The JWT SPIFFE Verifiable Identity Document\"\n    target: https://github.com/spiffe/spiffe/blob/main/standards/JWT-SVID.md\n\n  SPIFFE-WIT-SVID:\n    title: \"The WIT SPIFFE Verifiable Identity Document\"\n    target: https://github.com/spiffe/spiffe/blob/draft-wit-svid/standards/WIT-SVID.md\n```",
+              "createdAt": "2026-06-26T13:12:36Z",
+              "updatedAt": "2026-06-26T13:12:36Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc8AAAABEPjISA",
+          "commit": {
+            "abbreviatedOid": "db7e5dc"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "CHANGES_REQUESTED",
+          "body": "Thanks for opening the PR Jeff. I made a couple of suggestions, including addition of references.",
+          "createdAt": "2026-06-26T13:14:03Z",
+          "updatedAt": "2026-06-26T13:14:03Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 143,
+      "id": "PR_kwDOQP22qc7qtUpx",
+      "title": "changed for MAJOR-3, issue 123",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/143",
+      "state": "OPEN",
+      "author": "identitymonk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "see #123  Trying to attenuate the MUST and SHOULD by approaching it via BCP",
+      "createdAt": "2026-06-25T19:17:45Z",
+      "updatedAt": "2026-06-26T22:02:30Z",
+      "baseRepository": "PieterKas/agent2agent-auth-framework",
+      "baseRefName": "main",
+      "baseRefOid": "97740988f68486ec76d954e6543d0b1c7fe78dee",
+      "headRepository": "identitymonk/agent2agent-auth-framework",
+      "headRefName": "MAJOR-3",
+      "headRefOid": "9bfc1dcdb1a448d0203096e0a26da174c3545b71",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "identitymonk",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Applied the changes",
+          "createdAt": "2026-06-26T22:02:30Z",
+          "updatedAt": "2026-06-26T22:02:30Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc8AAAABEO4z8w",
+          "commit": {
+            "abbreviatedOid": "537bd62"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-26T11:14:08Z",
+          "updatedAt": "2026-06-26T11:14:08Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "I think we need to discuss as a group whether this is an informational draft or BCP. @bc-pi remarked that there is some baggage that goes with BCPs, so would be good to understand that before we make that call.",
+              "createdAt": "2026-06-26T11:14:08Z",
+              "updatedAt": "2026-06-26T11:14:08Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc8AAAABEO8wXA",
+          "commit": {
+            "abbreviatedOid": "537bd62"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-26T11:26:07Z",
+          "updatedAt": "2026-06-26T11:26:07Z",
+          "comments": [
+            {
+              "originalPosition": 37,
+              "body": "Add a reference to https://datatracker.ietf.org/doc/draft-fletcher-transaction-token-chaining-profile/01/\n\n```suggestion\nAgents often require access to resources that are protected by different OAuth 2.0 authorization servers. When the components in Figure 1 are protected by different logical authorization servers, an Agent SHOULD use OAuth Identity and Authorization Chaining Across Domains as defined in {{!OAUTH-ID-CHAIN=I-D.ietf-oauth-identity-chaining}}, or a derived specification such as the Identity Assertion JWT Authorization Grant {{!OAUTH-JWT-ASSERTION=I-D.ietf-oauth-identity-assertion-authz-grant}} or , Transaction Token Authorization Grant Profile for OAuth Identity and Authorization Chaining {{!OAUTH-TXN-ASSERTION=I-D.fletcher-transaction-token-chaining-profile}}, to obtain an access token from the relevant authorization servers. The agent first exchanges its current access token or transaction token for a JWT authorization grant (Section 2.3 of {{OAUTH-ID-CHAIN}}) and then presents that grant to obtain an access token for the target resource (Section 2.4 of {{OAUTH-ID-CHAIN}}).\n```",
+              "createdAt": "2026-06-26T11:26:07Z",
+              "updatedAt": "2026-06-26T11:26:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc8AAAABEO9mOA",
+          "commit": {
+            "abbreviatedOid": "537bd62"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "CHANGES_REQUESTED",
+          "body": "Overall looks good. Let's seperate changing the document type from info to bcp until we had a discussion. Changing the type of the document seems like it is orthogonal to the other changes suggested.",
+          "createdAt": "2026-06-26T11:28:45Z",
+          "updatedAt": "2026-06-26T11:28:45Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOQP22qc8AAAABESq3jw",
+          "commit": {
+            "abbreviatedOid": "537bd62"
+          },
+          "author": "identitymonk",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-26T22:00:12Z",
+          "updatedAt": "2026-06-26T22:00:12Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "Reversed to info",
+              "createdAt": "2026-06-26T22:00:12Z",
+              "updatedAt": "2026-06-26T22:00:12Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
