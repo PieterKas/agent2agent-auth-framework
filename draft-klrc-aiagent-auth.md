@@ -426,7 +426,9 @@ The authors would like to thank:
 
 # Document History
    \[\[ To be removed from the final specification ]]
+  -03
 
+   * Update us of normative language (https://github.com/PieterKas/agent2agent-auth-framework/issues/123)
   -02
 
    * Add Aaron Parecki from Okta as co-author.
