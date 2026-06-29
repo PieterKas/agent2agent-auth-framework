@@ -1526,7 +1526,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <p id="section-5-1">Agents <span class="bcp14">MUST</span> be uniquely identified in order to support authentication, authorization, auditing, and delegation.<a href="#section-5-1" class="pilcrow">¶</a></p>
 <p id="section-5-2">The Workload Identity in Multi-System Environments (WIMSE) identifier as defined by <span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span> is the primary identifier for agents in this framework.<a href="#section-5-2" class="pilcrow">¶</a></p>
 <p id="section-5-3">A WIMSE identifier is a URI that uniquely identifies a workload within a trust domain. Authorization decisions, delegation semantics, and audit records rely on this identifier remaining stable for the lifetime of the workload identity.<a href="#section-5-3" class="pilcrow">¶</a></p>
-<p id="section-5-4">The Secure Production Identity Framework for Everyone (<span>[<a href="#SPIFFE" class="cite xref">SPIFFE</a>]</span>) identifier is a widely deployed and operationally mature implementation of the WIMSE identifier model. A SPIFFE identifier (<span>[<a href="#SPIFFE-ID" class="cite xref">SPIFFE-ID</a>]</span>) is a URI in the form of <code>spiffe://&lt;trust-domain&gt;/&lt;path&gt;</code> that uniquely identifies a workload within a trust domain.<a href="#section-5-4" class="pilcrow">¶</a></p>
+<p id="section-5-4">The Secure Production Identity Framework for Everyone (<span>[<a href="#SPIFFE" class="cite xref">SPIFFE</a>]</span>) identifier is a widely deployed and operationally mature instance of the WIMSE identifier model <span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>. A SPIFFE identifier (<span>[<a href="#SPIFFE-ID" class="cite xref">SPIFFE-ID</a>]</span>) is a URI in the form of <code>spiffe://&lt;trust-domain&gt;/&lt;path&gt;</code> that uniquely identifies a workload within a trust domain.<a href="#section-5-4" class="pilcrow">¶</a></p>
 <p id="section-5-5">An agent participating in this framework <span class="bcp14">MUST</span> be assigned exactly one WIMSE identifier, which <span class="bcp14">MAY</span> be a SPIFFE ID.<a href="#section-5-5" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1536,7 +1536,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-agent-credentials" class="section-name selfRef">Agent Credentials</a>
       </h2>
 <p id="section-6-1">Agents <span class="bcp14">MUST</span> possess credentials that provide a cryptographic binding to the agent identifier. These credentials are considered primary credentials that are provisioned at runtime. An identifier alone is insufficient unless it can be verified to be controlled by the communicating agent through a cryptographic binding.<a href="#section-6-1" class="pilcrow">¶</a></p>
-<p id="section-6-2">WIMSE credentials (<span>[<a href="#WIMSE-CRED" class="cite xref">WIMSE-CRED</a>]</span>) are defined as a profile of X.509 certificates and Workload Identity Tokens (WITs), while SPIFFE defines SPIFFE Verified ID (SVID) profiles of JSON Web Token (JWT-SVID), X.509 certificates (X.509-SVID) and WIMSE Workload Identity Tokens (WIT-SVID). SPIFFE SVID credentials are compatible with WIMSE defined credentials. The choice of an appropriate format depends on the trust model and integration requirements.<a href="#section-6-2" class="pilcrow">¶</a></p>
+<p id="section-6-2">WIMSE defines two credential formats in <span>[<a href="#WIMSE-CRED" class="cite xref">WIMSE-CRED</a>]</span>: the Workload Identity Token (WIT) and the transport-layer X.509 Workload Identity Certificate (WIC), both of which bind a cryptographic key to a workload identifier for use in authentication. SPIFFE defines three credential formats: the X.509-SVID <span>[<a href="#SPIFFE-X509-SVID" class="cite xref">SPIFFE-X509-SVID</a>]</span>, WIT-SVID <span>[<a href="#SPIFFE-WIT-SVID" class="cite xref">SPIFFE-WIT-SVID</a>]</span>, and JWT-SVID <span>[<a href="#SPIFFE-JWT-SVID" class="cite xref">SPIFFE-JWT-SVID</a>]</span>. X.509-SVID is compatible with WIC, while WIT-SVID profiles WIT. JWT-SVIDs are short-lived bearer credentials used for JWT-based authentication. The choice of credential format depends on the deployment’s trust model and integration requirements.<a href="#section-6-2" class="pilcrow">¶</a></p>
 <p id="section-6-3">Agent credentials <span class="bcp14">SHOULD</span> be short-lived to minimize the risk of credential theft, <span class="bcp14">MUST</span> include an explicit expiration time after which it is no longer accepted, and <span class="bcp14">MAY</span> carry additional attributes relevant to the agent (for example trust domain, attestation evidence, or workload metadata).<a href="#section-6-3" class="pilcrow">¶</a></p>
 <p id="section-6-4">Deployments can improve the assurance of agent identity by protecting private keys using hardware-backed or isolated cryptographic storage such as TPMs, secure enclaves, or platform security modules when such capabilities are available. These mechanisms reduce key exfiltration risk but are not required for interoperability.<a href="#section-6-4" class="pilcrow">¶</a></p>
 <p id="section-6-5">In some cases, agents <span class="bcp14">MAY</span> need secondary credentials to access a proprietary or legacy environment that is not compatible with the X.509, JWT or WIT it is provisioned with. In these cases an agent <span class="bcp14">MAY</span> exchange their primary credentials through a credential exchange mechanisms (e.g., OAuth 2.0 Token Exchange <span>[<a href="#OAUTH-TOKEN-EXCHANGE" class="cite xref">OAUTH-TOKEN-EXCHANGE</a>]</span>, Transaction Tokens <span>[<a href="#OAUTH-TXN-TOKENS" class="cite xref">OAUTH-TXN-TOKENS</a>]</span> or Workload Identity Federation). This allows an agent to obtain a credential targeted to a specific environment by leveraging the primary credential in its possession.<a href="#section-6-5" class="pilcrow">¶</a></p>
@@ -2015,6 +2015,18 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
         <dd>
 <span class="refTitle">"SPIFFE-ID"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md">https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="SPIFFE-JWT-SVID">[SPIFFE-JWT-SVID]</dt>
+        <dd>
+<span class="refTitle">"The JWT SPIFFE Verifiable Identity Document"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/spiffe/spiffe/blob/main/standards/JWT-SVID.md">https://github.com/spiffe/spiffe/blob/main/standards/JWT-SVID.md</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="SPIFFE-WIT-SVID">[SPIFFE-WIT-SVID]</dt>
+        <dd>
+<span class="refTitle">"The WIT SPIFFE Verifiable Identity Document"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/spiffe/spiffe/blob/draft-wit-svid/standards/WIT-SVID.md">https://github.com/spiffe/spiffe/blob/draft-wit-svid/standards/WIT-SVID.md</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="SPIFFE-X509-SVID">[SPIFFE-X509-SVID]</dt>
+        <dd>
+<span class="refTitle">"The X.509 SPIFFE Verifiable Identity Document"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/spiffe/spiffe/blob/main/standards/X509-SVID.md">https://github.com/spiffe/spiffe/blob/main/standards/X509-SVID.md</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="SSF">[SSF]</dt>
         <dd>
 <span class="refTitle">"OpenID Shared Signals Framework Specification 1.0"</span>, <span>n.d.</span>, <span>&lt;<a href="https://openid.net/specs/openid-sharedsignals-framework-1_0-final.html">https://openid.net/specs/openid-sharedsignals-framework-1_0-final.html</a>&gt;</span>. </dd>
@@ -2066,35 +2078,40 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
   -03<a href="#appendix-A-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-A-2.1">
-          <p id="appendix-A-2.1.1">Editorial updates
-  -02<a href="#appendix-A-2.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-2.1.1">Editorial updates<a href="#appendix-A-2.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-2.2">
-          <p id="appendix-A-2.2.1">Add Aaron Parecki from Okta as co-author.<a href="#appendix-A-2.2.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-A-2.3">
-          <p id="appendix-A-2.3.1">Add reference to phishing resistent credentials (e.g. FIDO passkeys/authenticators) - see https://github.com/PieterKas/agent2agent-auth-framework/issues/106<a href="#appendix-A-2.3.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-A-2.4">
-          <p id="appendix-A-2.4.1">Fold attestation section into provosioning section. Change terminology to posture management.<a href="#appendix-A-2.4.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-A-2.5">
-          <p id="appendix-A-2.5.1">Clarify Oauth authentication mechanisms when an Agent acts as and OAuth client.<a href="#appendix-A-2.5.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-A-2.6">
-          <p id="appendix-A-2.6.1">Update Security Considerations section<a href="#appendix-A-2.6.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-A-2.7">
-          <p id="appendix-A-2.7.1">Add section on Agent Mission (see issue https://github.com/PieterKas/agent2agent-auth-framework/issues/107)<a href="#appendix-A-2.7.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-2.2.1">Clarify relationship between WIMSE and SPIFFE credentials (https://github.com/PieterKas/agent2agent-auth-framework/issues/136)<a href="#appendix-A-2.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-A-3">-01<a href="#appendix-A-3" class="pilcrow">¶</a></p>
+<p id="appendix-A-3">-02<a href="#appendix-A-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-A-4.1">
-          <p id="appendix-A-4.1.1">Add Nick Steele from OpenAI as co-author.<a href="#appendix-A-4.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-4.1.1">Add Aaron Parecki from Okta as co-author.<a href="#appendix-A-4.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-4.2">
+          <p id="appendix-A-4.2.1">Add reference to phishing resistent credentials (e.g. FIDO passkeys/authenticators) - see https://github.com/PieterKas/agent2agent-auth-framework/issues/106<a href="#appendix-A-4.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-4.3">
+          <p id="appendix-A-4.3.1">Fold attestation section into provosioning section. Change terminology to posture management.<a href="#appendix-A-4.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-4.4">
+          <p id="appendix-A-4.4.1">Clarify Oauth authentication mechanisms when an Agent acts as and OAuth client.<a href="#appendix-A-4.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-4.5">
+          <p id="appendix-A-4.5.1">Update Security Considerations section<a href="#appendix-A-4.5.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-4.6">
+          <p id="appendix-A-4.6.1">Add section on Agent Mission (see issue https://github.com/PieterKas/agent2agent-auth-framework/issues/107)<a href="#appendix-A-4.6.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-A-5">-00<a href="#appendix-A-5" class="pilcrow">¶</a></p>
+<p id="appendix-A-5">-01<a href="#appendix-A-5" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A-6.1">
+          <p id="appendix-A-6.1.1">Add Nick Steele from OpenAI as co-author.<a href="#appendix-A-6.1.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="appendix-A-7">-00<a href="#appendix-A-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authors-addresses">
