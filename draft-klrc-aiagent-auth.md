@@ -422,7 +422,9 @@ The authors would like to thank:
 
 # Document History
    \[\[ To be removed from the final specification ]]
+  -03
 
+   * Editorial updates
   -02
 
    * Add Aaron Parecki from Okta as co-author.
