@@ -1036,7 +1036,7 @@ Table of Contents
       work.
 
    *  Karl McGuinness for his blog posts on mission shaping as a pre-
-      cursor to authroization [MissionShaping]
+      cursor to authorization [MissionShaping]
 
 17.  References
 
@@ -1265,9 +1265,13 @@ Appendix A.  Document History
 
    [[ To be removed from the final specification ]] -03
 
+   *  Editorial updates
+
    *  Clarify relationship between WIMSE and SPIFFE credentials
       (https://github.com/PieterKas/agent2agent-auth-framework/
-      issues/136) -02
+      issues/136)
+
+   -02
 
    *  Add Aaron Parecki from Okta as co-author.
 
