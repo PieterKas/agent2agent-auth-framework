@@ -426,15 +426,17 @@ This document has no IANA actions.
 The authors would like to thank:
 
 * Sean O'Dell for providing valuable input and feedback on this work.
-* Karl McGuinness for his blog posts on mission shaping as a pre-cursor to authroization {{MissionShaping}}
+* Karl McGuinness for his blog posts on mission shaping as a pre-cursor to authorization {{MissionShaping}}
 
 --- back
 
 # Document History
    \[\[ To be removed from the final specification ]]
- -03
+  -03
 
+   * Editorial updates
    * Clarify relationship between WIMSE and SPIFFE credentials (https://github.com/PieterKas/agent2agent-auth-framework/issues/136)
+
   -02
 
    * Add Aaron Parecki from Okta as co-author.
