@@ -14,7 +14,7 @@
 <meta content="
        This document proposes best practices for authentication and authorization of AI agent interactions. It leverages existing standards such as the Workload Identity in Multi-System Environments (WIMSE) architecture and OAuth 2.0 family of specifications. Rather than defining new protocols, this document describes how existing and widely deployed standards can be applied or extended to establish agent authentication and authorization. By doing so, it aims to provide a framework within which to use existing standards, identify gaps and guide future standardization efforts for agent authentication and authorization. 
     " name="description">
-<meta content="xml2rfc 3.33.0" name="generator">
+<meta content="xml2rfc 3.34.0" name="generator">
 <meta content="OAuth" name="keyword">
 <meta content="WIMSE" name="keyword">
 <meta content="SPIFFE" name="keyword">
@@ -22,18 +22,19 @@
 <meta content="AI Agent Authentication and Authorization" name="keyword">
 <meta content="draft-klrc-aiagent-auth-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.33.0
-    Python 3.12.13
-    ConfigArgParse 1.7
+  xml2rfc 3.34.0
+    Python 3.14.5
+    ConfigArgParse 1.7.5
     google-i18n-address 3.1.1
     intervaltree 3.2.1
     Jinja2 3.1.6
-    lxml 6.0.2
-    platformdirs 4.9.6
+    lxml 6.1.1
+    natsort 8.4.0
+    platformdirs 4.10.0
     pycountry 24.6.1
     PyYAML 6.0.3
     requests 2.33.1
-    wcwidth 0.7.0
+    wcwidth 0.8.1
 -->
 <link href="draft-klrc-aiagent-auth.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1056,7 +1057,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Kasselman, et al.</td>
-<td class="center">Expires 3 December 2026</td>
+<td class="center">Expires 31 December 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1069,12 +1070,12 @@ svg {
 <dd class="internet-draft">draft-klrc-aiagent-auth-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-06-01" class="published">1 June 2026</time>
+<time datetime="2026-06-29" class="published">29 June 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-12-03">3 December 2026</time></dd>
+<dd class="expires"><time datetime="2026-12-31">31 December 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1139,7 +1140,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 3 December 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 31 December 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1525,7 +1526,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <p id="section-5-1">Agents <span class="bcp14">MUST</span> be uniquely identified in order to support authentication, authorization, auditing, and delegation.<a href="#section-5-1" class="pilcrow">¶</a></p>
 <p id="section-5-2">The Workload Identity in Multi-System Environments (WIMSE) identifier as defined by <span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span> is the primary identifier for agents in this framework.<a href="#section-5-2" class="pilcrow">¶</a></p>
 <p id="section-5-3">A WIMSE identifier is a URI that uniquely identifies a workload within a trust domain. Authorization decisions, delegation semantics, and audit records rely on this identifier remaining stable for the lifetime of the workload identity.<a href="#section-5-3" class="pilcrow">¶</a></p>
-<p id="section-5-4">The Secure Production Identity Framework for Everyone (<span>[<a href="#SPIFFE" class="cite xref">SPIFFE</a>]</span>) identifier is a widely deployed and operationally mature implementation of the WIMSE identifier model. A SPIFFE identifier (<span>[<a href="#SPIFFE-ID" class="cite xref">SPIFFE-ID</a>]</span>) is a URI in the form of <code>spiffe://&lt;trust-domain&gt;/&lt;path&gt;</code> that uniquely identifies a workload within a trust domain.<a href="#section-5-4" class="pilcrow">¶</a></p>
+<p id="section-5-4">The Secure Production Identity Framework for Everyone (<span>[<a href="#SPIFFE" class="cite xref">SPIFFE</a>]</span>) identifier is a widely deployed and operationally mature instance of the WIMSE identifier model <span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>. A SPIFFE identifier (<span>[<a href="#SPIFFE-ID" class="cite xref">SPIFFE-ID</a>]</span>) is a URI in the form of <code>spiffe://&lt;trust-domain&gt;/&lt;path&gt;</code> that uniquely identifies a workload within a trust domain.<a href="#section-5-4" class="pilcrow">¶</a></p>
 <p id="section-5-5">An agent participating in this framework <span class="bcp14">MUST</span> be assigned exactly one WIMSE identifier, which <span class="bcp14">MAY</span> be a SPIFFE ID.<a href="#section-5-5" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1535,7 +1536,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-agent-credentials" class="section-name selfRef">Agent Credentials</a>
       </h2>
 <p id="section-6-1">Agents <span class="bcp14">MUST</span> possess credentials that provide a cryptographic binding to the agent identifier. These credentials are considered primary credentials that are provisioned at runtime. An identifier alone is insufficient unless it can be verified to be controlled by the communicating agent through a cryptographic binding.<a href="#section-6-1" class="pilcrow">¶</a></p>
-<p id="section-6-2">WIMSE credentials (<span>[<a href="#WIMSE-CRED" class="cite xref">WIMSE-CRED</a>]</span>) are defined as a profile of X.509 certificates and Workload Identity Tokens (WITs), while SPIFFE defines SPIFFE Verified ID (SVID) profiles of JSON Web Token (JWT-SVID), X.509 certificates (X.509-SVID) and WIMSE Workload Identity Tokens (WIT-SVID). SPIFFE SVID credentials are compatible with WIMSE defined credentials. The choice of an appropriate format depends on the trust model and integration requirements.<a href="#section-6-2" class="pilcrow">¶</a></p>
+<p id="section-6-2">WIMSE defines two credential formats in <span>[<a href="#WIMSE-CRED" class="cite xref">WIMSE-CRED</a>]</span>: the Workload Identity Token (WIT) and the transport-layer X.509 Workload Identity Certificate (WIC), both of which bind a cryptographic key to a workload identifier for use in authentication. SPIFFE defines three credential formats: the X.509-SVID <span>[<a href="#SPIFFE-X509-SVID" class="cite xref">SPIFFE-X509-SVID</a>]</span>, WIT-SVID <span>[<a href="#SPIFFE-WIT-SVID" class="cite xref">SPIFFE-WIT-SVID</a>]</span>, and JWT-SVID <span>[<a href="#SPIFFE-JWT-SVID" class="cite xref">SPIFFE-JWT-SVID</a>]</span>. X.509-SVID is compatible with WIC, while WIT-SVID profiles WIT. JWT-SVIDs are short-lived bearer credentials used for JWT-based authentication. The choice of credential format depends on the deployment’s trust model and integration requirements.<a href="#section-6-2" class="pilcrow">¶</a></p>
 <p id="section-6-3">Agent credentials <span class="bcp14">SHOULD</span> be short-lived to minimize the risk of credential theft, <span class="bcp14">MUST</span> include an explicit expiration time after which it is no longer accepted, and <span class="bcp14">MAY</span> carry additional attributes relevant to the agent (for example trust domain, attestation evidence, or workload metadata).<a href="#section-6-3" class="pilcrow">¶</a></p>
 <p id="section-6-4">Deployments can improve the assurance of agent identity by protecting private keys using hardware-backed or isolated cryptographic storage such as TPMs, secure enclaves, or platform security modules when such capabilities are available. These mechanisms reduce key exfiltration risk but are not required for interoperability.<a href="#section-6-4" class="pilcrow">¶</a></p>
 <p id="section-6-5">In some cases, agents <span class="bcp14">MAY</span> need secondary credentials to access a proprietary or legacy environment that is not compatible with the X.509, JWT or WIT it is provisioned with. In these cases an agent <span class="bcp14">MAY</span> exchange their primary credentials through a credential exchange mechanisms (e.g., OAuth 2.0 Token Exchange <span>[<a href="#OAUTH-TOKEN-EXCHANGE" class="cite xref">OAUTH-TOKEN-EXCHANGE</a>]</span>, Transaction Tokens <span>[<a href="#OAUTH-TXN-TOKENS" class="cite xref">OAUTH-TXN-TOKENS</a>]</span> or Workload Identity Federation). This allows an agent to obtain a credential targeted to a specific environment by leveraging the primary credential in its possession.<a href="#section-6-5" class="pilcrow">¶</a></p>
@@ -1715,7 +1716,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <a href="#section-9.6" class="section-number selfRef">9.6. </a><a href="#name-cross-domain-access" class="section-name selfRef">Cross Domain Access</a>
         </h3>
 <p id="section-9.6-1">Agents often require access to resources that are protected by different OAuth 2.0 authorization servers. When the components in <a href="#fig-ai-agent-workload" class="auto internal xref">Figure 1</a> are protected by different logical authorization servers, an Agent <span class="bcp14">SHOULD</span> use OAuth Identity and Authorization Chaining Across Domains as defined in (<span>[<a href="#OAUTH-ID-CHAIN" class="cite xref">OAUTH-ID-CHAIN</a>]</span>), or a derived specification such as the Identity Assertion JWT Authorization Grant <span>[<a href="#OAUTH-JWT-ASSERTION" class="cite xref">OAUTH-JWT-ASSERTION</a>]</span>, to obtain an access token from the relevant authorization servers.<a href="#section-9.6-1" class="pilcrow">¶</a></p>
-<p id="section-9.6-2">When using OAuth Identity and Authorization Chaining Across Domains (<span>[<a href="#OAUTH-ID-CHAIN" class="cite xref">OAUTH-ID-CHAIN</a>]</span>), an Agent <span class="bcp14">SHOULD</span> use the access token or transaction token it received to obtain a JWT authorization grant as described in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-identity-chaining-12#section-2.3" class="relref">Section 2.3</a> of [<a href="#OAUTH-ID-CHAIN" class="cite xref">OAUTH-ID-CHAIN</a>]</span> and then use the JWT authorization grant it receives to obtain an access token for the resource it is trying to access as defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-identity-chaining-12#section-2.4" class="relref">Section 2.4</a> of [<a href="#OAUTH-ID-CHAIN" class="cite xref">OAUTH-ID-CHAIN</a>]</span>.<a href="#section-9.6-2" class="pilcrow">¶</a></p>
+<p id="section-9.6-2">When using OAuth Identity and Authorization Chaining Across Domains (<span>[<a href="#OAUTH-ID-CHAIN" class="cite xref">OAUTH-ID-CHAIN</a>]</span>), an Agent <span class="bcp14">SHOULD</span> use the access token or transaction token it received to obtain a JWT authorization grant as described in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-identity-chaining-16#section-2.3" class="relref">Section 2.3</a> of [<a href="#OAUTH-ID-CHAIN" class="cite xref">OAUTH-ID-CHAIN</a>]</span> and then use the JWT authorization grant it receives to obtain an access token for the resource it is trying to access as defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-identity-chaining-16#section-2.4" class="relref">Section 2.4</a> of [<a href="#OAUTH-ID-CHAIN" class="cite xref">OAUTH-ID-CHAIN</a>]</span>.<a href="#section-9.6-2" class="pilcrow">¶</a></p>
 <p id="section-9.6-3">When using the Identity Assertion JWT Authorization Grant <span>[<a href="#OAUTH-JWT-ASSERTION" class="cite xref">OAUTH-JWT-ASSERTION</a>]</span>, the identity assertion (e.g. the OpenID Connect ID Token or SAML assertion) for the target end-user is used to obtain a JWT assertion as described in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-identity-assertion-authz-grant-04#section-4.3" class="relref">Section 4.3</a> of [<a href="#OAUTH-JWT-ASSERTION" class="cite xref">OAUTH-JWT-ASSERTION</a>]</span>, which is then used to obtain an access token as described in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-identity-assertion-authz-grant-04#section-4.4" class="relref">Section 4.4</a> of [<a href="#OAUTH-JWT-ASSERTION" class="cite xref">OAUTH-JWT-ASSERTION</a>]</span>.<a href="#section-9.6-3" class="pilcrow">¶</a></p>
 <p id="section-9.6-4">OAuth Identity and Authorization Chaining Across Domains (<span>[<a href="#OAUTH-ID-CHAIN" class="cite xref">OAUTH-ID-CHAIN</a>]</span>) provides a general mechanism for obtaining cross-domain access that can be used whether an identity assertion like a SAML or OpenID Connect token is available or not. The Identity Assertion JWT Authorization Grant <span>[<a href="#OAUTH-JWT-ASSERTION" class="cite xref">OAUTH-JWT-ASSERTION</a>]</span> is optimized for cases where an identity assertion like a SAML or OpenID Connect token is available from an identity provider that is trusted by all the OAuth authorization servers as it removes the need for the user to re-authenticate. This is typically used within enterprise deployments to simplify authorization delegation for multiple software-as-a-service offerings.<a href="#section-9.6-4" class="pilcrow">¶</a></p>
 </section>
@@ -1944,7 +1945,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <dd class="break"></dd>
 <dt id="OAUTH-ID-CHAIN">[OAUTH-ID-CHAIN]</dt>
         <dd>
-<span class="refAuthor">Schwenkschuster, A.</span>, <span class="refAuthor">Kasselman, P.</span>, <span class="refAuthor">Burgin, K.</span>, <span class="refAuthor">Jenkins, M. J.</span>, <span class="refAuthor">Campbell, B.</span>, and <span class="refAuthor">A. Parecki</span>, <span class="refTitle">"OAuth Identity and Authorization Chaining Across Domains"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-identity-chaining-12</span>, <time datetime="2026-05-11" class="refDate">11 May 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-identity-chaining-12">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-identity-chaining-12</a>&gt;</span>. </dd>
+<span class="refAuthor">Schwenkschuster, A.</span>, <span class="refAuthor">Kasselman, P.</span>, <span class="refAuthor">Burgin, K.</span>, <span class="refAuthor">Jenkins, M. J.</span>, <span class="refAuthor">Campbell, B.</span>, and <span class="refAuthor">A. Parecki</span>, <span class="refTitle">"OAuth Identity and Authorization Chaining Across Domains"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-identity-chaining-16</span>, <time datetime="2026-06-26" class="refDate">26 June 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-identity-chaining-16">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-identity-chaining-16</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="OAUTH-JWT-ASSERTION">[OAUTH-JWT-ASSERTION]</dt>
         <dd>
@@ -1964,7 +1965,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <dd class="break"></dd>
 <dt id="OAUTH-SPIFFE">[OAUTH-SPIFFE]</dt>
         <dd>
-<span class="refAuthor">Schwenkschuster, A.</span>, <span class="refAuthor">Kasselman, P.</span>, <span class="refAuthor">Rose, S.</span>, and <span class="refAuthor">S. Thorgersen</span>, <span class="refTitle">"OAuth SPIFFE Client Authentication"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-spiffe-client-auth-01</span>, <time datetime="2026-03-02" class="refDate">2 March 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-spiffe-client-auth-01">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-spiffe-client-auth-01</a>&gt;</span>. </dd>
+<span class="refAuthor">Schwenkschuster, A.</span>, <span class="refAuthor">Kasselman, P.</span>, <span class="refAuthor">Rose, S.</span>, <span class="refAuthor">Thorgersen, S.</span>, and <span class="refAuthor">N. Cam-Winget</span>, <span class="refTitle">"OAuth SPIFFE Client Authentication"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-spiffe-client-auth-02</span>, <time datetime="2026-06-15" class="refDate">15 June 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-spiffe-client-auth-02">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-spiffe-client-auth-02</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="OAUTH-TOKEN-EXCHANGE">[OAUTH-TOKEN-EXCHANGE]</dt>
         <dd>
@@ -2014,6 +2015,18 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
         <dd>
 <span class="refTitle">"SPIFFE-ID"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md">https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="SPIFFE-JWT-SVID">[SPIFFE-JWT-SVID]</dt>
+        <dd>
+<span class="refTitle">"The JWT SPIFFE Verifiable Identity Document"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/spiffe/spiffe/blob/main/standards/JWT-SVID.md">https://github.com/spiffe/spiffe/blob/main/standards/JWT-SVID.md</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="SPIFFE-WIT-SVID">[SPIFFE-WIT-SVID]</dt>
+        <dd>
+<span class="refTitle">"The WIT SPIFFE Verifiable Identity Document"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/spiffe/spiffe/blob/draft-wit-svid/standards/WIT-SVID.md">https://github.com/spiffe/spiffe/blob/draft-wit-svid/standards/WIT-SVID.md</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="SPIFFE-X509-SVID">[SPIFFE-X509-SVID]</dt>
+        <dd>
+<span class="refTitle">"The X.509 SPIFFE Verifiable Identity Document"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/spiffe/spiffe/blob/main/standards/X509-SVID.md">https://github.com/spiffe/spiffe/blob/main/standards/X509-SVID.md</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="SSF">[SSF]</dt>
         <dd>
 <span class="refTitle">"OpenID Shared Signals Framework Specification 1.0"</span>, <span>n.d.</span>, <span>&lt;<a href="https://openid.net/specs/openid-sharedsignals-framework-1_0-final.html">https://openid.net/specs/openid-sharedsignals-framework-1_0-final.html</a>&gt;</span>. </dd>
@@ -2061,35 +2074,39 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
       <h2 id="name-document-history">
 <a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-document-history" class="section-name selfRef">Document History</a>
       </h2>
-<p id="appendix-A-1">[[ To be removed from the final specification ]]<a href="#appendix-A-1" class="pilcrow">¶</a></p>
-<p id="appendix-A-2">-02<a href="#appendix-A-2" class="pilcrow">¶</a></p>
+<p id="appendix-A-1">[[ To be removed from the final specification ]]
+ -03<a href="#appendix-A-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-A-3.1">
-          <p id="appendix-A-3.1.1">Add Aaron Parecki from Okta as co-author.<a href="#appendix-A-3.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A-2.1">
+          <p id="appendix-A-2.1.1">Clarify relationship between WIMSE and SPIFFE credentials (https://github.com/PieterKas/agent2agent-auth-framework/issues/136)
+  -02<a href="#appendix-A-2.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-3.2">
-          <p id="appendix-A-3.2.1">Add reference to phishing resistent credentials (e.g. FIDO passkeys/authenticators) - see https://github.com/PieterKas/agent2agent-auth-framework/issues/106<a href="#appendix-A-3.2.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-2.2">
+          <p id="appendix-A-2.2.1">Add Aaron Parecki from Okta as co-author.<a href="#appendix-A-2.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-3.3">
-          <p id="appendix-A-3.3.1">Fold attestation section into provosioning section. Change terminology to posture management.<a href="#appendix-A-3.3.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-2.3">
+          <p id="appendix-A-2.3.1">Add reference to phishing resistent credentials (e.g. FIDO passkeys/authenticators) - see https://github.com/PieterKas/agent2agent-auth-framework/issues/106<a href="#appendix-A-2.3.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-3.4">
-          <p id="appendix-A-3.4.1">Clarify Oauth authentication mechanisms when an Agent acts as and OAuth client.<a href="#appendix-A-3.4.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-2.4">
+          <p id="appendix-A-2.4.1">Fold attestation section into provosioning section. Change terminology to posture management.<a href="#appendix-A-2.4.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-3.5">
-          <p id="appendix-A-3.5.1">Update Security Considerations section<a href="#appendix-A-3.5.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-2.5">
+          <p id="appendix-A-2.5.1">Clarify Oauth authentication mechanisms when an Agent acts as and OAuth client.<a href="#appendix-A-2.5.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-3.6">
-          <p id="appendix-A-3.6.1">Add section on Agent Mission (see issue https://github.com/PieterKas/agent2agent-auth-framework/issues/107)<a href="#appendix-A-3.6.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-2.6">
+          <p id="appendix-A-2.6.1">Update Security Considerations section<a href="#appendix-A-2.6.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-2.7">
+          <p id="appendix-A-2.7.1">Add section on Agent Mission (see issue https://github.com/PieterKas/agent2agent-auth-framework/issues/107)<a href="#appendix-A-2.7.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-A-4">-01<a href="#appendix-A-4" class="pilcrow">¶</a></p>
+<p id="appendix-A-3">-01<a href="#appendix-A-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-A-5.1">
-          <p id="appendix-A-5.1.1">Add Nick Steele from OpenAI as co-author.<a href="#appendix-A-5.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A-4.1">
+          <p id="appendix-A-4.1.1">Add Nick Steele from OpenAI as co-author.<a href="#appendix-A-4.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-A-6">-00<a href="#appendix-A-6" class="pilcrow">¶</a></p>
+<p id="appendix-A-5">-00<a href="#appendix-A-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authors-addresses">
