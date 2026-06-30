@@ -1057,7 +1057,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Kasselman, et al.</td>
-<td class="center">Expires 31 December 2026</td>
+<td class="center">Expires 1 January 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1070,12 +1070,12 @@ svg {
 <dd class="internet-draft">draft-klrc-aiagent-auth-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-06-29" class="published">29 June 2026</time>
+<time datetime="2026-06-30" class="published">30 June 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-12-31">31 December 2026</time></dd>
+<dd class="expires"><time datetime="2027-01-01">1 January 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1140,7 +1140,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 31 December 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 1 January 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1565,6 +1565,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
       </ol>
 <p id="section-7-9">The use of short-lived credentials provides a significant improvement in the risk profile and risk of credential exposure. It provides an alternative to explicit revocation mechanisms and simplifies lifecycle management in large, automated environments while removing the risks of downtime as a result of credential expiry.<a href="#section-7-9" class="pilcrow">¶</a></p>
 <p id="section-7-10">Deployed frameworks such as <span>[<a href="#SPIFFE" class="cite xref">SPIFFE</a>]</span> provide proven mechanisms for automated, short-lived credential provisioning at runtime. In addition to issuing short-lived credentials, <span>[<a href="#SPIFFE" class="cite xref">SPIFFE</a>]</span> also provisions ephemeral cryptographic key material bound to each credential, further reducing the risks associated with compromising long-lived keys.<a href="#section-7-10" class="pilcrow">¶</a></p>
+<p id="section-7-11">The Large Language Model <span class="bcp14">MUST NOT</span> have access to an agent's credentials or to credentials that may be needed to access tools and services. This prevents the Large Language Model from using, exposing, or being manipulated via prompt injection into disclosing the credentials.<a href="#section-7-11" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="agent_authentication">
@@ -2084,34 +2085,40 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
           <p id="appendix-A-2.2.1">Clarify relationship between WIMSE and SPIFFE credentials (https://github.com/PieterKas/agent2agent-auth-framework/issues/136)<a href="#appendix-A-2.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-A-3">-02<a href="#appendix-A-3" class="pilcrow">¶</a></p>
+<p id="appendix-A-3">-03<a href="#appendix-A-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-A-4.1">
-          <p id="appendix-A-4.1.1">Add Aaron Parecki from Okta as co-author.<a href="#appendix-A-4.1.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-A-4.2">
-          <p id="appendix-A-4.2.1">Add reference to phishing resistent credentials (e.g. FIDO passkeys/authenticators) - see https://github.com/PieterKas/agent2agent-auth-framework/issues/106<a href="#appendix-A-4.2.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-A-4.3">
-          <p id="appendix-A-4.3.1">Fold attestation section into provosioning section. Change terminology to posture management.<a href="#appendix-A-4.3.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-A-4.4">
-          <p id="appendix-A-4.4.1">Clarify Oauth authentication mechanisms when an Agent acts as and OAuth client.<a href="#appendix-A-4.4.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-A-4.5">
-          <p id="appendix-A-4.5.1">Update Security Considerations section<a href="#appendix-A-4.5.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-A-4.6">
-          <p id="appendix-A-4.6.1">Add section on Agent Mission (see issue https://github.com/PieterKas/agent2agent-auth-framework/issues/107)<a href="#appendix-A-4.6.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-4.1.1">Clarify that LLMs should not have access to Agent credentials: https://github.com/PieterKas/agent2agent-auth-framework/issues/127<a href="#appendix-A-4.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-A-5">-01<a href="#appendix-A-5" class="pilcrow">¶</a></p>
+<p id="appendix-A-5">-02<a href="#appendix-A-5" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-A-6.1">
-          <p id="appendix-A-6.1.1">Add Nick Steele from OpenAI as co-author.<a href="#appendix-A-6.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-6.1.1">Add Aaron Parecki from Okta as co-author.<a href="#appendix-A-6.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-6.2">
+          <p id="appendix-A-6.2.1">Add reference to phishing resistent credentials (e.g. FIDO passkeys/authenticators) - see https://github.com/PieterKas/agent2agent-auth-framework/issues/106<a href="#appendix-A-6.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-6.3">
+          <p id="appendix-A-6.3.1">Fold attestation section into provosioning section. Change terminology to posture management.<a href="#appendix-A-6.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-6.4">
+          <p id="appendix-A-6.4.1">Clarify Oauth authentication mechanisms when an Agent acts as and OAuth client.<a href="#appendix-A-6.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-6.5">
+          <p id="appendix-A-6.5.1">Update Security Considerations section<a href="#appendix-A-6.5.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-6.6">
+          <p id="appendix-A-6.6.1">Add section on Agent Mission (see issue https://github.com/PieterKas/agent2agent-auth-framework/issues/107)<a href="#appendix-A-6.6.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-A-7">-00<a href="#appendix-A-7" class="pilcrow">¶</a></p>
+<p id="appendix-A-7">-01<a href="#appendix-A-7" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A-8.1">
+          <p id="appendix-A-8.1.1">Add Nick Steele from OpenAI as co-author.<a href="#appendix-A-8.1.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="appendix-A-9">-00<a href="#appendix-A-9" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authors-addresses">

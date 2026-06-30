@@ -5,7 +5,7 @@
 Network Working Group                                       P. Kasselman
 Internet-Draft                                          Defakto Security
 Intended status: Informational                               J. Lombardo
-Expires: 31 December 2026                                            AWS
+Expires: 1 January 2027                                              AWS
                                                             Y. Rosomakho
                                                                  Zscaler
                                                              B. Campbell
@@ -14,7 +14,7 @@ Expires: 31 December 2026                                            AWS
                                                                   OpenAI
                                                               A. Parecki
                                                                     Okta
-                                                            29 June 2026
+                                                            30 June 2026
 
 
                AI Agent Authentication and Authorization
@@ -60,7 +60,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 31 December 2026.
+   This Internet-Draft will expire on 1 January 2027.
 
 Copyright Notice
 
@@ -451,6 +451,12 @@ Table of Contents
    ephemeral cryptographic key material bound to each credential,
    further reducing the risks associated with compromising long-lived
    keys.
+
+   The Large Language Model MUST NOT have access to an agent's
+   credentials or to credentials that may be needed to access tools and
+   services.  This prevents the Large Language Model from using,
+   exposing, or being manipulated via prompt injection into disclosing
+   the credentials.
 
 8.  Agent Authentication
 
@@ -1270,6 +1276,11 @@ Appendix A.  Document History
    *  Clarify relationship between WIMSE and SPIFFE credentials
       (https://github.com/PieterKas/agent2agent-auth-framework/
       issues/136)
+
+   -03
+
+   *  Clarify that LLMs should not have access to Agent credentials:
+      https://github.com/PieterKas/agent2agent-auth-framework/issues/127
 
    -02
 
