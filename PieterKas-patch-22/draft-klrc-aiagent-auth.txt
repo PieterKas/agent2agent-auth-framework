@@ -5,7 +5,7 @@
 Network Working Group                                       P. Kasselman
 Internet-Draft                                          Defakto Security
 Intended status: Informational                               J. Lombardo
-Expires: 7 December 2026                                             AWS
+Expires: 1 January 2027                                              AWS
                                                             Y. Rosomakho
                                                                  Zscaler
                                                              B. Campbell
@@ -14,7 +14,7 @@ Expires: 7 December 2026                                             AWS
                                                                   OpenAI
                                                               A. Parecki
                                                                     Okta
-                                                             5 June 2026
+                                                            30 June 2026
 
 
                AI Agent Authentication and Authorization
@@ -60,7 +60,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 December 2026.
+   This Internet-Draft will expire on 1 January 2027.
 
 Copyright Notice
 
@@ -782,7 +782,7 @@ Table of Contents
    requested by an Agent requires explicit user confirmation.  In such
    cases the authorization server SHOULD either decline the request or
    obtain additional authorization from the User.  An Agent, acting as
-   an OAuth client, may use the OpenID Client Initiated Backchannel
+   an OAuth client, can use the OpenID Client Initiated Backchannel
    Authentication (CIBA) protocol ([OpenIDConnect.CIBA]).  This triggers
    an out-of-band interaction allowing the user to approve or deny the
    requested operation without exposing credentials to the agent (for
@@ -1098,9 +1098,9 @@ Table of Contents
               Schwenkschuster, A., Kasselman, P., Burgin, K., Jenkins,
               M. J., Campbell, B., and A. Parecki, "OAuth Identity and
               Authorization Chaining Across Domains", Work in Progress,
-              Internet-Draft, draft-ietf-oauth-identity-chaining-14, 2
+              Internet-Draft, draft-ietf-oauth-identity-chaining-16, 26
               June 2026, <https://datatracker.ietf.org/doc/html/draft-
-              ietf-oauth-identity-chaining-14>.
+              ietf-oauth-identity-chaining-16>.
 
    [OAUTH-JWT-ASSERTION]
               Parecki, A., McGuinness, K., and B. Campbell, "Identity
@@ -1129,12 +1129,12 @@ Table of Contents
               <https://www.rfc-editor.org/rfc/rfc8414>.
 
    [OAUTH-SPIFFE]
-              Schwenkschuster, A., Kasselman, P., Rose, S., and S.
-              Thorgersen, "OAuth SPIFFE Client Authentication", Work in
-              Progress, Internet-Draft, draft-ietf-oauth-spiffe-client-
-              auth-01, 2 March 2026,
+              Schwenkschuster, A., Kasselman, P., Rose, S., Thorgersen,
+              S., and N. Cam-Winget, "OAuth SPIFFE Client
+              Authentication", Work in Progress, Internet-Draft, draft-
+              ietf-oauth-spiffe-client-auth-02, 15 June 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              spiffe-client-auth-01>.
+              spiffe-client-auth-02>.
 
    [OAUTH-TOKEN-EXCHANGE]
               Jones, M., Nadalin, A., Campbell, B., Ed., Bradley, J.,
