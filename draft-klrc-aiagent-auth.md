@@ -443,7 +443,7 @@ The authors would like to thank:
    * Editorial updates
    * Clarify relationship between WIMSE and SPIFFE credentials (https://github.com/PieterKas/agent2agent-auth-framework/issues/136)
    * Clarify that LLMs should not have access to Agent credentials: https://github.com/PieterKas/agent2agent-auth-framework/issues/127
-   * Update us of normative language (https://github.com/PieterKas/agent2agent-auth-framework/issues/123)
+   * Update use of normative language (https://github.com/PieterKas/agent2agent-auth-framework/issues/123)
 
   -02
 
