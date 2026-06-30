@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-28T03:59:22.999584+00:00",
+  "timestamp": "2026-06-30T03:49:53.704115+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -5558,7 +5558,7 @@
       "labels": [],
       "body": "Clarify the use of CIBA protocol for user confirmation in OAuth authorization. See isssue #131 ",
       "createdAt": "2026-06-05T17:18:58Z",
-      "updatedAt": "2026-06-05T17:45:10Z",
+      "updatedAt": "2026-06-29T17:32:01Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
       "baseRefOid": "97740988f68486ec76d954e6543d0b1c7fe78dee",
@@ -5570,7 +5570,34 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc8AAAABEdNGbQ",
+          "commit": {
+            "abbreviatedOid": "9976abc"
+          },
+          "author": "identitymonk",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-29T17:30:48Z",
+          "updatedAt": "2026-06-29T17:32:01Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "> An Agent, acting as an OAuth client, may use the OpenID Client Initiated Backchannel Authentication (CIBA) protocol\n\nshould be `MAY`",
+              "createdAt": "2026-06-29T17:30:49Z",
+              "updatedAt": "2026-06-29T17:32:01Z"
+            },
+            {
+              "originalPosition": 5,
+              "body": "one small edit @PieterKas  not related to this change but should be handled by this change",
+              "createdAt": "2026-06-29T17:31:45Z",
+              "updatedAt": "2026-06-29T17:32:01Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 138,
@@ -5699,50 +5726,101 @@
       "id": "PR_kwDOQP22qc7kXCf6",
       "title": "Fix typo in acknowledgment section",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/141",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-06-09T11:57:44Z",
-      "updatedAt": "2026-06-09T11:57:44Z",
+      "updatedAt": "2026-06-29T11:31:47Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
-      "baseRefOid": "97740988f68486ec76d954e6543d0b1c7fe78dee",
+      "baseRefOid": "f3b635f4ad495f87e6097bb09df48d6366d1cb84",
       "headRepository": "PieterKas/agent2agent-auth-framework",
       "headRefName": "bc-pi-patch-authorization-was-authroization",
-      "headRefOid": "587ba4f14871f25cba71ff2694dddf7e428017e9",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "676c55d9c161aa4806a4c336d81cd7331b9bc294",
+      "closedAt": "2026-06-29T11:31:47Z",
+      "mergedAt": "2026-06-29T11:31:47Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "59289a1e6de2ca0f34323af71fd925a66455dafc"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOQP22qc8AAAABEasAnw",
+          "commit": {
+            "abbreviatedOid": "587ba4f"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-06-29T11:28:21Z",
+          "updatedAt": "2026-06-29T11:28:21Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOQP22qc8AAAABEaszmw",
+          "commit": {
+            "abbreviatedOid": "587ba4f"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-29T11:30:10Z",
+          "updatedAt": "2026-06-29T11:30:10Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "```suggestion\n  -03\n\n   * Editorial updates\n```",
+              "createdAt": "2026-06-29T11:30:10Z",
+              "updatedAt": "2026-06-29T11:30:10Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc8AAAABEas7bg",
+          "commit": {
+            "abbreviatedOid": "1d98d73"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-06-29T11:30:25Z",
+          "updatedAt": "2026-06-29T11:30:25Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 142,
       "id": "PR_kwDOQP22qc7qq9V_",
       "title": "changes for issue 136 / [EDIT-4] Section 6: SPIFFE vs WIMSE credential",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/142",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "identitymonk",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "See #136 ",
       "createdAt": "2026-06-25T17:28:06Z",
-      "updatedAt": "2026-06-26T22:01:53Z",
+      "updatedAt": "2026-06-29T11:21:21Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
       "baseRefOid": "97740988f68486ec76d954e6543d0b1c7fe78dee",
       "headRepository": "identitymonk/agent2agent-auth-framework",
       "headRefName": "EDIT-4",
-      "headRefOid": "5ceee8b4176e43c2cd232bbc718c9210f8b7d922",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "298a255c76b7643b01e811eb8a3d316dbcb969c5",
+      "closedAt": "2026-06-29T11:21:21Z",
+      "mergedAt": "2026-06-29T11:21:20Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "f3b635f4ad495f87e6097bb09df48d6366d1cb84"
+      },
       "comments": [
         {
           "author": "identitymonk",
@@ -5825,6 +5903,59 @@
           "createdAt": "2026-06-26T13:14:03Z",
           "updatedAt": "2026-06-26T13:14:03Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOQP22qc8AAAABEamdYw",
+          "commit": {
+            "abbreviatedOid": "5ceee8b"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-29T11:15:32Z",
+          "updatedAt": "2026-06-29T11:15:32Z",
+          "comments": [
+            {
+              "originalPosition": 31,
+              "body": "```suggestion\nWIMSE defines two credential formats in {{!WIMSE-CRED=I-D.ietf-wimse-workload-creds}}: the Workload Identity Token (WIT) and the transport-layer X.509 Workload Identity Certificate (WIC), both of which bind a cryptographic key to a workload identifier for use in authentication. SPIFFE defines three credential formats: the X.509-SVID {{SPIFFE-X509-SVID}}, WIT-SVID {{SPIFFE-WIT-SVID}}, and JWT-SVID {{SPIFFE-JWT-SVID}}. X.509-SVID is compatible with WIC, while WIT-SVID profiles WIT. JWT-SVIDs are short-lived bearer credentials used for JWT-based authentication. The choice of credential format depends on the deployment\u2019s trust model and integration requirements.\n```",
+              "createdAt": "2026-06-29T11:15:32Z",
+              "updatedAt": "2026-06-29T11:15:32Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc8AAAABEaoPLw",
+          "commit": {
+            "abbreviatedOid": "92ea72e"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-29T11:20:03Z",
+          "updatedAt": "2026-06-29T11:20:03Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "```suggestion\n -03\n\n   * Clarify relationship between WIMSE and SPIFFE credentials (https://github.com/PieterKas/agent2agent-auth-framework/issues/136)\n```",
+              "createdAt": "2026-06-29T11:20:03Z",
+              "updatedAt": "2026-06-29T11:20:03Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc8AAAABEaogqw",
+          "commit": {
+            "abbreviatedOid": "298a255"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-06-29T11:20:43Z",
+          "updatedAt": "2026-06-29T11:20:43Z",
+          "comments": []
         }
       ]
     },
@@ -5840,13 +5971,13 @@
       "labels": [],
       "body": "see #123  Trying to attenuate the MUST and SHOULD by approaching it via BCP",
       "createdAt": "2026-06-25T19:17:45Z",
-      "updatedAt": "2026-06-26T22:02:30Z",
+      "updatedAt": "2026-06-29T11:27:19Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
       "baseRefOid": "97740988f68486ec76d954e6543d0b1c7fe78dee",
       "headRepository": "identitymonk/agent2agent-auth-framework",
       "headRefName": "MAJOR-3",
-      "headRefOid": "9bfc1dcdb1a448d0203096e0a26da174c3545b71",
+      "headRefOid": "6007d75f16ef04725df195e1a7f96927204695cf",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -5931,6 +6062,26 @@
               "body": "Reversed to info",
               "createdAt": "2026-06-26T22:00:12Z",
               "updatedAt": "2026-06-26T22:00:12Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc8AAAABEargAg",
+          "commit": {
+            "abbreviatedOid": "9bfc1dc"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-29T11:27:12Z",
+          "updatedAt": "2026-06-29T11:27:13Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "```suggestion\n  -03\n\n   * Update us of normative language (https://github.com/PieterKas/agent2agent-auth-framework/issues/123)\n```",
+              "createdAt": "2026-06-29T11:27:13Z",
+              "updatedAt": "2026-06-29T11:27:13Z"
             }
           ]
         }
