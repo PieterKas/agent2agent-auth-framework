@@ -102,7 +102,17 @@ normative:
   RISC:
     title: OpenID Risk Incident Sharing and Coordination Profile 1.0
     target: https://openid.net/specs/openid-risc-1_0-final.html
+  SPIFFE-X509-SVID:
+    title: "The X.509 SPIFFE Verifiable Identity Document"
+    target: https://github.com/spiffe/spiffe/blob/main/standards/X509-SVID.md
 
+  SPIFFE-JWT-SVID:
+    title: "The JWT SPIFFE Verifiable Identity Document"
+    target: https://github.com/spiffe/spiffe/blob/main/standards/JWT-SVID.md
+
+  SPIFFE-WIT-SVID:
+    title: "The WIT SPIFFE Verifiable Identity Document"
+    target: https://github.com/spiffe/spiffe/blob/draft-wit-svid/standards/WIT-SVID.md
 informative:
   MissionShaping:
     title: "The Mission Shaping Problem"
@@ -213,14 +223,14 @@ The Workload Identity in Multi-System Environments (WIMSE) identifier as defined
 
 A WIMSE identifier is a URI that uniquely identifies a workload within a trust domain. Authorization decisions, delegation semantics, and audit records rely on this identifier remaining stable for the lifetime of the workload identity.
 
-The Secure Production Identity Framework for Everyone ({{SPIFFE}}) identifier is a widely deployed and operationally mature implementation of the WIMSE identifier model. A SPIFFE identifier ({{SPIFFE-ID}}) is a URI in the form of `spiffe://<trust-domain>/<path>` that uniquely identifies a workload within a trust domain.
+The Secure Production Identity Framework for Everyone ({{SPIFFE}}) identifier is a widely deployed and operationally mature instance of the WIMSE identifier model {{WIMSE-ID}}. A SPIFFE identifier ({{SPIFFE-ID}}) is a URI in the form of `spiffe://<trust-domain>/<path>` that uniquely identifies a workload within a trust domain.
 
 An agent participating in this framework MUST be assigned exactly one WIMSE identifier, which MAY be a SPIFFE ID.
 
 # Agent Credentials {#agent_credentials}
 Agents MUST possess credentials that provide a cryptographic binding to the agent identifier. These credentials are considered primary credentials that are provisioned at runtime. An identifier alone is insufficient unless it can be verified to be controlled by the communicating agent through a cryptographic binding.
 
-WIMSE credentials ({{!WIMSE-CRED=I-D.ietf-wimse-workload-creds}}) are defined as a profile of X.509 certificates and Workload Identity Tokens (WITs), while SPIFFE defines SPIFFE Verified ID (SVID) profiles of JSON Web Token (JWT-SVID), X.509 certificates (X.509-SVID) and WIMSE Workload Identity Tokens (WIT-SVID). SPIFFE SVID credentials are compatible with WIMSE defined credentials. The choice of an appropriate format depends on the trust model and integration requirements.
+WIMSE defines two credential formats in {{!WIMSE-CRED=I-D.ietf-wimse-workload-creds}}: the Workload Identity Token (WIT) and the transport-layer X.509 Workload Identity Certificate (WIC), both of which bind a cryptographic key to a workload identifier for use in authentication. SPIFFE defines three credential formats: the X.509-SVID {{SPIFFE-X509-SVID}}, WIT-SVID {{SPIFFE-WIT-SVID}}, and JWT-SVID {{SPIFFE-JWT-SVID}}. X.509-SVID is compatible with WIC, while WIT-SVID profiles WIT. JWT-SVIDs are short-lived bearer credentials used for JWT-based authentication. The choice of credential format depends on the deployment’s trust model and integration requirements.
 
 Agent credentials SHOULD be short-lived to minimize the risk of credential theft, MUST include an explicit expiration time after which it is no longer accepted, and MAY carry additional attributes relevant to the agent (for example trust domain, attestation evidence, or workload metadata).
 
@@ -251,6 +261,8 @@ Agent credential provisioning typically includes two phases:
 The use of short-lived credentials provides a significant improvement in the risk profile and risk of credential exposure. It provides an alternative to explicit revocation mechanisms and simplifies lifecycle management in large, automated environments while removing the risks of downtime as a result of credential expiry.
 
 Deployed frameworks such as {{SPIFFE}} provide proven mechanisms for automated, short-lived credential provisioning at runtime. In addition to issuing short-lived credentials, {{SPIFFE}} also provisions ephemeral cryptographic key material bound to each credential, further reducing the risks associated with compromising long-lived keys.
+
+The Large Language Model MUST NOT have access to an agent's credentials or to credentials that may be needed to access tools and services. This prevents the Large Language Model from using, exposing, or being manipulated via prompt injection into disclosing the credentials.
 
 # Agent Authentication {#agent_authentication}
 Agents may authenticate using a variety of mechanisms, depending on the credentials they possess, the protocols supported in the deployment environment, and the risk profile of the application. As described in the WIMSE Architecture {{!WIMSE-ARCH=I-D.ietf-wimse-arch}}, authentication can occur at either the transport layer or the application layer, and many deployments rely on a combination of both.
@@ -420,7 +432,7 @@ This document has no IANA actions.
 The authors would like to thank:
 
 * Sean O'Dell for providing valuable input and feedback on this work.
-* Karl McGuinness for his blog posts on mission shaping as a pre-cursor to authroization {{MissionShaping}}
+* Karl McGuinness for his blog posts on mission shaping as a pre-cursor to authorization {{MissionShaping}}
 
 --- back
 
@@ -428,7 +440,11 @@ The authors would like to thank:
    \[\[ To be removed from the final specification ]]
   -03
 
+   * Editorial updates
+   * Clarify relationship between WIMSE and SPIFFE credentials (https://github.com/PieterKas/agent2agent-auth-framework/issues/136)
+   * Clarify that LLMs should not have access to Agent credentials: https://github.com/PieterKas/agent2agent-auth-framework/issues/127
    * Update us of normative language (https://github.com/PieterKas/agent2agent-auth-framework/issues/123)
+
   -02
 
    * Add Aaron Parecki from Okta as co-author.
