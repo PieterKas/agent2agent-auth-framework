@@ -79,47 +79,48 @@ Copyright Notice
 Table of Contents
 
    1.  Introduction
-   2.  Conventions and Definitions
-   3.  Agents are workloads
-   4.  Agent Identity Management System
-   5.  Agent Identifier
-   6.  Agent Credentials
-   7.  Agent Credential Provisioning
-   8.  Agent Authentication
-     8.1.  Transport Layer Authentication
-       8.1.1.  Limitations
-     8.2.  Application Layer Authentication
-       8.2.1.  WIMSE Proof Tokens (WPTs)
-       8.2.2.  HTTP Message Signatures
-       8.2.3.  Limitations
-   9.  Agent Authorization
-     9.1.  Agent Mission
-     9.2.  Leverage OAuth 2.0 as a Delegation Authorization Framework
-     9.3.  Use of OAuth 2.0 Access Tokens
-     9.4.  Obtaining an OAuth 2.0 Access Token
-       9.4.1.  User Delegates Authorization
-       9.4.2.  Agent Obtains Own Authorization
-       9.4.3.  Agents Accessed by Systems or Other Agents
-       9.4.4.  OAuth 2.0 Security Best Practices
-     9.5.  Risk Reduction with Transaction Tokens
-     9.6.  Cross Domain Access
-     9.7.  Human in the Loop
-     9.8.  Tool-to-Service Access
-     9.9.  Privacy Considerations
-     9.10. OAuth 2.0 Discovery in Dynamic Environments
-       9.10.1.  Authorization Server Capability Discovery
-       9.10.2.  Protected Resource Capability Discovery
-       9.10.3.  Client Capability Discovery
-   10. Agent Monitoring, Observability and Remediation
-   11. Agent Authentication and Authorization Policy
-   12. Agent Compliance
-   13. Security Considerations
-   14. Privacy Considerations
-   15. IANA Considerations
-   16. Acknowledgments
-   17. References
-     17.1.  Normative References
-     17.2.  Informative References
+   2.  Document Status
+   3.  Conventions and Definitions
+   4.  Agents are workloads
+   5.  Agent Identity Management System
+   6.  Agent Identifier
+   7.  Agent Credentials
+   8.  Agent Credential Provisioning
+   9.  Agent Authentication
+     9.1.  Transport Layer Authentication
+       9.1.1.  Limitations
+     9.2.  Application Layer Authentication
+       9.2.1.  WIMSE Proof Tokens (WPTs)
+       9.2.2.  HTTP Message Signatures
+       9.2.3.  Limitations
+   10. Agent Authorization
+     10.1.  Agent Mission
+     10.2.  Leverage OAuth 2.0 as a Delegation Authorization Framework
+     10.3.  Use of OAuth 2.0 Access Tokens
+     10.4.  Obtaining an OAuth 2.0 Access Token
+       10.4.1.  User Delegates Authorization
+       10.4.2.  Agent Obtains Own Authorization
+       10.4.3.  Agents Accessed by Systems or Other Agents
+       10.4.4.  OAuth 2.0 Security Best Practices
+     10.5.  Risk Reduction with Transaction Tokens
+     10.6.  Cross Domain Access
+     10.7.  Human in the Loop
+     10.8.  Tool-to-Service Access
+     10.9.  Privacy Considerations
+     10.10. OAuth 2.0 Discovery in Dynamic Environments
+       10.10.1.  Authorization Server Capability Discovery
+       10.10.2.  Protected Resource Capability Discovery
+       10.10.3.  Client Capability Discovery
+   11. Agent Monitoring, Observability and Remediation
+   12. Agent Authentication and Authorization Policy
+   13. Agent Compliance
+   14. Security Considerations
+   15. Privacy Considerations
+   16. IANA Considerations
+   17. Acknowledgments
+   18. References
+     18.1.  Normative References
+     18.2.  Informative References
    Appendix A.  Document History
    Authors' Addresses
 
@@ -158,7 +159,15 @@ Table of Contents
        efforts in areas needing novel work rather than variations of
        existing approaches.
 
-2.  Conventions and Definitions
+2.  Document Status
+
+   This document profiles existing standards and emerging specifications
+   from the IETF, CNCF, and OpenID Foundation, as well as third-party
+   protocols and mechanisms, for the AI agent use case.  It defines best
+   current practices for combining these and identifies new requirements
+   specific to agent authentication and authorization.
+
+3.  Conventions and Definitions
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
@@ -166,7 +175,7 @@ Table of Contents
    BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
 
-3.  Agents are workloads
+4.  Agents are workloads
 
    An Agent is a workload that iteratively interacts with a Large
    Language Model (LLM) and a set of Tools, Services and Resources.  An
@@ -241,7 +250,7 @@ Table of Contents
    standards defined by SPIFFE [SPIFFE], WIMSE, OAuth and OpenID SSF
    [SSF].
 
-4.  Agent Identity Management System
+5.  Agent Identity Management System
 
    This document defines the term Agent Identity Management System
    (AIMS) as a conceptual model describing the set of functions required
@@ -303,7 +312,7 @@ Table of Contents
 
                  Figure 2: Agent Identity Management System
 
-5.  Agent Identifier
+6.  Agent Identifier
 
    Agents MUST be uniquely identified in order to support
    authentication, authorization, auditing, and delegation.
@@ -326,7 +335,7 @@ Table of Contents
    An agent participating in this framework MUST be assigned exactly one
    WIMSE identifier, which MAY be a SPIFFE ID.
 
-6.  Agent Credentials
+7.  Agent Credentials
 
    Agents MUST possess credentials that provide a cryptographic binding
    to the agent identifier.  These credentials are considered primary
@@ -373,13 +382,13 @@ Table of Contents
    difficult to rotate, making them unsuitable for secure agent
    authentication or authorization.
 
-7.  Agent Credential Provisioning
+8.  Agent Credential Provisioning
 
    Agent credential provisioning refers to the runtime issuance,
    renewal, lifecycle state and rotation of the credentials an agent
    uses to authenticate and authorize itself to other agents.  Agents
    may be provisioned with one or more credential types as described in
-   Section 6.  Unlike static secrets, agent credentials are provisioned
+   Section 7.  Unlike static secrets, agent credentials are provisioned
    dynamically and are intentionally short-lived, eliminating the
    operational burden of manual expiration management and reducing the
    impact of credential compromise.
@@ -458,7 +467,7 @@ Table of Contents
    exposing, or being manipulated via prompt injection into disclosing
    the credentials.
 
-8.  Agent Authentication
+9.  Agent Authentication
 
    Agents may authenticate using a variety of mechanisms, depending on
    the credentials they possess, the protocols supported in the
@@ -467,7 +476,7 @@ Table of Contents
    occur at either the transport layer or the application layer, and
    many deployments rely on a combination of both.
 
-8.1.  Transport Layer Authentication
+9.1.  Transport Layer Authentication
 
    Transport-layer authentication establishes trust during the
    establishment of a secure transport channel.  The most common
@@ -485,7 +494,7 @@ Table of Contents
    with an authenticated transport identity.  One example of this is the
    use of mTLS in service mesh architectures such as Istio or LinkerD.
 
-8.1.1.  Limitations
+9.1.1.  Limitations
 
    There are scenarios where transport-layer authentication is not
    desirable or cannot be relied upon.  In architectures involving
@@ -501,7 +510,7 @@ Table of Contents
    portable mechanism for expressing agent identity and conveying
    attestation or policy-relevant attributes.
 
-8.2.  Application Layer Authentication
+9.2.  Application Layer Authentication
 
    Application-layer authentication allows agents to authenticate
    independently of the underlying transport.  This enables end-to-end
@@ -511,7 +520,7 @@ Table of Contents
    The WIMSE working group defines WIMSE Proof Tokens and HTTP Message
    Signatures as authentication mechanisms that may be used by agents.
 
-8.2.1.  WIMSE Proof Tokens (WPTs)
+9.2.1.  WIMSE Proof Tokens (WPTs)
 
    WIMSE Workload Proof Tokens (WPTs, [WIMSE-WPT]) are a protocol-
    independent, application-layer mechanism for proving possession of
@@ -541,7 +550,7 @@ Table of Contents
    transport-layer identity (e.g., mutual TLS) is insufficient or
    unavailable.
 
-8.2.2.  HTTP Message Signatures
+9.2.2.  HTTP Message Signatures
 
    The WIMSE Workload-to-Workload Authentication with HTTP Signatures
    specification [WIMSE-HTTPSIG] defines an application-layer
@@ -563,7 +572,7 @@ Table of Contents
    scheme, or authority; those are only protected if separately covered
    (e.g., @method, @scheme, @authority).
 
-8.2.3.  Limitations
+9.2.3.  Limitations
 
    Unlike transport-layer authentication, application-layer
    authentication does not inherently provide channel binding to the
@@ -574,13 +583,13 @@ Table of Contents
    audience restrictions, nonce or unique identifier checks, and binding
    authentication to specific requests or transaction parameters.
 
-9.  Agent Authorization
+10.  Agent Authorization
 
    Agents act on behalf of a user, a system, or on their own behalf as
    shown in Figure 1 and need to obtain authorization when interacting
    with protected resources.
 
-9.1.  Agent Mission
+10.1.  Agent Mission
 
    An Agent receives a Mission from a User, a System, or another Agent.
    The Mission is the task or objective the Agent will pursue.  It is
@@ -595,7 +604,7 @@ Table of Contents
    are determined, the Agent SHOULD use the mechanisms described in this
    section to obtain access.
 
-9.2.  Leverage OAuth 2.0 as a Delegation Authorization Framework
+10.2.  Leverage OAuth 2.0 as a Delegation Authorization Framework
 
    The widely deployed OAuth 2.0 Authorization Framework
    [OAUTH-FRAMEWORK] is a mechanism for delegated authorization that
@@ -612,7 +621,7 @@ Table of Contents
    the LLM or Tools in Figure 1, which can evaluate its authorization
    policy and complete the request.
 
-9.3.  Use of OAuth 2.0 Access Tokens
+10.3.  Use of OAuth 2.0 Access Tokens
 
    An OAuth access token represents the authorization granted to the
    Agent.  In many deployments, access tokens are structured as JSON Web
@@ -649,7 +658,7 @@ Table of Contents
    associated authorization attributes equivalent to those conveyed in
    structured tokens.
 
-9.4.  Obtaining an OAuth 2.0 Access Token
+10.4.  Obtaining an OAuth 2.0 Access Token
 
    OAuth 2.0 defines a number authorization grant flows in support of
    different authorization scenarios.  The appropriate flow depends on
@@ -657,24 +666,24 @@ Table of Contents
    involvement.  The following subsections describe the most relevant
    flows for Agent authorization.
 
-9.4.1.  User Delegates Authorization
+10.4.1.  User Delegates Authorization
 
-   When a User delegates authorization to an Agent, the Agent SHOULD
-   obtain an access token using the Authorization Code Grant as
-   described in Section 4.1 of [OAUTH-FRAMEWORK].  This redirection-
-   based flow involves an interactive authorization process, typically
-   in a web browser, in which the user authenticates to the
-   authorization server and explicitly approves the requested access.
-   Users SHOULD be authenticated using phishing-resistant authentication
-   mechanisms such as a passkey.  Once the user has approved the
-   request, the authorization server returns an authorization code to
-   the Agent via the redirect.
+   When a User delegates authorization to an Agent, the Authorization
+   Code Grant as described in Section 4.1 of [OAUTH-FRAMEWORK] is the
+   appropriate mechanism.  This redirection-based flow involves an
+   interactive authorization process, typically in a web browser, in
+   which the user authenticates to the authorization server and
+   explicitly approves the requested access.  Users SHOULD be
+   authenticated using phishing-resistant authentication mechanisms such
+   as a passkey.  Once the user has approved the request, the
+   authorization server returns an authorization code to the Agent via
+   the redirect.
 
    The Agent, acting as an OAuth client, then makes a token request to
    the authorization server to redeem the authorization code for an
    access token.  When making this token request, the Agent
    authenticates itself directly to the authorization server using the
-   credentials described in Section 6 with a compatible OAuth client
+   credentials described in Section 7 with a compatible OAuth client
    authentication mechanism, and not with the use of static, long-lived
    client secrets.  Compatible OAuth client authentication mechanisms
    are defined in [OAUTH-CLIENTAUTH-JWT], [OAUTH-CLIENTAUTH-MTLS] and
@@ -686,31 +695,31 @@ Table of Contents
    OAuth negates the need for the Agent to have access to a User's
    credentials when accessing a resource on the User's behalf.
 
-9.4.2.  Agent Obtains Own Authorization
+10.4.2.  Agent Obtains Own Authorization
 
    Agents obtaining access tokens on their own behalf can use the Client
    Credentials Grant as described in Section 4.4 of [OAUTH-FRAMEWORK] or
    the JWT Authorization Grant as described in Section 2.1 of
    [OAUTH-CLIENTAUTH-JWT].  When using the Client Credentials Grant, the
    Agent authenticates itself using the credentials described in
-   Section 6 with a compatible OAuth client authentication mechanism
+   Section 7 with a compatible OAuth client authentication mechanism
    listed in previous section, and not with the use of static, long-
    lived client secrets.  When using the JWT Authorization Grant, the
    Agent will be identified in the subject of the JWT assertion.
 
-9.4.3.  Agents Accessed by Systems or Other Agents
+10.4.3.  Agents Accessed by Systems or Other Agents
 
    Agents themselves can act in the role of an OAuth protected resource
    and be invoked by a System (e.g. a batch job or another Agent).  The
    System obtains an access token using an appropriate mechanism and
    then invokes the Agent presenting the access token.
 
-9.4.4.  OAuth 2.0 Security Best Practices
+10.4.4.  OAuth 2.0 Security Best Practices
 
    The Best Current Practice for OAuth 2.0 Security as described in
    [OAUTH-BCP] are applicable when requesting and using access tokens.
 
-9.5.  Risk Reduction with Transaction Tokens
+10.5.  Risk Reduction with Transaction Tokens
 
    Resources servers, whether they are LLMs, Tools or Agents (in the
    Agent-to-Agent case) may be composed of multiple microservices that
@@ -747,24 +756,21 @@ Table of Contents
    another service (e.g. another Agent, Tool or LLM) by using OAuth 2.0
    Token Exchange as defined in [OAUTH-TOKEN-EXCHANGE].
 
-9.6.  Cross Domain Access
+10.6.  Cross Domain Access
 
    Agents often require access to resources that are protected by
    different OAuth 2.0 authorization servers.  When the components in
    Figure 1 are protected by different logical authorization servers, an
    Agent SHOULD use OAuth Identity and Authorization Chaining Across
-   Domains as defined in ([OAUTH-ID-CHAIN]), or a derived specification
+   Domains as defined in [OAUTH-ID-CHAIN], or a derived specification
    such as the Identity Assertion JWT Authorization Grant
-   [OAUTH-JWT-ASSERTION], to obtain an access token from the relevant
-   authorization servers.
-
-   When using OAuth Identity and Authorization Chaining Across Domains
-   ([OAUTH-ID-CHAIN]), an Agent SHOULD use the access token or
-   transaction token it received to obtain a JWT authorization grant as
-   described in Section 2.3 of [OAUTH-ID-CHAIN] and then use the JWT
-   authorization grant it receives to obtain an access token for the
-   resource it is trying to access as defined in Section 2.4 of
-   [OAUTH-ID-CHAIN].
+   [OAUTH-JWT-ASSERTION] or , Transaction Token Authorization Grant
+   Profile for OAuth Identity and Authorization Chaining
+   [OAUTH-TXN-ASSERTION], to obtain an access token from the relevant
+   authorization servers.  The agent first exchanges its current access
+   token or transaction token for a JWT authorization grant (Section 2.3
+   of [OAUTH-ID-CHAIN]) and then presents that grant to obtain an access
+   token for the target resource (Section 2.4 of [OAUTH-ID-CHAIN]).
 
    When using the Identity Assertion JWT Authorization Grant
    [OAUTH-JWT-ASSERTION], the identity assertion (e.g. the OpenID
@@ -785,7 +791,7 @@ Table of Contents
    deployments to simplify authorization delegation for multiple
    software-as-a-service offerings.
 
-9.7.  Human in the Loop
+10.7.  Human in the Loop
 
    An OAuth authorization server MAY conclude that the level of access
    requested by an Agent requires explicit user confirmation.  In such
@@ -820,13 +826,13 @@ Table of Contents
    initiation, which doesn't map well to cases that envision the need
    for User confirmation to occur mid-execution.
 
-9.8.  Tool-to-Service Access
+10.8.  Tool-to-Service Access
 
    Tools expose interfaces to underlying services and resources.  Access
    to the Tools can be controlled by OAuth and augmented by policy,
    attribute or role based authorization systems (amongst others).  If
    the Tools are implemented as one or more microservices, it should use
-   transaction tokens to reduce risk as described in Section 9.5 to
+   transaction tokens to reduce risk as described in Section 10.5 to
    avoid passing access tokens around within the Tool implementation.
 
    Access from the Tools to the resources and services MAY be controlled
@@ -844,7 +850,7 @@ Table of Contents
    received from the Agent to Services or Resources.  It increases the
    risk of credential theft and lateral attacks.
 
-9.9.  Privacy Considerations
+10.9.  Privacy Considerations
 
    Authorization tokens may contain user identifiers, agent identifiers,
    audience restrictions, transaction details, and contextual
@@ -855,18 +861,18 @@ Table of Contents
    required.
 
    Agents SHOULD request only the minimum scopes and authorization
-   details necessary to complete a task.  Resource servers SHOULD avoid
-   logging full tokens and instead log token identifiers or hashes.
-   When authorization context is propagated across services, derived or
-   down-scoped tokens (such as transaction tokens) SHOULD be used to
-   reduce correlation and replay risk.
+   details necessary to complete a task.  As recommended in [OAUTH-BCP],
+   resource servers avoid logging full tokens and instead log token
+   identifiers or hashes.  When authorization context is propagated
+   across services, derived or down-scoped tokens (such as transaction
+   tokens) SHOULD be used to reduce correlation and replay risk.
 
    Implementations MUST ensure that user identity information delegated
    to agents is not exposed to unrelated services and that cross-domain
    authorization exchanges only disclose information required for the
    target authorization decision.
 
-9.10.  OAuth 2.0 Discovery in Dynamic Environments
+10.10.  OAuth 2.0 Discovery in Dynamic Environments
 
    In dynamic Agent deployments (e.g., ephemeral workloads, multi-tenant
    services, and frequently changing endpoint topology), Agents and
@@ -874,7 +880,7 @@ Table of Contents
    static configuration and to bind runtime decisions to verifiable
    metadata.
 
-9.10.1.  Authorization Server Capability Discovery
+10.10.1.  Authorization Server Capability Discovery
 
    An Agent that needs to obtain tokens can discover authorization
    server endpoints and capabilities using OAuth 2.0 Authorization
@@ -885,7 +891,7 @@ Table of Contents
    signing keys (via jwks_uri), and other relevant capabilities without
    preconfiguring them.
 
-9.10.2.  Protected Resource Capability Discovery
+10.10.2.  Protected Resource Capability Discovery
 
    When an Agent is invoking a Tool, the Agent MAY use OAuth 2.0
    Protected Resource Metadata [OAUTH-RESOURCE-METADATA] to discover how
@@ -900,7 +906,7 @@ Table of Contents
    similar way as an Agent.  Similarly, a System may use
    [OAUTH-RESOURCE-METADATA] when accessing an Agent.
 
-9.10.3.  Client Capability Discovery
+10.10.3.  Client Capability Discovery
 
    Other actors (e.g., Authorization Servers, registrars, or policy
    systems) may need to learn about any entities (System, Agent, Tool)
@@ -915,7 +921,7 @@ Table of Contents
    their capabilities with authorization servers as defined in the OAuth
    2.0 Dynamic Client Registration Protocol [OAUTH-REGISTRATION].
 
-10.  Agent Monitoring, Observability and Remediation
+11.  Agent Monitoring, Observability and Remediation
 
    Because agents may perform sensitive actions autonomously or on
    behalf of users, deployments MUST maintain sufficient monitoring and
@@ -976,13 +982,13 @@ Table of Contents
    authority, intermediate calls, and resulting actions across service
    boundaries.
 
-11.  Agent Authentication and Authorization Policy
+12.  Agent Authentication and Authorization Policy
 
    The configuration and runtime parameters for Agent Identifiers
-   Section 5, Agent Credentials Section 6, Agent Credential Provisioning
-   Section 7, Agent Authentication Section 8, Agent Authorization
-   Section 9 and Agent Monitoring, Observability and Remediation
-   Section 10 collectively constitute the authentication and
+   Section 6, Agent Credentials Section 7, Agent Credential Provisioning
+   Section 8, Agent Authentication Section 9, Agent Authorization
+   Section 10 and Agent Monitoring, Observability and Remediation
+   Section 11 collectively constitute the authentication and
    authorization policy within which the Agent operates.
 
    Because these parameters are highly deployment and risk-model-
@@ -995,18 +1001,18 @@ Table of Contents
    supports consistent evaluation across the components participating in
    the end-to-end flow.
 
-12.  Agent Compliance
+13.  Agent Compliance
 
    Compliance for Agent-based systems SHOULD be assessed by auditing
    observed behavior and recorded evidence (logs, signals, and
    authorization decisions) against the deployment’s Agent
-   Authentication and Authorization Policy Section 11.  Since compliance
+   Authentication and Authorization Policy Section 12.  Since compliance
    criteria are specific to individual deployments, organizations,
    industries and jurisdictions, they are out of scope for this
    framework though implementers SHOULD ensure strong observability and
    accountable governance, subject to their specific business needs.
 
-13.  Security Considerations
+14.  Security Considerations
 
    This document composes existing specifications to enable
    authentication and authorization between AI agents.  The security
@@ -1021,20 +1027,20 @@ Table of Contents
    [OpenIDConnect.FAPI] defines a high-assurance profile of OAuth 2.0
    suitable for high security applications.
 
-14.  Privacy Considerations
+15.  Privacy Considerations
 
    This document composes existing specifications to enable
    authentication and authorization between AI agents.
 
-   In addition to the the privacy considerations in Section 9.9, the
+   In addition to the the privacy considerations in Section 10.9, the
    privacy considerations in each referenced specification apply in
    full.
 
-15.  IANA Considerations
+16.  IANA Considerations
 
    This document has no IANA actions.
 
-16.  Acknowledgments
+17.  Acknowledgments
 
    The authors would like to thank:
 
@@ -1044,9 +1050,9 @@ Table of Contents
    *  Karl McGuinness for his blog posts on mission shaping as a pre-
       cursor to authorization [MissionShaping]
 
-17.  References
+18.  References
 
-17.1.  Normative References
+18.1.  Normative References
 
    [A2A]      "Agent2Agent (A2A) Protocol", n.d.,
               <https://github.com/a2aproject/A2A>.
@@ -1156,6 +1162,14 @@ Table of Contents
               RFC 7662, DOI 10.17487/RFC7662, October 2015,
               <https://www.rfc-editor.org/rfc/rfc7662>.
 
+   [OAUTH-TXN-ASSERTION]
+              Fletcher, G., Kasselman, P., and S. O'Dell, "Transaction
+              Token Authorization Grant Profile for OAuth Identity and
+              Authorization Chaining", Work in Progress, Internet-Draft,
+              draft-fletcher-transaction-token-chaining-profile-01, 20
+              June 2026, <https://datatracker.ietf.org/doc/html/draft-
+              fletcher-transaction-token-chaining-profile-01>.
+
    [OAUTH-TXN-TOKENS]
               Tulshibagwale, A., Fletcher, G., and P. Kasselman,
               "Transaction Tokens", Work in Progress, Internet-Draft,
@@ -1260,7 +1274,7 @@ Table of Contents
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
               wpt-01>.
 
-17.2.  Informative References
+18.2.  Informative References
 
    [MissionShaping]
               McGuinness, K., "The Mission Shaping Problem", 2026,
@@ -1277,10 +1291,11 @@ Appendix A.  Document History
       (https://github.com/PieterKas/agent2agent-auth-framework/
       issues/136)
 
-   -03
-
    *  Clarify that LLMs should not have access to Agent credentials:
       https://github.com/PieterKas/agent2agent-auth-framework/issues/127
+
+   *  Update use of normative language (https://github.com/PieterKas/
+      agent2agent-auth-framework/issues/123)
 
    -02
 
