@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-30T03:49:53.704115+00:00",
+  "timestamp": "2026-07-02T03:43:05.806494+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -2097,15 +2097,15 @@
       "id": "I_kwDOQP22qc8AAAABEXqz6A",
       "title": "[TECH-4] LLM must not have access to agent credentials",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/127",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "_Source: email from Yaron Sheffer to the WIMSE mailing list, [Review of draft-klrc-aiagent-auth (editor's copy)](https://mailarchive.ietf.org/arch/msg/wimse/3baCsNZnK4XS5nH-iHWuaPJlbK0/). Quoted verbatim below._\n\nSection 7 (Credential Provisioning, which now encompasses attestation/posture assessment) should state explicitly that the LLM inference component of an agent MUST NOT have access to the agent's cryptographic credentials. The LLM is the most vulnerable part of the agent to prompt injection attacks; a compromised prompt could cause the LLM to exfiltrate credentials or use them for unauthorized actions. Credential access must be strictly separated from the data flow that passes through the LLM. This is a security property that the architecture should mandate, not leave to implementers.\n",
       "createdAt": "2026-06-04T11:15:08Z",
-      "updatedAt": "2026-06-06T13:33:09Z",
-      "closedAt": null,
+      "updatedAt": "2026-06-30T10:42:45Z",
+      "closedAt": "2026-06-30T10:42:45Z",
       "comments": [
         {
           "author": "PieterKas",
@@ -2134,6 +2134,13 @@
           "body": "I think this is a cross-cutting concern, in that the architectural implications are not only \"don't let the LLM touch the creds\" and extend to service/tool APIs where you might need an application vs. infrastructure API, where the app layer is related to the LLM context and the credentials only live in the underlying infra layer. ",
           "createdAt": "2026-06-06T13:33:09Z",
           "updatedAt": "2026-06-06T13:33:09Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "We may need a new spec about Agent Credential handling (added to list): https://github.com/PieterKas/agent2agent-auth-framework/issues/144",
+          "createdAt": "2026-06-30T10:42:38Z",
+          "updatedAt": "2026-06-30T10:42:38Z"
         }
       ]
     },
@@ -2439,6 +2446,22 @@
       "body": "See https://mailarchive.ietf.org/arch/msg/wimse/bJvimHVwmLiKFec8vAZ7jhw5gNQ/\n\nAdd clarification to point to WIMSE architecture draft for trust domain definition/description.",
       "createdAt": "2026-06-08T10:42:51Z",
       "updatedAt": "2026-06-08T10:42:51Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 144,
+      "id": "I_kwDOQP22qc8AAAABHKuZxA",
+      "title": "List of new work that may be needed based on this draft",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/144",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "1. Human-in-the-loop - how to request users to grant additional authorization in an out-of-band manner.\n2. Agent credential handling - Define architectures and patterns for agents using credentials at their disposal",
+      "createdAt": "2026-06-30T10:39:38Z",
+      "updatedAt": "2026-06-30T10:39:38Z",
       "closedAt": null,
       "comments": []
     }
@@ -5558,13 +5581,13 @@
       "labels": [],
       "body": "Clarify the use of CIBA protocol for user confirmation in OAuth authorization. See isssue #131 ",
       "createdAt": "2026-06-05T17:18:58Z",
-      "updatedAt": "2026-06-29T17:32:01Z",
+      "updatedAt": "2026-06-30T10:30:30Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
       "baseRefOid": "97740988f68486ec76d954e6543d0b1c7fe78dee",
       "headRepository": "PieterKas/agent2agent-auth-framework",
       "headRefName": "PieterKas-patch-22",
-      "headRefOid": "9976abc6f030586663cb0884e2f474d827b9e68b",
+      "headRefOid": "96b6d6dcd745099256a8b7b1c94be41d42f9f57d",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -5596,6 +5619,46 @@
               "updatedAt": "2026-06-29T17:32:01Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc8AAAABEiY5Dg",
+          "commit": {
+            "abbreviatedOid": "9976abc"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-30T10:22:02Z",
+          "updatedAt": "2026-06-30T10:22:03Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\nAn OAuth authorization server MAY conclude that the level of access requested by an Agent requires explicit user confirmation. In such cases the authorization server SHOULD either decline the request or obtain additional authorization from the User. An Agent, acting as an OAuth client, can use the OpenID Client Initiated Backchannel Authentication (CIBA) protocol ({{OpenIDConnect.CIBA}}). This triggers an out-of-band interaction allowing the user to approve or deny the requested operation without exposing credentials to the agent (for example a push notification requesting the user to approve a request through an authenticator application on their mobile device).\n```",
+              "createdAt": "2026-06-30T10:22:02Z",
+              "updatedAt": "2026-06-30T10:22:03Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc8AAAABEicAUw",
+          "commit": {
+            "abbreviatedOid": "9976abc"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-30T10:30:30Z",
+          "updatedAt": "2026-06-30T10:30:30Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "@identitymonk I am not sure we need a normative MAY here. Captialised MAYs are useful when there is optionality, and if the optionality becomes a conformance requirement. By using a capitalised MAY I don't think we change interoperability (it is still optional) and we don't change how you would implement CIBA (CIBA is filled with its own normative requirements). Givent he large number of proposals to use something other than CIBA, I am also unsure if we are in a position to mandate its use yet. I changed the langugage from may to can, in part to avoid misleading readers in the future into thinking the may could be interpreted as a MAY.",
+              "createdAt": "2026-06-30T10:30:30Z",
+              "updatedAt": "2026-06-30T10:30:30Z"
+            }
+          ]
         }
       ]
     },
@@ -5604,24 +5667,26 @@
       "id": "PR_kwDOQP22qc7jMxtM",
       "title": "Restrict Large Language Model access to agent credentials",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/138",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "PieterKas",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "Added a requirement to prevent Large Language Model access to agent credentials to enhance security. See issue #127",
       "createdAt": "2026-06-05T17:40:48Z",
-      "updatedAt": "2026-06-08T14:08:39Z",
+      "updatedAt": "2026-06-30T10:40:51Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
       "baseRefOid": "97740988f68486ec76d954e6543d0b1c7fe78dee",
       "headRepository": "PieterKas/agent2agent-auth-framework",
       "headRefName": "PieterKas-patch-23",
       "headRefOid": "624b71a4cc26b61cf67de188f15bac5a8e6e5386",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-06-30T10:40:51Z",
+      "mergedAt": "2026-06-30T10:40:51Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "3e276478f88f658401447cf3457e8cc4efcb3ce2"
+      },
       "comments": [
         {
           "author": "PieterKas",
@@ -5636,6 +5701,13 @@
           "body": "> I am OK with adding a sentence to the the main document for now in the current section, but I think there may need to be a different draft in the future that specifically talk about LLM security considerations (including things like hallucinations, datasets it was trained on etc). If we try and do everything in this one doc, the scope may become impractical. I can see a spec as a narrow as \"Credential Management in Agentic Systems\" where we can define specific behaviours (as opposed to this draft which is all about pointing to existing drafts).\r\n\r\nIsn't this draft about identifying areas that are ripe for standardization? Well, we've just found one. Let's point it out and move forward.",
           "createdAt": "2026-06-08T14:08:39Z",
           "updatedAt": "2026-06-08T14:08:39Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "Added Agent Credential Handling ass a potential new spec (see: https://github.com/PieterKas/agent2agent-auth-framework/issues/144)",
+          "createdAt": "2026-06-30T10:40:37Z",
+          "updatedAt": "2026-06-30T10:40:37Z"
         }
       ],
       "reviews": [
@@ -5964,24 +6036,26 @@
       "id": "PR_kwDOQP22qc7qtUpx",
       "title": "changed for MAJOR-3, issue 123",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/143",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "identitymonk",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "see #123  Trying to attenuate the MUST and SHOULD by approaching it via BCP",
       "createdAt": "2026-06-25T19:17:45Z",
-      "updatedAt": "2026-06-29T11:27:19Z",
+      "updatedAt": "2026-06-30T10:46:12Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
-      "baseRefOid": "97740988f68486ec76d954e6543d0b1c7fe78dee",
+      "baseRefOid": "3e276478f88f658401447cf3457e8cc4efcb3ce2",
       "headRepository": "identitymonk/agent2agent-auth-framework",
       "headRefName": "MAJOR-3",
-      "headRefOid": "6007d75f16ef04725df195e1a7f96927204695cf",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "d84af30cc17759586fcc78ea67e013f481be5468",
+      "closedAt": "2026-06-30T10:46:12Z",
+      "mergedAt": "2026-06-30T10:46:12Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "7284d690b22c5204e7378a4340bea289190cdf34"
+      },
       "comments": [
         {
           "author": "identitymonk",
@@ -6082,6 +6156,39 @@
               "body": "```suggestion\n  -03\n\n   * Update us of normative language (https://github.com/PieterKas/agent2agent-auth-framework/issues/123)\n```",
               "createdAt": "2026-06-29T11:27:13Z",
               "updatedAt": "2026-06-29T11:27:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQP22qc8AAAABEihL_A",
+          "commit": {
+            "abbreviatedOid": "69f58b3"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-06-30T10:44:49Z",
+          "updatedAt": "2026-06-30T10:44:49Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOQP22qc8AAAABEihaug",
+          "commit": {
+            "abbreviatedOid": "69f58b3"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-30T10:45:26Z",
+          "updatedAt": "2026-06-30T10:45:26Z",
+          "comments": [
+            {
+              "originalPosition": 49,
+              "body": "```suggestion\n   * Update use of normative language (https://github.com/PieterKas/agent2agent-auth-framework/issues/123)\n```",
+              "createdAt": "2026-06-30T10:45:26Z",
+              "updatedAt": "2026-06-30T10:45:26Z"
             }
           ]
         }
