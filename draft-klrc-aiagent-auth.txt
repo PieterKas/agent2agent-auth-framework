@@ -5,7 +5,7 @@
 Network Working Group                                       P. Kasselman
 Internet-Draft                                          Defakto Security
 Intended status: Informational                               J. Lombardo
-Expires: 1 January 2027                                              AWS
+Expires: 7 January 2027                                              AWS
                                                             Y. Rosomakho
                                                                  Zscaler
                                                              B. Campbell
@@ -14,7 +14,7 @@ Expires: 1 January 2027                                              AWS
                                                                   OpenAI
                                                               A. Parecki
                                                                     Okta
-                                                            30 June 2026
+                                                             6 July 2026
 
 
                AI Agent Authentication and Authorization
@@ -60,7 +60,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 1 January 2027.
+   This Internet-Draft will expire on 7 January 2027.
 
 Copyright Notice
 
@@ -797,12 +797,12 @@ Table of Contents
    requested by an Agent requires explicit user confirmation.  In such
    cases the authorization server SHOULD either decline the request or
    obtain additional authorization from the User.  An Agent, acting as
-   an OAuth client, may use the OpenID Client Initiated Backchannel
-   Authentication (CIBA) protocol.  This triggers an out-of-band
-   interaction allowing the user to approve or deny the requested
-   operation without exposing credentials to the agent (for example a
-   push notification requesting the user to approve a request through an
-   authenticator application on their mobile device).
+   an OAuth client, can use the OpenID Client Initiated Backchannel
+   Authentication (CIBA) protocol ([OpenIDConnect.CIBA]).  This triggers
+   an out-of-band interaction allowing the user to approve or deny the
+   requested operation without exposing credentials to the agent (for
+   example a push notification requesting the user to approve a request
+   through an authenticator application on their mobile device).
 
    Interactive agent frameworks may also solicit user confirmation
    directly during task execution (for example tool invocation approval
@@ -1250,9 +1250,9 @@ Table of Contents
               Campbell, B., Salowey, J. A., Schwenkschuster, A.,
               Sheffer, Y., and Y. Rosomakho, "WIMSE Workload
               Credentials", Work in Progress, Internet-Draft, draft-
-              ietf-wimse-workload-creds-01, 5 May 2026,
+              ietf-wimse-workload-creds-02, 2 July 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              workload-creds-01>.
+              workload-creds-02>.
 
    [WIMSE-HTTPSIG]
               Salowey, J. A. and Y. Sheffer, "WIMSE Workload-to-Workload
@@ -1296,6 +1296,11 @@ Appendix A.  Document History
 
    *  Update use of normative language (https://github.com/PieterKas/
       agent2agent-auth-framework/issues/123)
+
+   -03
+
+   *  Include reference to CIBA (see https://github.com/PieterKas/
+      agent2agent-auth-framework/issues/131)
 
    -02
 
