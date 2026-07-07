@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-02T03:43:05.806494+00:00",
+  "timestamp": "2026-07-07T03:33:24.660157+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -93,7 +93,7 @@
       "id": "I_kwDOQP22qc7kg4rZ",
       "title": "OAuth as an authorization delegation framework",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/3",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "OWNER",
       "assignees": [
@@ -102,8 +102,8 @@
       "labels": [],
       "body": ">{{RFC6749}} is an established and maintained framework of specifications for requesting, acquiring, and proving ownership of pieces of authorization in the form of bearer tokens.\n\nI think we should enforce that OAuth is a authorization delegation framework where the RO delegates access to the Client to access and API on the RS by calling the AS (we can split mechanics). \"pieces od the authorization\" = \"authorization delegation by the user\". It hink it is fine to also point out that additional this does not constitute all the authorization information.",
       "createdAt": "2026-01-20T13:49:18Z",
-      "updatedAt": "2026-02-10T10:41:08Z",
-      "closedAt": null,
+      "updatedAt": "2026-07-06T19:08:28Z",
+      "closedAt": "2026-07-06T19:08:28Z",
       "comments": [
         {
           "author": "PieterKas",
@@ -1945,7 +1945,7 @@
       "labels": [],
       "body": "_Source: email from Yaron Sheffer to the WIMSE mailing list, [Review of draft-klrc-aiagent-auth (editor's copy)](https://mailarchive.ietf.org/arch/msg/wimse/3baCsNZnK4XS5nH-iHWuaPJlbK0/). Quoted verbatim below._\n\nThe document uses RFC 2119 language extensively, which is unusual for an Informational document and potentially confusing, since Informational documents are not standards-track. Moreover, many of the normative statements restate requirements already defined in the referenced specifications, making them redundant. This points to a deeper question the authors should address explicitly: what is the intended status of this document? If it is meant to seed new standardization work and describe best current practice, BCP status would be more appropriate. If it is meant to be a normative standard showing in detail how all the pieces of a complicated architecture fit together, Standards Track would be warranted. The current Informational framing fits neither goal well.\n",
       "createdAt": "2026-06-04T11:11:47Z",
-      "updatedAt": "2026-06-04T15:03:35Z",
+      "updatedAt": "2026-07-06T13:52:57Z",
       "closedAt": null,
       "comments": [
         {
@@ -1954,6 +1954,13 @@
           "body": "cc @yaronf",
           "createdAt": "2026-06-04T15:03:35Z",
           "updatedAt": "2026-06-04T15:03:35Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "From the editors perspective we prefer to keep this as an informative document for the time being, rather than a BCP. We will adjust use of normative langugage in acccordance so as not to repeat what existing drafts define and also to avoid putting additional new requriements on deployments. We may revise this as the draft develops further.",
+          "createdAt": "2026-07-06T13:52:57Z",
+          "updatedAt": "2026-07-06T13:52:57Z"
         }
       ]
     },
@@ -2221,15 +2228,15 @@
       "id": "I_kwDOQP22qc8AAAABEXsWWg",
       "title": "[TECH-8] CIBA not cited from text; human-in-the-loop model too narrow (Section 9.7)",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/131",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "_Source: email from Yaron Sheffer to the WIMSE mailing list, [Review of draft-klrc-aiagent-auth (editor's copy)](https://mailarchive.ietf.org/arch/msg/wimse/3baCsNZnK4XS5nH-iHWuaPJlbK0/). Quoted verbatim below._\n\nSection 9.7 mentions CIBA by name but does not include an inline citation to [OpenIDConnect.CIBA], even though that reference exists in the references list. Please add the citation.\n\nAdditionally, the CIBA-based model may be too constrained. CIBA assumes a push notification to a separate device, but the main agent flow may already be running on a mobile device. More importantly, the threat model here is different from typical 2FA: the primary concern is not an external attacker but the agent itself acting outside its authorized scope. Explicit user consent mechanisms should be discussed in light of that threat.\n",
       "createdAt": "2026-06-04T11:19:43Z",
-      "updatedAt": "2026-06-08T14:35:07Z",
-      "closedAt": null,
+      "updatedAt": "2026-07-06T15:59:26Z",
+      "closedAt": "2026-07-06T15:59:26Z",
       "comments": [
         {
           "author": "PieterKas",
@@ -2376,15 +2383,15 @@
       "id": "I_kwDOQP22qc8AAAABEXtuaw",
       "title": "[EDIT-4] Section 6: SPIFFE credential paragraph is imprecise",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/136",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "_Source: email from Yaron Sheffer to the WIMSE mailing list, [Review of draft-klrc-aiagent-auth (editor's copy)](https://mailarchive.ietf.org/arch/msg/wimse/3baCsNZnK4XS5nH-iHWuaPJlbK0/). Quoted verbatim below._\n\nThe paragraph conflates SPIFFE credential types. SPIFFE WIT-SVID is a WIMSE credential. Other SPIFFE credential formats (X.509-SVID, JWT-SVID) are not WIMSE credentials. The text should be more precise about which formats are which.\n",
       "createdAt": "2026-06-04T11:23:53Z",
-      "updatedAt": "2026-06-09T12:02:17Z",
-      "closedAt": null,
+      "updatedAt": "2026-07-06T13:53:30Z",
+      "closedAt": "2026-07-06T13:53:30Z",
       "comments": [
         {
           "author": "PieterKas",
@@ -2461,9 +2468,17 @@
       "labels": [],
       "body": "1. Human-in-the-loop - how to request users to grant additional authorization in an out-of-band manner.\n2. Agent credential handling - Define architectures and patterns for agents using credentials at their disposal",
       "createdAt": "2026-06-30T10:39:38Z",
-      "updatedAt": "2026-06-30T10:39:38Z",
+      "updatedAt": "2026-07-07T01:37:01Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "aeoess",
+          "authorAssociation": "NONE",
+          "body": "On #2, I think the first thing to pin down is that the credential never ends up somewhere the LLM can reach it. Yaron's framing in #127 seems right: the model is the part most exposed to prompt injection, so the secret stays in the infrastructure layer and out of the model context\n\nThe shape is a delegated grant the agent can present and narrow, signed with its own key, so it can prove what it is allowed to do without holding the underlying secret\n\nSide note, out of scope here: once authorization is handled, there is still the question of what record survives after the agent acts. That is where audit and incident review usually land. I've been writing that layer up in IETF Internet-Draft draft-pidlisnyi-aps, if it is useful as a datapoint later",
+          "createdAt": "2026-07-07T00:53:39Z",
+          "updatedAt": "2026-07-07T01:37:01Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -5574,24 +5589,26 @@
       "id": "PR_kwDOQP22qc7jMU23",
       "title": "Add reference to CIBA protocol in user confirmation section",
       "url": "https://github.com/PieterKas/agent2agent-auth-framework/pull/137",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "PieterKas",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "Clarify the use of CIBA protocol for user confirmation in OAuth authorization. See isssue #131 ",
       "createdAt": "2026-06-05T17:18:58Z",
-      "updatedAt": "2026-06-30T10:30:30Z",
+      "updatedAt": "2026-07-06T13:48:25Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
       "baseRefOid": "97740988f68486ec76d954e6543d0b1c7fe78dee",
       "headRepository": "PieterKas/agent2agent-auth-framework",
       "headRefName": "PieterKas-patch-22",
       "headRefOid": "96b6d6dcd745099256a8b7b1c94be41d42f9f57d",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-07-06T13:48:25Z",
+      "mergedAt": "2026-07-06T13:48:25Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "56ffb188b7f66d0e6bf31d4145afd3caab49ff51"
+      },
       "comments": [],
       "reviews": [
         {
