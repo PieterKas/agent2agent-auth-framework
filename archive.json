@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-07T03:33:24.660157+00:00",
+  "timestamp": "2026-07-30T02:30:04.583950+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -893,9 +893,31 @@
       "labels": [],
       "body": "From George Fletcher\n\nSection 5 \n- there is no mention of instance identifier vs \u201cworkload identifier\u201d nor whether the \u201cworkload identifier\u201d needs to represent the instance or just the general workload \u201cexecutable bits\".\n- there is mention that the workload identifier needs to remain \"stable for the lifetime of the workload identity\u201d however it\u2019s not clear whether that should represent the instance of the workload or the set of executable bits",
       "createdAt": "2026-03-13T19:44:35Z",
-      "updatedAt": "2026-03-13T19:44:35Z",
+      "updatedAt": "2026-07-29T14:40:15Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "szh",
+          "authorAssociation": "NONE",
+          "body": "We hit this gap in two lab deployments and agree it needs to be resolved normatively. The pattern we've found useful is three distinct identifiers: `agent_id` (stable logical agent, used for policy and audit), `runtime_instance_id` (ephemeral pod/sandbox/session worker, used for attribution and replay resistance), and `deployment_id` (rollout-scoped binding \u2014 controller generation or image digest). draft-ietf-wimse-arch-08 \u00a73.4.11 requires that autonomous actions be distinguished from delegated ones \"for example by using separate workload identities or token scopes\" but leaves the mechanism open \u2014 this three-way split is the concrete answer to that open requirement. The key normative rule: policy written against agent_id MUST NOT be conflated with SPIFFE paths that encode only runtime_instance_id.",
+          "createdAt": "2026-07-29T13:37:16Z",
+          "updatedAt": "2026-07-29T13:37:16Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "OWNER",
+          "body": "Thanks @szh - Perhaps all three can be combined in a single identifier - WIMSE/SPIFFE identifiers are hierarchical, and describing the identifier as an ever more specific identifier, starting with the agent (class), then instance, then deployment. Something like:\n\nspiffe://< trust domain >/< class >/< instance >/< deployment > or wimse://< trust domain >/< class >/< instance >/< deployment >\n\n< trust domain >: example.org.prod\n< class >: finance/payroll/weekly\n< instance >: 0930/29/07/2026\n< deployment >: us-west\n",
+          "createdAt": "2026-07-29T14:35:17Z",
+          "updatedAt": "2026-07-29T14:38:15Z"
+        },
+        {
+          "author": "edgarfloresguerra2011-a11y",
+          "authorAssociation": "NONE",
+          "body": "This is directly relevant to what we're building at MarketNow. We've shipped Agent Trust Cards (ATC) \u2014 Ed25519-signed identity cards for AI agents, using RFC 8032 + RFC 8785 JCS canonicalization.\n\nKey design decisions that might be useful for your \"instance identifier\" question:\n- `decision_authority: \"consumer\"` \u2014 the card is evidence, not a verdict. The consumer makes the trust decision.\n- `sentinel_review_score` (not `trust_score`) \u2014 it's review evidence, not a trust claim\n- The ATC answers 4 narrow questions: identity binding, issuer, validity state, review evidence. It does NOT answer \"should I trust this agent?\"\n\nWe've also demonstrated cross-CA verification with Vibe (vibes-coded.com) \u2014 two independent CAs verifying each other's receipts via public endpoints, no shared code.\n\nSpec: https://marketnow.site/api/atc?action=spec\nCA key: https://marketnow.site/api/atc?action=ca-key\nVerify: https://marketnow.site/api/atc?action=verify&card_id=ATC-2026-7777670\n\nHappy to share schema details if useful.",
+          "createdAt": "2026-07-29T14:40:15Z",
+          "updatedAt": "2026-07-29T14:40:15Z"
+        }
+      ]
     },
     {
       "number": 67,
