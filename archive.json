@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-30T02:30:04.583950+00:00",
+  "timestamp": "2026-08-04T02:38:57.083173+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -2490,7 +2490,7 @@
       "labels": [],
       "body": "1. Human-in-the-loop - how to request users to grant additional authorization in an out-of-band manner.\n2. Agent credential handling - Define architectures and patterns for agents using credentials at their disposal",
       "createdAt": "2026-06-30T10:39:38Z",
-      "updatedAt": "2026-07-07T01:37:01Z",
+      "updatedAt": "2026-08-03T17:31:41Z",
       "closedAt": null,
       "comments": [
         {
@@ -2499,6 +2499,27 @@
           "body": "On #2, I think the first thing to pin down is that the credential never ends up somewhere the LLM can reach it. Yaron's framing in #127 seems right: the model is the part most exposed to prompt injection, so the secret stays in the infrastructure layer and out of the model context\n\nThe shape is a delegated grant the agent can present and narrow, signed with its own key, so it can prove what it is allowed to do without holding the underlying secret\n\nSide note, out of scope here: once authorization is handled, there is still the question of what record survives after the agent acts. That is where audit and incident review usually land. I've been writing that layer up in IETF Internet-Draft draft-pidlisnyi-aps, if it is useful as a datapoint later",
           "createdAt": "2026-07-07T00:53:39Z",
           "updatedAt": "2026-07-07T01:37:01Z"
+        },
+        {
+          "author": "Mayur021",
+          "authorAssociation": "NONE",
+          "body": "On item 1, the entry as written covers how to reach the user out of band. The other half of that gap is which operations require reaching them at all, and right now it has no home in either document.\n\ndraft-rosomakho-oauth-txn-challenge-00 leaves it to the resource: \"If the protected resource determines that the requested operation requires transaction-specific authorization, it returns a transaction authorization challenge.\" Section 1.1 then gives examples rather than a rule, namely sending a payment, publishing content, deleting data, modifying access policy, disclosing sensitive information. Those five share one property. None of them can be undone by the system that performed them. The list is already sorted on that axis, the axis is just never named, so implementers inherit the examples and two conformant deployments draw the line in different places.\n\nSection 12 here puts the policy model out of scope, and I think that is the right call. The side effect is that the trigger belongs to neither document, so the strength of the guarantee ends up decided per deployment while the protocol reads as complete.\n\nThe version of this that stays inside the composition remit is not a policy model. It is a class derived from the operation's declared effect rather than asserted by the agent, carried as a claim and evaluated by the resource alongside the authorization it already checks. That composes with authorization_details in the challenge and with agentic_ctx in draft-araut-oauth-transaction-tokens-for-agents, and it leaves the policy question where Section 12 puts it.\n\nOne property is load bearing if this is ever picked up. For a multi-step chain the class has to be the worst case reachable across the chain, evaluated before the first step rather than per call. An agent that chooses its own decomposition can otherwise hold every individual step under the line and still reach the same terminal effect.\n\nThe four-class vocabulary is already shipped in OWASP AISVS v1.0 C9.2.3 and the chain rule is C9.2.10, so this does not need new terms.\n\nI filed the longer version as #114 in May, before this register existed. Raising it here because item 1 is where it belongs on the list.\n\nAdjacent to but distinct from the record layer @aeoess raised above: that one is what survives after the action, this is what has to be decided before it.\n",
+          "createdAt": "2026-08-03T16:07:40Z",
+          "updatedAt": "2026-08-03T16:07:40Z"
+        },
+        {
+          "author": "aeoess",
+          "authorAssociation": "NONE",
+          "body": "Item 1 is the right place for this, but I think the trigger is broader than reversibility.\n\nSection 1.1 calls those operations sufficiently sensitive. AISVS is broader: it gates actions that are \"privileged, high-impact, or irreversible\", with enforcement based on both impact and ability to be reversed. A payment or an access-policy change may be reversible and still require step-up approval. So reversibility is one input to the gate, not the gate itself.\n\nThe chain rule has a different problem. Applying the highest-impact reversibility class across a chain only means something if the chain is bounded. The agent cannot be the sole authority for that boundary. For a single operation, the resource signs the challenge and the agent cannot substitute its own description. At chain level, a resource, orchestrator, or other trusted component should validate a plan or effect envelope, bind the challenge to it, and require a new challenge when execution would exceed it.\n\nFor a dynamic plan, the envelope can be revalidated as the plan develops. The full decomposition does not need to exist before the first step, but any expansion beyond the approved envelope does need a new challenge.\n\nI would treat C9.2.8 as supporting such a profile, not as already defining it. Calling the validated envelope part of the execution context still leaves three questions: who constructs it, who validates it, and which changes invalidate the approval.\n\nThe record layer I mentioned earlier comes after the decision. To make a derived class checkable rather than merely asserted, it would need to preserve the challenge, the validated envelope or its reference, the classification and its declared basis, and references to the actions actually recorded. A verifier could then recompute the recorded classification and test those recorded actions against the approved envelope. It still would not establish that no unrecorded step occurred.\n\nSplitting one outcome into smaller calls must not reduce the approval required to reach it.\n",
+          "createdAt": "2026-08-03T17:11:26Z",
+          "updatedAt": "2026-08-03T17:11:26Z"
+        },
+        {
+          "author": "Mayur021",
+          "authorAssociation": "NONE",
+          "body": "Both corrections are right, and I checked them against the text rather than taking them on agreement.\n\n9.2.1 gates privileged, high-impact, or irreversible actions, so reversibility is one of three triggers rather than the trigger. 9.2.4 keys enforcement to impact and ability to be reversed, which is two axes. A reversible payment can still be high-impact and still need the gate. I will stop stating it the way I did.\n\nThe envelope point lands somewhere more uncomfortable. 9.2.10 says approval gates for multi-step or multi-agent chains enforce the highest-impact reversibility classification present anywhere in the chain. That is my text, and it is silent on who establishes what the chain is. A worst-case rule evaluated over a set the agent supplied is the same one-sided check as a step count that arrives together with the steps it counts. It verifies the set it was handed and says nothing about the set it was not.\n\nSo your three questions are the right frame, and I do not think 9.2.8 closes them either. Binding an approval to execution context is a binding, not a statement of what that context must contain or who is entitled to assert it. Who constructs the envelope and who is trusted to validate it are the load-bearing parts, and neither is a property the agent can supply about itself.\n\nThe caveat you put at the end is the general form and worth keeping in whatever gets written. Recomputing a classification from the record tests the actions that were recorded, and cannot establish that nothing went unrecorded.\n",
+          "createdAt": "2026-08-03T17:31:41Z",
+          "updatedAt": "2026-08-03T17:31:41Z"
         }
       ]
     }
@@ -5220,7 +5241,7 @@
       "labels": [],
       "body": "Refer to FIDO passkeys/authenticators as an example of phishing-resistant credentials (see issue #106 )",
       "createdAt": "2026-04-21T13:55:25Z",
-      "updatedAt": "2026-05-30T06:50:49Z",
+      "updatedAt": "2026-08-03T14:11:44Z",
       "baseRepository": "PieterKas/agent2agent-auth-framework",
       "baseRefName": "main",
       "baseRefOid": "cba5256f5c7f60592afaa8133bf37651e8fe8b84",
