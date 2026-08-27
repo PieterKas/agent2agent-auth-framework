@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-08-18T01:16:32.509623+00:00",
+  "timestamp": "2026-08-27T08:02:42.525038+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -2553,6 +2553,38 @@
           "updatedAt": "2026-08-17T16:59:48Z"
         }
       ]
+    },
+    {
+      "number": 146,
+      "id": "I_kwDOQP22qc8AAAABOGXouw",
+      "title": "Name the gap: cross-domain access without prior federation",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/146",
+      "state": "OPEN",
+      "author": "tigerdawg-id",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Section 10.6 covers cross-domain access via OAuth Identity and Authorization Chaining and its derived profiles, all of which assume pre-established trust between the authorization servers involved.\n\nThe case where the interacting organizations have no prior relationship (counterparties discovered at runtime, no shared IdP, no federation agreement) has no path in the document. As agents transact with dynamically discovered services, this case grows more common, not less.\n\nSuggested resolution: name it as a gap in Section 10.6 or a dedicated gap section, per the document's stated goal of identifying gaps to guide future standardization. Requirements R1-R3 of draft-reece-wimse-cross-org-delegation are one attempt to state what a solution must provide; happy to contribute gap-analysis text.\n\nRaised in my Call for Adoption response on the WIMSE list.",
+      "createdAt": "2026-08-25T01:46:50Z",
+      "updatedAt": "2026-08-25T01:46:50Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 147,
+      "id": "I_kwDOQP22qc8AAAABOGYJRA",
+      "title": "State the limitation: verification under disconnection",
+      "url": "https://github.com/PieterKas/agent2agent-auth-framework/issues/147",
+      "state": "OPEN",
+      "author": "tigerdawg-id",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Every authorization path in the document terminates at an authorization server or an introspection callback (Sections 10.2-10.6). Deployments with intermittent connectivity, edge enforcement, or cross-organizational verifiers that cannot depend on the issuing side's availability need the authorization decision to complete from carried, signed material.\n\nSuggested resolution: at minimum, a stated limitation that the composed framework assumes issuer-side availability on the decision path, so implementers with disconnected or availability-independent requirements know the boundary. A gap statement pointing at offline-verifiable approaches would be stronger.\n\nRaised in my Call for Adoption response on the WIMSE list.",
+      "createdAt": "2026-08-25T01:48:30Z",
+      "updatedAt": "2026-08-25T01:48:30Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
