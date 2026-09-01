@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-08-27T08:02:42.525038+00:00",
+  "timestamp": "2026-09-01T04:02:08.719235+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -2450,7 +2450,7 @@
       "labels": [],
       "body": " Hi \u2014 sharing empirical research that directly supports the motivation for this framework.\n\nThe gap your draft addresses quantified:\n\nOur paper \"[title]\" (arXiv:2605.18414, May 2026) benchmarks prompt-based access control in MCP-based agentic deployments across adversarial scenarios. Key finding: prompt-based access control fails in 48.5\u201368.5% of adversarial test cases, meaning agents invoke unauthorized tools despite explicit restrictions in their system prompt.\n\nThis directly quantifies the risk described in your Section 1 problem statement \u2014 that implementations \"develop solutions in isolation\" without proper identity and authorization infrastructure. The failure rate is the empirical baseline for what the status quo looks like without a framework like AIMS.\n\nSpecific relevance:\n- Your Authorization layer (Section X, OAuth 2.0 delegation) addresses exactly the enforcement gap we measured\n- Our findings support the urgency of moving beyond prompt-based policy to cryptographic authorization\n- The 48.5\u201368.5% failure range could serve as a concrete benchmark for evaluating whether implementations conforming to this framework   reduce unauthorized tool invocation\n\nHappy to share the full paper or specific benchmark methodology if useful for the references section or security considerations.\n\n\u2014 Rohith Uppala | arXiv: https://arxiv.org/abs/2605.18414",
       "createdAt": "2026-06-07T15:10:49Z",
-      "updatedAt": "2026-06-08T12:44:10Z",
+      "updatedAt": "2026-08-30T17:41:49Z",
       "closedAt": null,
       "comments": [
         {
@@ -2459,6 +2459,13 @@
           "body": "Hi Rohit,\n\nThanks for the interest and proposition to contribute. We would like to see peer reviews of this before considering integration of your work in the Framework to ensure good quality references for the readers.\n\nPlease keep us posted on how you progress on this.\n\nJeff",
           "createdAt": "2026-06-08T12:44:10Z",
           "updatedAt": "2026-06-08T12:44:10Z"
+        },
+        {
+          "author": "rohith88",
+          "authorAssociation": "NONE",
+          "body": "  Hi Jeff,\n\nQuick update \u2014 the paper has since cleared peer review: it was accepted to the EMNLP 2026 Industry Track. The meta-review recommended it for oral presentation and assessed it as \"up to top 5%\" of accepted papers.\n\nLet me know if there's anything else you'd want to see before considering it.\n\nhttps://openreview.net/forum?id=gJLBGzRHNs\n\n<img width=\"1187\" height=\"514\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/d6656655-d16c-46dd-8790-64f3e9b57351\" />\n\n  \u2014 Rohith",
+          "createdAt": "2026-08-30T17:41:49Z",
+          "updatedAt": "2026-08-30T17:41:49Z"
         }
       ]
     },
@@ -2490,7 +2497,7 @@
       "labels": [],
       "body": "1. Human-in-the-loop - how to request users to grant additional authorization in an out-of-band manner.\n2. Agent credential handling - Define architectures and patterns for agents using credentials at their disposal",
       "createdAt": "2026-06-30T10:39:38Z",
-      "updatedAt": "2026-08-04T07:36:06Z",
+      "updatedAt": "2026-08-31T22:07:55Z",
       "closedAt": null,
       "comments": [
         {
@@ -2520,6 +2527,20 @@
           "body": "Both corrections are right, and I checked them against the text rather than taking them on agreement.\n\n9.2.1 gates privileged, high-impact, or irreversible actions, so reversibility is one of three triggers rather than the trigger. 9.2.4 keys enforcement to impact and ability to be reversed, which is two axes. A reversible payment can still be high-impact and still need the gate. I will stop stating it the way I did.\n\nThe envelope point lands somewhere more uncomfortable. 9.2.10 says approval gates for multi-step or multi-agent chains enforce the highest-impact reversibility classification present anywhere in the chain. That requirement came from an issue I filed, and it is silent on who establishes what the chain is. A worst-case rule evaluated over a set the agent supplied is the same one-sided check as a step count that arrives together with the steps it counts. It verifies the set it was handed and says nothing about the set it was not.\n\nSo your three questions are the right frame, and I do not think 9.2.8 closes them either. Binding an approval to execution context is a binding, not a statement of what that context must contain or who is entitled to assert it. Who constructs the envelope and who is trusted to validate it are the load-bearing parts, and neither is a property the agent can supply about itself.\n\nThe caveat you put at the end is the general form and worth keeping in whatever gets written. Recomputing a classification from the record tests the actions that were recorded, and cannot establish that nothing went unrecorded.\n",
           "createdAt": "2026-08-03T17:31:41Z",
           "updatedAt": "2026-08-04T07:36:06Z"
+        },
+        {
+          "author": "aeoess",
+          "authorAssociation": "NONE",
+          "body": "Agreed on all four, and your point about 9.2.10 being silent on who establishes the chain moves the argument past where I left it. I want to add one thing under it rather than restate it.\n\nThe three questions I raised were who constructs the envelope, who validates it, and which changes invalidate the approval. Your answer to the first two is that neither is a property the agent can supply about itself. That holds, and it generalizes past this requirement: whatever component establishes the chain, the approval is evaluated against an envelope that must be constructed or validated by an authority independent of the gated agent, and execution beyond that envelope invalidates the existing approval rather than being covered by it. Stated that way, the requirement does not need to define the envelope's contents at all. It needs to say the envelope may not originate solely from the party being gated.\n\nThe layer underneath is where I think this bottoms out. Any worst-case rule over a chain runs on effect declarations, and those declarations are themselves asserted by tool authors. So a validated envelope moves the trust from the agent to whoever declared the effects of the tools inside it. That is a real improvement, because the tool author is not the party trying to pass the gate and does not know which chain their declaration will be evaluated in. It is not a fixed point. A gate that composes over declared effects is exactly as sound as the declarations, and nothing in the requirement text says who is accountable for those or what happens when a tool's declared effect and its actual effect diverge.\n\nI do not think that belongs in 9.2.10. It is a separate question and putting it there would make the requirement unassessable in a different way. But it is the reason I would resist any wording that treats the envelope as settling the question rather than relocating it.\n",
+          "createdAt": "2026-08-31T21:54:45Z",
+          "updatedAt": "2026-08-31T21:54:45Z"
+        },
+        {
+          "author": "benrrr56-wq",
+          "authorAssociation": "NONE",
+          "body": "The two listed work streams (out-of-band grant requests for HITL, and agent credential handling) are the hard parts of agent auth. On the OOB grant piece, one edge dominates: when a human grants a scope for an agent in a separate channel, the grant must be bound to the exact pending action and nonce, and single-use, or a replayed approval re-drives a call the human never saw in the same context. Does the draft scope the OOB grant to a concrete pending request (action + nonce + requester), or is it a standing grant the agent can spend later? Bound approvals with recomputable evidence are what I build. https://agentkey.us",
+          "createdAt": "2026-08-31T22:07:55Z",
+          "updatedAt": "2026-08-31T22:07:55Z"
         }
       ]
     },
