@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-09-06T03:25:59.907550+00:00",
+  "timestamp": "2026-09-13T03:42:43.645060+00:00",
   "repo": "PieterKas/agent2agent-auth-framework",
   "labels": [
     {
@@ -2497,7 +2497,7 @@
       "labels": [],
       "body": "1. Human-in-the-loop - how to request users to grant additional authorization in an out-of-band manner.\n2. Agent credential handling - Define architectures and patterns for agents using credentials at their disposal",
       "createdAt": "2026-06-30T10:39:38Z",
-      "updatedAt": "2026-08-31T22:07:55Z",
+      "updatedAt": "2026-09-12T04:19:14Z",
       "closedAt": null,
       "comments": [
         {
@@ -2536,11 +2536,18 @@
           "updatedAt": "2026-08-31T21:54:45Z"
         },
         {
-          "author": "benrrr56-wq",
+          "author": "Mayur021",
           "authorAssociation": "NONE",
-          "body": "The two listed work streams (out-of-band grant requests for HITL, and agent credential handling) are the hard parts of agent auth. On the OOB grant piece, one edge dominates: when a human grants a scope for an agent in a separate channel, the grant must be bound to the exact pending action and nonce, and single-use, or a replayed approval re-drives a call the human never saw in the same context. Does the draft scope the OOB grant to a concrete pending request (action + nonce + requester), or is it a standing grant the agent can spend later? Bound approvals with recomputable evidence are what I build. https://agentkey.us",
-          "createdAt": "2026-08-31T22:07:55Z",
-          "updatedAt": "2026-08-31T22:07:55Z"
+          "body": "Both halves of your paragraph are in the standard now, and neither is my wording.\n\n\"The envelope may not originate solely from the party being gated\" is 9.2.10 as amended on 5 September: \"...enforce the highest-impact reversibility classification present anywhere in the chain, where the chain is established by a component outside the control of the agent being gated.\" And \"execution beyond that envelope invalidates the existing approval rather than being covered by it\" is the new 9.2.11: blocked until a new approval is obtained, and that approval enforces the highest-impact class across the cumulative chain. Both in 1.01-dev, neither released yet. You wrote the shape of both five days before they landed.\n\nOn the layer underneath, you were right that the envelope relocates the trust rather than settling it, and that gap now has a size. Across 35 crawls of the public MCP registry between June and August, 44,172 tools on 2,043 servers: 83.8% declare a canonical effect annotation, 59.3% hold a declaration still bound to an unmutated contract. The 24.5-point difference is the distance between what a declaration-gated system believes it has verified and what remains attested. It holds between 21.6 and 24.7 across every threshold tested. doi.org/10.5281/zenodo.22649163, with Gautam Bharti.\n\nSo a gate composing over declared effects is exactly as sound as the declarations, and for that population roughly a quarter of them are not what the gate thinks it is reading.\n\nYou are also right that it does not belong in 9.2.10. It had its own issue, OWASP/AISVS#1126, and that closed on 5 September on a glossary change: a trusted classification is now one \"created, maintained and stored outside of the agent's control.\" That fixes provenance, which is who may set a classification. It does not reach divergence, which is a classification correctly set by the right party that stops describing the tool underneath it. The case you named is still open, and the issue that carried it is not.",
+          "createdAt": "2026-09-10T12:16:55Z",
+          "updatedAt": "2026-09-10T12:16:55Z"
+        },
+        {
+          "author": "aeoess",
+          "authorAssociation": "NONE",
+          "body": "yeah, that makes the split much clearer.\n\n9.2.10 and 9.2.11 close the boundary we were talking about here. The remaining case is different: the classification can have the right provenance and still stop describing the tool it is gating. And the 44k-tool result gives that gap a much stronger basis than we had when #1126 was opened.\n\nI think that deserves its own issue rather than trying to stretch 9.2.10 or reopen the provenance question. I'll separate it that way.\n",
+          "createdAt": "2026-09-12T04:19:14Z",
+          "updatedAt": "2026-09-12T04:19:14Z"
         }
       ]
     },
